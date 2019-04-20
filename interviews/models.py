@@ -28,8 +28,8 @@ STATUS_ONDUTY_CHOICES = (
 # 每一次的面试记录也都要留下来
 
 class Interview(models.Model):
-    post = models.ForeignKey(Post)
-    candidate = models.ForeignKey(Candidate)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=1)
     status = models.IntegerField(choices=STATUS_CHOICES, default=0)
     last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
@@ -40,8 +40,8 @@ class Interview(models.Model):
         return '<interview C: %s B: %s' % (candidate.name, post.name)
 
 class OnDuty(models.Model):
-    post = models.ForeignKey(Post)
-    candidate = models.ForeignKey(Candidate)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
     is_active = models.BooleanField(default = 0)
     status = models.IntegerField(choices=STATUS_ONDUTY_CHOICES, default=0)
     last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
