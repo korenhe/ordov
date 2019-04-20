@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'companies',
     'experiences',
     'interviews',
-    'recruit_manager.apps.RecruitManagerConfig'
+    'recruit_manager.apps.RecruitManagerConfig',
+    'landing_page.apps.LandingPageConfig',
 ]
 
 MIDDLEWARE = [
