@@ -13,7 +13,7 @@ class Candidate(models.Model):
     # base info
     name = models.CharField(max_length=4)
 #   user = models.OneToOneField(User, on_delete=models.CASCADE)
-    gender = models.CharField(choices=(("male", "male"), ("female", "female"),), max_length=10, blank=True, null=True)
+    gender = models.CharField(choices=(('m', "male"), ('f', "female"),), max_length=1, blank=True, null=True)
     birth_year = models.CharField(max_length=4, blank=False, choices=BIRTH_YEAR_CHOICES)
     birth_month= models.CharField(max_length=4)
     date_of_birth = models.DateTimeField(blank=True, null=True)
