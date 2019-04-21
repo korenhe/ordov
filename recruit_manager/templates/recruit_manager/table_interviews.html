@@ -18,7 +18,7 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Candidate</h1>
+          <h1 class="h3 mb-2 text-gray-800">Interview</h1>
           <!--
           <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
           -->
@@ -33,27 +33,21 @@
                   <thead>
                     <tr>
                       <th>Name</th>
-                      <th>Gender</th>
-                      <th>Age</th>
                       <th>Stage</th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
                       <th>Name</th>
-                      <th>Gender</th>
-                      <th>Age</th>
                       <th>Stage</th>
                     </tr>
                   </tfoot>
-                  {% if t_candidate_list %}
+                  {% if t_interview_list %}
                   <tbody>
-                    {% for candidate in t_candidate_list %}
+                    {% for interview in t_interview_list %}
                     <tr>
-                      <td>{{ candidate.username }} </td>
-                      <td>{{ candidate.gender }} </td>
-                      <td>{{ candidate.birth_year }} </td>
-                      <th>
+                      <td>{{ interview.candidate.name }} </td>
+                      <td>
                         {% if candidate.gender == 'male' %}
                         <button class="btn btn-success btn-icon-split border-0" id="stage">
                           <span class="icon text-white-50">
@@ -69,7 +63,7 @@
                           <span class="text">Prepare Interview</span>
                         </button>
                         {% endif %}
-                      </th>
+                      </td>
                     </tr>
                     {% endfor %}
                   </tbody>

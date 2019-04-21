@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views import generic
 
 from candidates.models import Candidate
+from interviews.models import Interview
 
 # Create your views here.
 def index(request):
@@ -10,6 +11,12 @@ def index(request):
 
 class CandidateTable(generic.ListView):
     context_object_name = 't_candidate_list'
-    template_name = 'recruit_manager/tables.html'
+    template_name = 'recruit_manager/table_candidates.html'
     def get_queryset(self):
         return Candidate.objects.all()[:5]
+
+class InterviewTable(generic.ListView):
+    context_object_name = 't_interview_list'
+    template_name = 'recruit_manager/table_interviews.html'
+    def get_queryset(self):
+        return Interview.objects.all()[:5]
