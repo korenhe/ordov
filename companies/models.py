@@ -39,6 +39,6 @@ class Post(models.Model):
     level = models.CharField(max_length=20)
 
     def __str__(self):
-        return "%s,%s,%s" % (self.name, department.name, company.name)
+        return "%s,%s,%s" % (self.name, self.department.name, self.company.name)
 
 

@@ -11,7 +11,7 @@ from django.utils.encoding import python_2_unicode_compatible
 @python_2_unicode_compatible
 class Candidate(models.Model):
     # base info
-    username = models.CharField(max_length=4)
+    name = models.CharField(max_length=4)
 #   user = models.OneToOneField(User, on_delete=models.CASCADE)
     gendor = models.CharField(choices=(("male", "male"), ("female", "female"),), max_length=10, blank=True, null=True)
     birth_year = models.CharField(max_length=4, blank=False, choices=BIRTH_YEAR_CHOICES)
@@ -36,5 +36,5 @@ class Candidate(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
 
     def __str__ (self):
-        return self.username
+        return self.name
 

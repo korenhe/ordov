@@ -37,7 +37,7 @@ class Interview(models.Model):
     result = models.CharField(max_length=50)
 
     def __str__(self):
-        return '<interview C: %s B: %s' % (candidate.name, post.name)
+        return '<interview C: %s B: %s' % (self.candidate.name, self.post.name)
 
 class OnDuty(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -49,7 +49,4 @@ class OnDuty(models.Model):
     result = models.CharField(max_length=50)
 
     def __str__(self):
-        return '<onduty C: %s B: %s' % (candidate.name, post.name)
-    
-
-    
+        return '<onduty C: %s B: %s' % (self.candidate.name, self.post.name)
