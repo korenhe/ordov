@@ -52,7 +52,9 @@
                   <tbody>
                     {% for candidate in t_candidate_list %}
                     <tr>
-                      <td>{{ candidate.id }} </td>
+                      <td>
+                        <a href="{% url 'manager:t_candidate' candidate.id %}"> {{ candidate.id }}</a>
+                      </td>
                       <td>{{ candidate.name }} </td>
                       <td>{{ candidate.gender }} </td>
                       <td>{{ candidate.birth_year }} </td>
