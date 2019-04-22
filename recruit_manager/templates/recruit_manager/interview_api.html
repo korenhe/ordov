@@ -1,1 +1,60 @@
-This is the post form for collecting info from 3rd party
+{% load static %}
+{% include 'recruit_manager/basic_header.html' %}
+
+<body class="bg-gradient-primary">
+
+  <div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+      <div class="col-xl-10 col-lg-12 col-md-9">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+
+              <div class="col-lg-6">
+                <div class="p-5">
+                  <div class="text-left">
+                    <h1 class="h4 text-gray-900 mb-4">Interview API</h1>
+                  </div>
+                  <form class="user">
+
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="apiName" aria-describedby="emailHelp" placeholder="name">
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="apiGender" placeholder="gender">
+                    </div>
+                    <div class="form-group">
+                      <div class="custom-control custom-checkbox small">
+                        <input type="checkbox" class="custom-control-input" id="customCheck">
+                      </div>
+                    </div>
+
+                    <div class="btn btn-primary btn-block">
+                      Submit
+                    </div>
+
+                    <hr>
+                  </form>
+                  <hr>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  {% include 'recruit_manager/basic_js.html' %}
+
+</body>
+
+</html>
