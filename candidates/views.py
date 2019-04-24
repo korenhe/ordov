@@ -18,13 +18,10 @@ class CandidateView(APIView):
         return Response ({"candidates": serializer.data})
 
     def post(self, request):
-        print(request.POST)
         candidate = request.data.get('candidate')
 
-        print('candidate={}'.format(candidate))
         serializer = CandidateSerializer(data=candidate)
         if serializer.is_valid(raise_exception=True):
-            print("is valid in")
             candidate_saved = serializer.save()
 
         return Response(

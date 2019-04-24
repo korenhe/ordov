@@ -40,5 +40,3 @@ class Post(models.Model):
 
     def __str__(self):
         return "%s,%s,%s" % (self.name, self.department.name, self.company.name)
-
-
