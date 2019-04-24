@@ -11,7 +11,7 @@ from django.utils.encoding import python_2_unicode_compatible
 @python_2_unicode_compatible
 class Candidate(models.Model):
     # base info
-    name = models.CharField(max_length=4)
+    name = models.CharField(max_length=8)
 #   user = models.OneToOneField(User, on_delete=models.CASCADE)
     gender = models.CharField(choices=(('m', "male"), ('f', "female"),), max_length=1, blank=True, null=True)
     birth_year = models.CharField(max_length=4, blank=False, choices=BIRTH_YEAR_CHOICES)
