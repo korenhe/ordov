@@ -7,8 +7,8 @@ from rest_framework.views import APIView
 
 # Create your views here.
 
-from .models import Company, Department
-from .serializers import CompanySerializer, DepartmentSerializer
+from .models import Company, Department, Post
+from .serializers import CompanySerializer, DepartmentSerializer, PostSerializer
 
 class CompanyView(APIView):
     def get(self, request):
@@ -48,3 +48,24 @@ class DepartmentView(APIView):
             {"success": "Department '{}' created successfully".format(department_saved.name)}
         )
 
+class PostView(APIView):
+    def get(self, request):
+        posts = Post.objects.all()
+
+        serializer = PostSerializer(posts, many=True)
+        print("abc")
+        print(type(serializer))
+        print("bdd")
+        return Response ({"posts": serializer.data})
+
+    def post(self, request):
+        print(request.POST)
+        post = request.data.get('post')
+
+        serializer = PostSerializer(data=post)
+        if serializer.is_valid(raise_exception=True):
+            post_saved = serializer.save()
+
+        return Response(
+            {"success": "Post '{}' created successfully".format(post_saved.name)}
+        )
