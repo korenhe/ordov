@@ -1,0 +1,30 @@
+{
+  "company":
+  {
+    "name": "华为技术有限公司",
+    "short_name": "华为",
+    "description": "不只是500强",
+    "scale": 180000,
+    "area": "ICT",
+    "cType": "科技"
+  }
+}
+
+# ========================================
+
+{
+  "department":
+  {
+    "company":
+    {
+      "name": "华为技术有限公司",
+      "short_name": "华为",
+      "description": "不只是500强",
+      "scale": 180000,
+      "area": "ICT",
+      "cType": "科技"
+    },
+    "name": "CloudBU",
+    "description": "RDS"
+  }
+}
