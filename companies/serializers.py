@@ -16,6 +16,9 @@ class CompanySerializer(serializers.ModelSerializer):
             )
 
 class DepartmentSerializer(serializers.ModelSerializer):
+
+    company = CompanySerializer(required=True)
+
     class Meta:
         model = Department
         fields = (
@@ -26,3 +29,14 @@ class DepartmentSerializer(serializers.ModelSerializer):
         )
 
         depth = 1
+
+    def create(self, validated_data):
+        company_data = validated_data.pop('company')
+
+        company = CompanySerializer.create(CompanySerializer(), validated_data=company_data)
+
+        department, created = Department.objects.update_or_create(
+            company=company,
+            **validated_data)
+
+        return department
