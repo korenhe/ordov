@@ -5,7 +5,7 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.encoding import python_2_unicode_compatible
 
-from candidates.models import Candidate
+from resumes.models import Resume
 # Create your models here.
 
 #
@@ -14,7 +14,7 @@ from candidates.models import Candidate
 # 让员工去填公司全称简直是噩梦
 @python_2_unicode_compatible
 class Experience(models.Model):
-    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, default='')
     start = models.DateField()
     end = models.DateField()
 

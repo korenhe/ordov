@@ -37,11 +37,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.weibo',
+
     'rest_framework',
+
+    'accounts',
+
     'candidates',
     'companies',
     'experiences',
     'interviews',
+    'resumes',
     'recruit_manager.apps.RecruitManagerConfig',
     'landing_page.apps.LandingPageConfig',
 ]
@@ -106,6 +116,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+LOGIN_URL = '/accounts/login'
+LOGIN_REDIRECT_URL = '/manager/'
+
+SITE_ID = 1
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/

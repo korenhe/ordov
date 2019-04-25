@@ -1,0 +1,1 @@
+python manage.py makemigrations accounts candidates companies experiences interviews resumes

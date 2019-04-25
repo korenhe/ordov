@@ -1,11 +1,11 @@
 from django.urls import path
 
-from .views import CandidateView
+from .views import ResumeView
 
 
 app_name = "candidates"
 
 # app_name will help us do a reverse look-up latter.
 urlpatterns = [
-    path('candidates/', CandidateView.as_view()),
+    path('resumes/', ResumeView.as_view()),
 ]

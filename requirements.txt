@@ -6,3 +6,5 @@ djangorestframework
 pip
 setuptools
 wheel
+django-allauth
+django-countries

@@ -1,13 +1,13 @@
 from rest_framework import serializers
 from phonenumber_field.serializerfields import PhoneNumberField
 
-from .models import Candidate
+from .models import Resume
 
-class CandidateSerializer(serializers.ModelSerializer):
+class ResumeSerializer(serializers.ModelSerializer):
     #phone_number = PhoneNumberField(required=True)
 
     class Meta:
-        model = Candidate
+        model = Resume
         fields = (
             'name',
             'gender',
