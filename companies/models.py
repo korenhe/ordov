@@ -2,11 +2,9 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 
 # Create your models here.
 
-@python_2_unicode_compatible
 class Company(models.Model):
     name = models.CharField(max_length=50, primary_key=True)
     short_name = models.CharField(max_length=50)
@@ -19,7 +17,6 @@ class Company(models.Model):
     def __str__(self):
         return self.name
 
-@python_2_unicode_compatible
 class Department(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
@@ -28,8 +25,6 @@ class Department(models.Model):
     def __str__(self):
         return self.name
 
-#
-@python_2_unicode_compatible
 class Post(models.Model):
     # TODO: to confirm it is safe to hierarchy CASCADE here
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
