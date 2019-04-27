@@ -124,7 +124,7 @@ AUTHENTICATION_BACKENDS = (
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 LOGIN_URL = '/accounts/login'
-LOGIN_REDIRECT_URL = '/manager/'
+#LOGIN_REDIRECT_URL = '/manager/'
 
 SITE_ID = 1
 

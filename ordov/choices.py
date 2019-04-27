@@ -31,6 +31,13 @@ BIRTH_MONTH_CHOICES = (
 	('12', '12'),
 )
 
+USER_TYPE_CHOICES = (
+    ('', ''),
+    ('Candidate', 'Candidate'),
+    ('Recruiter','Recruiter'),
+    ('Employer','Employer'),
+)
+
 BIRTH_YEAR_CHOICES = ( 
 	('',''),
     ('1980','1980'),

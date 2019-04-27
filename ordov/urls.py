@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from candidates import views as candidatesViews
+from accounts import views as accountsViews
 
 urlpatterns = [
+    path('accounts/signup/', accountsViews.signup),
     path('accounts/', include('allauth.urls')),
     path('candidates/apply/', candidatesViews.apply, name='candidate_apply'),
     path('candidates/apply/success', candidatesViews.apply_success, name='candidate_apply_success'),
@@ -25,7 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', include('landing_page.urls')),
-    path('manager/', include('recruit_manager.urls')),
+    path('manager/', include('recruit_manager.urls'), name='manager'),
 
     path('api/', include('resumes.urls')),
     path('api/', include('companies.urls')),
