@@ -4,12 +4,10 @@ from django.contrib.auth.models import User
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from .choices import (EDUCATION_CHOICES, BIRTH_YEAR_CHOICES, MAJOR_CHOICES)
-from django.utils.encoding import python_2_unicode_compatible
 from candidates.models import Candidate
 
 # Create your models here.
 
-@python_2_unicode_compatible
 class Resume(models.Model):
     # The Resume would be linked to a candidate afterwards
     # This resume would

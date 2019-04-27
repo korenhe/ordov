@@ -24,16 +24,13 @@ def apply(request):
         form = UserApplyStep1Form(request.POST)
         if form.is_valid():
             data = form.data
-            first_name = data['first_name']
-            last_name = data['last_name']
+            username = data['username']
             email = data['email']
             phone_num = data['phone']
 
             user, created = User.objects.get_or_create(
-                first_name = first_name,
-                last_name = last_name,
+                username=username,
                 email=email,
-                username=email
             )
             if not created:
                 messages.add_message(request, messages.ERROR,
@@ -64,6 +61,18 @@ def apply(request):
                 candidate = candidate,
                 resume_id = 1,
                 visible = True,
+                gendor = data['gender'],
+                birth_year = data['birth_year'],
+                birth_month = data['birth_month'],
+                identity = data['identity'],
+                phone_number = data['phone'],
+                qq = data['qq'],
+                residence = data['residence'],
+                email = data['email'],
+                #marriaged = data['marriage'],
+                degree = data['degree'],
+                major = data['major'],
+                school = data['school'],
             )
             resume.save()
             messages.add_message(request, messages.SUCCESS,
