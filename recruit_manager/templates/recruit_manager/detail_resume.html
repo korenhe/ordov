@@ -21,7 +21,7 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">{{ t_candidate.user.username }}</h1>
+            <h1 class="h3 mb-0 text-gray-800">{{ t_resume_detail.username }}</h1>
           </div>
 
           <div class="row">
@@ -32,7 +32,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Birth(year)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ t_candidate.birth_year }}</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ t_resume_detail.birth_year }}</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -48,7 +48,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Identity</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ t_candidate.identity }}</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ t_resume_detail.identity }}</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -64,7 +64,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Phone</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ t_candidate.phone_number }}</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ t_resume_detail.phone_number }}</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -80,7 +80,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Email</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ t_candidate.email }}</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ t_resume_detail.email }}</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -94,7 +94,7 @@
               <div class="row">
 
                 <div class="col-lg-6">
-                  {% for experience in t_candidate.experience_set.all %}
+                  {% for experience in t_resume_detail.experience_set.all %}
                   <div class="card mb-4">
                     <div class="card-header py-3">
                       <h6 class="m-0 font-weight-bold text-primary">Experience</h6>
@@ -115,9 +115,9 @@
                     </div>
 
                     <div class="card-body">
-                      Degree: {{ t_candidate.degree }} </br>
-                      Major:  {{ t_candidate.major  }} </br>
-                      School: {{ t_candidate.school }} </br>
+                      Degree: {{ t_resume_detail.degree }} </br>
+                      Major:  {{ t_resume_detail.major  }} </br>
+                      School: {{ t_resume_detail.school }} </br>
                     </div>
                   </div>
                 </div>

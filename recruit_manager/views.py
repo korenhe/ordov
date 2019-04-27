@@ -3,6 +3,7 @@ from django.views import generic
 
 from candidates.models import Candidate
 from interviews.models import Interview
+from resumes.models import Resume
 
 # Create your views here.
 def index(request):
@@ -21,11 +22,6 @@ class CandidateTable(generic.ListView):
         context['template_table_template'] = 'recruit_manager/table_candidates.html'
         context['template_table_name'] = 'Candidate'
         return context
-
-class CandidateDetail(generic.DetailView):
-    model = Candidate
-    context_object_name = 't_candidate'
-    template_name = 'recruit_manager/detail_candidate.html'
 
 class InterviewTable(generic.ListView):
     context_object_name = 't_interview_list'
@@ -46,3 +42,21 @@ def interview_api(request, candidate_id):
         't_candidate': candidate
     }
     return render(request, 'recruit_manager/interview_api.html', context)
+
+class ResumeTable(generic.ListView):
+    context_object_name = 't_resume_list'
+    template_name = 'recruit_manager/table_basic.html'
+
+    def get_queryset(self):
+        return Resume.objects.all()[:5]
+
+    def get_context_data(self, **kwargs):
+        context = super(ResumeTable, self).get_context_data(**kwargs)
+        context['template_table_template'] = 'recruit_manager/table_resumes.html'
+        context['template_table_name'] = 'Resume'
+        return context
+
+class ResumeDetail(generic.DetailView):
+    model = Resume
+    context_object_name = 't_resume_detail'
+    template_name = 'recruit_manager/detail_resume.html'
