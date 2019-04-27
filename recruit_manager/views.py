@@ -4,6 +4,7 @@ from django.views import generic
 from candidates.models import Candidate
 from interviews.models import Interview
 from resumes.models import Resume
+from companies.models import Post
 
 # Create your views here.
 def index(request):
@@ -28,7 +29,7 @@ class InterviewTable(generic.ListView):
     template_name = 'recruit_manager/table_basic.html'
 
     def get_queryset(self):
-        return Interview.objects.all()[:5]
+        return Interview.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super(InterviewTable, self).get_context_data(**kwargs)
@@ -48,7 +49,7 @@ class ResumeTable(generic.ListView):
     template_name = 'recruit_manager/table_basic.html'
 
     def get_queryset(self):
-        return Resume.objects.all()[:5]
+        return Resume.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super(ResumeTable, self).get_context_data(**kwargs)
@@ -60,3 +61,16 @@ class ResumeDetail(generic.DetailView):
     model = Resume
     context_object_name = 't_resume_detail'
     template_name = 'recruit_manager/detail_resume.html'
+
+class PostTable(generic.ListView):
+    context_object_name = 't_post_list'
+    template_name = 'recruit_manager/table_basic.html'
+
+    def get_queryset(self):
+        return Post.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(PostTable, self).get_context_data(**kwargs)
+        context['template_table_template'] = 'recruit_manager/table_posts.html'
+        context['template_table_name'] = 'Post'
+        return context
