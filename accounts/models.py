@@ -17,12 +17,15 @@ class UserProfile(models.Model):
     )
     last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
+
     def __str__(self):
         return self.user.username
+
     def generate_token(self):
         email = self.user.email
         token = signing.dumps({'email': email})
         return token
+
     @staticmethod
     def verify_token(token, max_age=604800):
         # default max_age is 7 days

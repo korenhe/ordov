@@ -13,10 +13,10 @@ class Resume(models.Model):
     # This resume would
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, blank=True)
     resume_id = models.IntegerField()
-    visible = models.BooleanField(default=False) 
+    visible = models.BooleanField(default=False)
     # base info
-    username = models.CharField(max_length=4)
-    gendor = models.CharField(choices=(("male", "male"), ("female", "female"),), max_length=10, blank=True, null=True)
+    username = models.CharField(max_length=8)
+    gender = models.CharField(choices=(("m", "male"), ("f", "female"),), max_length=1, blank=True, null=True)
     birth_year = models.CharField(max_length=4, blank=True, null=True, choices=BIRTH_YEAR_CHOICES)
     birth_month= models.CharField(max_length=4, blank=True, null=True)
     date_of_birth = models.DateTimeField(blank=True, null=True)

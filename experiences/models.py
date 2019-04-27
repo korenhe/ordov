@@ -36,5 +36,5 @@ class Experience(models.Model):
     witness_phone = PhoneNumberField(null=True, blank=False)
 
     def __str__(self):
-        return '%s at %s' % (self.candidate.name, self.company_name)
+        return '%s at %s' % (self.candidate.user.username, self.company_name)
 

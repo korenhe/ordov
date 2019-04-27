@@ -51,7 +51,7 @@
                     {% for interview in t_interview_list %}
                     <tr>
                       <th>{{ interview.id }}</th>
-                      <td>{{ interview.candidate.name }} </td>
+                      <td>{{ interview.candidate.user.username }} </td>
                       <td>{{ interview.post.company}} {{ interview.post.department }} </td>
                       <td>{{ interview.is_active }} </td>
                     </tr>

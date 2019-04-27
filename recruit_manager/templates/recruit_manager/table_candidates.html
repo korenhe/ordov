@@ -34,8 +34,6 @@
                     <tr>
                       <th>ID</th>
                       <th>Name</th>
-                      <th>Gender</th>
-                      <th>Age</th>
                       <th>status</th>
                     </tr>
                   </thead>
@@ -43,8 +41,6 @@
                     <tr>
                       <th>ID</th>
                       <th>Name</th>
-                      <th>Gender</th>
-                      <th>Age</th>
                       <th>status</th>
                     </tr>
                   </tfoot>
@@ -55,9 +51,7 @@
                       <td>
                         <a href="{% url 'manager:t_candidate' candidate.id %}"> {{ candidate.id }}</a>
                       </td>
-                      <td>{{ candidate.name }} </td>
-                      <td>{{ candidate.gender }} </td>
-                      <td>{{ candidate.birth_year }} </td>
+                      <td>{{ candidate.user.username }} </td>
 
                       <td>
                       {% if candidate.interview_set.all.count > 0 %}

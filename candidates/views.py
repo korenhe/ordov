@@ -38,7 +38,7 @@ def updateResume(request):
                 candidate = candidate,
                 resume_id = 1,
                 visible = True,
-                gendor = data['gender'],
+                gender = data['gender'],
                 birth_year = data['birth_year'],
                 birth_month = data['birth_month'],
                 identity = data['identity'],
