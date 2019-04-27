@@ -11,9 +11,16 @@ def index(request):
 
 class CandidateTable(generic.ListView):
     context_object_name = 't_candidate_list'
-    template_name = 'recruit_manager/table_candidates.html'
+    template_name = 'recruit_manager/table_basic.html'
+
     def get_queryset(self):
         return Candidate.objects.all().prefetch_related('interview_set')
+
+    def get_context_data(self, **kwargs):
+        context = super(CandidateTable, self).get_context_data(**kwargs)
+        context['template_table_template'] = 'recruit_manager/table_candidates.html'
+        context['template_table_name'] = 'Candidate'
+        return context
 
 class CandidateDetail(generic.DetailView):
     model = Candidate
@@ -22,10 +29,16 @@ class CandidateDetail(generic.DetailView):
 
 class InterviewTable(generic.ListView):
     context_object_name = 't_interview_list'
-    template_name = 'recruit_manager/table_interviews.html'
+    template_name = 'recruit_manager/table_basic.html'
 
     def get_queryset(self):
         return Interview.objects.all()[:5]
+
+    def get_context_data(self, **kwargs):
+        context = super(InterviewTable, self).get_context_data(**kwargs)
+        context['template_table_template'] = 'recruit_manager/table_interviews.html'
+        context['template_table_name'] = 'Interview'
+        return context
 
 def interview_api(request, candidate_id):
     candidate = get_object_or_404(Candidate, pk=candidate_id)
