@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
-from django.utils.encoding import python_2_unicode_compatible
 
 from resumes.models import Resume
 # Create your models here.
@@ -12,7 +11,6 @@ from resumes.models import Resume
 # TODO: 工作经历表关联company表
 # 与 Employee 表是一对多的关系，即一个应聘者包含多个
 # 让员工去填公司全称简直是噩梦
-@python_2_unicode_compatible
 class Experience(models.Model):
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, default='')
     start = models.DateField()
