@@ -25,5 +25,5 @@ class ResumeView(APIView):
             resume_saved = serializer.save()
 
         return Response(
-            {"success": "Resume '{}' created successfully".format(resume_saved.name)}
+            {"success": "Resume '{}' created successfully".format(resume_saved.username)}
         )

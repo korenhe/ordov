@@ -47,7 +47,7 @@ class Education(models.Model):
     start = models.DateField()
     end = models.DateField()
 
-    school = models.CharField(max_length=50)  
+    school = models.CharField(max_length=50)
     college = models.CharField(max_length=50)
     major = models.CharField(max_length=50)
 
