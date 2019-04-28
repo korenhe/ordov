@@ -19,7 +19,7 @@
       {% for resume in t_resume_list %}
       <tr>
         <td>
-          <a href="{% url 'manager:t_resume' resume.id %}">
+          <a href="{% url 'app_manager:t_resume' resume.id %}">
             {{ resume.id }}
           </a>
         </td>

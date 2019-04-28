@@ -1,9 +1,8 @@
 from django.urls import path
 
-from landing_page import views
+from recruit_applicant import views
 
-app_name = 'app_landing'
+app_name = 'app_applicant'
 urlpatterns = [
-    # ex: /landing_page/
     path('', views.index, name='t_index'), # t_index will be used in template
 ]

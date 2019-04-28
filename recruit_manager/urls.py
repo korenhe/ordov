@@ -2,7 +2,7 @@ from django.urls import path
 
 from recruit_manager import views
 
-app_name = 'manager'
+app_name = 'app_manager'
 urlpatterns = [
     # ex: /manager/
     path('', views.index, name='t_index'), # t_index will be used in template

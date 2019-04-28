@@ -27,7 +27,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', include('landing_page.urls')),
+
     path('manager/', include('recruit_manager.urls'), name='manager'),
+    path('company/', include('recruit_company.urls'), name='company'),
+    path('applicant/', include('recruit_applicant.urls'), name='applicant'),
 
     path('api/', include('resumes.urls')),
     path('api/', include('companies.urls')),
