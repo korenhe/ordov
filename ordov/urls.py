@@ -31,4 +31,5 @@ urlpatterns = [
 
     path('api/', include('resumes.urls')),
     path('api/', include('companies.urls')),
+    path('api/', include('experiences.urls')),
 ]

@@ -30,7 +30,7 @@ class Experience(models.Model):
     description = models.CharField(max_length=50)
     salary = models.IntegerField(default=0)
     leave_reason = models.CharField(max_length=20)
-    zuoxi = models.CharField(max_length=20)
+    shift = models.CharField(max_length=20)
 
     witness = models.CharField(max_length=20)
     witness_phone = PhoneNumberField(null=True, blank=False)
