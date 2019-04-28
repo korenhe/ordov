@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'interviews',
     'resumes',
     'recruit_manager.apps.RecruitManagerConfig',
+    'recruit_applicant.apps.RecruitApplicantConfig',
+    'recruit_company.apps.RecruitCompanyConfig',
     'landing_page.apps.LandingPageConfig',
 ]
 
