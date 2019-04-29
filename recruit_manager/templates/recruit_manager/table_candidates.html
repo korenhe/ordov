@@ -18,8 +18,12 @@
                   <tbody>
                     {% for candidate in t_candidate_list %}
                     <tr>
-                      <td>{{ candidate.id }}</td>
-                      <td>{{ candidate.user.username }} </td>
+                      <td>
+                        <a href="{% url 'app_manager:t_resume' candidate.resume_set.first.id %}">
+                           {{ candidate.id }}
+                        </a>
+                      </td>
+                      <td>{{ candidate.resume_set.first.username }} </td>
 
                       <td>
                       {% if candidate.interview_set.all.count > 0 %}
