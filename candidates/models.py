@@ -7,6 +7,6 @@ from django.db import models
 
 class Candidate(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default='', blank=True, null=True)
-
+    interviewed = models.BooleanField(default=False, blank=True, null=True)
     def __str__ (self):
         return self.user.username

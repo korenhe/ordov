@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 from candidates.models import Candidate
 from interviews.models import Interview
@@ -43,6 +45,15 @@ def interview_api(request, candidate_id):
         't_candidate': candidate
     }
     return render(request, 'recruit_manager/interview_api.html', context)
+
+def interview_result(request, candidate_id):
+    candidate = get_object_or_404(Candidate, pk=candidate_id)
+
+    candidate.interviewed = True
+    candidate.save()
+    context = {}
+
+    return HttpResponseRedirect(reverse('app_manager:t_candidates'), context)
 
 class ResumeTable(generic.ListView):
     context_object_name = 't_resume_list'
