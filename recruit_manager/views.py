@@ -6,11 +6,17 @@ from django.http import HttpResponseRedirect
 from candidates.models import Candidate
 from interviews.models import Interview
 from resumes.models import Resume
-from companies.models import Post
+from companies.models import Post, Company
 
 # Create your views here.
 def index(request):
-    context = {}
+    tcc = Company.objects.all().count()
+    tac = Candidate.objects.all().count()
+
+    context = {
+        't_company_count': tcc,
+        't_candidate_count': tac,
+    }
     return render(request, 'recruit_manager/index.html', context)
 
 class CandidateTable(generic.ListView):
