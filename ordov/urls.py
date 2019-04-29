@@ -19,7 +19,8 @@ from candidates import views as candidatesViews
 from accounts import views as accountsViews
 
 urlpatterns = [
-    path('accounts/signup/', accountsViews.signup),
+    path('accounts/signup/', accountsViews.signup, name='signup'),
+    path('accounts/login/', accountsViews.MyLoginView.as_view(), name='login'),
     path('accounts/', include('allauth.urls')),
     path('candidates/resume/update', candidatesViews.updateResume, name='candidate_update_resume'),
     path('candidates/resume/success', candidatesViews.apply_success, name='candidate_apply_success'),

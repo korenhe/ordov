@@ -9,6 +9,7 @@ from .forms import SignUpForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from accounts.models import UserProfile
+from allauth.account.views import LoginView
 
 # Create your views here.
 
@@ -36,5 +37,8 @@ def signup(request):
             return HttpResponseRedirect("/manager")
     elif request.method == 'GET':
         form = SignUpForm()
-    return render(request, 'signup.html', {'form':form})
-   
+    return render(request, 'accounts/signup.html', {'form':form})
+
+
+class MyLoginView(LoginView):
+    template_name = 'accounts/login.html'
