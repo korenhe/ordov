@@ -1,0 +1,16 @@
+Django==2.2
+Babel==2.6.0
+
+djangorestframework==3.9.2
+django-allauth==0.39.1
+django-countries==5.3.3
+django-phonenumber-field==2.3.1
+phonenumberslite==8.10.10
+
+pip==19.1
+setuptools==41.0.1
+wheel==0.33.1
+
+mysql-connector-python==8.0.16
+
+Faker==1.0.5
