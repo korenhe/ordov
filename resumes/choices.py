@@ -10,6 +10,14 @@ EDUCATION_CHOICES = (
     ('博士','博士'),
 )
 
+EDUCATION_TYPE_CHOICES = (
+    ('',''),
+    ('统招','统招'),
+    ('普招','普招'),
+    ('成招','成招'),
+)
+
+
 MARRIAGE_CHOICES = (
     ('', ''),
     ('未婚', '未婚'),

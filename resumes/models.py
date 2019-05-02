@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
-from .choices import (EDUCATION_CHOICES, BIRTH_YEAR_CHOICES, MAJOR_CHOICES, MARRIAGE_CHOICES)
+from .choices import (EDUCATION_CHOICES, BIRTH_YEAR_CHOICES, MAJOR_CHOICES, MARRIAGE_CHOICES, EDUCATION_TYPE_CHOICES)
 from candidates.models import Candidate
 
 # Create your models here.
@@ -64,8 +64,11 @@ class Education(models.Model):
     school = models.CharField(max_length=50)
     college = models.CharField(max_length=50)
     major = models.CharField(max_length=50)
-
     degree = models.CharField(max_length=50, choices=EDUCATION_CHOICES)
+    edu_type = models.CharField(max_length=50, choices=EDUCATION_TYPE_CHOICES)
+
+    instructor = models.CharField(max_length=50)
+    instructor_phone = PhoneNumberField(null=True, blank=True, unique=True)
 
     def __str__(self):
         return self.degree
