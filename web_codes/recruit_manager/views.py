@@ -24,7 +24,8 @@ class CandidateTable(generic.ListView):
     template_name = 'recruit_manager/table_basic.html'
 
     def get_queryset(self):
-        return Candidate.objects.all().prefetch_related('interview_set')
+        return Candidate.objects.all().prefetch_related('resume_set')
+#        return Candidate.objects.all()[:20]
 
     def get_context_data(self, **kwargs):
         context = super(CandidateTable, self).get_context_data(**kwargs)

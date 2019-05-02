@@ -32,7 +32,7 @@ class ResumeSerializer(serializers.ModelSerializer):
             'qq',
             'residence',
             'email',
-            'marriaged',
+            'marriage',
 
             'degree',
             'major',

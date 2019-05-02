@@ -8,7 +8,9 @@ services:
       MYSQL_ROOT_PASSWORD: root
     ports:
       - "3306:3306"
-
+#    command: mysqld --innodb-buffer-pool-size=256M
+    volumes:
+      - ./database:/var/lib/mysql
   web:
     tty: yes
     build: .

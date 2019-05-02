@@ -1,5 +1,5 @@
 {
-   "departments" : [
+   "department":
       {
          "description" : "华为的“2012实验室”是华为的总研究组织",
          "company" : {
@@ -11,18 +11,5 @@
             "short_name" : "华为"
          },
          "name" : "2012实验室"
-      },
-      {
-         "company" : {
-            "cType" : "民营企业",
-            "scale" : 100000,
-            "description" : "百度（纳斯达克：BIDU），全球最大的中文搜索引擎、最大的中文网站。",
-            "area" : "计算机",
-            "name" : "百度网讯科技有限公司",
-            "short_name" : "百度"
-         },
-         "description" : "基础架构部，原基础平台部门",
-         "name" : "基础架构部"
       }
-   ]
 }
