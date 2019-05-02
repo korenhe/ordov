@@ -21,7 +21,7 @@ class Resume(models.Model):
     birth_month= models.CharField(max_length=4, blank=True, null=True)
     date_of_birth = models.DateTimeField(blank=True, null=True)
     identity = models.CharField(max_length=25, blank=True, null=True)
-    age = models.IntegerField()
+    age = models.IntegerField(null=True)
 
     # birth place (jiguan in chinese)
     birth_provice = models.CharField(max_length=10, blank=True, null=True)
@@ -65,9 +65,9 @@ class Education(models.Model):
     college = models.CharField(max_length=50)
     major = models.CharField(max_length=50)
     degree = models.CharField(max_length=50, choices=EDUCATION_CHOICES)
-    edu_type = models.CharField(max_length=50, choices=EDUCATION_TYPE_CHOICES)
+    edu_type = models.CharField(max_length=50, choices=EDUCATION_TYPE_CHOICES, null=True)
 
-    instructor = models.CharField(max_length=50)
+    instructor = models.CharField(max_length=50, null=True)
     instructor_phone = PhoneNumberField(null=True, blank=True, unique=True)
 
     def __str__(self):
