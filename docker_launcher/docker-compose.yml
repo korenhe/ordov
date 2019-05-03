@@ -2,15 +2,7 @@ version: '3'
 
 services:
   db:
-    image: mysql
-    environment:
-      MYSQL_DATABASE: mysql_db
-      MYSQL_ROOT_PASSWORD: root
-    ports:
-      - "3306:3306"
-#    command: mysqld --innodb-buffer-pool-size=256M
-    volumes:
-      - ./database:/var/lib/mysql
+    image: postgres
   web:
     tty: yes
     build: .
@@ -21,4 +13,5 @@ services:
     depends_on:
       - db
     environment:
-      WAIT_HOSTS: db:3306
+      WAIT_HOSTS: db:5432
+#    command: python manage.py runserver 0.0.0.0:8000

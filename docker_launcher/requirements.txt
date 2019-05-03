@@ -11,6 +11,5 @@ pip==19.1
 setuptools==41.0.1
 wheel==0.33.1
 
-mysql-connector-python==8.0.16
-
 Faker==1.0.5
+psycopg2>=2.7,<3.0
