@@ -5,7 +5,6 @@ from django.http import HttpResponseRedirect
 
 from candidates.models import Candidate
 from interviews.models import Interview
-from resumes.models import Resume
 from companies.models import Post, Company
 
 # Create your views here.
@@ -60,23 +59,6 @@ def interview_result(request, candidate_id):
     context = {}
 
     return HttpResponseRedirect(reverse('app_manager:t_candidates'), context)
-
-class ResumeTable(generic.ListView):
-    context_object_name = 't_resume_list'
-    template_name = 'resumes/table_resumes.html'
-
-    def get_queryset(self):
-        return Resume.objects.all()
-
-    def get_context_data(self, **kwargs):
-        context = super(ResumeTable, self).get_context_data(**kwargs)
-        context['template_table_name'] = 'Resume'
-        return context
-
-class ResumeDetail(generic.DetailView):
-    model = Resume
-    context_object_name = 't_resume_detail'
-    template_name = 'recruit_manager/detail_resume.html'
 
 class PostTable(generic.ListView):
     context_object_name = 't_post_list'
