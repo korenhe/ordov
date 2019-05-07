@@ -2,8 +2,11 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
+from django.views import generic
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import viewsets
 
 # Create your views here.
 
@@ -53,9 +56,6 @@ class PostView(APIView):
         posts = Post.objects.all()
 
         serializer = PostSerializer(posts, many=True)
-        print("abc")
-        print(type(serializer))
-        print("bdd")
         return Response ({"posts": serializer.data})
 
     def post(self, request):
@@ -69,3 +69,19 @@ class PostView(APIView):
         return Response(
             {"success": "Post '{}' created successfully".format(post_saved.name)}
         )
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all().order_by('id')
+    serializer_class = PostSerializer
+
+class PostTable(generic.ListView):
+    context_object_name = 't_post_list'
+    template_name = 'companies/table_posts.html'
+
+    def get_queryset(self):
+        return Post.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(PostTable, self).get_context_data(**kwargs)
+        context['template_table_name'] = 'Post'
+        return context

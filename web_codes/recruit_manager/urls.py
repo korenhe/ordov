@@ -1,7 +1,8 @@
 from django.urls import path
 
 from recruit_manager import views
-from resumes import views as resumes_views
+from resumes import views as resumesViews
+from companies import views as companiesViews
 
 app_name = 'app_manager'
 urlpatterns = [
@@ -13,7 +14,7 @@ urlpatterns = [
     path('interview-api/<int:candidate_id>', views.interview_api, name='t_interview_api'),
     path('interview-result/<int:candidate_id>', views.interview_result, name='t_interview_result'),
 
-    path('resumes/', resumes_views.ResumeTable.as_view(), name='t_resumes'),
-    path('resumes/<int:pk>', resumes_views.ResumeDetail.as_view(), name='t_resume'),
-    path('posts/', views.PostTable.as_view(), name='t_posts'),
+    path('resumes/', resumesViews.ResumeTable.as_view(), name='t_resumes'),
+    path('resumes/<int:pk>', resumesViews.ResumeDetail.as_view(), name='t_resume'),
+    path('posts/', companiesViews.PostTable.as_view(), name='t_posts'),
 ]

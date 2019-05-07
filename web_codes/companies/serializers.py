@@ -41,10 +41,15 @@ class DepartmentSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     department = DepartmentSerializer(required=True)
+    id = serializers.SerializerMethodField('get_obj_id')
+
+    def get_obj_id(self, post):
+        return post.id
 
     class Meta:
         model = Post
         fields = (
+            'id',
             'department',
 
             'name',
