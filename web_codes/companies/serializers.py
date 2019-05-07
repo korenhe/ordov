@@ -41,9 +41,9 @@ class DepartmentSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     department = DepartmentSerializer(required=True)
-    id = serializers.SerializerMethodField('get_obj_id')
+    id = serializers.SerializerMethodField()
 
-    def get_obj_id(self, post):
+    def get_id(self, post):
         return post.id
 
     class Meta:

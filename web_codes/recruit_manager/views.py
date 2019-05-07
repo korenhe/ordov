@@ -31,18 +31,6 @@ class CandidateTable(generic.ListView):
         context['template_table_name'] = 'Candidate'
         return context
 
-class InterviewTable(generic.ListView):
-    context_object_name = 't_interview_list'
-    template_name = 'recruit_manager/table_interviews.html'
-
-    def get_queryset(self):
-        return Interview.objects.all()
-
-    def get_context_data(self, **kwargs):
-        context = super(InterviewTable, self).get_context_data(**kwargs)
-        context['template_table_name'] = 'Interview'
-        return context
-
 def interview_api(request, candidate_id):
     candidate = get_object_or_404(Candidate, pk=candidate_id)
     context = {

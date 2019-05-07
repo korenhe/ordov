@@ -1,0 +1,42 @@
+{% extends "recruit_manager/table_basic.html" %}
+{% load static %}
+{% block content %}
+<div class="table-responsive">
+  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-server-side="true" data-ajax="/api/interviews/?format=datatables">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Post</th>
+        <th>Active</th>
+      </tr>
+    </thead>
+  </table>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+ $(document).ready(function() {
+   var table = $('#dataTable').DataTable({
+     "serverSide": true,
+     "columns": [
+       {"data": "id"},
+       {"data": "candidate_name"},
+       {"data": "post_name"},
+       {"data": null},
+     ],
+   });
+ });
+</script>
+{% endblock%}
+<!--
+     <th>ID</th>
+     <th>Name</th>
+     <th>Post</th>
+     <th>Active</th>
+     <th>{{ interview.id }}</th>
+     <td>{{ interview.candidate.user.username }} </td>
+     <td>{{ interview.post.company}} {{ interview.post.department }} </td>
+     <td>{{ interview.is_active }} </td>
+-->

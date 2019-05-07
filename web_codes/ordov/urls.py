@@ -19,6 +19,7 @@ from candidates import views as candidatesViews
 from resumes import views as resumesViews
 from accounts import views as accountsViews
 from companies import views as companiesViews
+from interviews import views as interviewsViews
 
 from rest_framework import routers
 
@@ -26,6 +27,7 @@ router = routers.DefaultRouter()
 router.register(r'resumes', resumesViews.ResumeViewSet)
 router.register(r'candidates', candidatesViews.CandidateViewSet)
 router.register(r'posts', companiesViews.PostViewSet)
+router.register(r'interviews', interviewsViews.InterviewViewSet)
 
 urlpatterns = [
     path('accounts/signup/', accountsViews.signup, name='signup'),
