@@ -7,10 +7,10 @@ from .models import Resume
 class ResumeSerializer(serializers.ModelSerializer):
     #phone_number = PhoneNumberField(required=True)
     candidate = CandidateSerializer(required=False)
-    stat = serializers.SerializerMethodField('is_named_bar')
+    stat = serializers.SerializerMethodField()
+    candidate_id = serializers.SerializerMethodField()
 
-    def is_named_bar(self, resume):
-        print("here")
+    def get_stat(self, resume):
         rt = resume.experience_set.first()
         if rt:
             print(rt.company_name)
@@ -18,9 +18,18 @@ class ResumeSerializer(serializers.ModelSerializer):
         else:
             return None
 
+    def get_candidate_id(self, resume):
+        print(resume.candidate)
+        if resume.candidate:
+            print(resume.candidate.id)
+            return resume.candidate.id
+        else:
+            return None
+
     class Meta:
         model = Resume
         fields = (
+            'candidate_id',
             'candidate',
             'resume_id',
             'visible',

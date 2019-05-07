@@ -5,6 +5,7 @@
   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-server-side="true" data-ajax="/api/resumes/?format=datatables">
     <thead>
       <tr>
+        <th>CandidateID</th>
         <th>ID</th>
         <th>Name</th>
         <th>Gender</th>
@@ -27,6 +28,8 @@
    var table = $('#dataTable').DataTable({
      "serverSide": true,
      "columns": [
+       {"data": "candidate_id",
+       visible: false},
        {"data": "resume_id"},
        {"data": "username"},
        {"data": "gender",
@@ -44,8 +47,10 @@
        {"data": "degree"},
        {"data": "major"},
        {"data": "stat",
-        render: function(cell, type, data, meta) {
-          if (data.stat) {
+        render: function(data, type, row, meta) {
+          console.log(row.stat);
+          console.log(data, type, row, meta);
+          if (row.stat) {
             return "\
 <button class=\"btn btn-success btn-icon-split border-0\" id=\"stage\">\
 <span class=\"icon text-white-50\">\
@@ -53,8 +58,11 @@
 <span class=\"text\">Interviewed</span>\
 </button>";
           }
-          var url="{% url 'app_manager:t_interview_api' 1234 %}".replace(/1234/, data.resume_id);
-          var str = "\
+
+          if (row.candidate_id) {
+            var url="{% url 'app_manager:t_interview_api' 1234 %}".replace(/1234/, row.candidate_id);
+
+            var str = "\
 <form action=" + url + " method='GET'>\
 <button class=\"btn btn-info btn-icon-split border-0\" id=\"stage\">\
 <span class=\"icon text-white-50\">\
@@ -62,8 +70,10 @@
 <span class=\"text\">Prepare Interview</span>\
 </button>\
 </form>";
-          console.log(str);
-          return str;
+            return str;
+          }
+
+          return "ABC";
         }
        },
      ],
