@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from rest_framework import viewsets
 
 from .forms import UserApplyStep1Form, UserApplyStep2Form
 
@@ -13,6 +14,7 @@ from resumes.models import Resume
 from accounts.models import UserProfile
 
 from .models import Candidate
+from .serializers import CandidateSerializer
 
 # Create your views here.
 
@@ -74,3 +76,14 @@ def apply_success(request):
         availablility_url = reverse('available', args=[user.id]) + '?key=' + key
     return render(request, 'candidate/apply.html',
         {'success':'success', 'jobs_url':jobs_url,'availability_url': availability_url})
+
+class CandidateViewSet(viewsets.ModelViewSet):
+    queryset = Candidate.objects.all().order_by('id')
+    serializer_class = CandidateSerializer
+
+    def get_options(self):
+        return "options", {
+            "resume": [{'label': "alabel", 'value': "avalue"} for obj in Candidate.objects.all()],
+        }
+    class Meta:
+        datatables_extra_json = ('get_options', )

@@ -14,6 +14,5 @@ urlpatterns = [
 
     path('resumes/', views.ResumeTable.as_view(), name='t_resumes'),
     path('resumes/<int:pk>', views.ResumeDetail.as_view(), name='t_resume'),
-
     path('posts/', views.PostTable.as_view(), name='t_posts'),
 ]

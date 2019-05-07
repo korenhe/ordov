@@ -21,28 +21,27 @@ def index(request):
 
 class CandidateTable(generic.ListView):
     context_object_name = 't_candidate_list'
-    template_name = 'recruit_manager/table_basic.html'
+    template_name = 'candidates/table_candidates.html'
+    paginate_by = 10
 
     def get_queryset(self):
-        return Candidate.objects.all().prefetch_related('resume_set')
-#        return Candidate.objects.all()[:20]
+        candidate_list = Candidate.objects.all().prefetch_related('resume_set')
+        return candidate_list
 
     def get_context_data(self, **kwargs):
         context = super(CandidateTable, self).get_context_data(**kwargs)
-        context['template_table_template'] = 'recruit_manager/table_candidates.html'
         context['template_table_name'] = 'Candidate'
         return context
 
 class InterviewTable(generic.ListView):
     context_object_name = 't_interview_list'
-    template_name = 'recruit_manager/table_basic.html'
+    template_name = 'recruit_manager/table_interviews.html'
 
     def get_queryset(self):
         return Interview.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super(InterviewTable, self).get_context_data(**kwargs)
-        context['template_table_template'] = 'recruit_manager/table_interviews.html'
         context['template_table_name'] = 'Interview'
         return context
 
@@ -64,14 +63,13 @@ def interview_result(request, candidate_id):
 
 class ResumeTable(generic.ListView):
     context_object_name = 't_resume_list'
-    template_name = 'recruit_manager/table_basic.html'
+    template_name = 'resumes/table_resumes.html'
 
     def get_queryset(self):
         return Resume.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super(ResumeTable, self).get_context_data(**kwargs)
-        context['template_table_template'] = 'recruit_manager/table_resumes.html'
         context['template_table_name'] = 'Resume'
         return context
 
@@ -82,13 +80,12 @@ class ResumeDetail(generic.DetailView):
 
 class PostTable(generic.ListView):
     context_object_name = 't_post_list'
-    template_name = 'recruit_manager/table_basic.html'
+    template_name = 'recruit_manager/table_posts.html'
 
     def get_queryset(self):
         return Post.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super(PostTable, self).get_context_data(**kwargs)
-        context['template_table_template'] = 'recruit_manager/table_posts.html'
         context['template_table_name'] = 'Post'
         return context

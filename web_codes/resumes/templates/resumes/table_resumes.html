@@ -1,0 +1,54 @@
+{% extends "recruit_manager/table_basic.html" %}
+{% load static %}
+{% block content %}
+<div class="table-responsive">
+  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-server-side="true" data-ajax="/api/resumes/?format=datatables">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Age</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>School</th>
+        <th>Degree</th>
+        <th>Major</th>
+        <th>Stat</th>
+      </tr>
+    </thead>
+  </table>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+ $(document).ready(function() {
+   var table = $('#dataTable').DataTable({
+     "serverSide": true,
+     "columns": [
+       {"data": "resume_id"},
+       {"data": "username"},
+       {"data": "gender"},
+       {"data": "age"},
+       {"data": "phone_number"},
+       {"data": "email"},
+       {"data": "school"},
+       {"data": "degree"},
+       {"data": "major"},
+       {"data": "stat"},
+     ],
+     columnDefs: [{
+       targets:[-1],
+       render: function(cell, type, data, meta) {
+         if (data.stat) {
+           console.log(data.stat)
+           return "<button type='button'>GOI</button>";
+         }
+         return "";
+       }
+     }],
+   });
+ });
+</script>
+{% endblock%}

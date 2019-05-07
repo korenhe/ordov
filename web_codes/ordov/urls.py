@@ -16,7 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from candidates import views as candidatesViews
+from resumes import views as resumesViews
 from accounts import views as accountsViews
+
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register(r'resumes', resumesViews.ResumeViewSet)
+router.register(r'candidates', candidatesViews.CandidateViewSet)
 
 urlpatterns = [
     path('accounts/signup/', accountsViews.signup, name='signup'),
@@ -33,7 +40,5 @@ urlpatterns = [
     path('company/', include('recruit_company.urls'), name='company'),
     path('applicant/', include('recruit_applicant.urls'), name='applicant'),
 
-    path('api/', include('resumes.urls')),
-    path('api/', include('companies.urls')),
-    path('api/', include('experiences.urls')),
+    path('api/', include(router.urls)),
 ]

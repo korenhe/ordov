@@ -10,12 +10,12 @@ from candidates.models import Candidate
 
 class Resume(models.Model):
     # The Resume would be linked to a candidate afterwards
-    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, blank=True)
-    resume_id = models.IntegerField()
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, blank=True, null=True)
+    resume_id = models.IntegerField(null=True)
     visible = models.BooleanField(default=False)
 
     # base info
-    username = models.CharField(max_length=8)
+    username = models.CharField(max_length=8, blank=True, null=True)
     gender = models.CharField(choices=(("m", "男"), ("f", "女"),), max_length=1, blank=True, null=True)
     birth_year = models.CharField(max_length=4, blank=True, null=True, choices=BIRTH_YEAR_CHOICES)
     birth_month= models.CharField(max_length=4, blank=True, null=True)

@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import viewsets
 
 # Create your views here.
 from .models import Resume
@@ -27,3 +28,7 @@ class ResumeView(APIView):
         return Response(
             {"success": "Resume '{}' created successfully".format(resume_saved.username)}
         )
+
+class ResumeViewSet(viewsets.ModelViewSet):
+    queryset = Resume.objects.all().order_by('id')
+    serializer_class = ResumeSerializer

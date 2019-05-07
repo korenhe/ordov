@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -44,6 +43,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.weibo',
 
     'rest_framework',
+    'rest_framework_datatables',
 
     'accounts',
 
@@ -157,3 +157,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 PHONENUMBER_DB_FORMAT = 'E164'
+
+# rest framework
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework_datatables.renderers.DatatablesRenderer',
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'rest_framework_datatables.filters.DatatablesFilterBackend',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework_datatables.pagination.DatatablesPageNumberPagination',
+    'PAGE_SIZE': 50,
+}
