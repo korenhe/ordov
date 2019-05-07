@@ -29,25 +29,44 @@
      "columns": [
        {"data": "resume_id"},
        {"data": "username"},
-       {"data": "gender"},
+       {"data": "gender",
+        render: function(cell, type, data, meta) {
+          if (data.gender == 'f') {
+            return "Female";
+          }
+          return "Male";
+        }
+       },
        {"data": "age"},
        {"data": "phone_number"},
        {"data": "email"},
        {"data": "school"},
        {"data": "degree"},
        {"data": "major"},
-       {"data": "stat"},
+       {"data": "stat",
+        render: function(cell, type, data, meta) {
+          if (data.stat) {
+            return "\
+<button class=\"btn btn-success btn-icon-split border-0\" id=\"stage\">\
+<span class=\"icon text-white-50\">\
+<i class=\"fas fa-check\"></i></span>\
+<span class=\"text\">Interviewed</span>\
+</button>";
+          }
+          var url="{% url 'app_manager:t_interview_api' 1234 %}".replace(/1234/, data.resume_id);
+          var str = "\
+<form action=" + url + " method='GET'>\
+<button class=\"btn btn-info btn-icon-split border-0\" id=\"stage\">\
+<span class=\"icon text-white-50\">\
+<i class=\"fas fa-arrow-right\"></i></span>\
+<span class=\"text\">Prepare Interview</span>\
+</button>\
+</form>";
+          console.log(str);
+          return str;
+        }
+       },
      ],
-     columnDefs: [{
-       targets:[-1],
-       render: function(cell, type, data, meta) {
-         if (data.stat) {
-           console.log(data.stat)
-           return "<button type='button'>GOI</button>";
-         }
-         return "";
-       }
-     }],
    });
  });
 </script>
