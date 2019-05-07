@@ -6,13 +6,13 @@ from faker import Faker
 import requests
 import os
 ip="127.0.0.1"
-url='http://127.0.0.1:8001/api/resumes/'
+url='http://127.0.0.1:8000/api/resumes/'
 
 degree_chocies=['高中', '硕士', '本科', '博士']
 marriage_choices = ['未婚', '已婚', '离婚']
 
 def generate(i):
-    with open("./resume.template", "r") as f:
+    with open("./resume.template", "r", encoding='utf-8') as f:
         fake1 = Faker("zh_CN")
         payload = json.load(f)
         # update name
