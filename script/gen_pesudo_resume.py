@@ -1,5 +1,6 @@
-# -*- coding:utf-8 -*-
-#!/usr/bin/python
+#!/usr/bin/env python
+
+
 import json 
 import random
 from faker import Faker
@@ -16,42 +17,42 @@ def generate(i):
         fake1 = Faker("zh_CN")
         payload = json.load(f)
         # update name
-        payload['resume']['username'] = fake1.name()
+        payload['username'] = fake1.name()
         # phone
-        payload['resume']['phone_number'] = "+86"+fake1.phone_number()
+        payload['phone_number'] = "+86"+fake1.phone_number()
         # qq
         qq =u''.join(str(random.choice(range(8))) for _ in range(8))
-        payload['resume']['qq'] = int(qq)
+        payload['qq'] = int(qq)
         # identy
-        payload['resume']['identity'] = fake1.ssn()
+        payload['identity'] = fake1.ssn()
         # resident
-        payload['resume']['residence'] = fake1.address().split()[0]
-        payload['resume']['degree'] = degree_chocies[random.randint(0, len(degree_chocies)-1)]
-        payload['resume']['birth_year'] = '2000'
-        payload['resume']['email'] = fake1.free_email()
-        payload['resume']['marriage'] = marriage_choices[random.randint(0, len(marriage_choices)-1)]
+        payload['residence'] = fake1.address().split()[0]
+        payload['degree'] = degree_chocies[random.randint(0, len(degree_chocies)-1)]
+        payload['birth_year'] = '2000'
+        payload['email'] = fake1.free_email()
+        payload['marriage'] = marriage_choices[random.randint(0, len(marriage_choices)-1)]
 
         try:
             os.stat("pesudo_resume")
         except:
             os.mkdir("pesudo_resume")
 
-        with open("pesudo_resume/resume.target.{}".format(i), "w") as fw:
-            json.dump(payload, fw)
+        with open("pesudo_resume/resume.target.{}".format(i), "w", encoding='utf-8') as fw:
+            json.dump(payload, fw, ensure_ascii=False)
 
         #resp = requests.post(url, headers={'Content-type':'application/json'}, data=payload)
 
+NUM=100
 if __name__ == '__main__':
     count = 0
-    while (count < 100):
+    while (count < NUM):
         generate(count)
         count = count + 1
-    os.system("ls -al")
     i = 0
-    #curl -X POST -H 'Content-type:application/json' 127.0.0.1:8001/api/resumes/ -d@resume.template
-    while (i < 100):
-        cmd = "curl -X POST -H 'Content-type:application/json' 127.0.0.1:8000/api/resumes/ -d@" + "pesudo_resume/resume.target.{}".format(i)
+
+    while (i < NUM):
+        cmd = "curl -X POST -H 'Content-type:application/json' 127.0.0.1:8000/api/resumes/ -d@pesudo_resume/resume.target.{}".format(i)
         print(cmd)
         os.system(cmd)
         i = i+1
-    os.system("rm pesudo_resume/*")
+    #os.system("rm pesudo_resume/*")

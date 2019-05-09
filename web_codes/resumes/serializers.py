@@ -54,14 +54,20 @@ class ResumeSerializer(serializers.ModelSerializer):
         )
 
     def create(self, validated_data):
-        try:
-            candidate_data = validated_data.pop('candidate')
-            candidate = CandidateSerializer.create(CandidateSerializer(), validated_data=candidate_data)
+#        try:
+#            print(validated_data)
+#            candidate_data = validated_data.pop('candidate')
+#            candidate = CandidateSerializer.create(CandidateSerializer(), validated_data=candidate_data)
 
-            resume, created = Resume.objects.update_or_create(
-                candidate=candidate, **validated_data)
-            return resume
-        except KeyError:
+#            resume, created = Resume.objects.update_or_create(
+#                candidate=candidate, **validated_data)
+#            return resume
+#        except KeyError:
 
-            resume = Resume.objects.create(**validated_data)
-            return resume
+#            resume = Resume.objects.create(**validated_data)
+#            return resume
+
+        candidate_data = validated_data.pop('candidate')
+        resume = Resume.objects.create(**validated_data)
+        print(resume)
+        return resume

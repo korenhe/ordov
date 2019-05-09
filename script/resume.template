@@ -1,22 +1,21 @@
 {
-   "resume" :{
-         "email" : "chengdeshan@163.com",
-         "major" : "计算机",
-         "qq" : 72360329,
-         "birth_year" : "1980",
-         "phone_number" : "+8619910434399",
-         "resume_id" : 0,
-         "marriaged" : false,
-         "degree" : "高中",
-         "date_of_birth" : "1980-04-28T15:47:24Z",
-         "identity" : "330722196501292110",
-         "school" : "衡水一中",
-         "candidate" : {
-         },
-         "username" : "成德善",
-         "visible" : true,
-         "gender" : "f",
-         "residence" : "河北省衡水市阳光小区1号楼",
-         "birth_month" : "10"
-      }
+    "candidate" : {
+    },
+    "resume_id": 123,
+    "visible" : true,
+    "username" : "成德善",
+    "gender" : "f",
+    "birth_year" : "1980",
+    "birth_month" : "10",
+    "date_of_birth" : "1980-04-28T15:47:24Z",
+    "identity" : "330722196501292110",
+    "age":23,
+    "phone_number" : "+8619910434399",
+    "qq" : 72360329,
+    "residence" : "河北省衡水市阳光小区1号楼",
+    "email" : "chengdeshan@163.com",
+    "marriaged" : false,
+    "major" : "计算机",
+    "degree" : "高中",
+    "school" : "衡水一中"
 }
