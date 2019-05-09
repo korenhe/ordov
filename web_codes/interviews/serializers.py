@@ -11,7 +11,10 @@ class InterviewSerializer(serializers.ModelSerializer):
         return interview.id
 
     def get_candidate_name(self, interview):
-        return interview.candidate.resume_set.first().username
+        try:
+            return interview.candidate.resume_set.first().username
+        except AttributeError:
+            return "Anonymous"
 
     def get_post_name(self, interview):
         return interview.post.name
@@ -19,10 +22,12 @@ class InterviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Interview
         fields = (
-            'id',
-            'candidate_name',
-            'post_name',
+            'id', #M
+            'candidate_name', #M
+            'post_name', #M
+            'candidate',
+            'post',
             'is_active',
             'status',
             'result',
-            )
+        )

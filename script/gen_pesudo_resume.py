@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
-
-import json 
+import json
 import random
 from faker import Faker
 import requests
@@ -40,8 +39,6 @@ def generate(i):
         with open("pesudo_resume/resume.target.{}".format(i), "w", encoding='utf-8') as fw:
             json.dump(payload, fw, ensure_ascii=False)
 
-        #resp = requests.post(url, headers={'Content-type':'application/json'}, data=payload)
-
 NUM=100
 if __name__ == '__main__':
     count = 0
@@ -55,4 +52,3 @@ if __name__ == '__main__':
         print(cmd)
         os.system(cmd)
         i = i+1
-    #os.system("rm pesudo_resume/*")

@@ -42,7 +42,6 @@ class Resume(models.Model):
     expected_post = models.CharField(max_length=50, null=True, blank=True)
     expected_positon = models.CharField(max_length=50, null=True, blank=True)
 
-
     # education related
     degree = models.CharField(max_length=30, blank=True, null=True)
     major = models.CharField(max_length=30, blank=True, null=True)
@@ -54,7 +53,6 @@ class Resume(models.Model):
 
     def __str__ (self):
         return self.username
-
 
 class Education(models.Model):
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE)

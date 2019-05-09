@@ -17,8 +17,8 @@ STATUS_CHOICES = (
 )
 
 STATUS_ONDUTY_CHOICES = (
-    (0, 'Open'), 
-    (1, '入职确认'), 
+    (0, 'Open'),
+    (1, '入职确认'),
     (2, '考察期'),
     (3, 'finish'),
 )
