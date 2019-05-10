@@ -56,3 +56,33 @@ class Experience(models.Model):
 
     def __str__(self):
         return 'company: {}'.format(self.company_name)
+
+class Project(models.Model):
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, default='')
+    start = models.DateField()
+    end = models.DateField()
+
+    brief = models.TextField(max_length=500, blank=True, null=True, default='')
+    scale = models.IntegerField(default=0)
+    role = models.CharField(max_length=20, blank=True, null=True)
+
+    company_name = models.CharField(max_length=50, blank=True, null=True, default='')
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, default='')
+
+    duty = models.CharField(max_length=50, blank=True, null=True)
+    summary = models.TextField(max_length=500, blank=True, null=True, default='')
+
+class Language(models.Model):
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, default='')
+    name = models.CharField(max_length=10, blank=True, null=True, default='')
+    cert = models.CharField(max_length=20, blank=True, null=True, default='')
+    description = models.TextField(max_length=100, blank=True, null=True, default='')
+
+
+class Certification(models.Model):
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, default='')
+    time = models.CharField(max_length=20, blank=True, null=True, default='')
+    name = models.CharField(max_length=20, blank=True, null=True, default='')
+    institution = models.CharField(max_length=50, blank=True, null=True, default='')
+    description = models.TextField(max_length=100, blank=True, null=True, default='')
+
