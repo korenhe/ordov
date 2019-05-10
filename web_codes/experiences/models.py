@@ -5,6 +5,7 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
 from resumes.models import Resume
+from companies.models import Company, Department, Post
 # Create your models here.
 
 #
@@ -16,24 +17,42 @@ class Experience(models.Model):
     start = models.DateField()
     end = models.DateField()
 
-    # company info
+    # company info, currently we record the company info in charField
+    # TODO: generate the foreign to company/department/post
     company_name = models.CharField(max_length=50)
-    department_name = models.CharField(max_length=50)
-    post_name = models.CharField(max_length=50)
-                # TODO: merge province/city/
-    work_province = models.CharField(max_length=20)
-    work_city = models.CharField(max_length=30)
-    work_district = models.CharField(max_length=30)
+    department_name = models.CharField(max_length=50, blank=True, null=True)
+    post_name = models.CharField(max_length=50, blank=True, null=True)
 
-    #
-    level = models.CharField(max_length=50)
-    description = models.CharField(max_length=50)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, default='')
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, blank=True, null=True, default='')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, blank=True, null=True, default='')
+
+    # TODO: merge province/city/
+    work_province = models.CharField(max_length=20, blank=True, null=True)
+    work_city = models.CharField(max_length=30, blank=True, null=True)
+    work_district = models.CharField(max_length=30, blank=True, null=True)
+
+    # post info
+    level = models.CharField(max_length=50, blank=True, null=True)
+    description = models.CharField(max_length=50, blank=True, null=True)
     salary = models.IntegerField(default=0)
-    leave_reason = models.CharField(max_length=20)
-    shift = models.CharField(max_length=20)
+    deduct_salary = models.IntegerField(default=0)
+    leave_reason = models.CharField(max_length=20, blank=True, null=True)
+    shift = models.CharField(max_length=20, blank=True, null=True)
+    duty = models.TextField(max_length=500, blank=True, null=True, default='')
+    subornates = models.IntegerField(default=0)
+    # the following three fields should be in post field
+    # TODO: move these fields to Post
+    pType = models.CharField(max_length=50, blank=True, null=True, default='')
+    pFeature = models.CharField(max_length=50, blank=True, null=True, default='')
 
-    witness = models.CharField(max_length=20)
+    witness = models.CharField(max_length=20, blank=True, null=True)
+    witness_post = models.CharField(max_length=20, blank=True, null=True)
     witness_phone = PhoneNumberField(null=True, blank=False)
+
+    # reserved fields
+    reserved1 = models.CharField(max_length=50, blank=True, null=True)
+    reserved2 = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
         return 'company: {}'.format(self.company_name)
