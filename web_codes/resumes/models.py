@@ -78,11 +78,19 @@ class Education(models.Model):
     start = models.DateField()
     end = models.DateField()
 
+    # basic info
     school = models.CharField(max_length=50)
     college = models.CharField(max_length=50)
     major = models.CharField(max_length=50)
     degree = models.CharField(max_length=50, choices=EDUCATION_CHOICES)
     edu_type = models.CharField(max_length=50, choices=EDUCATION_TYPE_CHOICES, null=True)
+
+    # resident info
+    provice = models.CharField(max_length=10, blank=True, null=True)
+    city = models.CharField(max_length=10, blank=True, null=True)
+    distinct = models.CharField(max_length=10, blank=True, null=True)
+    street = models.CharField(max_length=20, blank=True, null=True)
+    place = models.CharField(max_length=50, blank=True, null=True)
 
     instructor = models.CharField(max_length=50, null=True)
     instructor_phone = PhoneNumberField(null=True, blank=True, unique=True)
