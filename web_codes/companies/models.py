@@ -22,6 +22,10 @@ class Department(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=1000)
 
+    # reserved
+    reserved1 = models.CharField(max_length=50, blank=True, null=True, default='')
+    reserved2 = models.CharField(max_length=50, blank=True, null=True, default='')
+
     def __str__(self):
         return self.name
 
@@ -30,8 +34,16 @@ class Post(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
-    description = models.CharField(max_length=1000)
-    level = models.CharField(max_length=20)
+
+    pType = models.CharField(max_length=50, blank=True, null=True, default='')
+    pFeature = models.CharField(max_length=50, blank=True, null=True, default='')
+    description = models.CharField(max_length=1000, blank=True, null=True, default='')
+    # the level field should be in experience table
+    #level = models.CharField(max_length=20, blank=True, null=True, default='')
+
+    # reserved
+    reserved1 = models.CharField(max_length=50, blank=True, null=True, default='')
+    reserved2 = models.CharField(max_length=50, blank=True, null=True, default='')
 
     def __str__(self):
         return "%s,%s,%s" % (self.name, self.department.name, self.company.name)
