@@ -13,12 +13,15 @@ class Resume(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, blank=True, null=True)
     resume_id = models.IntegerField(null=True)
     visible = models.BooleanField(default=False)
+    resume_way = models.CharField(max_length=20, blank=True, null=True)
+    resume_way2 = models.CharField(max_length=20, blank=True, null=True)
 
     # base info
-    username = models.CharField(max_length=8, blank=True, null=True)
+    username = models.CharField(max_length=10, blank=True, null=True)
     gender = models.CharField(choices=(("m", "男"), ("f", "女"),), max_length=1, blank=True, null=True)
     birth_year = models.CharField(max_length=4, blank=True, null=True, choices=BIRTH_YEAR_CHOICES)
-    birth_month= models.CharField(max_length=4, blank=True, null=True)
+    birth_month = models.CharField(max_length=4, blank=True, null=True)
+    birth_day = models.CharField(max_length=4, blank=True, null=True)
     date_of_birth = models.DateTimeField(blank=True, null=True)
     identity = models.CharField(max_length=25, blank=True, null=True)
     age = models.IntegerField(null=True)
@@ -35,6 +38,14 @@ class Resume(models.Model):
     residence = models.CharField(max_length=50, blank=True, null=True)
     email = models.CharField(max_length=50, blank=True, null=True)
     marriage = models.CharField(max_length=10, blank=True, null=True, choices=MARRIAGE_CHOICES)
+    live_state = models.CharField(max_length=10, blank=True, null=True)
+
+    # resident info
+    current_settle_provice = models.CharField(max_length=10, blank=True, null=True)
+    current_settle_city = models.CharField(max_length=10, blank=True, null=True)
+    current_settle_distinct = models.CharField(max_length=10, blank=True, null=True)
+    current_settle_street = models.CharField(max_length=20, blank=True, null=True)
+    birth_place = models.CharField(max_length=50, blank=True, null=True)
 
     # Expection info
     expected_area = models.CharField(max_length=50, null=True, blank=True)
@@ -46,6 +57,14 @@ class Resume(models.Model):
     degree = models.CharField(max_length=30, blank=True, null=True)
     major = models.CharField(max_length=30, blank=True, null=True)
     school = models.CharField(max_length=30, blank=True, null=True)
+    graduate_time = models.CharField(max_length=30, blank=True, null=True)
+
+    # Text Fieled
+    self_description = models.TextField(max_length=500, blank=True, null=True, default='')
+
+    # reserved Field
+    reserved1 = models.CharField(max_length=50, blank=True, null=True, default='')
+    reserved2 = models.CharField(max_length=50, blank=True, null=True, default='')
 
     # table related info
     last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
