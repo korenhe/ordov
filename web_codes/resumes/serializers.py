@@ -2,7 +2,7 @@ from rest_framework import serializers
 from phonenumber_field.serializerfields import PhoneNumberField
 
 from candidates.serializers import CandidateSerializer
-from .models import Resume
+from .models import Resume, Education
 
 class ResumeSerializer(serializers.ModelSerializer):
     #phone_number = PhoneNumberField(required=True)
@@ -71,3 +71,24 @@ class ResumeSerializer(serializers.ModelSerializer):
         resume = Resume.objects.create(**validated_data)
         print(resume)
         return resume
+
+class EducationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Education
+        fields = (
+            'resume',
+            'start',
+            'end',
+            'school',
+            'college',
+            'major',
+            'degree',
+            'edu_type',
+            'provice',
+            'city',
+            'distinct',
+            'street',
+            'place',
+            'instructor',
+            'instructor_phone',
+        )
