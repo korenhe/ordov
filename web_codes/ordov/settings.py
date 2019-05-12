@@ -158,6 +158,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 PHONENUMBER_DB_FORMAT = 'E164'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # rest framework
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (

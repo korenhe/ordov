@@ -10,6 +10,9 @@ from .resume_certification_info import update_language_info, update_certificatio
 
 def test_load_excel():
     filename="/code/recruit_manager/static/resume_template_2003.xls"
+    load_excel(filename)
+
+def load_excel(filename):
     data = xlrd.open_workbook(filename, formatting_info=True)
     table = data.sheets()[0]
     headerList = map(lambda x:x.value, table.row(1))
@@ -22,6 +25,7 @@ def test_load_excel():
         print("This is not a valid Excel")
         return
 
+    print("Begin to Parsing...")
     #for i, value in enumerate(table.row(1)):
     #        iPos[value] = i
     # Found the comment info line

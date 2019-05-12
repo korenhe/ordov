@@ -9,6 +9,7 @@ app_name = 'app_manager'
 urlpatterns = [
     # ex: /manager/
     path('', views.index, name='t_index'), # t_index will be used in template
+    path('upload/', views.upload, name='t_upload'),
     path('candidates/', views.CandidateTable.as_view(), name='t_candidates'),
 
     path('interviews/', interviewsViews.InterviewTable.as_view(), name='t_interviews'),
