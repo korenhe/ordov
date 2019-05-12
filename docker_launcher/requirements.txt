@@ -9,6 +9,9 @@ django-countries==5.3.3
 django-phonenumber-field==2.3.1
 phonenumberslite==8.10.10
 
+xlrd
+xlwt
+
 pip==19.1
 setuptools==41.0.1
 wheel==0.33.1
