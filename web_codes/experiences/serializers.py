@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from phonenumber_field.serializerfields import PhoneNumberField
 
-from .models import Experience
+from .models import Experience, Project, Language, Certification
 
 class ExperienceSerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,3 +28,42 @@ class ExperienceSerializer(serializers.ModelSerializer):
             'witness',
             'witness_phone'
             )
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = (
+            'resume',
+            'start',
+            'end',
+
+            "brief",
+            "scale",
+            "role",
+
+            "company_name",
+            "duty",
+            "summary"
+            )
+
+class LanguageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Language
+        fields = (
+            'resume',
+            'name',
+            'cert',
+            "description",
+        )
+
+
+class CertificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Certification
+        fields = (
+            'resume',
+            'time',
+            'name',
+            "institution",
+            "description",
+        )
+
