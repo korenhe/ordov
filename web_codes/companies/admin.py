@@ -11,7 +11,7 @@ class DepartmentAdmin(admin.ModelAdmin):
     list_display=('name','description')
 
 class PostAdmin(admin.ModelAdmin):
-    list_display=('name','description', 'level')
+    list_display=('name','description')
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'department1':
             kwargs["queryset"] = Department.objects.filter(name=r'中国国际金融股份有限公司')
