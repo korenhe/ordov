@@ -11,7 +11,7 @@ def update_language_info(resume, phone):
     try:
         resume = Resume.objects.get(phone_number=phone)
     except (ObjectDoesNotExist, MultipleObjectsReturned):
-        print("typeof reusme", type(resume))
+        print("Update Language: There Should Be One Resume Item, Return.")
         return
 
     lang = {
@@ -36,7 +36,7 @@ def update_certification_info(resume, phone):
     try:
         resume = Resume.objects.get(phone_number=phone)
     except (ObjectDoesNotExist, MultipleObjectsReturned):
-        print ("type of resume", type(resume))
+        print("Update Certification: There Should Be One Resume Item, Return")
         return
 
     cert = {

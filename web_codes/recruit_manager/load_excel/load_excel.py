@@ -34,19 +34,24 @@ def load_excel(filename):
     # Attention, how to check the combined cells
 
     curValidPhone = ""
+    validItem = True
     for rownum in range(2, table.nrows):
         curRowList = list(map(lambda x:x.value, table.row(rownum)))
         phone = curRowList[iPos['PHONE']].strip()
         if not phone == "":
             curValidPhone = phone
             # firstly, the basic resume info should be updated
-            create_or_update_basic_info(curRowList)
+            if not create_or_update_basic_info(curRowList, curValidPhone):
+                validItem = False
+                continue
+            else:
+                validItem = True
             # education/experience/certification info should be updated basing on phone
             update_education_info(curRowList, curValidPhone)
             update_experience_info(curRowList, curValidPhone)
             update_language_info(curRowList, curValidPhone)
             update_certification_info(curRowList, curValidPhone)
-        else:
+        elif validItem == True:
             # education/experience/certification info should be updated basing on phone
             update_education_info(curRowList, curValidPhone)
             update_experience_info(curRowList, curValidPhone)

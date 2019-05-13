@@ -1,16 +1,31 @@
 from .resume_template import iPos
 from resumes.models import Resume
 from resumes.serializers import ResumeSerializer
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+
+
 import json
 
-def create_or_update_basic_info(resume):
+def create_or_update_basic_info(resume, phone):
 
-    # step1: get basic info from resume
-    name = resume[iPos['PHONE']].strip()
-    resume_way = resume[iPos['RESUME_WAY']].strip()
-    resume_way2 = resume[iPos['RESUME_WAY2']].strip()
     user = resume[iPos['NAME']].strip()
     phone = resume[iPos['PHONE']].strip()
+
+    # step0: check if the phone is registered
+    # For resumes from excel, we regard phone_number as 'primary key'
+
+    try:
+        resume = Resume.objects.get(phone_number=phone)
+    except (ObjectDoesNotExist, MultipleObjectsReturned):
+        pass
+
+    if not resume is None:
+        print("Add New Resume (%s %s) Fault: Exists" % (user.encode('utf-8'), phone))
+        return False
+
+    # step1: get basic info from resume
+    resume_way = resume[iPos['RESUME_WAY']].strip()
+    resume_way2 = resume[iPos['RESUME_WAY2']].strip()
     gender = resume[iPos['GENDER']].strip()
     qq = resume[iPos['QQ']]
     email = resume[iPos['EMAIL']].strip()
@@ -93,3 +108,5 @@ def create_or_update_basic_info(resume):
         resume_saved = serializer.save()
     else:
         print("Fail to seriliaze resume")
+
+    return True

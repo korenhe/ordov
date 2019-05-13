@@ -35,7 +35,7 @@ def update_education_info(resume, phone):
     try:
         resume = Resume.objects.get(phone_number=phone)
     except (ObjectDoesNotExist, MultipleObjectsReturned):
-        print("typeof reusme", type(resume))
+        print("Update Education: There Should Be One Resume, Return")
         return
 
     education = {
