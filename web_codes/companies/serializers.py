@@ -54,7 +54,6 @@ class PostSerializer(serializers.ModelSerializer):
 
             'name',
             'description',
-            'level',
         )
 
     def create(self, validated_data):
