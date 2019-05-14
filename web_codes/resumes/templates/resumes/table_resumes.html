@@ -2,7 +2,20 @@
 {% load static %}
 {% block content %}
 <div class="table-responsive">
-  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-server-side="true" data-ajax="/api/resumes/?format=datatables">
+  <table border="0" cellspacing="5" cellpadding="5">
+    <tbody><tr>
+      <td>Minimum age:</td>
+      <td><input type="text" id="min" name="min"></td>
+    </tr>
+    <tr>
+      <td>Maximum age:</td>
+      <td><input type="text" id="max" name="max"></td>
+    </tr>
+    </tbody>
+  </table>
+
+
+  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
     <thead>
       <tr>
         <th>CandidateID</th>
@@ -24,12 +37,23 @@
 
 {% block extra_js %}
 <script>
+
  $(document).ready(function() {
    var table = $('#dataTable').DataTable({
+     "processing": true,
      "serverSide": true,
+
+     "ajax": {
+       "url": "/api/resumes/",
+       "type": "GET",
+       "data": function (d) {
+         d.extra_search = 451;
+       },
+     },
+
      "columns": [
        {"data": "candidate_id",
-       visible: false},
+        visible: false},
        {"data": "resume_id"},
        {"data": "username"},
        {"data": "gender",
@@ -48,8 +72,6 @@
        {"data": "major"},
        {"data": "stat",
         render: function(data, type, row, meta) {
-          console.log(row.stat);
-          console.log(data, type, row, meta);
           if (row.stat) {
             return "\
 <button class=\"btn btn-success btn-icon-split border-0\" id=\"stage\">\
@@ -77,6 +99,11 @@
         }
        },
      ],
+   });
+
+   $('#min, #max').keyup(function() {
+     console.log("asdf");
+     table.draw();
    });
  });
 </script>
