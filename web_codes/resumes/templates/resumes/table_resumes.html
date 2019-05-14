@@ -47,7 +47,8 @@
        "url": "/api/resumes/",
        "type": "GET",
        "data": function (d) {
-         d.extra_search = 451;
+         d.degree_min = $('#min').val();
+         d.degree_max = $('#max').val();
        },
      },
 

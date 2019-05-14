@@ -73,6 +73,33 @@ class Resume(models.Model):
     def __str__ (self):
         return self.username
 
+def query_resumes_by_args(**kwargs):
+    draw = int(kwargs.get('draw', None)[0])
+    length = int(kwargs.get('length', None)[0])
+    start = int(kwargs.get('start', None)[0])
+    search_value = kwargs.get('search[value]', None)[0]
+    order_column = kwargs.get('order[0][column]', None)[0]
+    order = kwargs.get('order[0][dir]', None)[0]
+
+    age_min = kwargs.get('degree_min', None)[0] or 0
+    age_max = kwargs.get('degree_max', None)[0] or 100
+
+
+    queryset = Resume.objects.all()
+    total = queryset.count()
+
+    # filter and orderby
+    queryset = queryset.filter(age__range=[age_min, age_max])
+    count = queryset.count()
+
+    queryset = queryset[start:start + length]
+    return {
+        'items': queryset,
+        'count': count,
+        'total': total,
+        'draw' : draw,
+    }
+
 class Education(models.Model):
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
     start = models.DateField()
