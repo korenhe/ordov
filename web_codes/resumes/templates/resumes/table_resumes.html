@@ -10,6 +10,9 @@
 
         <td>Minimum degree:</td>
         <td><input type="text" id="min_degree" name="min_degree"></td>
+
+        <td>Gender:</td>
+        <td><input type="checkbox" id="gender_f" name="gender_f" checked>Female</td>
       </tr>
       <tr>
         <td>Maximum age:</td>
@@ -17,6 +20,9 @@
 
         <td>Maximum degree:</td>
         <td><input type="text" id="max_degree" name="max_degree"></td>
+
+        <td></td>
+        <td><input type="checkbox" id="gender_m" name="gender_m" checked>Male</td>
       </tr>
     </tbody>
   </table>
@@ -59,6 +65,9 @@
 
          d.age_min = $('#min_age').val();
          d.age_max = $('#max_age').val();
+
+         d.gender_m = $('#gender_m:checked').val();
+         d.gender_f = $('#gender_f:checked').val();
        },
      },
 
@@ -106,6 +115,10 @@
    });
 
    $('#min_degree, #max_degree, #min_age, #max_age').keyup(function() {
+     table.draw();
+   });
+
+   $('#gender_m, #gender_f').on('click', function() {
      table.draw();
    });
  });
