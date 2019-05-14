@@ -3,14 +3,21 @@
 {% block content %}
 <div class="table-responsive">
   <table border="0" cellspacing="5" cellpadding="5">
-    <tbody><tr>
-      <td>Minimum age:</td>
-      <td><input type="text" id="min" name="min"></td>
-    </tr>
-    <tr>
-      <td>Maximum age:</td>
-      <td><input type="text" id="max" name="max"></td>
-    </tr>
+    <tbody>
+      <tr>
+        <td>Minimum age:</td>
+        <td><input type="text" id="min_age" name="min_age"></td>
+
+        <td>Minimum degree:</td>
+        <td><input type="text" id="min_degree" name="min_degree"></td>
+      </tr>
+      <tr>
+        <td>Maximum age:</td>
+        <td><input type="text" id="max_age" name="max_age"></td>
+
+        <td>Maximum degree:</td>
+        <td><input type="text" id="max_degree" name="max_degree"></td>
+      </tr>
     </tbody>
   </table>
 
@@ -47,8 +54,11 @@
        "url": "/api/resumes/",
        "type": "GET",
        "data": function (d) {
-         d.degree_min = $('#min').val();
-         d.degree_max = $('#max').val();
+         d.degree_min = $('#min_degree').val();
+         d.degree_max = $('#max_degree').val();
+
+         d.age_min = $('#min_age').val();
+         d.age_max = $('#max_age').val();
        },
      },
 
@@ -57,14 +67,7 @@
         visible: false},
        {"data": "resume_id"},
        {"data": "username"},
-       {"data": "gender",
-        render: function(cell, type, data, meta) {
-          if (data.gender == 'f') {
-            return "Female";
-          }
-          return "Male";
-        }
-       },
+       {"data": "gender"},
        {"data": "age"},
        {"data": "phone_number"},
        {"data": "email"},
@@ -102,8 +105,7 @@
      ],
    });
 
-   $('#min, #max').keyup(function() {
-     console.log("asdf");
+   $('#min_degree, #max_degree, #min_age, #max_age').keyup(function() {
      table.draw();
    });
  });

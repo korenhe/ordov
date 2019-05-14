@@ -1,7 +1,7 @@
 {
     "candidate" : {
     },
-    "resume_id": 123,
+    "resume_id": 1,
     "visible" : true,
     "username" : "成德善",
     "gender" : "f",
@@ -16,6 +16,6 @@
     "email" : "chengdeshan@163.com",
     "marriaged" : false,
     "major" : "计算机",
-    "degree" : "高中",
+    "degree" : 2,
     "school" : "衡水一中"
 }

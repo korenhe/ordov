@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework import viewsets, status
 
 # Create your views here.
-from .models import Resume
+from .models import Resume, query_resumes_by_args
 from .serializers import ResumeSerializer, EducationSerializer
 
 class ResumeView(APIView):

@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
-from .choices import (EDUCATION_CHOICES, BIRTH_YEAR_CHOICES, MAJOR_CHOICES, MARRIAGE_CHOICES, EDUCATION_TYPE_CHOICES)
+from .choices import (DEGREE_CHOICES, BIRTH_YEAR_CHOICES, MAJOR_CHOICES, MARRIAGE_CHOICES, EDUCATION_TYPE_CHOICES)
 from candidates.models import Candidate
 
 # Create your models here.
@@ -54,7 +54,7 @@ class Resume(models.Model):
     expected_positon = models.CharField(max_length=50, null=True, blank=True)
 
     # education related
-    degree = models.CharField(max_length=30, blank=True, null=True)
+    degree = models.IntegerField(blank=True, null=True, choices=DEGREE_CHOICES)
     major = models.CharField(max_length=30, blank=True, null=True)
     school = models.CharField(max_length=30, blank=True, null=True)
     graduate_time = models.CharField(max_length=30, blank=True, null=True)
@@ -81,18 +81,26 @@ def query_resumes_by_args(**kwargs):
     order_column = kwargs.get('order[0][column]', None)[0]
     order = kwargs.get('order[0][dir]', None)[0]
 
-    age_min = kwargs.get('degree_min', None)[0] or 0
-    age_max = kwargs.get('degree_max', None)[0] or 100
+    age_min = kwargs.get('age_min', None)[0] or 0
+    age_max = kwargs.get('age_max', None)[0] or 100
 
+    degree_min = kwargs.get('degree_min', None)[0] or 0
+    degree_max = kwargs.get('degree_max', None)[0] or 10
 
     queryset = Resume.objects.all()
     total = queryset.count()
 
     # filter and orderby
-    queryset = queryset.filter(age__range=[age_min, age_max])
+    queryset = queryset.filter(models.Q(age__range=[age_min, age_max]) &
+                               models.Q(degree__range=[degree_min, degree_max]))
     count = queryset.count()
 
     queryset = queryset[start:start + length]
+    # final decoration
+    for q in queryset:
+        q.degree = DEGREE_CHOICES[q.degree][1]
+        q.gender = "Female" if (q.gender == 'f') else "Male"
+
     return {
         'items': queryset,
         'count': count,
@@ -109,7 +117,7 @@ class Education(models.Model):
     school = models.CharField(max_length=50)
     college = models.CharField(max_length=50)
     major = models.CharField(max_length=50)
-    degree = models.CharField(max_length=50, choices=EDUCATION_CHOICES)
+    degree = models.IntegerField(choices=DEGREE_CHOICES)
     edu_type = models.CharField(max_length=50, choices=EDUCATION_TYPE_CHOICES, null=True)
 
     # resident info

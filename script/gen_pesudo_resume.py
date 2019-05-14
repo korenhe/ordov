@@ -8,7 +8,6 @@ import os
 ip="127.0.0.1"
 url='http://127.0.0.1:8000/api/resumes/'
 
-degree_chocies=['高中', '硕士', '本科', '博士']
 marriage_choices = ['未婚', '已婚', '离婚']
 
 def generate(i):
@@ -17,6 +16,7 @@ def generate(i):
         payload = json.load(f)
         # update name
         payload['username'] = fake1.name()
+        payload['resume_id'] = random.choice(range(200000)) + 1
         # phone
         payload['phone_number'] = "+86"+fake1.phone_number()
         # qq
@@ -26,7 +26,9 @@ def generate(i):
         payload['identity'] = fake1.ssn()
         # resident
         payload['residence'] = fake1.address().split()[0]
-        payload['degree'] = degree_chocies[random.randint(0, len(degree_chocies)-1)]
+        payload['degree'] = random.choice(range(8)) + 1
+        payload['age'] = random.choice(range(40)) + 15
+        payload['gender'] = 'f' if random.choice(range(2)) == 1 else 'm'
         payload['birth_year'] = '2000'
         payload['email'] = fake1.free_email()
         payload['marriage'] = marriage_choices[random.randint(0, len(marriage_choices)-1)]
