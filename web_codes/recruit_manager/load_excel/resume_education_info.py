@@ -17,7 +17,7 @@ def update_education_info(resume, phone):
     edu_colleage = resume[iPos['EDUCATION_COLLEGE']].strip()
     edu_major = resume[iPos['EDUCATION_MAJOR']].strip()
     edu_type = resume[iPos['EDUCATION_TYPE']].strip()
-    edu_degree = resume[iPos['EDUCATION_DEGREE']].strip()
+    degree = resume[iPos['EDUCATION_DEGREE']].strip()
     edu_reference = resume[iPos['EDUCATION_REFERENCE']].strip()
     edu_reference_phone = resume[iPos['EDUCATION_REFERENCE_PHONE']].strip()
     edu_provice = resume[iPos['EDUCATION_PROVICE']].strip()
@@ -30,6 +30,27 @@ def update_education_info(resume, phone):
     edu_start = edu_start + "-01"
     print("edu_end", edu_end)
     edu_end = edu_end +"-01"
+
+    degreeNO=0
+    if degree.find('小学'):
+        degreeNO = 1
+    elif degree.find('初中'):
+        degreeNO = 2
+    elif degree.find('高中'):
+        degreeNO = 3
+    elif degree.find('中专'):
+        degreeNO = 4
+    elif degree.find('大专'):
+        degreeNO = 5
+    elif degree.find('本科'):
+        degreeNO = 6
+    elif degree.find('硕士'):
+        degreeNO = 7
+    elif degree.find('博士'):
+        degreeNO = 8
+    elif degree.find('博士后'):
+        degreeNO = 9
+
     # step3: create education info
 
     resumeTarget = None
@@ -47,7 +68,7 @@ def update_education_info(resume, phone):
         "school" : edu_school,
         "college" : edu_colleage,
         "major" : edu_major,
-        "degree" : edu_degree,
+        "degree" : degreeNO,
         "edu_type" : edu_type,
 
         "province" : edu_provice,
