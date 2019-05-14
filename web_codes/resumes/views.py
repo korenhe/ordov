@@ -42,6 +42,11 @@ class ResumeViewSet(viewsets.ModelViewSet):
         result = dict()
 
         result['data'] = serializer.data
+        tds = result['data']
+
+        for td in tds:
+            td.update({'DT_RowId':'row_{}'.format(td['resume_id'])})
+
         result['draw'] = resume['draw']
 
         result['recordsTotal'] = int(resume['total'])

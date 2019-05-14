@@ -31,7 +31,8 @@
   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
     <thead>
       <tr>
-        <th>CandidateID</th>
+        <th>CK</th>
+        <th>CID</th>
         <th>ID</th>
         <th>Name</th>
         <th>Gender</th>
@@ -50,8 +51,9 @@
 
 {% block extra_js %}
 <script>
-
  $(document).ready(function() {
+   var selected = [];
+
    var table = $('#dataTable').DataTable({
      "processing": true,
      "serverSide": true,
@@ -71,9 +73,20 @@
        },
      },
 
+  "rowCallback": function(row, data) {
+  if ($.inArray(data.DT_RowId, selected) !== -1 ) {
+  $(row).addClass('selected');
+  }
+
+  },
+
      "columns": [
+       {"data": null,
+        "checkboxes": {
+        },
+       },
        {"data": "candidate_id",
-        visible: false},
+        "visible": false},
        {"data": "resume_id"},
        {"data": "username"},
        {"data": "gender"},
@@ -101,25 +114,38 @@
 <form action=" + url + " method='GET'>\
 <button class=\"btn btn-info btn-icon-split border-0\" id=\"stage\">\
 <span class=\"icon text-white-50\">\
-<i class=\"fas fa-arrow-right\"></i></span>\
+  <i class=\"fas fa-arrow-right\"></i></span>\
 <span class=\"text\">Prepare Interview</span>\
 </button>\
 </form>";
-            return str;
-          }
+return str;
+}
 
-          return "ABC";
-        }
-       },
-     ],
-   });
+return "ABC";
+}
+},
+],
+});
 
-   $('#min_degree, #max_degree, #min_age, #max_age').keyup(function() {
-     table.draw();
-   });
+$('#min_degree, #max_degree, #min_age, #max_age').keyup(function() {
+table.draw();
+});
 
-   $('#gender_m, #gender_f').on('click', function() {
-     table.draw();
+$('#gender_m, #gender_f').on('click', function() {
+table.draw();
+});
+
+$('#dataTable tbody').on('click', 'tr', function() {
+var id = this.id;
+var index = $.inArray(id, selected);
+
+if ( index === -1 ) {
+selected.push(id);
+} else {
+       selected.splice(index, 1);
+     }
+
+     $(this).toggleClass('selected');
    });
  });
 </script>
