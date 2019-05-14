@@ -85,6 +85,7 @@ class PostViewSet(viewsets.ModelViewSet):
         tds = result['data']
 
         for td in tds:
+            print(td)
             td.update({'DT_RowId': td['id']})
 
         result['draw'] = post['draw']

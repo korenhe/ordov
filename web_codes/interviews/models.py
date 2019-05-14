@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from candidates.models import Candidate
 from companies.models import Post
+from resumes.models import Resume
 
 # Create your models here.
 
@@ -29,7 +30,8 @@ STATUS_ONDUTY_CHOICES = (
 
 class Interview(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, null=True)
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, null=True, blank=True)
     is_active = models.BooleanField(default=1)
     status = models.IntegerField(choices=STATUS_CHOICES, default=0)
     last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
@@ -37,7 +39,33 @@ class Interview(models.Model):
     result = models.CharField(max_length=50)
 
     def __str__(self):
-        return '<interview C: %s B: %s' % (self.candidate.user.username, self.post.name)
+        return '<interview C: %s B: %s' % (self.resume.resume_id, self.post.name)
+
+def query_interviews_by_args(**kwargs):
+    draw = int(kwargs.get('draw', None)[0])
+    length = int(kwargs.get('length', None)[0])
+    start = int(kwargs.get('start', None)[0])
+    search_value = kwargs.get('search[value]', None)[0]
+    order_column = kwargs.get('order[0][column]', None)[0]
+    order = kwargs.get('order[0][dir]', None)[0]
+
+    queryset = Interview.objects.all()
+    total = queryset.count()
+
+    print(queryset)
+    # filter and orderby
+
+    count = queryset.count()
+
+    queryset = queryset[start:start + length]
+    # final decoration
+
+    return {
+        'items': queryset,
+        'count': count,
+        'total': total,
+        'draw' : draw,
+    }
 
 class OnDuty(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

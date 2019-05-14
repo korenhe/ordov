@@ -2,11 +2,10 @@
 {% load static %}
 {% block content %}
 <div class="table-responsive">
-  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-server-side="true" data-ajax="/api/interviews/?format=datatables">
+  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
     <thead>
       <tr>
-        <th>ID</th>
-        <th>Name</th>
+        <th>Resume</th>
         <th>Post</th>
         <th>Active</th>
       </tr>
@@ -19,11 +18,17 @@
 <script>
  $(document).ready(function() {
    var table = $('#dataTable').DataTable({
+     "processing": true,
      "serverSide": true,
+
+     "ajax": {
+       "url": "/api/interviews/",
+       "type": "GET",
+     },
+
      "columns": [
-       {"data": "id"},
-       {"data": "candidate_name"},
-       {"data": "post_name"},
+       {"data": "resume"},
+       {"data": "post"},
        {"data": "is_active"},
      ],
    });
