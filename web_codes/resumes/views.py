@@ -44,11 +44,12 @@ class ResumeViewSet(viewsets.ModelViewSet):
         result['data'] = serializer.data
         tds = result['data']
 
+        # here we can modify the response data, and we can add pesudo fields in
+        # serializer, as we handled candidate_id
         for td in tds:
-            td.update({'DT_RowId':'row_{}'.format(td['resume_id'])})
+            td.update({'DT_RowId': td['resume_id']})
 
         result['draw'] = resume['draw']
-
         result['recordsTotal'] = int(resume['total'])
         result['recordsFiltered'] = int(resume['count'])
 

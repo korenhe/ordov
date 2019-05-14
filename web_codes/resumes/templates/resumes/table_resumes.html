@@ -46,107 +46,115 @@
       </tr>
     </thead>
   </table>
+
+  <form>
+  <button type='submit' id='id_b_submit'>SUBMIT</button>
+  </form>
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
- $(document).ready(function() {
-   var selected = [];
+  $(document).ready(function() {
+    var selected = [];
 
-   var table = $('#dataTable').DataTable({
-     "processing": true,
-     "serverSide": true,
+    var table = $('#dataTable').DataTable({
+      "processing": true,
+      "serverSide": true,
 
-     "ajax": {
-       "url": "/api/resumes/",
-       "type": "GET",
-       "data": function (d) {
-         d.degree_min = $('#min_degree').val();
-         d.degree_max = $('#max_degree').val();
+      "ajax": {
+        "url": "/api/resumes/",
+        "type": "GET",
+        "data": function (d) {
+          d.degree_min = $('#min_degree').val();
+          d.degree_max = $('#max_degree').val();
 
-         d.age_min = $('#min_age').val();
-         d.age_max = $('#max_age').val();
+          d.age_min = $('#min_age').val();
+          d.age_max = $('#max_age').val();
 
-         d.gender_m = $('#gender_m:checked').val();
-         d.gender_f = $('#gender_f:checked').val();
-       },
-     },
-
-  "rowCallback": function(row, data) {
-  if ($.inArray(data.DT_RowId, selected) !== -1 ) {
-  $(row).addClass('selected');
-  }
-
-  },
-
-     "columns": [
-       {"data": null,
-        "checkboxes": {
+          d.gender_m = $('#gender_m:checked').val();
+          d.gender_f = $('#gender_f:checked').val();
         },
-       },
-       {"data": "candidate_id",
-        "visible": false},
-       {"data": "resume_id"},
-       {"data": "username"},
-       {"data": "gender"},
-       {"data": "age"},
-       {"data": "phone_number"},
-       {"data": "email"},
-       {"data": "school"},
-       {"data": "degree"},
-       {"data": "major"},
-       {"data": "stat",
-        render: function(data, type, row, meta) {
-          if (row.stat) {
-            return "\
-<button class=\"btn btn-success btn-icon-split border-0\" id=\"stage\">\
-<span class=\"icon text-white-50\">\
-<i class=\"fas fa-check\"></i></span>\
-<span class=\"text\">Interviewed</span>\
-</button>";
-          }
+      },
 
-          if (row.candidate_id) {
-            var url="{% url 'app_manager:t_interview_api' 1234 %}".replace(/1234/, row.candidate_id);
+      "rowCallback": function(row, data) {
+        if ($.inArray(data.DT_RowId, selected) !== -1 ) {
+          $(row).addClass('selected');
+        }
 
-            var str = "\
-<form action=" + url + " method='GET'>\
-<button class=\"btn btn-info btn-icon-split border-0\" id=\"stage\">\
-<span class=\"icon text-white-50\">\
-  <i class=\"fas fa-arrow-right\"></i></span>\
-<span class=\"text\">Prepare Interview</span>\
-</button>\
-</form>";
-return str;
-}
+      },
 
-return "ABC";
-}
-},
-],
-});
+      "columns": [
+        {"data": null,
+         "checkboxes": {
+         },
+        },
+        {"data": "candidate_id",
+         "visible": false},
+        {"data": "resume_id"},
+        {"data": "username"},
+        {"data": "gender"},
+        {"data": "age"},
+        {"data": "phone_number"},
+        {"data": "email"},
+        {"data": "school"},
+        {"data": "degree"},
+        {"data": "major"},
+        {"data": "stat",
+         render: function(data, type, row, meta) {
+           if (row.stat) {
+             return "\
+  <button class=\"btn btn-success btn-icon-split border-0\" id=\"stage\">\
+    <span class=\"icon text-white-50\">\
+      <i class=\"fas fa-check\"></i></span>\
+    <span class=\"text\">Interviewed</span>\
+  </button>";
+           }
 
-$('#min_degree, #max_degree, #min_age, #max_age').keyup(function() {
-table.draw();
-});
+           if (row.candidate_id) {
+             var url="{% url 'app_manager:t_interview_api' 1234 %}".replace(/1234/, row.candidate_id);
 
-$('#gender_m, #gender_f').on('click', function() {
-table.draw();
-});
+             var str = "\
+  <form action=" + url + " method='GET'>\
+    <button class=\"btn btn-info btn-icon-split border-0\" id=\"stage\">\
+      <span class=\"icon text-white-50\">\
+        <i class=\"fas fa-arrow-right\"></i></span>\
+      <span class=\"text\">Prepare Interview</span>\
+    </button>\
+  </form>";
+             return str;
+           }
 
-$('#dataTable tbody').on('click', 'tr', function() {
-var id = this.id;
-var index = $.inArray(id, selected);
+           return "ABC";
+         }
+        },
+      ],
+    });
 
-if ( index === -1 ) {
-selected.push(id);
-} else {
-       selected.splice(index, 1);
-     }
+    $('#min_degree, #max_degree, #min_age, #max_age').keyup(function() {
+      table.draw();
+    });
 
-     $(this).toggleClass('selected');
-   });
- });
+    $('#gender_m, #gender_f').on('click', function() {
+      table.draw();
+    });
+
+    $('#dataTable tbody').on('click', 'tr', function() {
+      var id = this.id;
+      var index = $.inArray(id, selected);
+
+      if ( index === -1 ) {
+        selected.push(id);
+      } else {
+        selected.splice(index, 1);
+      }
+
+      $(this).toggleClass('selected');
+    });
+
+    $('#id_b_submit').on('click', function() {
+      console.log(selected);
+    });
+  });
 </script>
 {% endblock%}
