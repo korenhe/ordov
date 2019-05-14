@@ -14,12 +14,14 @@ def create_or_update_basic_info(resume, phone):
     # step0: check if the phone is registered
     # For resumes from excel, we regard phone_number as 'primary key'
 
+    resumeTarget = None
     try:
-        resume = Resume.objects.get(phone_number=phone)
+        resumeTarget = Resume.objects.get(phone_number=phone, username=user)
     except (ObjectDoesNotExist, MultipleObjectsReturned):
         pass
 
-    if not resume is None:
+    if not resumeTarget is None:
+        #print(json.dumps(resumeTarget, ensure_ascii=False))
         print("Add New Resume (%s %s) Fault: Exists" % (user.encode('utf-8'), phone))
         return False
 

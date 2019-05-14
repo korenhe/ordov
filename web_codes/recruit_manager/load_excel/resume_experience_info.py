@@ -35,14 +35,15 @@ def update_experience_info(resume, phone):
 
     # step2: refresh data
     # step3: create experience data
+    resumeTarget = None
     try:
-        resume = Resume.objects.get(phone_number=phone)
+        resumeTarget = Resume.objects.get(phone_number=phone)
     except (ObjectDoesNotExist, MultipleObjectsReturned):
         print("Update Experience: There Should Be One Resume, Return")
         return
 
     experience = {
-        "resume" : resume,
+        "resume" : resumeTarget,
         "start" : exp_start,
         "end" : exp_end,
         "company_name" : exp_company,

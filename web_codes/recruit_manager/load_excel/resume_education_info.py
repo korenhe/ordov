@@ -32,14 +32,15 @@ def update_education_info(resume, phone):
     edu_end = edu_end +"-01"
     # step3: create education info
 
+    resumeTarget = None
     try:
-        resume = Resume.objects.get(phone_number=phone)
+        resumeTarget = Resume.objects.get(phone_number=phone)
     except (ObjectDoesNotExist, MultipleObjectsReturned):
         print("Update Education: There Should Be One Resume, Return")
         return
 
     education = {
-        "resume" : resume,
+        "resume" : resumeTarget,
         "start" : edu_start,
         "end" : edu_end,
 

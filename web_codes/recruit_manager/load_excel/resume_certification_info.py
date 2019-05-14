@@ -8,14 +8,15 @@ def update_language_info(resume, phone):
     lang_certification = resume[iPos['LANGUAGE_CERTIFICATION']]
     lang_description = resume[iPos['LANGUAGE_DESCRIPTION']].strip()
 
+    resumeTarget = None
     try:
-        resume = Resume.objects.get(phone_number=phone)
+        resumeTarget = Resume.objects.get(phone_number=phone)
     except (ObjectDoesNotExist, MultipleObjectsReturned):
         print("Update Language: There Should Be One Resume Item, Return.")
         return
 
     lang = {
-        "resume" : resume,
+        "resume" : resumeTarget,
         "name" : lang_name,
         "cert" : lang_vertification,
         "description" : lang_description,
@@ -33,14 +34,15 @@ def update_certification_info(resume, phone):
     cert_institution = resume[iPos['CERTIFICATION_INSTITUTION']].strip()
     cert_description = resume[iPos['CERTIFICATION_DESCRIPTION']].strip()
 
+    resumeTarget = None
     try:
-        resume = Resume.objects.get(phone_number=phone)
+        resumeTarget = Resume.objects.get(phone_number=phone)
     except (ObjectDoesNotExist, MultipleObjectsReturned):
         print("Update Certification: There Should Be One Resume Item, Return")
         return
 
     cert = {
-        "resume" : resume,
+        "resume" : resumeTarget,
         "time" : cert_time,
         "name" : cert_name,
         "institution" : cert_institution,
