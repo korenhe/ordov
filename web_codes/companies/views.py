@@ -6,11 +6,11 @@ from django.views import generic
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 
 # Create your views here.
 
-from .models import Company, Department, Post
+from .models import Company, Department, Post, query_posts_by_args
 from .serializers import CompanySerializer, DepartmentSerializer, PostSerializer
 
 class CompanyView(APIView):
@@ -73,6 +73,25 @@ class PostView(APIView):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by('id')
     serializer_class = PostSerializer
+
+    def list(self, request, **kwargs):
+
+        post = query_posts_by_args(**request.query_params)
+
+        serializer = PostSerializer(post['items'], many=True)
+        result = dict()
+
+        result['data'] = serializer.data
+        tds = result['data']
+
+        for td in tds:
+            td.update({'DT_RowId': td['id']})
+
+        result['draw'] = post['draw']
+        result['recordsTotal'] = int(post['total'])
+        result['recordsFiltered'] = int(post['count'])
+
+        return Response(result, status=status.HTTP_200_OK, template_name=None, content_type=None)
 
 class PostTable(generic.ListView):
     context_object_name = 't_post_list'

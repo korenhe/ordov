@@ -47,3 +47,28 @@ class Post(models.Model):
 
     def __str__(self):
         return "%s,%s,%s" % (self.name, self.department.name, self.company.name)
+
+def query_posts_by_args(**kwargs):
+    draw = int(kwargs.get('draw', None)[0])
+    length = int(kwargs.get('length', None)[0])
+    start = int(kwargs.get('start', None)[0])
+    search_value = kwargs.get('search[value]', None)[0]
+    order_column = kwargs.get('order[0][column]', None)[0]
+    order = kwargs.get('order[0][dir]', None)[0]
+
+    queryset = Post.objects.all()
+    total = queryset.count()
+
+    # filter and orderby
+    count = queryset.count()
+
+    queryset = queryset[start:start + length]
+
+    # final decoration
+
+    return {
+        'items': queryset,
+        'count': count,
+        'total': total,
+        'draw' : draw,
+    }

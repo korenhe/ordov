@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 <div class="table-responsive">
-  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-server-side="true" data-ajax="/api/posts/?format=datatables">
+  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
     <thead>
       <tr>
         <th>ID</th>
@@ -13,20 +13,57 @@
       </tr>
     </thead>
   </table>
+
+  <form>
+    <button type='submit' id='id_b_submit'>SUBMIT</button>
+  </form>
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
  $(document).ready(function() {
+   var selected = [];
    var table = $('#dataTable').DataTable({
+     "processing": true,
      "serverSide": true,
+
+     "ajax": {
+       "url": "/api/posts/",
+       "type": "GET",
+     },
+
+     "rowCallback": function(row, data) {
+       if ($.inArray(data.DT_RowId, selected) !== -1 ) {
+         $(row).addClass('selected');
+       }
+
+     },
+
      "columns": [
        {"data": "id"},
        {"data": "department.company.name"},
        {"data": "department.name"},
        {"data": "name"},
      ],
+   });
+
+   $('#dataTable tbody').on('click', 'tr', function() {
+     var id = this.id;
+     var index = $.inArray(id, selected);
+
+     if ( index === -1 ) {
+       selected.push(id);
+     } else {
+       selected.splice(index, 1);
+     }
+
+     $(this).toggleClass('selected');
+   });
+
+   $('#id_b_submit').on('click', function() {
+     console.log(selected);
+     localStorage['post'] = selected[0];
    });
  });
 </script>

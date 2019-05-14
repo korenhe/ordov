@@ -90,7 +90,6 @@ def query_resumes_by_args(**kwargs):
     gender_f = kwargs.get('gender_f', None) or False
     gender_m = kwargs.get('gender_m', None) or False
 
-    print("xx", gender_f, gender_m)
     queryset = Resume.objects.all()
     total = queryset.count()
 
