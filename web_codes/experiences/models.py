@@ -62,6 +62,7 @@ class Project(models.Model):
     start = models.DateField()
     end = models.DateField()
 
+    name = models.CharField(max_length=20, blank=True, null=True)
     brief = models.TextField(max_length=500, blank=True, null=True, default='')
     scale = models.IntegerField(default=0)
     role = models.CharField(max_length=20, blank=True, null=True)
