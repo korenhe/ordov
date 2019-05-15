@@ -119,15 +119,15 @@ def query_resumes_by_args(**kwargs):
 
 class Education(models.Model):
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
-    start = models.DateField()
-    end = models.DateField()
+    start = models.DateField(blank=True, null=True)
+    end = models.DateField(blank=True, null=True)
 
     # basic info
-    school = models.CharField(max_length=50)
-    college = models.CharField(max_length=50)
-    major = models.CharField(max_length=50)
-    degree = models.IntegerField(choices=DEGREE_CHOICES)
-    edu_type = models.CharField(max_length=50, choices=EDUCATION_TYPE_CHOICES, null=True)
+    school = models.CharField(max_length=50, blank=True, null=True)
+    college = models.CharField(max_length=50, blank=True, null=True)
+    major = models.CharField(max_length=50, blank=True, null=True)
+    degree = models.IntegerField(choices=DEGREE_CHOICES, blank=True, null=True)
+    edu_type = models.CharField(max_length=50, choices=EDUCATION_TYPE_CHOICES, blank=True, null=True)
 
     # resident info
     provice = models.CharField(max_length=10, blank=True, null=True)
