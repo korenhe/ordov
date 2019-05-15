@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
 from .choices import (DEGREE_CHOICES, BIRTH_YEAR_CHOICES, MAJOR_CHOICES, MARRIAGE_CHOICES, EDUCATION_TYPE_CHOICES)
 from candidates.models import Candidate
 
@@ -33,7 +32,7 @@ class Resume(models.Model):
     birth_place = models.CharField(max_length=50, blank=True, null=True)
 
     # social info
-    phone_number = PhoneNumberField(null=True, blank=True, unique=True)
+    phone_number = models.CharField(max_length=15, null=True, blank=True)
     qq = models.BigIntegerField(null=True, blank=True)
     residence = models.CharField(max_length=50, blank=True, null=True)
     email = models.CharField(max_length=50, blank=True, null=True)
@@ -118,7 +117,7 @@ def query_resumes_by_args(**kwargs):
     }
 
 class Education(models.Model):
-    resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, default='')
     start = models.DateField(blank=True, null=True)
     end = models.DateField(blank=True, null=True)
 
@@ -137,7 +136,7 @@ class Education(models.Model):
     place = models.CharField(max_length=50, blank=True, null=True)
 
     instructor = models.CharField(max_length=50, null=True)
-    instructor_phone = PhoneNumberField(null=True, blank=True, unique=True)
+    instructor_phone = models.CharField(max_length=15, null=True, blank=True)
 
     def __str__(self):
         return self.degree

@@ -1,11 +1,9 @@
 from rest_framework import serializers
-from phonenumber_field.serializerfields import PhoneNumberField
 
 from candidates.serializers import CandidateSerializer
 from .models import Resume, Education
 
 class ResumeSerializer(serializers.ModelSerializer):
-    #phone_number = PhoneNumberField(required=True)
     candidate = CandidateSerializer(required=False)
     stat = serializers.SerializerMethodField()
     candidate_id = serializers.SerializerMethodField()

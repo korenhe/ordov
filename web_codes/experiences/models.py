@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
 
 from resumes.models import Resume
 from companies.models import Company, Department, Post
@@ -48,7 +47,7 @@ class Experience(models.Model):
 
     witness = models.CharField(max_length=20, blank=True, null=True)
     witness_post = models.CharField(max_length=20, blank=True, null=True)
-    witness_phone = PhoneNumberField(null=True, blank=False)
+    witness_phone = models.CharField(max_length=15, null=True, blank=False)
 
     # reserved fields
     reserved1 = models.CharField(max_length=50, blank=True, null=True)

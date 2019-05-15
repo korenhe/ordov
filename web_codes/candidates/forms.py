@@ -1,7 +1,6 @@
 from django import forms
 from django_countries.fields import LazyTypedChoiceField
 from django_countries import countries
-from phonenumber_field.modelfields import PhoneNumberField
 from ordov.choices import (BIRTH_YEAR_CHOICES, BIRTH_MONTH_CHOICES,EDUCATION_CHOICES, MARRIAGE_CHOICES,MAJOR_CHOICES,
 	 GENDER_CHOICES)
 
