@@ -10,12 +10,13 @@ import time
 from candidates.models import Candidate
 from companies.models import Company
 from interviews.models import Interview
+from resumes.models import Resume
 from .load_excel import load_excel
 
 # Create your views here.
 def index(request):
     tcc = Company.objects.all().count()
-    tac = Candidate.objects.all().count()
+    tac = Resume.objects.all().count()
 
     context = {
         't_company_count': tcc,
