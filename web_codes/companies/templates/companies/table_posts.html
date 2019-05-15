@@ -34,7 +34,7 @@
      },
 
      "rowCallback": function(row, data) {
-       if ($.inArray(data.DT_RowId, selected) !== -1 ) {
+       if ($.inArray(data.DT_RowId.toString(), selected) !== -1 ) {
          $(row).addClass('selected');
        }
 
