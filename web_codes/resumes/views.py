@@ -11,6 +11,7 @@ from rest_framework import viewsets, status
 # Create your views here.
 from .models import Resume, query_resumes_by_args
 from .serializers import ResumeSerializer, EducationSerializer
+from datatableview.views import DatatableView
 
 class ResumeView(APIView):
     def get(self, request):
@@ -67,6 +68,17 @@ class ResumeTable(generic.ListView):
         context['template_table_name'] = 'Resume'
 
         return context
+
+
+class CompositeTable(DatatableView):
+    model = Resume
+
+    datatable_options = {
+        'columns' : ['resume_id', 'username', 'gender', 'age', 'phone_number',
+                     'email', 'school', 'degree', 'major']
+        }
+
+
 
 class ResumeDetail(generic.DetailView):
     model = Resume

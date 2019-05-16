@@ -1,0 +1,25 @@
+{% extends "recruit_manager/table_basic.html" %}
+{% load static %}
+{% block content %}
+
+{{ datatable }}
+
+{% endblock %}
+
+{% block extra_js %}
+
+<!-- Page level plugins -->
+<!-- Page level custom scripts -->
+<script type="text/javascript" charset="utf8" src="{% static 'recruit_manager/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+<script type="text/javascript" charset="utf8" src="{% static 'recruit_manager/vendor/datatables/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" charset="utf8" src="{% static 'js/datatableview.js' %}"></script>
+
+<script type="text/javascript">
+ datatableview.auto_initialize = false;
+ $(function() {
+   datatableview.initialize($('.datatable'));
+ });
+</script>
+
+{% endblock%}
