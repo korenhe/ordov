@@ -1,8 +1,10 @@
+#-*- coding:utf-8 -*-
 from .resume_template import iPos
 from resumes.models import Resume
 from resumes.serializers import ResumeSerializer
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
+from .common import validate_degree
 
 import json
 
@@ -22,9 +24,9 @@ def create_or_update_basic_info(resume, phone):
 
     if not resumeTarget is None:
         #print(json.dumps(resumeTarget, ensure_ascii=False))
-        print("Add New Resume (%s %s) Fault: Exists" % (user.encode('utf-8'), phone))
         return False
 
+    print("No Item for", phone, ", Create it")
     # step1: get basic info from resume
     resume_way = resume[iPos['RESUME_WAY']].strip()
     resume_way2 = resume[iPos['RESUME_WAY2']].strip()
@@ -61,27 +63,10 @@ def create_or_update_basic_info(resume, phone):
     else:
         gender = 'f'
 
-    degreeNO = 0
-    if degree.find('小学'):
-        degreeNO = 1
-    elif degree.find('初中'):
-        degreeNO = 2
-    elif degree.find('高中'):
-        degreeNO = 3
-    elif degree.find('中专'):
-        degreeNO = 4
-    elif degree.find('大专'):
-        degreeNO = 5
-    elif degree.find('本科'):
-        degreeNO = 6
-    elif degree.find('硕士'):
-        degreeNO = 7
-    elif degree.find('博士'):
-        degreeNO = 8
-    elif degree.find('博士后'):
-        degreeNO = 9
+    degreeNO = validate_degree(degree)
 
     if not birth_year == '':
+        print("birth_year: ", birth_year,"|")
         birth_year = int(birth_year)
     if not birth_month == '':
         birth_month = int(birth_month)
@@ -98,11 +83,12 @@ def create_or_update_basic_info(resume, phone):
 		"username" : user,
 
 		"gender" : gender,
-		"phone" : "+86" + phone,
+		"phone_number" : phone,
 		"birth_year" : birth_year,
 		"birth_month" : birth_month,
 		"birth_day" : birth_day,
 		"identity" : identity,
+        "email": email,
 
 		"degree" : degreeNO,
 		"major" : major,
@@ -128,6 +114,7 @@ def create_or_update_basic_info(resume, phone):
     serializer = ResumeSerializer(data=resume)
     if serializer.is_valid(raise_exception=True):
         resume_saved = serializer.save()
+        print("resume update done", resume_saved)
     else:
         print("Fail to seriliaze resume")
 

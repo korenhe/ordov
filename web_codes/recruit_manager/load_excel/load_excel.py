@@ -52,6 +52,7 @@ def load_excel(filename):
             update_language_info(curRowList, curValidPhone)
             update_certification_info(curRowList, curValidPhone)
         elif validItem == True:
+            pass
             # education/experience/certification info should be updated basing on phone
             update_education_info(curRowList, curValidPhone)
             update_experience_info(curRowList, curValidPhone)

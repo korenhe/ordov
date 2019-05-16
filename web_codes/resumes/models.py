@@ -135,7 +135,7 @@ class Education(models.Model):
     street = models.CharField(max_length=20, blank=True, null=True)
     place = models.CharField(max_length=50, blank=True, null=True)
 
-    instructor = models.CharField(max_length=50, null=True)
+    instructor = models.CharField(max_length=50, blank=True, null=True)
     instructor_phone = models.CharField(max_length=15, null=True, blank=True)
 
     def __str__(self):

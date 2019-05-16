@@ -13,12 +13,12 @@ from companies.models import Company, Department, Post
 # 让员工去填公司全称简直是噩梦
 class Experience(models.Model):
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, default='')
-    start = models.DateField()
-    end = models.DateField()
+    start = models.DateField(blank=True, null=True)
+    end = models.DateField(blank=True, null=True)
 
     # company info, currently we record the company info in charField
     # TODO: generate the foreign to company/department/post
-    company_name = models.CharField(max_length=50)
+    company_name = models.CharField(max_length=50, blank=True, null=True)
     department_name = models.CharField(max_length=50, blank=True, null=True)
     post_name = models.CharField(max_length=50, blank=True, null=True)
 
@@ -47,7 +47,7 @@ class Experience(models.Model):
 
     witness = models.CharField(max_length=20, blank=True, null=True)
     witness_post = models.CharField(max_length=20, blank=True, null=True)
-    witness_phone = models.CharField(max_length=15, null=True, blank=False)
+    witness_phone = models.CharField(max_length=15, null=True, blank=True)
 
     # reserved fields
     reserved1 = models.CharField(max_length=50, blank=True, null=True)
@@ -58,8 +58,8 @@ class Experience(models.Model):
 
 class Project(models.Model):
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, default='')
-    start = models.DateField()
-    end = models.DateField()
+    start = models.DateField(blank=True, null=True)
+    end = models.DateField(blank=True, null=True)
 
     name = models.CharField(max_length=20, blank=True, null=True)
     brief = models.TextField(max_length=500, blank=True, null=True, default='')

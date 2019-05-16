@@ -3,6 +3,7 @@ from resumes.models import Resume
 
 from experiences.serializers import ExperienceSerializer
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+from .common import validate_date, validate_salary
 
 
 def update_experience_info(resume, phone):
@@ -11,6 +12,11 @@ def update_experience_info(resume, phone):
     exp_start = resume[iPos['EXPERIENCE_START_TIME']].strip()
     exp_end = resume[iPos['EXPERIENCE_END_TIME']].strip()
     exp_company = resume[iPos['EXPERIENCE_COMPANY_NAME']].strip()
+
+    if exp_company == '':
+        print("exp_company is null, Return")
+        return
+
     exp_company_short = resume[iPos['EXPERIENCE_COMPANY_SHORT_NAME']].strip()
     exp_department = resume[iPos['EXPERIENCE_DEPARTMENT']].strip()
     exp_post_name = resume[iPos['EXPERIENCE_POST_NAME']].strip()
@@ -34,6 +40,12 @@ def update_experience_info(resume, phone):
     exp_post_reference_phone = resume[iPos['EXPERIENCE_POST_REFERENCE_PHONE']].strip()
 
     # step2: refresh data
+    exp_start = validate_date(exp_start)
+    exp_end = validate_date(exp_end)
+    print("salary: ", exp_post_base_salary)
+    exp_post_base_salary = validate_salary(exp_post_base_salary)
+    exp_post_deduct_salary = validate_salary(exp_post_deduct_salary)
+
     # step3: create experience data
     resumeTarget = None
     try:
@@ -43,7 +55,7 @@ def update_experience_info(resume, phone):
         return
 
     experience = {
-        "resume" : resumeTarget,
+        "resume" : {"phone_number": phone},
         "start" : exp_start,
         "end" : exp_end,
         "company_name" : exp_company,
@@ -60,7 +72,7 @@ def update_experience_info(resume, phone):
         "deduct_salary" : exp_post_deduct_salary,
 
         "shift" : exp_post_zuoxi,
-        "leave_reason" : exp_post_leave_reson,
+        "leave_reason" : exp_post_leave_reason,
 
         "work_province" : exp_post_provice,
         "work_city" : exp_post_city,

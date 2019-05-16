@@ -5,7 +5,7 @@ from resumes.models import Education
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 from resumes.serializers import EducationSerializer
-
+from .common import validate_date, validate_degree, validate_edu_type
 
 def update_education_info(resume, phone):
     if phone is "":
@@ -26,31 +26,15 @@ def update_education_info(resume, phone):
     edu_street = resume[iPos['EDUCATION_STREET']].strip()
 
     # step2: refresh data
-    print("edu_start", edu_start)
-    edu_start = edu_start + "-01"
-    print("edu_end", edu_end)
-    edu_end = edu_end +"-01"
+    print("pre edu_start:", edu_start, "|")
+    print("pre edu_end:", edu_end, "|")
+    edu_start = validate_date(edu_start)
+    edu_end = validate_date(edu_end)
+    degreeNO = validate_degree(degree)
+    edu_type = validate_edu_type(edu_type)
 
-    degreeNO=0
-    if degree.find('小学'):
-        degreeNO = 1
-    elif degree.find('初中'):
-        degreeNO = 2
-    elif degree.find('高中'):
-        degreeNO = 3
-    elif degree.find('中专'):
-        degreeNO = 4
-    elif degree.find('大专'):
-        degreeNO = 5
-    elif degree.find('本科'):
-        degreeNO = 6
-    elif degree.find('硕士'):
-        degreeNO = 7
-    elif degree.find('博士'):
-        degreeNO = 8
-    elif degree.find('博士后'):
-        degreeNO = 9
-
+    print("edu_start:", edu_start, "|")
+    print("edu_end:", edu_end, "|")
     # step3: create education info
 
     resumeTarget = None
@@ -60,8 +44,11 @@ def update_education_info(resume, phone):
         print("Update Education: There Should Be One Resume, Return")
         return
 
+    print("resumeTarget", resumeTarget)
+
+    #"resume" : resumeTarget,
     education = {
-        "resume" : resumeTarget,
+        "resume" : {"phone_number":phone},
         "start" : edu_start,
         "end" : edu_end,
 

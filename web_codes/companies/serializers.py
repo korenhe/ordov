@@ -23,7 +23,6 @@ class DepartmentSerializer(serializers.ModelSerializer):
         model = Department
         fields = (
             'company', # foreignkey
-
             'name',
             'description',
         )

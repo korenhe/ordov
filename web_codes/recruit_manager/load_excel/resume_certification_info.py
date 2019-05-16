@@ -3,6 +3,8 @@ from resumes.models import Resume
 
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
+from experiences.serializers import LanguageSerializer, CertificationSerializer
+
 def update_language_info(resume, phone):
     lang_name = resume[iPos['LANGUAGE_NAME']].strip()
     lang_certification = resume[iPos['LANGUAGE_CERTIFICATION']]
@@ -16,9 +18,9 @@ def update_language_info(resume, phone):
         return
 
     lang = {
-        "resume" : resumeTarget,
+        "resume" : {"phone_number":phone},
         "name" : lang_name,
-        "cert" : lang_vertification,
+        "cert" : lang_certification,
         "description" : lang_description,
     }
 
@@ -42,7 +44,7 @@ def update_certification_info(resume, phone):
         return
 
     cert = {
-        "resume" : resumeTarget,
+        "resume" : {"phone_number": phone},
         "time" : cert_time,
         "name" : cert_name,
         "institution" : cert_institution,

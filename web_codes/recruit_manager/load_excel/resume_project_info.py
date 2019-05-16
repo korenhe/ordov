@@ -1,6 +1,7 @@
 from resume_template import iPos
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from experiences.models import Project
+from experiences.serializers import ProjectSerializer
 def update_project_info(resume, phone):
 
     # step1: get the raw data
