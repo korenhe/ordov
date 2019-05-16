@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
 
+<div class="text-primary" id="text_company_name"> HAHA </div>
 {{ datatable }}
 
 {{ post_datatable }}
@@ -19,21 +20,60 @@
 
 <script type="text/javascript">
  datatableview.auto_initialize = false;
+ var resume_selected = [];
+ var post_selected = false;
+ var post_selected_value = 0;
+
  $(function() {
-   datatableview.initialize($('.datatable'));
+   var common_options = {
+     "rowCallback": function(row, data) {
+       console.log("rowcallback in " + data.DT_RowId.toString() + " " + post_selected_value + " " + post_selected);
+       if ((post_selected === true) && (data.DT_RowId == post_selected_value)) {
+         $(row).addClass('selected');
+       } else if ($.inArray(data.DT_RowId.toString(), resume_selected) !== -1 ) {
+         $(row).addClass('selected');
+       }
+
+     }
+   };
+   datatableview.initialize($('.datatable'), common_options);
  });
 
  $(document).ready(function() {
    $('#DataTables_Table_0 tbody').on('click', 'tr', function() {
      var id = this.id;
-     console.log("click in 1");
+     var index = $.inArray(id, resume_selected);
+
+     if ( index === -1 ) {
+       resume_selected.push(id);
+     } else {
+       resume_selected.splice(index, 1);
+     }
+
      $(this).toggleClass('selected');
    });
 
    $('#DataTables_Table_1 tbody').on('click', 'tr', function() {
      var id = this.id;
-     console.log("click in 2");
-     $(this).toggleClass('selected');
+
+     if (id === post_selected_value && post_selected === true) {
+       $(this).toggleClass('selected');
+       console.log(id + " off");
+       post_selected = false;
+     } else {
+       $(this).toggleClass('selected');
+       console.log(id + " on");
+       console.log($(this));
+
+       if (post_selected === true) {
+         $('tr#' + post_selected_value).toggleClass('selected');
+       }
+       post_selected = true;
+       post_selected_value = id;
+
+       var tr = document.getElementById(id);
+       $('#DataTables_Table_1').getElementById("text_company_name").innerHTML = tr.innerText;
+     }
    });
 
  });
