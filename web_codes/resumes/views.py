@@ -10,8 +10,10 @@ from rest_framework import viewsets, status
 
 # Create your views here.
 from .models import Resume, query_resumes_by_args
+from companies.models import Post
 from .serializers import ResumeSerializer, EducationSerializer
 from datatableview.views import DatatableView
+from datatableview.utils import *
 
 class ResumeView(APIView):
     def get(self, request):
@@ -74,11 +76,90 @@ class CompositeTable(DatatableView):
     model = Resume
 
     datatable_options = {
-        'columns' : ['resume_id', 'username', 'gender', 'age', 'phone_number',
-                     'email', 'school', 'degree', 'major']
-        }
+        'structure_template': "datatableview/bootstrap_structure.html",
+        'columns' : [
+            ('Resume', 'resume_id'),
+            ('Name', 'username'),
+            ('Gender', 'gender'),
+            ('Age', 'age'),
+            ('Phone', 'phone_number'),
+            ('Email', 'email'),
+            ('School', 'school'),
+            ('Degree', 'degree'),
+            ('Major', 'major'),
+            ('Stat', None, 'get_entry_stat')
+        ]}
+
+    def get_entry_stat(self, instance, *args, **kwargs):
+        return "ABC{}".format(instance.username)
+
+    post_datatable_options = {
+        'structure_template': "datatableview/bootstrap_structure.html",
+        'columns': [
+            'company',
+            'department',
+            'name',
+        ]
+    }
+
+    def get_queryset(self, type=None):
+        """
+        Customized implementation of the queryset getter.  The custom argument ``type`` is managed
+        by us, and is used in the context and GET parameters to control which table we return.
+        """
+
+        if type is None:
+            type = self.request.GET.get('datatable-type', None)
+
+        if type == "demo3":
+            return Post.objects.all()
+        return super(CompositeTable, self).get_queryset()
+
+    def get_datatable_options(self, type=None):
+        """
+        Customized implementation of the options getter.  The custom argument ``type`` is managed
+        by us, and is used in the context and GET parameters to control which table we return.
+        """
+
+        if type is None:
+            type = self.request.GET.get('datatable-type', None)
+
+        options = self.datatable_options
+
+        if type == "demo3":
+            # Return separate options settings
+            options = self.post_datatable_options
+
+        return options
+
+    def get_datatable(self, type=None):
+        """
+        Customized implementation of the structure getter.  The custom argument ``type`` is managed
+        by us, and is used in the context and GET parameters to control which table we return.
+        """
+        if type is None:
+            type = self.request.GET.get('datatable-type', None)
+
+        if type is not None:
+            datatable_options = self.get_datatable_options(type=type)
+            # Put a marker variable in the AJAX GET request so that the table identity is known
+            ajax_url = self.request.path + "?datatable-type={type}".format(type=type)
+
+        if type == "demo3":
+            # Change the reference model to Blog, instead of Entry
+            datatable = get_datatable_structure(ajax_url, datatable_options, model=Post)
+        else:
+            return super(CompositeTable, self).get_datatable()
+
+        return datatable
 
 
+    def get_context_data(self, **kwargs):
+        context = super(CompositeTable, self).get_context_data(**kwargs)
+
+        # Get the other structure objects for the initial context
+        context['post_datatable'] = self.get_datatable(type="demo3")
+        return context
 
 class ResumeDetail(generic.DetailView):
     model = Resume

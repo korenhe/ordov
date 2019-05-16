@@ -4,6 +4,8 @@
 
 {{ datatable }}
 
+{{ post_datatable }}
+
 {% endblock %}
 
 {% block extra_js %}
@@ -13,13 +15,29 @@
 <script type="text/javascript" charset="utf8" src="{% static 'recruit_manager/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
 <script type="text/javascript" charset="utf8" src="{% static 'recruit_manager/vendor/datatables/jquery.dataTables.min.js' %}"></script>
 
-<script type="text/javascript" charset="utf8" src="{% static 'js/datatableview.js' %}"></script>
+<script type="text/javascript" charset="utf8" src="{% static 'recruit_manager/js/datatableview.js' %}"></script>
 
 <script type="text/javascript">
  datatableview.auto_initialize = false;
  $(function() {
    datatableview.initialize($('.datatable'));
  });
+
+ $(document).ready(function() {
+   $('#DataTables_Table_0 tbody').on('click', 'tr', function() {
+     var id = this.id;
+     console.log("click in 1");
+     $(this).toggleClass('selected');
+   });
+
+   $('#DataTables_Table_1 tbody').on('click', 'tr', function() {
+     var id = this.id;
+     console.log("click in 2");
+     $(this).toggleClass('selected');
+   });
+
+ });
+
 </script>
 
 {% endblock%}
