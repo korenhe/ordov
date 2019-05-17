@@ -3,9 +3,12 @@
 {% block content %}
 
 <div class="text-primary" id="text_company_name"> HAHA </div>
-{{ datatable }}
 
 {{ post_datatable }}
+
+<HR style="border:3 double #987cb9" width="90%" color=#987cb9 SIZE=3>
+
+{{ datatable }}
 
 {% endblock %}
 
@@ -25,7 +28,7 @@
  var post_selected_value = 0;
 
  $(function() {
-   var common_options = {
+   var common_options2 = {
      "rowCallback": function(row, data) {
        console.log("rowcallback in " + data.DT_RowId.toString() + " " + post_selected_value + " " + post_selected);
        if ((post_selected === true) && (data.DT_RowId == post_selected_value)) {
@@ -33,14 +36,20 @@
        } else if ($.inArray(data.DT_RowId.toString(), resume_selected) !== -1 ) {
          $(row).addClass('selected');
        }
+     },
 
-     }
    };
+
+   var common_options1 = {
+     "lengthChange": false,
+     "pageLength" : 5,
+   };
+   var common_options = [common_options1, common_options2];
    datatableview.initialize($('.datatable'), common_options);
  });
 
  $(document).ready(function() {
-   $('#DataTables_Table_0 tbody').on('click', 'tr', function() {
+   $('#DataTables_Table_1 tbody').on('click', 'tr', function() {
      var id = this.id;
      var index = $.inArray(id, resume_selected);
 
@@ -53,7 +62,7 @@
      $(this).toggleClass('selected');
    });
 
-   $('#DataTables_Table_1 tbody').on('click', 'tr', function() {
+   $('#DataTables_Table_0 tbody').on('click', 'tr', function() {
      var id = this.id;
 
      if (id === post_selected_value && post_selected === true) {
@@ -72,7 +81,7 @@
        post_selected_value = id;
 
        var tr = document.getElementById(id);
-       $('#DataTables_Table_1').getElementById("text_company_name").innerHTML = tr.innerText;
+       document.getElementById("text_company_name").innerHTML = tr.innerText;
      }
    });
 
