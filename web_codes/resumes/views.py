@@ -71,6 +71,19 @@ class ResumeTable(generic.ListView):
 
         return context
 
+class MultiTable(generic.ListView):
+    context_object_name = 't_resume_list'
+    template_name = 'resumes/table_multi.html'
+
+    def get_queryset(self):
+        return Resume.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(MultiTable, self).get_context_data(**kwargs)
+        context['template_table_name'] = 'Resume'
+
+        return context
+
 
 class CompositeTable(DatatableView):
     model = Resume
