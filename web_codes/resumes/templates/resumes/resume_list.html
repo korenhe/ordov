@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-<div class="text-primary" id="text_company_name"> HAHA </div>
+<div class="text-primary" id="text_company_name"> Select Post </div>
 
 {{ post_datatable }}
 
@@ -28,27 +28,33 @@
  var post_selected_value = 0;
 
  $(function() {
-   var common_options2 = {
+   var resume_options = {
      "rowCallback": function(row, data) {
-       console.log("rowcallback in " + data.DT_RowId.toString() + " " + post_selected_value + " " + post_selected);
-       if ((post_selected === true) && (data.DT_RowId == post_selected_value)) {
-         $(row).addClass('selected');
-       } else if ($.inArray(data.DT_RowId.toString(), resume_selected) !== -1 ) {
+
+       if ($.inArray(data.DT_RowId.toString(), resume_selected) !== -1 ) {
          $(row).addClass('selected');
        }
      },
 
    };
 
-   var common_options1 = {
+   var post_options = {
      "lengthChange": false,
      "pageLength" : 5,
+
+     "rowCallback": function(row, data) {
+
+       if ((post_selected === true) && (data.DT_RowId == post_selected_value)) {
+         $(row).addClass('selected');
+       }
+     },
    };
-   var common_options = [common_options1, common_options2];
+   var common_options = [post_options, resume_options];
    datatableview.initialize($('.datatable'), common_options);
  });
 
  $(document).ready(function() {
+   // resume table
    $('#DataTables_Table_1 tbody').on('click', 'tr', function() {
      var id = this.id;
      var index = $.inArray(id, resume_selected);
@@ -62,6 +68,7 @@
      $(this).toggleClass('selected');
    });
 
+   // post table
    $('#DataTables_Table_0 tbody').on('click', 'tr', function() {
      var id = this.id;
 

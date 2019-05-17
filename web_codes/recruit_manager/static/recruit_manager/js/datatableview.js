@@ -131,7 +131,6 @@ var datatableview = {
       });
       table_index += 1;
       try {
-        console.log(options);
         options = confirm_datatable_options(options, datatable);
       } catch (e) {
 
@@ -147,6 +146,7 @@ var datatableview = {
       }
 
       var search_input = initialized_datatable.closest('.dataTables_wrapper').find('.dataTables_filter input');
+      console.log(search_input);
       var clear_button = template_clear_button.clone().click(function(){
         $(this).trigger('clear.datatable', [initialized_datatable]);
         return false;
