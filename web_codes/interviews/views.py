@@ -32,7 +32,8 @@ class InterviewViewSet(viewsets.ModelViewSet):
         # here we can modify the response data, and we can add pesudo fields in
         # serializer, as we handled candidate_id
         for td in tds:
-            resume = Resume.objects.get(pk=td['resume']).username
+            resume_obj = Resume.objects.get(pk=td['resume'])
+            resume = resume_obj.username + '(' + str(td['resume']) + ')'
             post = Post.objects.get(pk=td['post']).name
             td.update({'resume': resume})
             td.update({'post': post})

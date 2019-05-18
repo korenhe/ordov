@@ -110,7 +110,7 @@
        },
        {"data": "candidate_id",
         "visible": false},
-       {"data": "resume_id"},
+       {"data": "id"},
        {"data": "username"},
        {"data": "gender"},
        {"data": "age"},
@@ -239,20 +239,23 @@
      console.log(post_selected_value);
      console.log(resume_selected);
 
-     var csrftoken = getCookie('csrftoken');
-
      // submit to interview interface
      for (var i = 0; i < resume_selected.length; i++) {
        var xhr = new XMLHttpRequest();
        xhr.open("POST", "/api/interviews/");
        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+       var csrftoken = getCookie('csrftoken');
+
        xhr.setRequestHeader("X-CSRFToken", csrftoken);
 
-       data = {"resume": resume_selected[i],
-               "post": post_selected_value,
+       data = {"resume": Number(resume_selected[i]),
+               "post": Number(post_selected_value),
                "is_active":true,
+               "status": 0,
                "result":"Pending",
        };
+
+       console.log(data);
        xhr.send(JSON.stringify(data));
        xhr.onloadend = function() {
          //done

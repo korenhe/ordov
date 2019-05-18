@@ -11,23 +11,24 @@ class ResumeSerializer(serializers.ModelSerializer):
     def get_stat(self, resume):
         rt = resume.experience_set.first()
         if rt:
-            print(rt.company_name)
             return str(rt.company_name)
         else:
             return None
 
     def get_candidate_id(self, resume):
-        print(resume.candidate)
         if resume.candidate:
-            print(resume.candidate.id)
             return resume.candidate.id
         else:
             return None
 
+    def get_id(self, resume):
+        return resume.id
+
     class Meta:
         model = Resume
         fields = (
-            'candidate_id',
+            'candidate_id', # M
+            'id',
             'candidate',
             'resume_id',
             'visible',
