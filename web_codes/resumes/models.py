@@ -80,27 +80,25 @@ def query_resumes_by_args(**kwargs):
     order_column = kwargs.get('order[0][column]', None)[0]
     order = kwargs.get('order[0][dir]', None)[0]
 
-    age_min = kwargs.get('age_min', None)[0] or 0
-    age_max = kwargs.get('age_max', None)[0] or 100
+    age_min = kwargs.get('age_id', None)[0] or 0
 
-    degree_min = kwargs.get('degree_min', None)[0] or 0
-    degree_max = kwargs.get('degree_max', None)[0] or 10
+    degree_min = kwargs.get('degree_id', None)[0] or 0
 
-    gender_f = kwargs.get('gender_f', None) or False
-    gender_m = kwargs.get('gender_m', None) or False
+    gender_f = kwargs.get('gender_id', None) or False
 
     queryset = Resume.objects.all()
     total = queryset.count()
 
     # filter and orderby
+    """
     queryset = queryset.filter(models.Q(age__range=[age_min, age_max]) &
-                               models.Q(degree__range=[degree_min, degree_max]))
+                               models.Q(degree__gt=degree_min))
 
     if not gender_f:
         queryset = queryset.filter(models.Q(gender__contains='m'))
     elif not gender_m:
         queryset = queryset.filter(models.Q(gender__contains='f'))
-
+    """
     count = queryset.count()
 
     queryset = queryset[start:start + length]

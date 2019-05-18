@@ -78,7 +78,7 @@
 					  </div>
 					  <div class="col-md-2 form-group">
 						<label> 工作地点 </label>
-						<select class="form-control" id="gender_id">
+						<select class="form-control" id="province_id">
 						  <option>不限</option>
 						  <option>北京</option>
 						  <option>上海</option>
@@ -89,15 +89,15 @@
 				    <div class="row col-md-24 register-form">
 					  <div class="col-md-3 form-group">
 						<label> 最小年龄 </label>
-						<input type="text" name="age_id" placeholder="年龄" value="">
+						<input type="text" name="age_id" id="age_id" placeholder="年龄" value="">
 					  </div>
 					  <div class="col-md-3 form-group">
 						<label> 工作年限 </label>
-						<input type="text" name="work_time_id" placeholder="年限" value="">
+						<input type="text" name="work_time_id" id="work_time_id" placeholder="年限" value="">
 					  </div>
 					  <div class="col-md-3 form-group">
 						<label> 起薪 </label>
-						<input type="text" name="salary_id" placeholder="填入起薪" value="">
+						<input type="text" name="salary_id" id="salary_id" placeholder="填入起薪" value="">
 					  </div>
 					</div>
 				  </form>
@@ -192,14 +192,9 @@
         "url": "/api/resumes/",
         "type": "GET",
         "data": function (d) {
-          d.degree_min = $('#min_degree').val();
-          d.degree_max = $('#max_degree').val();
-
-          d.age_min = $('#min_age').val();
-          d.age_max = $('#max_age').val();
-
-          d.gender_m = $('#gender_m:checked').val();
-          d.gender_f = $('#gender_f:checked').val();
+          d.degree_id = $('#degree_id').val();
+          d.age_id = $('#age_id').val();
+          d.gender_id = $('#gender_id').val();
         },
       },
 
@@ -276,11 +271,7 @@
       ],
     });
 
-    $('#min_degree, #max_degree, #min_age, #max_age').keyup(function() {
-      table.draw();
-    });
-
-    $('#gender_m, #gender_f').on('click', function() {
+    $('#degree_id, #gender_id, #age_id').keyup(function() {
       table.draw();
     });
 
