@@ -202,7 +202,6 @@
         if ($.inArray(data.DT_RowId.toString(), selected) !== -1 ) {
           $(row).addClass('selected');
         }
-
       },
 
       "columns": [
@@ -274,6 +273,9 @@
     $('#degree_id, #gender_id, #age_id').keyup(function() {
       table.draw();
     });
+    $('#degree_id, #gender_id').change(function() {
+      table.draw();
+    });
 
     $('#dataTable tbody').on('click', 'tr', function() {
       var id = this.id;
@@ -292,7 +294,6 @@
       var s_post = localStorage['post']
       console.log(s_post);
       console.log(selected);
-
       // submit to interview interface
     });
   });

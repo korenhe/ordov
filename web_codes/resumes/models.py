@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.db import models
 from .choices import (DEGREE_CHOICES, BIRTH_YEAR_CHOICES, MAJOR_CHOICES, MARRIAGE_CHOICES, EDUCATION_TYPE_CHOICES)
+from .choices import (DEGREE_CHOICES_MAP)
 from candidates.models import Candidate
 
 # Create your models here.
@@ -84,21 +85,22 @@ def query_resumes_by_args(**kwargs):
 
     degree_min = kwargs.get('degree_id', None)[0] or 0
 
-    gender_f = kwargs.get('gender_id', None) or False
+    gender_f = kwargs.get('gender_id', None)[0]
 
     queryset = Resume.objects.all()
     total = queryset.count()
 
     # filter and orderby
-    """
-    queryset = queryset.filter(models.Q(age__range=[age_min, age_max]) &
-                               models.Q(degree__gt=degree_min))
+    if not gender_f.find(u'不限') >= 0:
+        if gender_f.find(u'男') >= 0:
+            queryset = queryset.filter(models.Q(gender__contains='m'))
+        elif gender_f.find(u'女') >= 0:
+            queryset = queryset.filter(models.Q(gender__contains='f'))
 
-    if not gender_f:
-        queryset = queryset.filter(models.Q(gender__contains='m'))
-    elif not gender_m:
-        queryset = queryset.filter(models.Q(gender__contains='f'))
-    """
+    degree_id = DEGREE_CHOICES_MAP.get(degree_min, 0)
+    queryset = queryset.filter(models.Q(degree__gte=degree_id))
+
+    # ------
     count = queryset.count()
 
     queryset = queryset[start:start + length]
