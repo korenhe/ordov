@@ -4,11 +4,50 @@
 
 <div class="panel-group" id="accordion">
 	<div class="panel panel-success">
+
+	    <?-- Add a new collapse -->
+	    <div class="panel panel-default">
+		<div class="panel-heading">
+		  <h4 class="panel-title">
+		    <a data-toggle="collapse" data-parent="#accordion"
+		       href="#collapsePostBasicInfo">
+			     岗位基本信息
+			</a>
+		  </h4>
+		</div>
+		<div id="collapsePostBasicInfo" class="panel-collapse collapse in">
+			<div class="panel-body">
+		    <?--企业基本信息-->
+			  <?-- Can we split this filter part to another filter.html? -->
+			  <div class="container col-md-24">
+                <form name='filter_form' method='post' action="#">
+				    <div class="row col-md-24 register-form">
+					  <div class="col-md-3 form-group">
+						<label> 公司名称 </label>
+						<input type="text" name="company_id" placeholder="公司名称" value="">
+					  </div>
+					  <div class="col-md-3 form-group">
+						<label> 岗位名称 </label>
+						<input type="text" name="department_id" placeholder="岗位名称" value="">
+					  </div>
+					  <div class="col-md-3 form-group">
+						<label> 职位名称 </label>
+						<input type="text" name="post_id" placeholder="职位名称" value="">
+					  </div>
+					</div>
+				  </form>
+				</div>
+				<?-- This is the end of filter logic -->
+			</div>
+		</div>
+		</div>
+	    <?-- Basic -->
+
 		<div class="panel-heading">
 			<h4 class="panel-title">
 				<a data-toggle="collapse" data-parent="#accordion"
 				   href="#collapseRequest">
-				   岗位要求(点开设置)
+				   岗位要求
 				</a>
 			</h4>
 		</div>
@@ -66,37 +105,78 @@
 				<?-- This is the end of filter logic -->
 			</div>
 		</div>
+		<?--End of the Last Filter -->
+
+	    <?-- tempPlate For a collapse -->
+	    <div class="panel panel-default">
+		<div class="panel-heading">
+		  <h4 class="panel-title">
+		    <a data-toggle="collapse" data-parent="#accordion"
+		       href="#collapseCandidates">
+			    合适的候选人名单
+			</a>
+		  </h4>
+		</div>
+		<div id="collapseCandidates" class="panel-collapse collapse in">
+			<div class="panel-body">
+
+			  <?--Logic for table show-->
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>CK</th>
+                      <th>CID</th>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Gender</th>
+                      <th>Age</th>
+                      <th>Phone</th>
+                      <th>Email</th>
+                      <th>School</th>
+                      <th>Degree</th>
+                      <th>Major</th>
+                      <th>Stat</th>
+                     </tr>
+                  </thead>
+                </table>
+                <form>
+                  <button type='submit' id='id_b_submit'>SUBMIT</button>
+                </form>
+               </div>
+			  <?--End logic for table show-->
+
+		    </div>
+		</div>
+		</div>
+	    <?-- table filter -->
+
+	    <?-- tempPlate For a collapse -->
+	    <div class="panel panel-default" style="display:none;">
+		<div class="panel-heading">
+		  <h4 class="panel-title">
+		    <a data-toggle="collapse" data-parent="#accordion"
+		       href="#collapseTemplate">
+			    title
+			</a>
+		  </h4>
+		</div>
+		<div id="collapseTemplate" class="panel-collapse collapse in">
+			<div class="panel-body">
+				body
+			</div>
+		</div>
+		</div>
+	    <?-- Basic -->
 	</div>
 </div>
 <script type="text/javascript">
 	$(function () { $('#collapseRequest').collapse('show')});
+	$(function () { $('#collapsePostBasicInfo').collapse('show')});
+	$(function () { $('#collapseCandidates').collapse('show')});
+	$(function () { $('#collapseTemplate').collapse('show')});
 </script>
 
-
-<div class="table-responsive">
-  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-    <thead>
-      <tr>
-        <th>CK</th>
-        <th>CID</th>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Gender</th>
-        <th>Age</th>
-        <th>Phone</th>
-        <th>Email</th>
-        <th>School</th>
-        <th>Degree</th>
-        <th>Major</th>
-        <th>Stat</th>
-      </tr>
-    </thead>
-  </table>
-
-  <form>
-  <button type='submit' id='id_b_submit'>SUBMIT</button>
-  </form>
-</div>
 {% endblock %}
 
 {% block extra_js %}
