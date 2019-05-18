@@ -33,11 +33,14 @@ class InterviewViewSet(viewsets.ModelViewSet):
         # serializer, as we handled candidate_id
         for td in tds:
             resume_obj = Resume.objects.get(pk=td['resume'])
-            resume = resume_obj.username + '(' + str(td['resume']) + ')'
-            post = Post.objects.get(pk=td['post']).name
+            resume = resume_obj.username + '(ID=' + str(td['resume']) + ')'
+
+            post_obj = Post.objects.get(pk=td['post'])
+            post = '-'.join([post_obj.company.name, post_obj.department.name, post_obj.name])
+
             td.update({'resume': resume})
             td.update({'post': post})
-#            td.update({'DT_RowId': td['resume']})
+            td.update({'DT_RowId': td['resume']})
 
         result['draw'] = interview['draw']
         result['recordsTotal'] = int(interview['total'])

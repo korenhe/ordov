@@ -10,8 +10,10 @@
       <div class="panel-heading">
         <h4 class="panel-title">
           <a data-toggle="collapse" data-parent="#accordion"
-            href="#collapsePost">
+href="#collapsePost">
+            <div class="text-primary" id="text_company_name">
               选择要操作的岗位
+            </div>
           </a>
         </h4>
       </div>
@@ -21,8 +23,8 @@
             <table class="table table-bordered" id="dataTable_post" width="100%" cellspacing="0">
               <thead>
               <tr><th>ID</th><th>Company</th><th>Department</th><th>Name</th></tr>
-			  </thead>
-			</table>
+              </thead>
+            </table>
           </div>
         </div>
       </div>
@@ -41,7 +43,7 @@
       </div>
       <div id="collapseRequest" class="panel-collapse collapse">
         <div class="panel-body">
-				<?-- Inner Filter -->
+                <?-- Inner Filter -->
                 <div class="container col-md-24">
                 <form name='filter_form' method='post' action="#">
                     <div class="row col-md-24 register-form">
@@ -90,7 +92,7 @@
                     </div>
                   </form>
                 </div>
-				<?-- Innter Filter-->
+                <?-- Innter Filter-->
         </div>
       </div>
     </div>
@@ -109,32 +111,32 @@
       <div id="collapseCandidates" class="panel-collapse collapse">
         <div class="panel-body">
 
-		  <?-- canidates table-->
-		  <div class="table-responsive">
-		  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-		    <thead>
-		      <tr>
-		        <th>CK</th>
-		        <th>CID</th>
-		        <th>ID</th>
-		        <th>Name</th>
-		        <th>Gender</th>
-		        <th>Age</th>
-		        <th>Phone</th>
-		        <th>Email</th>
-		        <th>School</th>
-		        <th>Degree</th>
-		        <th>Major</th>
-		        <th>Stat</th>
-		      </tr>
-		    </thead>
-		  </table>
-		  </div>
+          <?-- canidates table-->
+          <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>CK</th>
+                <th>CID</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>School</th>
+                <th>Degree</th>
+                <th>Major</th>
+                <th>Stat</th>
+              </tr>
+            </thead>
+          </table>
+          </div>
 
-		  <form>
-		    <button type='button' id='id_button_submit'>SUBMIT</button>
-		  </form>
-		  <?-- End candidates table-->
+          <form>
+            <button type='button' id='id_button_submit'>SUBMIT</button>
+          </form>
+          <?-- End candidates table-->
 
         </div>
       </div>
@@ -153,7 +155,7 @@
       </div>
       <div id="collapseTemplate" class="panel-collapse collapse">
         <div class="panel-body">
-			body
+            body
         </div>
       </div>
     </div>
@@ -167,69 +169,69 @@
 
 {% block extra_js %}
 <script>
- $(document).ready(function() {
+  $(document).ready(function() {
 
-   $(function () { $('#collapsePost').collapse({toggle: true})});
-   $(function () { $('#collapseCandidates').collapse({toggle: false})});
-   $(function () { $('#collapseTemplate').collapse({toggle: false})});
-   $(function () { $('#collapseRequest').collapse({toggle: false})});
+    $(function () { $('#collapsePost').collapse({toggle: true})});
+    $(function () { $('#collapseCandidates').collapse({toggle: false})});
+    $(function () { $('#collapseTemplate').collapse({toggle: false})});
+    $(function () { $('#collapseRequest').collapse({toggle: false})});
 
-   var resume_selected = [];
-   var post_selected = false;
-   var post_selected_value = 0;
+    var resume_selected = [];
+    var post_selected = false;
+    var post_selected_value = 0;
 
-   var table = $('#dataTable').DataTable({
-     "processing": true,
-     "serverSide": true,
+    var table = $('#dataTable').DataTable({
+      "processing": true,
+      "serverSide": true,
 
-     "ajax": {
-       "url": "/api/resumes/",
-       "type": "GET",
-       "data": function (d) {
-         d.degree_id = $('#degree_id').val();
-         d.age_id = $('#age_id').val();
-         d.gender_id = $('#gender_id').val();
-       },
-     },
-
-     "rowCallback": function(row, data) {
-       if ($.inArray(data.DT_RowId.toString(), resume_selected) !== -1 ) {
-         $(row).addClass('selected');
-       }
-
-     },
-
-     "columns": [
-       {"data": null,
-        "checkboxes": {
+      "ajax": {
+        "url": "/api/resumes/",
+        "type": "GET",
+        "data": function (d) {
+          d.degree_id = $('#degree_id').val();
+          d.age_id = $('#age_id').val();
+          d.gender_id = $('#gender_id').val();
         },
-       },
-       {"data": "candidate_id",
-        "visible": false},
-       {"data": "id"},
-       {"data": "username"},
-       {"data": "gender"},
-       {"data": "age"},
-       {"data": "phone_number"},
-       {"data": "email"},
-       {"data": "school"},
-       {"data": "degree"},
-       {"data": "major"},
-       {"data": "stat",
-        render: function(data, type, row, meta) {
-          if (row.stat) {
-            return "\
+      },
+
+      "rowCallback": function(row, data) {
+        if ($.inArray(data.DT_RowId.toString(), resume_selected) !== -1 ) {
+          $(row).addClass('selected');
+        }
+
+      },
+
+      "columns": [
+        {"data": null,
+         "checkboxes": {
+         },
+        },
+        {"data": "candidate_id",
+         "visible": false},
+        {"data": "id"},
+        {"data": "username"},
+        {"data": "gender"},
+        {"data": "age"},
+        {"data": "phone_number"},
+        {"data": "email"},
+        {"data": "school"},
+        {"data": "degree"},
+        {"data": "major"},
+        {"data": "stat",
+         render: function(data, type, row, meta) {
+           if (row.stat) {
+             return "\
   <button class=\"btn btn-success btn-icon-split border-0\" id=\"stage\">\
     <span class=\"icon text-white-50\">\
       <i class=\"fas fa-check\"></i></span>\
     <span class=\"text\">Interviewed</span>\
   </button>";
-          }
+           }
 
-          if (row.candidate_id) {
-            var url="{% url 'app_manager:t_interview_api' 1234 %}".replace(/1234/, row.candidate_id);
+           if (row.candidate_id) {
+             var url="{% url 'app_manager:t_interview_api' 1234 %}".replace(/1234/, row.candidate_id);
 
-            var str = "\
+             var str = "\
   <form action=" + url + " method='GET'>\
     <button class=\"btn btn-info btn-icon-split border-0\" id=\"stage\">\
       <span class=\"icon text-white-50\">\
@@ -237,127 +239,131 @@
       <span class=\"text\">Prepare Interview</span>\
     </button>\
   </form>";
-            return str;
-          }
+             return str;
+           }
 
-          return "ABC";
-        }
-       },
-     ],
-   });
-
-   var table_post = $('#dataTable_post').DataTable({
-     "lengthChange": false,
-     "pageLength" : 5,
-
-     "processing": true,
-     "serverSide": true,
-
-     "ajax": {
-       "url": "/api/posts/",
-       "type": "GET",
-     },
-
-     "rowCallback": function(row, data) {
-
-       if ((post_selected === true) && (data.DT_RowId == post_selected_value)) {
-         $(row).addClass('selected');
-       }
-     },
-
-     "columns": [
-       {"data": "id"},
-       {"data": "department.company.name"},
-       {"data": "department.name"},
-       {"data": "name"},
-     ],
-   });
-
-   $('#min_degree, #max_degree, #min_age, #max_age').keyup(function() {
-     table.draw();
-   });
-
-   $('#gender_m, #gender_f').on('click', function() {
-     table.draw();
-   });
-
-   $('#dataTable tbody').on('click', 'tr', function() {
-     var id = this.id;
-     var index = $.inArray(id, resume_selected);
-
-     if ( index === -1 ) {
-       resume_selected.push(id);
-     } else {
-       resume_selected.splice(index, 1);
-     }
-
-     $(this).toggleClass('selected');
-   });
-
-   // post table
-   $('#dataTable_post tbody').on('click', 'tr', function() {
-     var id = this.id;
-
-     if (id === post_selected_value && post_selected === true) {
-       $(this).toggleClass('selected');
-       post_selected = false;
-     } else {
-       $(this).toggleClass('selected');
-
-       if (post_selected === true) {
-         $('tr#' + post_selected_value).toggleClass('selected');
-       }
-       post_selected = true;
-       post_selected_value = id;
-
-       var tr = document.getElementById(id);
-       document.getElementById("text_company_name").innerHTML = tr.innerText;
-     }
-   });
-
-   function getCookie(name) {
-     var cookieValue = null;
-     if (document.cookie && document.cookie !== '') {
-       var cookies = document.cookie.split(';');
-       for (var i = 0; i < cookies.length; i++) {
-         var cookie = cookies[i].trim();
-         // Does this cookie string begin with the name we want?
-         if (cookie.substring(0, name.length + 1) === (name + '=')) {
-           cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-           break;
+           return "Available";
          }
-       }
-     }
-     return cookieValue;
-   }
+        },
+      ],
+    });
 
-   $('#id_button_submit').on('click', function() {
-     console.log(post_selected_value);
-     console.log(resume_selected);
+    var table_post = $('#dataTable_post').DataTable({
+      "lengthChange": false,
+      "pageLength" : 5,
 
-     // submit to interview interface
-     for (var i = 0; i < resume_selected.length; i++) {
-       var xhr = new XMLHttpRequest();
-       xhr.open("POST", "/api/interviews/");
-       xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-       var csrftoken = getCookie('csrftoken');
+      "processing": true,
+      "serverSide": true,
 
-       xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      "ajax": {
+        "url": "/api/posts/",
+        "type": "GET",
+      },
 
-       data = {"resume": Number(resume_selected[i]),
-               "post": Number(post_selected_value),
-               "is_active":true,
-               "status": 0,
-               "result":"Pending",
-       };
+      "rowCallback": function(row, data) {
 
-       console.log(data);
-       xhr.send(JSON.stringify(data));
-       xhr.onloadend = function() {
-         //done
-       };
-     }
-   });
- });
+        if ((post_selected === true) && (data.DT_RowId == post_selected_value)) {
+          $(row).addClass('selected');
+        }
+      },
+
+      "columns": [
+        {"data": "id"},
+        {"data": "department.company.name"},
+        {"data": "department.name"},
+        {"data": "name"},
+      ],
+    });
+
+    $('#age_id').keyup(function() {
+      table.draw();
+    });
+
+    $('#degree_id, #gender_id').change(function() {
+      table.draw();
+    });
+
+    $('#gender_m, #gender_f').on('click', function() {
+      table.draw();
+    });
+
+    $('#dataTable tbody').on('click', 'tr', function() {
+      var id = this.id;
+      var index = $.inArray(id, resume_selected);
+
+      if ( index === -1 ) {
+        resume_selected.push(id);
+      } else {
+        resume_selected.splice(index, 1);
+      }
+
+      $(this).toggleClass('selected');
+    });
+
+    // post table
+    $('#dataTable_post tbody').on('click', 'tr', function() {
+      var id = this.id;
+
+      if (id === post_selected_value && post_selected === true) {
+        $(this).toggleClass('selected');
+        post_selected = false;
+      } else {
+        $(this).toggleClass('selected');
+
+        if (post_selected === true) {
+          $('tr#' + post_selected_value).toggleClass('selected');
+        }
+        post_selected = true;
+        post_selected_value = id;
+
+        var tr = document.getElementById(id);
+        document.getElementById("text_company_name").innerHTML = tr.innerText;
+      }
+    });
+
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    $('#id_button_submit').on('click', function() {
+      console.log(post_selected_value);
+      console.log(resume_selected);
+
+      // submit to interview interface
+      for (var i = 0; i < resume_selected.length; i++) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/api/interviews/");
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        var csrftoken = getCookie('csrftoken');
+
+        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+
+        data = {"resume": Number(resume_selected[i]),
+                "post": Number(post_selected_value),
+                "is_active":true,
+                "status": 0,
+                "result":"Pending",
+               };
+
+        console.log(data);
+        xhr.send(JSON.stringify(data));
+        xhr.onloadend = function() {
+          //done
+        };
+      }
+    });
+  });
 </script>
 {% endblock%}

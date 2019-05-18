@@ -98,7 +98,8 @@ def query_resumes_by_args(**kwargs):
             queryset = queryset.filter(models.Q(gender__contains='f'))
 
     degree_id = DEGREE_CHOICES_MAP.get(degree_min, 0)
-    queryset = queryset.filter(models.Q(degree__gte=degree_id))
+    queryset = queryset.filter(models.Q(degree__gte=degree_id) &
+                               models.Q(age__gte=age_min))
 
     # ------
     count = queryset.count()
