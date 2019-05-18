@@ -28,7 +28,6 @@ class InterviewViewSet(viewsets.ModelViewSet):
         result['data'] = serializer.data
         tds = result['data']
 
-        print(result)
         # here we can modify the response data, and we can add pesudo fields in
         # serializer, as we handled candidate_id
         for td in tds:

@@ -3,124 +3,66 @@
 {% block content %}
 
 <div class="panel-group" id="accordion">
-	<div class="panel panel-success">
+    <div class="panel panel-success">
 
-	    <?-- Add a new collapse -->
-	    <div class="panel panel-default">
-		<div class="panel-heading">
-		  <h4 class="panel-title">
-		    <a data-toggle="collapse" data-parent="#accordion"
-		       href="#collapsePostBasicInfo">
-			     岗位基本信息
-			</a>
-		  </h4>
-		</div>
-		<div id="collapsePostBasicInfo" class="panel-collapse collapse">
-			<div class="panel-body">
-		    <?--企业基本信息-->
-			  <?-- Can we split this filter part to another filter.html? -->
-			  <div class="container col-md-24">
-                <form name='filter_form' method='post' action="#">
-				    <div class="row col-md-24 register-form">
-					  <div class="col-md-3 form-group">
-						<label> 公司名称 </label>
-						<input type="text" name="company_id" placeholder="公司名称" value="">
-					  </div>
-					  <div class="col-md-3 form-group">
-						<label> 岗位名称 </label>
-						<input type="text" name="department_id" placeholder="岗位名称" value="">
-					  </div>
-					  <div class="col-md-3 form-group">
-						<label> 职位名称 </label>
-						<input type="text" name="post_id" placeholder="职位名称" value="">
-					  </div>
-					</div>
-				  </form>
-				</div>
-				<?-- This is the end of filter logic -->
-			</div>
-		</div>
-		</div>
-	    <?-- Basic -->
 
-		<div class="panel-heading">
-			<h4 class="panel-title">
-				<a data-toggle="collapse" data-parent="#accordion"
-				   href="#collapseRequest">
-				   岗位要求
-				</a>
-			</h4>
-		</div>
-		<div id="collapseRequest" class="panel-collapse collapse">
-			<div class="panel-body">
-			  <?-- Can we split this filter part to another filter.html? -->
-			  <div class="container col-md-24">
+        <div id="collapseRequest" class="panel-collapse collapse">
+            <div class="panel-body">
+              <?-- Can we split this filter part to another filter.html? -->
+              <div class="container col-md-24">
                 <form name='filter_form' method='post' action="#">
-					<div class="row col-md-24 register-form">
-					  <div class="col-md-2 form-group">
+                    <div class="row col-md-24 register-form">
+                      <div class="col-md-2 form-group">
                         <label> 最低学历 </label>
-						<select class="form-control" id="degree_id">
-						  <option>不限</option>
-						  <option>初中</option>
-						  <option>高中</option>
-						  <option>本科</option>
-						  <option>硕士</option>
-						  <option>博士</option>
-						</select>
-					  </div>
-					  <div class="col-md-2 form-group">
-						<label> 性别 </label>
-						<select class="form-control" id="gender_id">
-						  <option>不限</option>
-						  <option>男</option>
-						  <option>女</option>
-						</select>
-					  </div>
-					  <div class="col-md-2 form-group">
-						<label> 工作地点 </label>
-						<select class="form-control" id="province_id">
-						  <option>不限</option>
-						  <option>北京</option>
-						  <option>上海</option>
-						  <option>杭州</option>
-						</select>
-					  </div>
-					</div>
-				    <div class="row col-md-24 register-form">
-					  <div class="col-md-3 form-group">
-						<label> 最小年龄 </label>
-						<input type="text" name="age_id" id="age_id" placeholder="年龄" value="">
-					  </div>
-					  <div class="col-md-3 form-group">
-						<label> 工作年限 </label>
-						<input type="text" name="work_time_id" id="work_time_id" placeholder="年限" value="">
-					  </div>
-					  <div class="col-md-3 form-group">
-						<label> 起薪 </label>
-						<input type="text" name="salary_id" id="salary_id" placeholder="填入起薪" value="">
-					  </div>
-					</div>
-				  </form>
-				</div>
-				<?-- This is the end of filter logic -->
-			</div>
-		</div>
-		<?--End of the Last Filter -->
+                        <select class="form-control" id="degree_id">
+                        </select>
+                      </div>
+                      <div class="col-md-2 form-group">
+                        <label> 性别 </label>
+                        <select class="form-control" id="gender_id">
+                        </select>
+                      </div>
+                      <div class="col-md-2 form-group">
+                        <label> 工作地点 </label>
+                        <select class="form-control" id="province_id">
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row col-md-24 register-form">
+                      <div class="col-md-3 form-group">
+                        <label> 最小年龄 </label>
+                        <input type="text" name="age_id" id="age_id" placeholder="年龄" value="">
+                      </div>
+                      <div class="col-md-3 form-group">
+                        <label> 工作年限 </label>
+                        <input type="text" name="work_time_id" id="work_time_id" placeholder="年限" value="">
+                      </div>
+                      <div class="col-md-3 form-group">
+                        <label> 起薪 </label>
+                        <input type="text" name="salary_id" id="salary_id" placeholder="填入起薪" value="">
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <?-- This is the end of filter logic -->
+            </div>
+        </div>
+        <?--End of the Last Filter -->
 
-	    <?-- tempPlate For a collapse -->
-	    <div class="panel panel-default">
-		<div class="panel-heading">
-		  <h4 class="panel-title">
-		    <a data-toggle="collapse" data-parent="#accordion"
-		       href="#collapseCandidates">
-			    合适的候选人名单
-			</a>
-		  </h4>
-		</div>
-		<div id="collapseCandidates" class="panel-collapse collapse">
-			<div class="panel-body">
+        <?-- tempPlate For a collapse -->
+        <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion"
+               href="#collapseCandidates">
+                合适的候选人名单
+            </a>
+          </h4>
+        </div>
+        <div id="collapseCandidates" class="panel-collapse collapse">
+            <div class="panel-body">
 
-			  <?--Logic for table show-->
+              <?--Logic for table show-->
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
@@ -140,47 +82,43 @@
                      </tr>
                   </thead>
                 </table>
-                <form>
-                  <button type='submit' id='id_b_submit'>SUBMIT</button>
-                </form>
                </div>
-			  <?--End logic for table show-->
+              <?--End logic for table show-->
 
-		    </div>
-		</div>
-		</div>
-	    <?-- table filter -->
+            </div>
+        </div>
+        </div>
+        <?-- table filter -->
 
-	    <?-- tempPlate For a collapse -->
-	    <div class="panel panel-default" style="display:none;">
-		<div class="panel-heading">
-		  <h4 class="panel-title">
-		    <a data-toggle="collapse" data-parent="#accordion"
-		       href="#collapseTemplate">
-			    title
-			</a>
-		  </h4>
-		</div>
-		<div id="collapseTemplate" class="panel-collapse collapse">
-			<div class="panel-body">
-				body
-			</div>
-		</div>
-		</div>
-	    <?-- Basic -->
-	</div>
+        <?-- tempPlate For a collapse -->
+        <div class="panel panel-default" style="display:none;">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion"
+               href="#collapseTemplate">
+                title
+            </a>
+          </h4>
+        </div>
+        <div id="collapseTemplate" class="panel-collapse collapse">
+            <div class="panel-body">
+                body
+            </div>
+        </div>
+        </div>
+        <?-- Basic -->
+    </div>
 </div>
 
 {% endblock %}
 
 {% block extra_js %}
-<script>
+  <script>
   $(document).ready(function() {
 
-	$(function () { $('#collapsePostBasicInfo').collapse('show')});
-	$(function () { $('#collapseCandidates').collapse('show')});
-	$(function () { $('#collapseTemplate').collapse('show')});
-    $(function () { $('#collapseRequest').collapse({toggle: true})});
+    $(function () { $('#collapsePostBasicInfo').collapse('show')});
+    $(function () { $('#collapseCandidates').collapse('show')});
+    $(function () { $('#collapseTemplate').collapse('show')});
 
     var selected = [];
 
@@ -205,55 +143,58 @@
       },
 
       "columns": [
-            {
-                "data": null,
-                "checkboxes": {},
-            },
-            {
-                "data": "candidate_id",
-                "visible": false
-            },
-            {
-                "data": "resume_id"
-            },
-            {
-                "data": "username"
-            },
-            {
-                "data": "gender"
-            },
-            {
-                "data": "age"
-            },
-            {
-                "data": "phone_number"
-            },
-            {
-                "data": "email"
-            },
-            {
-                "data": "school"
-            },
-            {
-                "data": "degree"
-            },
-            {
-                "data": "major"
-            },
-            {
-                "data": "stat",
-                render: function(data, type, row, meta) {
-                    if (row.stat) {
-                        return "\
+        {
+          "data": null,
+          "checkboxes": {},
+        },
+        {
+          "data": "candidate_id",
+          "visible": false
+        },
+        {
+          "data": "id",
+          render: function(data, type, row, meta) {
+            return '<a class="nav-link" href={% url 'app_manager:t_resume' 1234 %}> 1234 </a>'.replace(/1234/g, row.id);
+          }
+        },
+        {
+          "data": "username"
+        },
+        {
+          "data": "gender"
+        },
+        {
+          "data": "age"
+        },
+        {
+          "data": "phone_number"
+        },
+        {
+          "data": "email"
+        },
+        {
+          "data": "school"
+        },
+        {
+          "data": "degree"
+        },
+        {
+          "data": "major"
+        },
+        {
+          "data": "stat",
+          render: function(data, type, row, meta) {
+            if (row.stat) {
+              return "\
                         <button class=\"btn btn-success btn-icon-split border-0\" id=\"stage\">\
                         <span class=\"icon text-white-50\">\
                         <i class=\"fas fa-check\"></i></span>\
                         <span class=\"text\">Interviewed</span>\
                         </button>";
-                    }
-                if (row.candidate_id) {
-                    var url="{% url 'app_manager:t_interview_api' 1234 %}".replace(/1234/, row.candidate_id);
-                    var str = "\
+            }
+            if (row.candidate_id) {
+              var url="{% url 'app_manager:t_interview_api' 1234 %}".replace(/1234/, row.candidate_id);
+              var str = "\
                     <form action=" + url + " method='GET'>\
                     <button class=\"btn btn-info btn-icon-split border-0\" id=\"stage\">\
                     <span class=\"icon text-white-50\">\
@@ -261,12 +202,12 @@
                     <span class=\"text\">Prepare Interview</span>\
                     </button>\
                     </form>";
-                    return str;
-                }
+              return str;
+            }
 
-                return "ABC";
-                }
-            },
+            return "ABC";
+          }
+        },
       ],
     });
 

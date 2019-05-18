@@ -5,6 +5,7 @@ from django.db import models
 from .choices import (DEGREE_CHOICES, BIRTH_YEAR_CHOICES, MAJOR_CHOICES, MARRIAGE_CHOICES, EDUCATION_TYPE_CHOICES)
 from .choices import (DEGREE_CHOICES_MAP)
 from candidates.models import Candidate
+from model_utils import Choices
 
 # Create your models here.
 
@@ -73,6 +74,21 @@ class Resume(models.Model):
     def __str__ (self):
         return self.username
 
+ORDER_COLUMN_CHOICES = Choices(
+    ('0', 'id'),
+    ('1', 'candidate_id'),
+    ('2', 'id'),
+    ('3', 'username'),
+    ('4', 'gender'),
+    ('5', 'age'),
+    ('6', 'phone_number'),
+    ('7', 'email'),
+    ('8', 'school'),
+    ('9', 'degree'),
+    ('10', 'major'),
+    ('11', 'id'),
+)
+
 def query_resumes_by_args(**kwargs):
     draw = int(kwargs.get('draw', None)[0])
     length = int(kwargs.get('length', None)[0])
@@ -80,6 +96,10 @@ def query_resumes_by_args(**kwargs):
     search_value = kwargs.get('search[value]', None)[0]
     order_column = kwargs.get('order[0][column]', None)[0]
     order = kwargs.get('order[0][dir]', None)[0]
+
+    order_column = ORDER_COLUMN_CHOICES[int(order_column)][1]
+    if order == 'desc':
+        order_column = '-' + order_column
 
     age_min = kwargs.get('age_id', None)[0] or 0
 
@@ -104,7 +124,8 @@ def query_resumes_by_args(**kwargs):
     # ------
     count = queryset.count()
 
-    queryset = queryset[start:start + length]
+    queryset = queryset.order_by(order_column)[start:start + length]
+
     # final decoration
     for q in queryset:
         q.degree = DEGREE_CHOICES[q.degree][1]

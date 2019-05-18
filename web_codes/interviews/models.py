@@ -4,6 +4,7 @@ from django.db import models
 from candidates.models import Candidate
 from companies.models import Post
 from resumes.models import Resume
+from model_utils import Choices
 
 # Create your models here.
 
@@ -41,6 +42,12 @@ class Interview(models.Model):
     def __str__(self):
         return '<interview C: %s B: %s' % (self.resume.resume_id, self.post.name)
 
+ORDER_COLUMN_CHOICES = Choices(
+    ('0', 'resume'),
+    ('1', 'post'),
+    ('2', 'is_active'),
+)
+
 def query_interviews_by_args(**kwargs):
     draw = int(kwargs.get('draw', None)[0])
     length = int(kwargs.get('length', None)[0])
@@ -49,15 +56,18 @@ def query_interviews_by_args(**kwargs):
     order_column = kwargs.get('order[0][column]', None)[0]
     order = kwargs.get('order[0][dir]', None)[0]
 
+    order_column = ORDER_COLUMN_CHOICES[int(order_column)][1]
+    if order == 'desc':
+        order_column = '-' + order_column
+
     queryset = Interview.objects.all()
     total = queryset.count()
 
-    print(queryset)
     # filter and orderby
 
     count = queryset.count()
 
-    queryset = queryset[start:start + length]
+    queryset = queryset.order_by(order_column)[start:start + length]
     # final decoration
 
     return {
