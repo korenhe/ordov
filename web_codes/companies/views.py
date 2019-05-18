@@ -21,7 +21,6 @@ class CompanyView(APIView):
         return Response ({"companies": serializer.data})
 
     def post(self, request):
-        print(request.POST)
         company = request.data.get('company')
 
         serializer = CompanySerializer(data=company)
@@ -40,7 +39,6 @@ class DepartmentView(APIView):
         return Response ({"departments": serializer.data})
 
     def post(self, request):
-        print(request.POST)
         department = request.data.get('department')
 
         serializer = DepartmentSerializer(data=department)
@@ -59,7 +57,6 @@ class PostView(APIView):
         return Response ({"posts": serializer.data})
 
     def post(self, request):
-        print(request.POST)
         post = request.data.get('post')
 
         serializer = PostSerializer(data=post)

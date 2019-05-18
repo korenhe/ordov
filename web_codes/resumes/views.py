@@ -120,7 +120,6 @@ class CompositeTable(DatatableView):
         Customized implementation of the queryset getter.  The custom argument ``type`` is managed
         by us, and is used in the context and GET parameters to control which table we return.
         """
-        print('get_queryset')
         if type is None:
             type = self.request.GET.get('datatable-type', None)
 
@@ -133,7 +132,6 @@ class CompositeTable(DatatableView):
         Customized implementation of the options getter.  The custom argument ``type`` is managed
         by us, and is used in the context and GET parameters to control which table we return.
         """
-        print('get_datatable_options: {}'.format(type))
         if type is None:
             type = self.request.GET.get('datatable-type', None)
 
@@ -150,7 +148,6 @@ class CompositeTable(DatatableView):
         Customized implementation of the structure getter.  The custom argument ``type`` is managed
         by us, and is used in the context and GET parameters to control which table we return.
         """
-        print('get_datatable')
         if type is None:
             type = self.request.GET.get('datatable-type', None)
 
@@ -169,13 +166,11 @@ class CompositeTable(DatatableView):
 
 
     def get_context_data(self, **kwargs):
-        print('get_context_data')
         context = super(CompositeTable, self).get_context_data(**kwargs)
 
         # Get the other structure objects for the initial context
         context['post_datatable'] = self.get_datatable(type="C_POST")
 
-        print(context)
         return context
 
 class ResumeDetail(generic.DetailView):

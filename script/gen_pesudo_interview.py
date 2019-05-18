@@ -26,7 +26,7 @@ def generate(i):
         with open("pesudo_interview/interview.target.{}".format(i), "w", encoding='utf-8') as fw:
             json.dump(payload, fw, ensure_ascii=False)
 
-NUM=20
+NUM=1
 if __name__ == '__main__':
     count = 0
     while (count < NUM):
