@@ -101,3 +101,37 @@ class PostTable(generic.ListView):
         context = super(PostTable, self).get_context_data(**kwargs)
         context['template_table_name'] = 'Post'
         return context
+
+# TODO: This is a temporary method for update resume from ajax
+# and would be removed afterwards
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
+def UpdatePost(request):
+    if request.method == 'POST':
+        print("post",request.POST)
+        company_name = request.POST['company_name']
+        department_name = request.POST['department_name']
+        post_name = request.POST['post_name']
+        print("company:", company_name, " department:", department_name, " post:", post_name)
+        post_info = {
+            "department": {
+                "description": "",
+                "company": {
+                    "cType":"",
+                    "name": company_name,
+                    "scale": 0,
+                    "area": "",
+                    "description": "",
+                    "short_name": company_name
+                },
+                "name": department_name
+            },
+            "description": post_name,
+            "name": post_name,
+            "level": ""
+        }
+        serializer = PostSerializer(data=post_info)
+        if serializer.is_valid(raise_exception=True):
+            post_saved = serializer.save()
+        else:
+            print("Fail to serialize the post")

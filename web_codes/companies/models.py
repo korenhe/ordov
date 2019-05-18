@@ -8,12 +8,12 @@ from model_utils import Choices
 
 class Company(models.Model):
     name = models.CharField(max_length=50, primary_key=True)
-    short_name = models.CharField(max_length=50)
-    description = models.CharField(max_length=1000)
-    scale = models.IntegerField(default=0)
+    short_name = models.CharField(max_length=50, blank=True, null=True)
+    description = models.CharField(max_length=1000, blank=True, null=True)
+    scale = models.IntegerField(default=0, blank=True, null=True)
     # choice
-    area = models.CharField(max_length=50)
-    cType = models.CharField(max_length=50)
+    area = models.CharField(max_length=50, blank=True, null=True)
+    cType = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -21,7 +21,7 @@ class Company(models.Model):
 class Department(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
-    description = models.CharField(max_length=1000)
+    description = models.CharField(max_length=1000, blank=True, null=True)
 
     # reserved
     reserved1 = models.CharField(max_length=50, blank=True, null=True, default='')

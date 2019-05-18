@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container col-md-24">
-<form name='filter_form' method='post' action="#">
+<form name='filter_form'>
     {% csrf_token %}
     <div class="row col-md-24 register-form">
       <div class="col-md-3 form-group">
@@ -125,17 +125,14 @@
  });
 function postAjaxSubmit() {
   $.ajax({
-      url:"/api/posts/",
-      type:"POST",
-      data: function(d) {
-        d.company_name = $('#company_id').val();
-        d.department_name = $('#department_id').val();
-        d.post_name = $('#post_id').val();
-        d.base_salary = $('#base_salary_id').val();
-        d.gender =$('#gender_id').val();
-        d.degree =$('#degree_id').val();
+      "url": "/post/post/update",
+      "type":"POST",
+      "data": {
+        "company_name" : $('#company_name_id').val(),
+        "department_name" : $('#department_id').val(),
+        "post_name" : $('#post_id').val()
       },
-  })
+  });
 }
 </script>
 {% endblock%}

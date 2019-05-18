@@ -45,4 +45,5 @@ urlpatterns = [
     path('applicant/', include('recruit_applicant.urls'), name='applicant'),
 
     path('api/', include(router.urls)),
+    path('post/post/update', companiesViews.UpdatePost),
 ]
