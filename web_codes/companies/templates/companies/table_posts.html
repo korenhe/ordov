@@ -1,6 +1,57 @@
 {% extends "recruit_manager/table_basic.html" %}
 {% load static %}
 {% block content %}
+
+<div class="container col-md-24">
+<form name='filter_form' method='post' action="#">
+    {% csrf_token %}
+    <div class="row col-md-24 register-form">
+      <div class="col-md-3 form-group">
+        <label> 公司名称 </label>
+        <input type="text" name="company_name" id="company_name_id" placeholder="公司名" value="">
+      </div>
+      <div class="col-md-3 form-group">
+        <label> 部门名称 </label>
+        <input type="text" name="department" id="department_id" placeholder="部门名称" value="">
+      </div>
+      <div class="col-md-3 form-group">
+        <label> 岗位名称 </label>
+        <input type="text" name="post" id="post_id" placeholder="岗位名称" value="">
+	  </div>
+    </div>
+    <div class="row col-md-24 register-form">
+      <div class="col-md-3 form-group">
+        <label>底薪</label>
+        <input type="text" name="base_salary" id="base_salary_id" placeholder="底薪 元/月" value="">
+      </div>
+      <div class="col-md-3 form-group">
+        <label> 性别 </label>
+	      <select class="form-control" id="gender_id">
+            <option>不限</option>
+            <option>男</option>
+            <option>女</option>
+		  </select>
+      </div>
+      <div class="col-md-3 form-group">
+        <label> 最低学历 </label>
+          <select class="form-control" id="degree_id">
+            <option>不限</option>
+            <option>初中</option>
+            <option>高中</option>
+            <option>本科</option>
+            <option>硕士</option>
+            <option>博士</option>
+          </select>
+      </div>
+      <div class="col-md-3 form-group">
+        <button type='submit' class="btn btn-primary" id='post_button_id'>确认发布</button>
+      </div>
+    </div>
+</form>
+</div>
+
+
+<div class="container col-md-24">
 <div class="table-responsive">
   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
     <thead>
@@ -18,6 +69,8 @@
     <button type='submit' id='id_b_submit'>SUBMIT</button>
   </form>
 </div>
+</div>
+
 {% endblock %}
 
 {% block extra_js %}
@@ -65,6 +118,24 @@
      console.log(selected);
      localStorage['post'] = selected[0];
    });
+   $('#post_button_id').on('click', function() {
+        postAjaxSubmit()
+        table.draw()
+   });
  });
+function postAjaxSubmit() {
+  $.ajax({
+      url:"/api/posts/",
+      type:"POST",
+      data: function(d) {
+        d.company_name = $('#company_id').val();
+        d.department_name = $('#department_id').val();
+        d.post_name = $('#post_id').val();
+        d.base_salary = $('#base_salary_id').val();
+        d.gender =$('#gender_id').val();
+        d.degree =$('#degree_id').val();
+      },
+  })
+}
 </script>
 {% endblock%}
