@@ -1,78 +1,179 @@
 {% extends "recruit_manager/table_basic.html" %}
 {% load static %}
 {% block content %}
-<div class="table-responsive">
 
-  <div class="text-primary" id="text_company_name"> Select Post </div>
+<div class="panel-group" id="accordion">
+  <div class="panel panel-success">
 
-  <table class="table table-bordered" id="dataTable_post" width="100%" cellspacing="0">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Company</th>
-        <th>Department</th>
-        <th>Name</th>
-      </tr>
-    </thead>
-  </table>
+    <?-- Post -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion"
+            href="#collapsePost">
+              选择要操作的岗位
+          </a>
+        </h4>
+      </div>
+      <div id="collapsePost" class="panel-collapse collapse">
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable_post" width="100%" cellspacing="0">
+              <thead>
+              <tr><th>ID</th><th>Company</th><th>Department</th><th>Name</th></tr>
+			  </thead>
+			</table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <?-- Post -->
 
-  <HR style="border:3 double #987cb9" width="90%" color=#987cb9 SIZE=3>
+    <?-- Filter -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion"
+            href="#collapseRequest">
+              岗位要求设置
+          </a>
+        </h4>
+      </div>
+      <div id="collapseRequest" class="panel-collapse collapse">
+        <div class="panel-body">
+				<?-- Inner Filter -->
+                <div class="container col-md-24">
+                <form name='filter_form' method='post' action="#">
+                    <div class="row col-md-24 register-form">
+                      <div class="col-md-2 form-group">
+                        <label> 最低学历 </label>
+                        <select class="form-control" id="degree_id">
+                          <option>不限</option>
+                          <option>初中</option>
+                          <option>高中</option>
+                          <option>本科</option>
+                          <option>硕士</option>
+                          <option>博士</option>
+                        </select>
+                      </div>
+                      <div class="col-md-2 form-group">
+                        <label> 性别 </label>
+                        <select class="form-control" id="gender_id">
+                          <option>不限</option>
+                          <option>男</option>
+                          <option>女</option>
+                        </select>
+                      </div>
+                      <div class="col-md-2 form-group">
+                        <label> 工作地点 </label>
+                        <select class="form-control" id="province_id">
+                          <option>不限</option>
+                          <option>北京</option>
+                          <option>上海</option>
+                          <option>杭州</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row col-md-24 register-form">
+                      <div class="col-md-3 form-group">
+                        <label> 最小年龄 </label>
+                        <input type="text" name="age_id" id="age_id" placeholder="年龄" value="">
+                      </div>
+                      <div class="col-md-3 form-group">
+                        <label> 工作年限 </label>
+                        <input type="text" name="work_time_id" id="work_time_id" placeholder="年限" value="">
+                      </div>
+                      <div class="col-md-3 form-group">
+                        <label> 起薪 </label>
+                        <input type="text" name="salary_id" id="salary_id" placeholder="填入起薪" value="">
+                      </div>
+                    </div>
+                  </form>
+                </div>
+				<?-- Innter Filter-->
+        </div>
+      </div>
+    </div>
+    <?-- Filter -->
 
-  <table border="0" cellspacing="5" cellpadding="5">
-    <tbody>
-      <tr>
-        <td>Minimum age:</td>
-        <td><input type="text" id="min_age" name="min_age"></td>
+    <?-- Candidates -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion"
+            href="#collapseCandidates">
+              符合条件的候选人
+          </a>
+        </h4>
+      </div>
+      <div id="collapseCandidates" class="panel-collapse collapse">
+        <div class="panel-body">
 
-        <td>Minimum degree:</td>
-        <td><input type="text" id="min_degree" name="min_degree"></td>
+		  <?-- canidates table-->
+		  <div class="table-responsive">
+		  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+		    <thead>
+		      <tr>
+		        <th>CK</th>
+		        <th>CID</th>
+		        <th>ID</th>
+		        <th>Name</th>
+		        <th>Gender</th>
+		        <th>Age</th>
+		        <th>Phone</th>
+		        <th>Email</th>
+		        <th>School</th>
+		        <th>Degree</th>
+		        <th>Major</th>
+		        <th>Stat</th>
+		      </tr>
+		    </thead>
+		  </table>
+		  </div>
 
-        <td>Gender:</td>
-        <td><input type="checkbox" id="gender_f" name="gender_f" checked>Female</td>
-      </tr>
-      <tr>
-        <td>Maximum age:</td>
-        <td><input type="text" id="max_age" name="max_age"></td>
+		  <form>
+		    <button type='button' id='id_button_submit'>SUBMIT</button>
+		  </form>
+		  <?-- End candidates table-->
 
-        <td>Maximum degree:</td>
-        <td><input type="text" id="max_degree" name="max_degree"></td>
+        </div>
+      </div>
+    </div>
+    <?-- Candidates -->
 
-        <td></td>
-        <td><input type="checkbox" id="gender_m" name="gender_m" checked>Male</td>
-      </tr>
-    </tbody>
-  </table>
+    <?-- tempPlate For a collapse -->
+    <div class="panel panel-default" style="display:none;">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion"
+            href="#collapseTemplate">
+              title
+          </a>
+        </h4>
+      </div>
+      <div id="collapseTemplate" class="panel-collapse collapse">
+        <div class="panel-body">
+			body
+        </div>
+      </div>
+    </div>
+    <?-- Basic -->
 
-
-  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-    <thead>
-      <tr>
-        <th>CK</th>
-        <th>CID</th>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Gender</th>
-        <th>Age</th>
-        <th>Phone</th>
-        <th>Email</th>
-        <th>School</th>
-        <th>Degree</th>
-        <th>Major</th>
-        <th>Stat</th>
-      </tr>
-    </thead>
-  </table>
-
-  <form>
-    <button type='button' id='id_button_submit'>SUBMIT</button>
-  </form>
-
+  </div>
 </div>
+
+
 {% endblock %}
 
 {% block extra_js %}
 <script>
  $(document).ready(function() {
+
+   $(function () { $('#collapsePost').collapse({toggle: true})});
+   $(function () { $('#collapseCandidates').collapse({toggle: false})});
+   $(function () { $('#collapseTemplate').collapse({toggle: false})});
+   $(function () { $('#collapseRequest').collapse({toggle: false})});
+
    var resume_selected = [];
    var post_selected = false;
    var post_selected_value = 0;
@@ -85,14 +186,9 @@
        "url": "/api/resumes/",
        "type": "GET",
        "data": function (d) {
-         d.degree_min = $('#min_degree').val();
-         d.degree_max = $('#max_degree').val();
-
-         d.age_min = $('#min_age').val();
-         d.age_max = $('#max_age').val();
-
-         d.gender_m = $('#gender_m:checked').val();
-         d.gender_f = $('#gender_f:checked').val();
+         d.degree_id = $('#degree_id').val();
+         d.age_id = $('#age_id').val();
+         d.gender_id = $('#gender_id').val();
        },
      },
 
