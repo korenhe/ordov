@@ -15,7 +15,7 @@
 			</a>
 		  </h4>
 		</div>
-		<div id="collapsePostBasicInfo" class="panel-collapse collapse in">
+		<div id="collapsePostBasicInfo" class="panel-collapse collapse">
 			<div class="panel-body">
 		    <?--企业基本信息-->
 			  <?-- Can we split this filter part to another filter.html? -->
@@ -117,7 +117,7 @@
 			</a>
 		  </h4>
 		</div>
-		<div id="collapseCandidates" class="panel-collapse collapse in">
+		<div id="collapseCandidates" class="panel-collapse collapse">
 			<div class="panel-body">
 
 			  <?--Logic for table show-->
@@ -161,7 +161,7 @@
 			</a>
 		  </h4>
 		</div>
-		<div id="collapseTemplate" class="panel-collapse collapse in">
+		<div id="collapseTemplate" class="panel-collapse collapse">
 			<div class="panel-body">
 				body
 			</div>
@@ -170,18 +170,18 @@
 	    <?-- Basic -->
 	</div>
 </div>
-<script type="text/javascript">
-	$(function () { $('#collapseRequest').collapse('show')});
-	$(function () { $('#collapsePostBasicInfo').collapse('show')});
-	$(function () { $('#collapseCandidates').collapse('show')});
-	$(function () { $('#collapseTemplate').collapse('show')});
-</script>
 
 {% endblock %}
 
 {% block extra_js %}
 <script>
   $(document).ready(function() {
+
+	$(function () { $('#collapsePostBasicInfo').collapse('show')});
+	$(function () { $('#collapseCandidates').collapse('show')});
+	$(function () { $('#collapseTemplate').collapse('show')});
+    $(function () { $('#collapseRequest').collapse({toggle: true})});
+
     var selected = [];
 
     var table = $('#dataTable').DataTable({
