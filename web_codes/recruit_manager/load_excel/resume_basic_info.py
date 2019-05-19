@@ -65,9 +65,11 @@ def create_or_update_basic_info(resume, phone):
 
     degreeNO = validate_degree(degree)
 
+    age = 0
     if not birth_year == '':
         print("birth_year: ", birth_year,"|")
         birth_year = int(birth_year)
+        age = 2019 - brith_year
     if not birth_month == '':
         birth_month = int(birth_month)
     if not birth_day == '':
@@ -89,6 +91,7 @@ def create_or_update_basic_info(resume, phone):
 		"birth_day" : birth_day,
 		"identity" : identity,
         "email": email,
+        "age": age,
 
 		"degree" : degreeNO,
 		"major" : major,
