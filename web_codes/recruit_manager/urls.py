@@ -18,6 +18,7 @@ urlpatterns = [
     path('interview-result/<int:candidate_id>', views.interview_result, name='t_interview_result'),
 
     path('invitation-api/<int:resume_id>', views.invitation_api, name='t_invitation_api'),
+    path('invitation-result/<int:resume_id>', views.invitation_result, name='t_invitation_result'),
 
     path('resumes/', resumesViews.ResumeTable.as_view(), name='t_resumes'),
     path('multi/', resumesViews.MultiTable.as_view(), name='t_multi'),

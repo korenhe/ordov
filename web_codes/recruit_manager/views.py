@@ -69,13 +69,6 @@ def interview_api(request, candidate_id):
     }
     return render(request, 'recruit_manager/interview_api.html', context)
 
-def invitation_api(request, resume_id):
-    resume = get_object_or_404(Resume, pk=resume_id)
-    context = {
-        't_resume': resume
-    }
-    return render(request, 'recruit_manager/invitation_api.html', context)
-
 def interview_result(request, candidate_id):
     candidate = get_object_or_404(Candidate, pk=candidate_id)
 
@@ -83,4 +76,18 @@ def interview_result(request, candidate_id):
     candidate.save()
     context = {}
 
-    return HttpResponseRedirect(reverse('app_manager:t_candidates'), context)
+    return HttpResponseRedirect(reverse('app_manager:t_interviews'), context)
+
+def invitation_api(request, resume_id):
+    resume = get_object_or_404(Resume, pk=resume_id)
+    context = {
+        't_resume': resume
+    }
+    return render(request, 'recruit_manager/invitation_api.html', context)
+
+def invitation_result(request, resume_id):
+    resume = get_object_or_404(Resume, pk=resume_id)
+
+    context = {}
+
+    return HttpResponseRedirect(reverse('app_manager:t_interviews'), context)

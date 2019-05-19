@@ -5,15 +5,7 @@ from .models import Resume, Education
 
 class ResumeSerializer(serializers.ModelSerializer):
     candidate = CandidateSerializer(required=False)
-    stat = serializers.SerializerMethodField()
     candidate_id = serializers.SerializerMethodField()
-
-    def get_stat(self, resume):
-        rt = resume.experience_set.first()
-        if rt:
-            return str(rt.company_name)
-        else:
-            return None
 
     def get_candidate_id(self, resume):
         if resume.candidate:
@@ -49,7 +41,6 @@ class ResumeSerializer(serializers.ModelSerializer):
             'degree',
             'major',
             'school',
-            'stat'
         )
 
     def create(self, validated_data):
