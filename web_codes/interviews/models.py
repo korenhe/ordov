@@ -32,7 +32,6 @@ STATUS_ONDUTY_CHOICES = (
 class Interview(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, null=True)
-    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, null=True, blank=True)
     is_active = models.BooleanField(default=1)
     status = models.IntegerField(choices=STATUS_CHOICES, default=0)
     last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
@@ -76,7 +75,10 @@ def query_interviews_by_args(**kwargs):
     count = queryset.count()
 
     queryset = queryset.order_by(order_column)[start:start + length]
+
     # final decoration
+    for q in queryset:
+        q.status = STATUS_CHOICES[q.status][1]
 
     return {
         'items': queryset,

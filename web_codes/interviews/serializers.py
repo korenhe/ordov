@@ -10,5 +10,6 @@ class InterviewSerializer(serializers.ModelSerializer):
             'resume',
             'post',
             'is_active',
+            'status',
             'result',
         )

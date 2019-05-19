@@ -40,6 +40,11 @@ class InterviewViewSet(viewsets.ModelViewSet):
             td.update({'resume_pk': resume_obj.id})
             td.update({'resume': resume})
             td.update({'post': post})
+
+            if resume_obj.candidate:
+                td.update({'linked_candidate': resume_obj.candidate.id})
+            else:
+                td.update({'linked_candidate': None})
             td.update({'DT_RowId': td['resume']})
 
         result['draw'] = interview['draw']

@@ -10,6 +10,8 @@
         <th>*Post</th>
         <th>Active</th>
         <th>Status</th>
+        <th>Action</th>
+        <th>Linked</th>
       </tr>
     </thead>
   </table>
@@ -34,9 +36,10 @@
        {"data": "resume"},
        {"data": "post"},
        {"data": "is_active"},
-       {"data": "stat",
+       {"data": "status"},
+       {"data": null,
         render: function(data, type, row, meta) {
-          if (row.status) {
+          if (row.status > 0) {
             return "\
   <button class=\"btn btn-success btn-icon-split border-0\" id=\"stage\">\
     <span class=\"icon text-white-50\">\
@@ -45,10 +48,9 @@
   </button>";
           }
 
-          if (row.candidate_id) {
-            var url="{% url 'app_manager:t_interview_api' 1234 %}".replace(/1234/, row.candidate_id);
+          var url="{% url 'app_manager:t_interview_api' 1234 %}".replace(/1234/, row.candidate_id);
 
-            var str = "\
+          var str = "\
   <form action=" + url + " method='GET'>\
     <button class=\"btn btn-info btn-icon-split border-0\" id=\"stage\">\
       <span class=\"icon text-white-50\">\
@@ -56,22 +58,35 @@
       <span class=\"text\">Prepare Interview</span>\
     </button>\
   </form>";
-            return str;
-          } else {
-            var url='{% url 'app_manager:t_invitation_api' 1234 %}'.replace(/1234/, row.resume_pk);
-            var str = "\
+          return str;
+        }
+       },
+       {
+         "data": null,
+         render: function(data, type, row, meta) {
+           if (row.linked_candidate == null) {
+             console.log(row.linked_candidate);
+             var url='{% url 'app_manager:t_invitation_api' 1234 %}'.replace(/1234/, row.resume_pk);
+             var str = "\
   <form action=" + url + " method='GET'>\
-    <button class=\"btn btn-info btn-icon-split border-0\" id=\"stage\">\
+    <button class=\"btn btn-primary btn-icon-split border-0\" id=\"stage\">\
       <span class=\"icon text-white-50\">\
-        <i class=\"fas fa-arrow-right\"></i></span>\
+        <i class=\"fas fa-info-circle\"></i></span>\
       <span class=\"text\">Invitation</span>\
     </button>\
   </form>";
-            return str;
-          }
-
-          return "Unreachable";
-        }
+             return str;
+           } else {
+             console.log(row.linked_candidate);
+             var str = "\
+    <button class=\"btn btn-success btn-icon-split border-0\" id=\"stage\">\
+      <span class=\"icon text-white-50\">\
+        <i class=\"fas fa-check\"></i></span>\
+      <span class=\"text\">Linked: " + row.linked_candidate + "</span>\
+    </button>";
+             return str;
+           }
+         }
        },
      ],
    });
