@@ -16,7 +16,7 @@
       <li class="nav-item">
         <a class="nav-link" href={% url 'app_manager:t_index' %}>
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
+          <span>系统信息总览</span></a>
       </li>
 
       <!-- Divider -->
@@ -24,26 +24,56 @@
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        Interface
+        操作面板
       </div>
+
+      <!-- Nav Item - Tables -->
+      <li class="nav-item active">
+        <a class="nav-link" href={% url 'app_manager:t_interviews' %}>
+          <i class="fas fa-fw fa-table"></i>
+          <span>面试过程</span></a>
+      </li>
+
+      <!-- Nav Item - Tables -->
+      <li class="nav-item active">
+        <a class="nav-link" href={% url 'app_manager:t_posts' %}>
+          <i class="fas fa-fw fa-table"></i>
+          <span>发布岗位</span></a>
+      </li>
+
+      <!-- Nav Item - Tables -->
+      <li class="nav-item active">
+        <a class="nav-link" href={% url 'app_manager:t_resumes' %}>
+          <i class="fas fa-fw fa-table"></i>
+          <span>查看所有简历</span></a>
+      </li>
+
+      <!-- Nav Item - Tables -->
+      <li class="nav-item active">
+        <a class="nav-link" href={% url 'app_manager:t_multi' %}>
+          <i class="fas fa-fw fa-table"></i>
+          <span>人才过滤</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
           <i class="fas fa-fw fa-cog"></i>
-          <span>Components</span>
+          <span>系统工具</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Components:</h6>
-            <a class="collapse-item" href="#">Schedule</a>
-            <a class="collapse-item" href="#">Todos</a>
+            <h6 class="collapse-header">Excel:</h6>
+            <a class="collapse-item" href={% url 'app_manager:t_upload'%}>上传简历Excel表</a>
           </div>
         </div>
       </li>
 
       <!-- Nav Item - Utilities Collapse Menu -->
-      <li class="nav-item">
+      <li class="nav-item" style="display:none">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
           <i class="fas fa-fw fa-wrench"></i>
           <span>Utilities</span>
@@ -55,69 +85,6 @@
             <a class="collapse-item" href=#>Times</a>
           </div>
         </div>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Addons
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Pages</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Login Screens:</h6>
-            <a class="collapse-item" href=#>Login</a>
-            <a class="collapse-item" href=#>Register</a>
-            <a class="collapse-item" href=#>Forgot Password</a>
-            <div class="collapse-divider"></div>
-            <h6 class="collapse-header">Other Pages:</h6>
-            <a class="collapse-item" href=#>404 Page</a>
-            <a class="collapse-item" href={% url 'app_manager:t_upload'%}>上传简历Excel表</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Charts</span></a>
-      </li>
-
-      <!-- Nav Item - Tables -->
-      <li class="nav-item active">
-        <a class="nav-link" href={% url 'app_manager:t_interviews' %}>
-          <i class="fas fa-fw fa-table"></i>
-          <span>Interviews</span></a>
-      </li>
-
-      <!-- Nav Item - Tables -->
-      <li class="nav-item active">
-        <a class="nav-link" href={% url 'app_manager:t_posts' %}>
-          <i class="fas fa-fw fa-table"></i>
-          <span>Posts</span></a>
-      </li>
-
-      <!-- Nav Item - Tables -->
-      <li class="nav-item active">
-        <a class="nav-link" href={% url 'app_manager:t_resumes' %}>
-          <i class="fas fa-fw fa-table"></i>
-          <span>Resumes</span></a>
-      </li>
-
-      <!-- Nav Item - Tables -->
-      <li class="nav-item active">
-        <a class="nav-link" href={% url 'app_manager:t_multi' %}>
-          <i class="fas fa-fw fa-table"></i>
-          <span>Composite</span></a>
       </li>
 
       <!-- Divider -->
