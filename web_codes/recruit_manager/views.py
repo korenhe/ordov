@@ -17,10 +17,14 @@ from .load_excel import load_excel
 def index(request):
     tcc = Company.objects.all().count()
     tac = Resume.objects.all().count()
+    tic = Interview.objects.all().count()
+    tsc = 0
 
     context = {
         't_company_count': tcc,
         't_candidate_count': tac,
+        't_interview_count': tic,
+        't_success_count': tsc,
     }
     return render(request, 'recruit_manager/index.html', context)
 
