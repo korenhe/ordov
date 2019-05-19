@@ -203,6 +203,7 @@ href="#collapsePost">
 
       "columns": [
         {"data": null,
+         "visible": false,
          "checkboxes": {
          },
         },
@@ -280,10 +281,6 @@ href="#collapsePost">
     });
 
     $('#degree_id, #gender_id').change(function() {
-      table.draw();
-    });
-
-    $('#gender_m, #gender_f').on('click', function() {
       table.draw();
     });
 
