@@ -44,8 +44,9 @@ class Interview(models.Model):
 
 ORDER_COLUMN_CHOICES = Choices(
     ('0', 'resume'),
-    ('1', 'post'),
-    ('2', 'is_active'),
+    ('1', 'resume'),
+    ('2', 'post'),
+    ('3', 'is_active'),
 )
 
 def query_interviews_by_args(**kwargs):
