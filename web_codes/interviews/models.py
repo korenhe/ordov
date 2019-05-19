@@ -9,13 +9,13 @@ from model_utils import Choices
 # Create your models here.
 
 STATUS_CHOICES = (
-    (0, 'Open'),
+    (0, '预约'),
     (1, '面试前沟通(AI/人工面试)'),
     (2, '面试1'),
     (3, '面试2'),
     (4, '面试3'),
     (5, '发放offer'),
-    (6, 'finish'),
+    (6, '完成'),
 )
 
 STATUS_ONDUTY_CHOICES = (

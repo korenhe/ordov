@@ -32,12 +32,44 @@
                         <input type="text" class="form-control" id="apiEmail" placeholder={{ t_resume.email }}>
                       </div>
 
+                      {% if t_interview.status == 0 %}
                       <button class="btn btn-info btn-icon-split border-0" id="stage">
                         <span class="icon text-white-50">
                           <i class="fas fa-arrow-right"></i>
                         </span>
-                        <span class="text">Contact Candidate...</span>
+                        <span class="text">开始预约联系人</span>
                       </button>
+                      {% elif t_interview.status == 1 %}
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="text_result" placeholder="填写意见">
+                      </div>
+                      <button class="btn btn-info btn-icon-split border-0" id="stage">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-arrow-right"></i>
+                        </span>
+                        <span class="text">面试前沟通结束</span>
+                      </button>
+                      {% elif t_interview.status < 5 %}
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="text_result" placeholder="填写意见">
+                      </div>
+                      <button class="btn btn-info btn-icon-split border-0" id="stage">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-arrow-right"></i>
+                        </span>
+                        <span class="text">面试结束</span>
+                      </button>
+                      {% elif t_interview.status == 5 %}
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="text_result" placeholder="OFFER详情">
+                      </div>
+                      <button class="btn btn-info btn-icon-split border-0" id="stage">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-arrow-right"></i>
+                        </span>
+                        <span class="text">发放OFFER</span>
+                      </button>
+                      {% endif %}
                     <hr>
                   </form>
                   <hr>
