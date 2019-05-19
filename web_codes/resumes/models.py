@@ -121,6 +121,13 @@ def query_resumes_by_args(**kwargs):
     queryset = queryset.filter(models.Q(degree__gte=degree_id) &
                                models.Q(age__gte=age_min))
 
+    if search_value:
+        queryset = queryset.filter(models.Q(username__icontains=search_value) |
+                                   models.Q(phone_number__icontains=search_value) |
+                                   models.Q(email__icontains=search_value) |
+                                   models.Q(school__icontains=search_value) |
+                                   models.Q(major__icontains=search_value))
+
     # ------
     count = queryset.count()
 

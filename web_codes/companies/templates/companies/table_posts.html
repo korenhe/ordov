@@ -53,10 +53,10 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Company</th>
-        <th>Department</th>
-        <th>JD</th>
-        <th>Level</th>
+        <th>*Company</th>
+        <th>*Department</th>
+        <th>*Name</th>
+        <th>*JD</th>
       </tr>
     </thead>
   </table>
@@ -92,6 +92,7 @@
        {"data": "department.company.name"},
        {"data": "department.name"},
        {"data": "name"},
+       {"data": "description"},
      ],
    });
 
@@ -113,20 +114,20 @@
      localStorage['post'] = selected[0];
    });
    $('#post_button_id').on('click', function() {
-        postAjaxSubmit()
-        table.draw()
+     postAjaxSubmit()
+     table.draw()
    });
  });
-function postAjaxSubmit() {
-  $.ajax({
-      "url": "/post/post/update",
-      "type":"POST",
-      "data": {
-        "company_name" : $('#company_name_id').val(),
-        "department_name" : $('#department_id').val(),
-        "post_name" : $('#post_id').val()
-      },
-  });
-}
+ function postAjaxSubmit() {
+   $.ajax({
+     "url": "/post/post/update",
+     "type":"POST",
+     "data": {
+       "company_name" : $('#company_name_id').val(),
+       "department_name" : $('#department_id').val(),
+       "post_name" : $('#post_id').val()
+     },
+   });
+ }
 </script>
 {% endblock%}

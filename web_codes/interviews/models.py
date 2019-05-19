@@ -65,6 +65,13 @@ def query_interviews_by_args(**kwargs):
 
     # filter and orderby
 
+    if search_value:
+        queryset = queryset.filter(models.Q(post__name__icontains=search_value) |
+                                   models.Q(post__department__name__icontains=search_value) |
+                                   models.Q(post__department__company__name__icontains=search_value) |
+                                   models.Q(resume__username__icontains=search_value))
+
+    # ------
     count = queryset.count()
 
     queryset = queryset.order_by(order_column)[start:start + length]

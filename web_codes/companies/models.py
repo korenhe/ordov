@@ -54,6 +54,7 @@ ORDER_COLUMN_CHOICES = Choices(
     ('1', 'company'),
     ('2', 'department'),
     ('3', 'name'),
+    ('4', 'description'),
 )
 
 def query_posts_by_args(**kwargs):
@@ -72,6 +73,14 @@ def query_posts_by_args(**kwargs):
     total = queryset.count()
 
     # filter and orderby
+
+    if search_value:
+        queryset = queryset.filter(models.Q(department__company__name__icontains=search_value) |
+                                   models.Q(department__name__icontains=search_value) |
+                                   models.Q(name__icontains=search_value) |
+                                   models.Q(description__icontains=search_value))
+
+    # ------
     count = queryset.count()
 
     queryset = queryset.order_by(order_column)[start:start + length]
