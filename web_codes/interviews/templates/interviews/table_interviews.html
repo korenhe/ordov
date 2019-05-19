@@ -48,7 +48,7 @@
   </button>";
           }
 
-          var url="{% url 'app_manager:t_interview_api' 1234 %}".replace(/1234/, row.candidate_id);
+          var url="{% url 'app_manager:t_interview_api' 1234 %}".replace(/1234/, row.resume_pk);
 
           var str = "\
   <form action=" + url + " method='GET'>\

@@ -14,8 +14,8 @@ urlpatterns = [
 
     path('interviews/', interviewsViews.InterviewTable.as_view(), name='t_interviews'),
 
-    path('interview-api/<int:candidate_id>', views.interview_api, name='t_interview_api'),
-    path('interview-result/<int:candidate_id>', views.interview_result, name='t_interview_result'),
+    path('interview-api/<int:resume_id>', views.interview_api, name='t_interview_api'),
+    path('interview-result/<int:resume_id>', views.interview_result, name='t_interview_result'),
 
     path('invitation-api/<int:resume_id>', views.invitation_api, name='t_invitation_api'),
     path('invitation-result/<int:resume_id>', views.invitation_result, name='t_invitation_result'),

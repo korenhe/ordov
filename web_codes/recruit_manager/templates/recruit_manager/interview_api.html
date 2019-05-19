@@ -20,16 +20,16 @@
                   <div class="text-left">
                     <h1 class="h4 text-gray-900 mb-4">Schedule Interview</h1>
                   </div>
-                  <form class="user "action={% url 'app_manager:t_interview_result' t_candidate.id %} method='GET'>
+                  <form class="user "action={% url 'app_manager:t_interview_result' t_resume.id %} method='GET'>
 
                       <div class="form-group">
-                        <input type="text" class="form-control" id="apiName" aria-describedby="Username" placeholder={{ t_candidate.resume_set.first.username }}>
+                        <input type="text" class="form-control" id="apiName" aria-describedby="Username" placeholder={{ t_resume.username }}>
                       </div>
                       <div class="form-group">
-                        <input type="text" class="form-control" id="apiPhone" placeholder={{ t_candidate.resume_set.first.phone_number }}>
+                        <input type="text" class="form-control" id="apiPhone" placeholder={{ t_resume.phone_number }}>
                       </div>
                       <div class="form-group">
-                        <input type="text" class="form-control" id="apiEmail" placeholder={{ t_candidate.resume_set.first.email }}>
+                        <input type="text" class="form-control" id="apiEmail" placeholder={{ t_resume.email }}>
                       </div>
 
                       <button class="btn btn-info btn-icon-split border-0" id="stage">
