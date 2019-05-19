@@ -6,9 +6,10 @@ from django.views import generic
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import viewsets, status
+from rest_framework import viewsets
+from rest_framework import status as rest_status
 
-from .models import Interview, query_interviews_by_args
+from .models import Interview, query_interviews_by_args, STATUS_CHOICES
 from .serializers import InterviewSerializer
 from companies.models import Post
 from resumes.models import Resume
@@ -40,6 +41,7 @@ class InterviewViewSet(viewsets.ModelViewSet):
             td.update({'resume_pk': resume_obj.id})
             td.update({'resume': resume})
             td.update({'post': post})
+            td.update({'status_name': STATUS_CHOICES[td['status']][1]})
 
             if resume_obj.candidate:
                 td.update({'linked_candidate': resume_obj.candidate.id})
@@ -51,7 +53,7 @@ class InterviewViewSet(viewsets.ModelViewSet):
         result['recordsTotal'] = int(interview['total'])
         result['recordsFiltered'] = int(interview['count'])
 
-        return Response(result, status=status.HTTP_200_OK, template_name=None, content_type=None)
+        return Response(result, status=rest_status.HTTP_200_OK, template_name=None, content_type=None)
 
 class InterviewTable(generic.ListView):
     context_object_name = 't_interview_list'

@@ -66,18 +66,22 @@ class CandidateTable(generic.ListView):
         context['template_table_name'] = 'Candidate'
         return context
 
-def interview_api(request, resume_id):
+def interview_api(request, resume_id, interview_id):
     resume = get_object_or_404(Resume, pk=resume_id)
+    interview = get_object_or_404(Interview, pk=interview_id)
+
     context = {
-        't_resume': resume
+        't_resume': resume,
+        't_interview' : interview,
     }
     return render(request, 'recruit_manager/interview_api.html', context)
 
-def interview_result(request, resume_id):
-    resume = get_object_or_404(Resume, pk=resume_id)
+def interview_result(request, interview_id):
+    interview = get_object_or_404(Interview, pk=interview_id)
 
-    #candidate.interviewed = True
-    #candidate.save()
+    if interview.status < 6:
+        interview.status += 1
+        interview.save()
     context = {}
 
     return HttpResponseRedirect(reverse('app_manager:t_interviews'), context)

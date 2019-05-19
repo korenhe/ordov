@@ -5,10 +5,12 @@
   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
     <thead>
       <tr>
+        <th>IPK</th>
         <th>RPK</th>
         <th>*Resume</th>
         <th>*Post</th>
         <th>Active</th>
+        <th>Status</th>
         <th>Status</th>
         <th>Action</th>
         <th>Linked</th>
@@ -24,6 +26,7 @@
    var table = $('#dataTable').DataTable({
      "processing": true,
      "serverSide": true,
+     "order": [[ 0, "desc" ]],
 
      "ajax": {
        "url": "/api/interviews/",
@@ -31,15 +34,18 @@
      },
 
      "columns": [
+       {"data": "id"},
        {"data": "resume_pk",
         "visible": false},
        {"data": "resume"},
        {"data": "post"},
        {"data": "is_active"},
-       {"data": "status"},
+       {"data": "status_name"},
+       {"data": "status",
+        "visible": false},
        {"data": null,
         render: function(data, type, row, meta) {
-          if (row.status > 0) {
+          if (row.status == 6) {
             return "\
   <button class=\"btn btn-success btn-icon-split border-0\" id=\"stage\">\
     <span class=\"icon text-white-50\">\
@@ -48,7 +54,7 @@
   </button>";
           }
 
-          var url="{% url 'app_manager:t_interview_api' 1234 %}".replace(/1234/, row.resume_pk);
+          var url="{% url 'app_manager:t_interview_api' 1234 2345 %}".replace(/1234/, row.resume_pk).replace(/2345/, row.id);
 
           var str = "\
   <form action=" + url + " method='GET'>\

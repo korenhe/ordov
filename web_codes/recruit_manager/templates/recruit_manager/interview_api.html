@@ -18,9 +18,9 @@
               <div class="col-lg-6">
                 <div class="p-5">
                   <div class="text-left">
-                    <h1 class="h4 text-gray-900 mb-4">Schedule Interview</h1>
+                    <h1 class="h4 text-gray-900 mb-4">Simulation Of Interview: {{ t_interview.status }}</h1>
                   </div>
-                  <form class="user "action={% url 'app_manager:t_interview_result' t_resume.id %} method='GET'>
+                  <form class="user "action={% url 'app_manager:t_interview_result' t_interview.id %} method='GET'>
 
                       <div class="form-group">
                         <input type="text" class="form-control" id="apiName" aria-describedby="Username" placeholder={{ t_resume.username }}>

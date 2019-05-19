@@ -42,10 +42,13 @@ class Interview(models.Model):
         return '<interview C: %s B: %s' % (self.resume.resume_id, self.post.name)
 
 ORDER_COLUMN_CHOICES = Choices(
-    ('0', 'resume'),
+    ('0', 'id'),
     ('1', 'resume'),
-    ('2', 'post'),
-    ('3', 'is_active'),
+    ('2', 'resume'),
+    ('3', 'post'),
+    ('4', 'is_active'),
+    ('5', 'status'),
+    ('6', 'status'),
 )
 
 def query_interviews_by_args(**kwargs):
@@ -77,8 +80,6 @@ def query_interviews_by_args(**kwargs):
     queryset = queryset.order_by(order_column)[start:start + length]
 
     # final decoration
-    for q in queryset:
-        q.status = STATUS_CHOICES[q.status][1]
 
     return {
         'items': queryset,
