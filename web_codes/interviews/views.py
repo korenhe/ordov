@@ -37,6 +37,7 @@ class InterviewViewSet(viewsets.ModelViewSet):
             post_obj = Post.objects.get(pk=td['post'])
             post = '-'.join([post_obj.company.name, post_obj.department.name, post_obj.name])
 
+            td.update({'resume_pk': resume_obj.id})
             td.update({'resume': resume})
             td.update({'post': post})
             td.update({'DT_RowId': td['resume']})

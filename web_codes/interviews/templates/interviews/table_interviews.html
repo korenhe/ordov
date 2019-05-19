@@ -5,9 +5,11 @@
   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
     <thead>
       <tr>
+        <th>RPK</th>
         <th>*Resume</th>
         <th>*Post</th>
         <th>Active</th>
+        <th>Status</th>
       </tr>
     </thead>
   </table>
@@ -27,9 +29,50 @@
      },
 
      "columns": [
+       {"data": "resume_pk",
+        "visible": true},
        {"data": "resume"},
        {"data": "post"},
        {"data": "is_active"},
+       {"data": "stat",
+        render: function(data, type, row, meta) {
+          if (row.status) {
+            return "\
+  <button class=\"btn btn-success btn-icon-split border-0\" id=\"stage\">\
+    <span class=\"icon text-white-50\">\
+      <i class=\"fas fa-check\"></i></span>\
+    <span class=\"text\">Interviewed</span>\
+  </button>";
+          }
+
+          if (row.candidate_id) {
+            var url="{% url 'app_manager:t_interview_api' 1234 %}".replace(/1234/, row.candidate_id);
+
+            var str = "\
+  <form action=" + url + " method='GET'>\
+    <button class=\"btn btn-info btn-icon-split border-0\" id=\"stage\">\
+      <span class=\"icon text-white-50\">\
+        <i class=\"fas fa-arrow-right\"></i></span>\
+      <span class=\"text\">Prepare Interview</span>\
+    </button>\
+  </form>";
+            return str;
+          } else {
+            var url='{% url 'app_manager:t_invitation_api' 1234 %}'.replace(/1234/, row.resume_pk);
+            var str = "\
+  <form action=" + url + " method='GET'>\
+    <button class=\"btn btn-info btn-icon-split border-0\" id=\"stage\">\
+      <span class=\"icon text-white-50\">\
+        <i class=\"fas fa-arrow-right\"></i></span>\
+      <span class=\"text\">Invitation</span>\
+    </button>\
+  </form>";
+            return str;
+          }
+
+          return "Unreachable";
+        }
+       },
      ],
    });
  });
