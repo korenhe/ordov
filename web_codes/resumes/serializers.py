@@ -2,10 +2,12 @@ from rest_framework import serializers
 
 from candidates.serializers import CandidateSerializer
 from .models import Resume, Education
+from interviews.models import Interview
 
 class ResumeSerializer(serializers.ModelSerializer):
     candidate = CandidateSerializer(required=False)
     candidate_id = serializers.SerializerMethodField()
+    is_in_interview = serializers.SerializerMethodField()
 
     def get_candidate_id(self, resume):
         if resume.candidate:
@@ -16,12 +18,28 @@ class ResumeSerializer(serializers.ModelSerializer):
     def get_id(self, resume):
         return resume.id
 
+    def get_is_in_interview(self, resume):
+        post_id = self.context.get('post_id')
+        print("xxx", post_id)
+        if (Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)):
+            return True
+        else:
+            return False
+
     class Meta:
         model = Resume
         fields = (
-            'candidate_id', # M
+            # MethodField
+
+            'candidate_id',
             'id',
+            'is_in_interview',
+
+            # CascadeField
             'candidate',
+
+            # OrdinaryField
+
             'resume_id',
             'visible',
             'username',

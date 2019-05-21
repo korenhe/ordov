@@ -30,8 +30,12 @@ STATUS_ONDUTY_CHOICES = (
 # 每一次的面试记录也都要留下来
 
 class Interview(models.Model):
+    class Meta:
+        unique_together = (('post', 'resume'), )
+
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, null=True)
+
     is_active = models.BooleanField(default=1)
     status = models.IntegerField(choices=STATUS_CHOICES, default=0)
     last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
