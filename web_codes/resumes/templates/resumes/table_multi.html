@@ -2,115 +2,110 @@
 {% load static %}
 {% block content %}
 
-<div class="panel-group" id="accordion">
-  <div class="panel panel-success">
-
-    <?-- Post -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion"
-href="#collapsePost">
-            <div class="text-primary" id="text_company_name">
+<div id="accordion">
+  <?-- Post -->
+  <div class="card">
+    <div class="card-header" id="headingOne">
+        <h5 class="mb-0">
+          <button id="text_company_name" class="btn btn-link" data-toggle="collapse" data-target="#collapsePost" aria-expanded="true" aria-controls="collapsePost">
               选择要操作的岗位
-            </div>
-          </a>
-        </h4>
+          </button>
+        </h5>
       </div>
-      <div id="collapsePost" class="panel-collapse collapse">
-        <div class="panel-body">
+
+      <div id="collapsePost" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+        <div class="card-body">
           <div class="table-responsive">
             <table class="table table-bordered" id="dataTable_post" width="100%" cellspacing="0">
               <thead>
-              <tr><th>ID</th><th>Company</th><th>Department</th><th>Name</th></tr>
+                <tr><th>ID</th><th>Company</th><th>Department</th><th>Name</th></tr>
               </thead>
             </table>
           </div>
         </div>
       </div>
+  </div>
+  <?-- Post -->
+
+  <?-- Filter -->
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+          岗位要求设置
+        </button>
+      </h5>
     </div>
-    <?-- Post -->
 
-    <?-- Filter -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion"
-            href="#collapseRequest">
-              岗位要求设置
-          </a>
-        </h4>
-      </div>
-      <div id="collapseRequest" class="panel-collapse collapse">
-        <div class="panel-body">
-                <?-- Inner Filter -->
-                <form name='filter_form' method='post' action="#">
-                    <div class="row col-md-24 register-form">
-                      <div class="col-md-2 form-group">
-                        <label> 最低学历 </label>
-                        <select class="form-control" id="degree_id">
-                          <option>不限</option>
-                          <option>初中</option>
-                          <option>高中</option>
-                          <option>本科</option>
-                          <option>硕士</option>
-                          <option>博士</option>
-                        </select>
-                      </div>
-                      <div class="col-md-2 form-group">
-                        <label> 性别 </label>
-                        <select class="form-control" id="gender_id">
-                          <option>不限</option>
-                          <option>男</option>
-                          <option>女</option>
-                        </select>
-                      </div>
-                      <div class="col-md-2 form-group">
-                        <label> 最小年龄 </label><br>
-                        <input type="text" name="age_id" id="age_id" placeholder="年龄" value="" style="height:calc(2.25rem + 2px);">
-                      </div>
-                      <div class="col-md-2 form-group" style="display:none;">
-                        <label> 工作地点 </label>
-                        <select class="form-control" id="province_id">
-                          <option>不限</option>
-                          <option>北京</option>
-                          <option>上海</option>
-                          <option>杭州</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="row col-md-24 register-form" style="display:none;">
-                      <div class="col-md-2 form-group">
-                        <label> 工作年限 </label>
-                        <input type="text" name="work_time_id" id="work_time_id" placeholder="年限" value="">
-                      </div>
-                      <div class="col-md-2 form-group">
-                        <label> 起薪 </label>
-                        <input type="text" name="salary_id" id="salary_id" placeholder="填入起薪" value="">
-                      </div>
-                    </div>
-                  </form>
-                <?-- Innter Filter-->
-        </div>
+    <div id="collapseFilter" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+      <div class="card-body">
+        <?-- Inner Filter -->
+        <form name='filter_form' method='post' action="#">
+          <div class="row col-md-24 register-form">
+            <div class="col-md-2 form-group">
+              <label> 最低学历 </label>
+              <select class="form-control" id="degree_id">
+                <option>不限</option>
+                <option>初中</option>
+                <option>高中</option>
+                <option>本科</option>
+                <option>硕士</option>
+                <option>博士</option>
+              </select>
+            </div>
+            <div class="col-md-2 form-group">
+              <label> 性别 </label>
+              <select class="form-control" id="gender_id">
+                <option>不限</option>
+                <option>男</option>
+                <option>女</option>
+              </select>
+            </div>
+            <div class="col-md-2 form-group">
+              <label> 最小年龄 </label><br>
+              <input type="text" name="age_id" id="age_id" placeholder="年龄" value="" style="height:calc(2.25rem + 2px);">
+            </div>
+            <div class="col-md-2 form-group" style="display:none;">
+              <label> 工作地点 </label>
+              <select class="form-control" id="province_id">
+                <option>不限</option>
+                <option>北京</option>
+                <option>上海</option>
+                <option>杭州</option>
+              </select>
+            </div>
+          </div>
+          <div class="row col-md-24 register-form" style="display:none;">
+            <div class="col-md-2 form-group">
+              <label> 工作年限 </label>
+              <input type="text" name="work_time_id" id="work_time_id" placeholder="年限" value="">
+            </div>
+            <div class="col-md-2 form-group">
+              <label> 起薪 </label>
+              <input type="text" name="salary_id" id="salary_id" placeholder="填入起薪" value="">
+            </div>
+          </div>
+        </form>
+        <?-- Innter Filter-->
       </div>
     </div>
-    <?-- Filter -->
+  </div>
+  <?-- Filter -->
 
-    <?-- Candidates -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion"
-            href="#collapseCandidates">
-              符合条件的候选人
-          </a>
-        </h4>
-      </div>
-      <div id="collapseCandidates" class="panel-collapse collapse">
-        <div class="panel-body">
+  <?-- Candidates -->
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseCandidates" aria-expanded="false" aria-controls="collapseCandidates">
+          符合条件的候选人
+        </button>
+      </h5>
+    </div>
 
-          <?-- canidates table-->
-          <div class="table-responsive">
+    <div id="collapseCandidates" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+      <div class="card-body">
+        <?-- canidates table-->
+        <div class="table-responsive">
           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
               <tr>
@@ -129,41 +124,20 @@ href="#collapsePost">
               </tr>
             </thead>
           </table>
-          </div>
-
-          <form action={% url 'app_manager:t_interviews' %} method="GET">
-            <center>
-              <button type='submit' class="btn btn-primary" id='id_button_submit' style="width:50%">SUBMIT</button>
-            </center>
-          </form>
-          <?-- End candidates table-->
-
         </div>
+
+        <form action={% url 'app_manager:t_interviews' %} method="GET">
+          <center>
+            <button type='submit' class="btn btn-primary" id='id_button_submit' style="width:50%">SUBMIT</button>
+          </center>
+        </form>
+        <?-- End candidates table-->
+
       </div>
     </div>
-    <?-- Candidates -->
-
-    <?-- tempPlate For a collapse -->
-    <div class="panel panel-default" style="display:none;">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion"
-            href="#collapseTemplate">
-              title
-          </a>
-        </h4>
-      </div>
-      <div id="collapseTemplate" class="panel-collapse collapse">
-        <div class="panel-body">
-            body
-        </div>
-      </div>
-    </div>
-    <?-- Basic -->
-
   </div>
+  <?-- Candidates -->
 </div>
-
 
 {% endblock %}
 
@@ -171,10 +145,7 @@ href="#collapsePost">
 <script>
  $(document).ready(function() {
 
-   $(function () { $('#collapsePost').collapse({toggle: true})});
-   $(function () { $('#collapseCandidates').collapse({toggle: false})});
-   $(function () { $('#collapseTemplate').collapse({toggle: false})});
-   $(function () { $('#collapseRequest').collapse({toggle: false})});
+   //$('.collapse').collapse();
 
    var resume_selected = [];
    var post_selected = false;
@@ -288,8 +259,9 @@ href="#collapsePost">
        post_selected_value = id;
 
        var tr = document.getElementById(id);
-       document.getElementById("text_company_name").innerHTML = tr.innerText;
        table.draw();
+
+       document.getElementById("text_company_name").innerHTML = tr.innerText;
      }
    });
 
