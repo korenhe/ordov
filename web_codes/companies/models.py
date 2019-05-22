@@ -3,14 +3,35 @@ from __future__ import unicode_literals
 
 from django.db import models
 from model_utils import Choices
+from .choices import SCALE_CHOICES
 
 # Create your models here.
 
 class Company(models.Model):
     name = models.CharField(max_length=50, primary_key=True)
     short_name = models.CharField(max_length=50, blank=True, null=True)
-    description = models.CharField(max_length=1000, blank=True, null=True)
+    description = models.TextField(max_length=1000, blank=True, null=True, default='')
     scale = models.IntegerField(default=0, blank=True, null=True)
+    scale2 = models.TextField(blank=True, null=True, choices=SCALE_CHOICES)
+
+    registerd_capital = models.IntegerField(default=0, blank=True, null=True)
+    founding_time = models.DateField(blank=True, null=True)
+    # unified social credit code
+    uscc = models.CharField(max_length=50, blank=True, null=True)
+
+    address_provice = models.CharField(max_length=10, blank=True, null=True)
+    address_city = models.CharField(max_length=10, blank=True, null=True)
+    address_distinct = models.CharField(max_length=10, blank=True, null=True)
+    address_stress = models.CharField(max_length=20, blank=True, null=True)
+
+    phone_number = models.CharField(max_length=15, null=True, blank=True)
+    email = models.CharField(max_length=50, blank=True, null=True)
+    website = models.CharField(max_length=50, blank=True, null=True)
+
+    # image and radio
+    business_licence = models.ImageField(blank=True, null=True);
+    #introduce_radio = models.
+
     # choice
     area = models.CharField(max_length=50, blank=True, null=True)
     cType = models.CharField(max_length=50, blank=True, null=True)

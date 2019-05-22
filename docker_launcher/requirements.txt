@@ -21,3 +21,5 @@ Faker==1.0.5
 psycopg2>=2.7,<3.0
 
 django-model-utils==1.1.0
+
+pillow
