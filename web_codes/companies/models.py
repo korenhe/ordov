@@ -59,9 +59,31 @@ class Post(models.Model):
 
     pType = models.CharField(max_length=50, blank=True, null=True, default='')
     pFeature = models.CharField(max_length=50, blank=True, null=True, default='')
+    pXingzhi = models.CharField(max_length=50, blank=True, null=True, default='')
     description = models.CharField(max_length=1000, blank=True, null=True, default='')
     # the level field should be in experience table
-    #level = models.CharField(max_length=20, blank=True, null=True, default='')
+    level = models.CharField(max_length=20, blank=True, null=True, default='')
+    subsidy = models.CharField(max_length=20, blank=True, null=True, default='')
+    sum_salaray = models.CharField(max_length=20, blank=True, null=True, default='')
+    year_yard = models.CharField(max_length=20, blank=True, null=True, default='')
+    social_security = models.CharField(max_length=20, blank=True, null=True, default='')
+    other_benefit = models.CharField(max_length=20, blank=True, null=True, default='')
+
+    address_provice = models.CharField(max_length=10, blank=True, null=True)
+    address_city = models.CharField(max_length=10, blank=True, null=True)
+    address_distinct = models.CharField(max_length=10, blank=True, null=True)
+    address_stress = models.CharField(max_length=20, blank=True, null=True)
+
+    # Requirement for the post
+    degree = models.IntegerField(blank=True, null=True, choices=DEGREE_CHOICES)
+    ageMin = models.IntegerField(blank=True, null=True)
+    ageMax = models.IntegerField(blank=True, null=True)
+    recruit_count = models.IntegerField(blank=True, null=True)
+    salary_offer = models.CharField(max_length=20, blank=True, null=True, default='')
+    observe_time = models.IntegerField(blank=True, null=True)
+    interview_location = models.CharField(max_length=30, blank=True, null=True)
+    linkman = models.CharField(max_length=10, blank=True, null=True)
+    linkman_phone = models.CharField(max_length=15, null=True, blank=True)
 
     # reserved
     reserved1 = models.CharField(max_length=50, blank=True, null=True, default='')
