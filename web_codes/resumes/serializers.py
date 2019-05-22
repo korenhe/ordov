@@ -20,10 +20,12 @@ class ResumeSerializer(serializers.ModelSerializer):
 
     def get_is_in_interview(self, resume):
         post_id = self.context.get('post_id')
-        print("xxx", post_id)
+
         if (Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)):
+            print("in interview", post_id)
             return True
         else:
+            print("not in interview", post_id)
             return False
 
     class Meta:
