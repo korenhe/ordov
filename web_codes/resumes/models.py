@@ -2,8 +2,8 @@
 from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.db import models
-from .choices import (DEGREE_CHOICES, BIRTH_YEAR_CHOICES, MAJOR_CHOICES, MARRIAGE_CHOICES, EDUCATION_TYPE_CHOICES)
-from .choices import (DEGREE_CHOICES_MAP)
+from .choices import (BIRTH_YEAR_CHOICES, MAJOR_CHOICES, MARRIAGE_CHOICES, EDUCATION_TYPE_CHOICES)
+from ordov.choices import (DEGREE_CHOICES, DEGREE_CHOICES_MAP)
 from candidates.models import Candidate
 from model_utils import Choices
 

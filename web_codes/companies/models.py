@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from model_utils import Choices
 from .choices import SCALE_CHOICES
+from ordov.choices import DEGREE_CHOICES
 
 # Create your models here.
 
