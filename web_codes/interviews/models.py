@@ -96,6 +96,26 @@ def query_interviews_by_args(**kwargs):
         'draw' : draw,
     }
 
+class Interview_Invite_Agree(models.Model):
+    interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
+
+    date = models.DateField()
+    time = models.DateTimeField(auto_now_add=True, auto_now=False)
+    contact = models.CharField(max_length=10, blank=True, null=True)
+    address = models.CharField(max_length=50, blank=True, null=True)
+    certification = models.CharField(max_length=500, blank=True, null=True)
+    attention = models.CharField(max_length=500, blank=True, null=True)
+    other = models.CharField(max_length=500, blank=True, null=True)
+
+class Interview_Invite_Disagree(models.Model):
+    interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
+
+    address = models.CharField(max_length=50, blank=True, null=True)
+    industry = models.CharField(max_length=50, blank=True, null=True)
+    salary = models.CharField(max_length=50, blank=True, null=True)
+    insurance = models.CharField(max_length=50, blank=True, null=True)
+    other = models.CharField(max_length=500, blank=True, null=True)
+
 class OnDuty(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
