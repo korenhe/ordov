@@ -9,13 +9,14 @@ from model_utils import Choices
 # Create your models here.
 
 STATUS_CHOICES = (
-    (0, '预约'),
-    (1, '面试前沟通(AI/人工面试)'),
-    (2, '面试1'),
-    (3, '面试2'),
-    (4, '面试3'),
-    (5, '发放offer'),
-    (6, '完成'),
+    (0, '筛选'),
+    (1, '邀约'),
+    (2, '面试'),
+    (3, 'OFFER'),
+    (4, '入职'),
+    (5, '考察'),
+    (6, '回款'),
+    (7, '完成'),
 )
 
 STATUS_ONDUTY_CHOICES = (
@@ -41,6 +42,9 @@ class Interview(models.Model):
     last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     result = models.CharField(max_length=50)
+
+    # manually check
+    is_match = models.BooleanField(default=1)
 
     def __str__(self):
         return '<interview C: %s B: %s' % (self.resume.resume_id, self.post.name)

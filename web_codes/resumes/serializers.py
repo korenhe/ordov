@@ -2,12 +2,14 @@ from rest_framework import serializers
 
 from candidates.serializers import CandidateSerializer
 from .models import Resume, Education
-from interviews.models import Interview
+from interviews.models import Interview, STATUS_CHOICES
 
 class ResumeSerializer(serializers.ModelSerializer):
     candidate = CandidateSerializer(required=False)
     candidate_id = serializers.SerializerMethodField()
-    is_in_interview = serializers.SerializerMethodField()
+    interview_status = serializers.SerializerMethodField()
+    interview_status_name = serializers.SerializerMethodField()
+    is_match = serializers.SerializerMethodField()
 
     def get_candidate_id(self, resume):
         if resume.candidate:
@@ -18,15 +20,44 @@ class ResumeSerializer(serializers.ModelSerializer):
     def get_id(self, resume):
         return resume.id
 
-    def get_is_in_interview(self, resume):
+    # by post id, can be is_in_interview for post1 but not for post2
+    def get_is_match(self, resume):
         post_id = self.context.get('post_id')
 
-        if (Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)):
-            print("in interview", post_id)
-            return True
+        #obj = Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)
+        objs = Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)
+        if (objs):
+            assert len(objs) == 1
+            if objs[0].is_match:
+                return 1
+            else:
+                return 0
         else:
-            print("not in interview", post_id)
-            return False
+            return -1
+
+    def get_interview_status(self, resume):
+        post_id = self.context.get('post_id')
+
+        #obj = Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)
+        objs = Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)
+        if (objs):
+            assert len(objs) == 1
+            return objs[0].status
+        else:
+            # default 0
+            return 0
+
+    def get_interview_status_name(self, resume):
+        post_id = self.context.get('post_id')
+
+        #obj = Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)
+        objs = Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)
+        if (objs):
+            assert len(objs) == 1
+            return STATUS_CHOICES[objs[0].status][1]
+        else:
+            # default 0
+            return "--"
 
     class Meta:
         model = Resume
@@ -35,7 +66,9 @@ class ResumeSerializer(serializers.ModelSerializer):
 
             'candidate_id',
             'id',
-            'is_in_interview',
+            'interview_status',
+            'interview_status_name',
+            'is_match',
 
             # CascadeField
             'candidate',
