@@ -115,7 +115,7 @@ def query_resumes_by_args(**kwargs):
     post_id = int(kwargs.get('post_id', [0])[0])
 
     if status_min:
-        queryset = Resume.objects.filter(interview__status__gte=status_min)
+        queryset = Resume.objects.filter(interview__status__gte=status_min, interview__post__id=post_id)
     else:
         queryset = Resume.objects.all()
 
