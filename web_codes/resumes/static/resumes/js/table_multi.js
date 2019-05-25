@@ -195,17 +195,18 @@ $(document).ready(function() {
          /* -------------------------------------------------------------------------------- */
          else if (row.interview_status == 2) {
            return `
-<button class="interview_button btn btn-success border-0" data-toggle="modal" data-target="#interviewModal" id="` + row.interview_id + `">
-  <span class="text">面试</span>
-</button>
 `;
          }
          /* -------------------------------------------------------------------------------- */
          else if (row.interview_status == 3) {
            return `
-<button class="offer_button btn btn-success border-0" data-toggle="modal" data-target="#offerModal" id="` + row.interview_id + `">
-  <span class="text">发放offer</span>
-</button>
+                <select class="stage_three_select form-control" id="` + row.interview_id + `">
+                    <option>面试过程中</option>
+                    <option>查看职位信息</option>
+                    <option>查看应聘者信息</option>
+                    <option>SUCCESS:填写面试报告</option>
+                    <option>FAIL:终止面试</option>
+                </select>
 `;
          }
          /* -------------------------------------------------------------------------------- */
@@ -333,6 +334,23 @@ $(document).ready(function() {
 
   });
 
+  $(document).on('change', '.stage_three_select', function() {
+    interview_selected_value = Number(this.id);
+
+    value = $("#"+(interview_selected_value)+".stage_three_select").val()
+    if (value == "面试过程中") {
+    } else if (value == "查看职位信息") {
+        $('#postModal').modal('toggle');
+    } else if (value == "查看应聘者信息") {
+        $('#candidateModal').modal('toggle');
+    } else if (value == "SUCCESS:填写面试报告") {
+        $('#interviewModal2').modal('toggle');
+    } else if (value == "FAIL:终止面试") {
+        $('#stopModal').modal('toggle');
+    }
+
+  });
+
   $(document).on('click', '.dial_button', function() {
     interview_selected_value = Number(this.id);
   });
@@ -448,6 +466,19 @@ $(document).ready(function() {
       submit_interview_by_id(interview_id, "/api/interviews/", status, table);
     });
   });
+
+  $(function() {
+    $('#interviewFormSubmit2').click(function(e){
+      e.preventDefault();
+
+      var interview_id = interview_selected_value;
+
+      $('#interviewModal2').modal('hide');
+      var status = 4 // status++
+      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+    });
+  });
+
 
   $(function(){
     $('#interviewFormSubmit').click(function(e){

@@ -275,6 +275,124 @@
 </div>
 
 
+<!-- Post Info -->
+<div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">岗位信息</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <?--Show candidate informations here.-->
+
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+            <form>
+              <div class="form-group">
+                <input type="text" class="form-control" id="text_date" placeholder="公司名">
+              </div>
+
+              <div class="form-group">
+                <input type="text" class="form-control" id="text_task_id" placeholder="部门名">
+              </div>
+
+              <div class="form-group">
+                <input type="text" class="form-control" id="text_huashu_id" placeholder="岗位名称">
+              </div>
+
+              <div class="form-group">
+                <input type="text" class="form-control" id="text_robot_id" placeholder="岗位简介">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Candidate Info -->
+<div class="modal fade" id="candidateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">应聘者信息</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <?--Show candidate informations here.-->
+
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+            <form>
+              <div class="form-group">
+                <input type="text" class="form-control" id="text_date" placeholder="姓名">
+              </div>
+
+              <div class="form-group">
+                <input type="text" class="form-control" id="text_task_id" placeholder="学历">
+              </div>
+
+              <div class="form-group">
+                <input type="text" class="form-control" id="text_huashu_id" placeholder="学校">
+              </div>
+
+              <div class="form-group">
+                <input type="text" class="form-control" id="text_robot_id" placeholder="电话">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Interview Info -->
+<div class="modal fade" id="interviewModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">面试结论</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <?--Show candidate informations here.-->
+
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+            <form>
+              <div class="form-group">
+                <input type="text" class="form-control" id="text_date" placeholder="应聘者技术表现">
+              </div>
+
+              <div class="form-group">
+                <input type="text" class="form-control" id="text_task_id" placeholder="应聘者情商表现">
+              </div>
+
+              <div class="form-group">
+                <input type="text" class="form-control" id="text_huashu_id" placeholder="备注">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="interviewFormSubmit2" class="btn btn-primary">进入下一阶段: 发放offer</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!-- STOP -->
 <div class="modal fade" id="stopModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
