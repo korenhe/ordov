@@ -139,11 +139,14 @@ $(document).ready(function() {
          if (row.interview_status == 0) {
            return `
 <button class="invite_button btn btn-success border-0" data-toggle="modal" data-target="#inviteModal" id="` + row.id + `">
-  <span class="text">AI </span>
+  <span class="text">AI沟通 </span>
 </button>
 
 <button class="invite_button btn btn-success border-0" id="` + row.id + `">
-  <span class="text">SMS</span>
+  <span class="text">人工沟通</span>
+</button>
+<button class="invite_button btn btn-success border-0" id="` + row.id + `">
+  <span class="text">不合适</span>
 </button>
 
 `;
@@ -152,7 +155,7 @@ $(document).ready(function() {
          else if (row.interview_status == 1) {
            return `
 <button class="dial_button btn btn-success border-0" data-toggle="modal" data-target="#dialModal" id="` + row.interview_id + `">
-  <span class="text">Dial</span>
+  <span class="text">打电话</span>
 </button>
 `;
          }
@@ -160,7 +163,7 @@ $(document).ready(function() {
          else if (row.interview_status == 2) {
            return `
 <button class="interview_button btn btn-success border-0" data-toggle="modal" data-target="#interviewModal" id="` + row.interview_id + `">
-  <span class="text">Interview</span>
+  <span class="text">面试</span>
 </button>
 `;
          }
@@ -168,7 +171,7 @@ $(document).ready(function() {
          else if (row.interview_status == 3) {
            return `
 <button class="offer_button btn btn-success border-0" data-toggle="modal" data-target="#offerModal" id="` + row.interview_id + `">
-  <span class="text">Offer</span>
+  <span class="text">发放offer</span>
 </button>
 `;
          }
@@ -176,7 +179,7 @@ $(document).ready(function() {
          else if (row.interview_status == 4) {
            return `
 <button class="entry_button btn btn-success border-0" data-toggle="modal" data-target="#entryModal" id="` + row.interview_id + `">
-  <span class="text">Entry</span>
+  <span class="text">入职</span>
 </button>
 `;
          }
@@ -184,7 +187,7 @@ $(document).ready(function() {
          else if (row.interview_status == 5) {
            return `
 <button class="inspect_button btn btn-success border-0" data-toggle="modal" data-target="#inspectModal" id="` + row.interview_id + `">
-  <span class="text">Inspect</span>
+  <span class="text">考察期</span>
 </button>
 `;
          }
@@ -192,13 +195,13 @@ $(document).ready(function() {
          else if (row.interview_status == 6) {
            return `
 <button class="payback_button btn btn-success border-0" data-toggle="modal" data-target="#paybackModal" id="` + row.interview_id + `">
-  <span class="text">Payback</span>
+  <span class="text">入职反馈</span>
 </button>
 `;
          }
          /* -------------------------------------------------------------------------------- */
          else {
-           return "Not yet";
+           return "流程结束";
          }
        }},
     ],
