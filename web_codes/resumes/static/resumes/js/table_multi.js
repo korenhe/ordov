@@ -138,23 +138,23 @@ $(document).ready(function() {
          /* -------------------------------------------------------------------------------- */
          if (row.interview_status == 0) {
            return `
-<button class="invite_button btn btn-success border-0" data-toggle="modal" data-target="#inviteModal" id="` + row.id + `">
-  <span class="text">AI沟通 </span>
-</button>
+                <button class="invite_button btn btn-success border-0" id="` + row.id + `" style="display:none;">
+                <span class="text">不合适</span>
+                </button>
 
-<button class="invite_button btn btn-success border-0" id="` + row.id + `">
-  <span class="text">人工沟通</span>
-</button>
-<button class="invite_button btn btn-success border-0" id="` + row.id + `">
-  <span class="text">不合适</span>
-</button>
-
-`;
+                <select class="stage_one_select form-control" id="` + row.id + `">
+                    <option>待选状态</option>
+                    <option>AI沟通</option>
+                    <option>短信沟通</option>
+                    <option>人工沟通</option>
+                    <option>不合适</option>
+                </select>
+          `;
          }
          /* -------------------------------------------------------------------------------- */
          else if (row.interview_status == 1) {
            return `
-<button class="dial_button btn btn-success border-0" data-toggle="modal" data-target="#dialModal" id="` + row.interview_id + `">
+                <button class="dial_button btn btn-success border-0" data-toggle="modal" data-target="#dialModal" id="` + row.interview_id + `">
   <span class="text">打电话</span>
 </button>
 `;
@@ -267,6 +267,20 @@ $(document).ready(function() {
 
   $(document).on('click', '.invite_button', function() {
     resume_selected_value = Number(this.id);
+    alert(resume_selected_value)
+  });
+
+  $(document).on('change', '.stage_one_select', function() {
+	resume_selected_value = Number(this.id);
+    /* Attention: how to select one item by variable */
+    value = $(".stage_one_select:eq("+(resume_selected_value-1)+")").val()
+    if (value == "AI沟通") {
+       $('#dialModal').modal('toggle');
+    } else if (value == "短信沟通") {
+    } else if (value == "人工沟通") {
+    } else if (value == "不符合要求") {
+    }
+
   });
 
   $(document).on('click', '.dial_button', function() {
