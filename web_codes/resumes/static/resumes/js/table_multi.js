@@ -183,7 +183,7 @@ $(document).ready(function() {
   <span class="text">打电话</span>
 </button>
                -->
-                <select class="stage_one_select form-control" id="` + row.id + `">
+                <select class="stage_one_select form-control" id="` + row.interview_id + `">
                     <option>等待AI结果</option>
                     <option>继续下轮过程</option>
                     <option>终止面试</option>
@@ -304,12 +304,12 @@ $(document).ready(function() {
 
   $(document).on('change', '.stage_zero_select', function() {
 	resume_selected_value = Number(this.id);
-    interview_selected_value = Number(this.id);
 
     /* Attention: how to select one item by variable */
     /*value = $(".stage_zero_select:eq("+(resume_selected_value-1)+")").val() */
-    /* TODO: There is a Bug here, the first there item could NOT be triggered*/
-    value = $("#"+(interview_selected_value)+" .stage_zero_select").val()
+    /* the intersection selector for jQuery */
+
+    value = $("#"+(resume_selected_value)+".stage_zero_select").val()
     if (value == "AI沟通") {
        $('#dialModal').modal('toggle');
     } else if (value == "短信沟通") {
@@ -320,10 +320,9 @@ $(document).ready(function() {
   });
 
   $(document).on('change', '.stage_one_select', function() {
-    resume_selected_value = Number(this.id);
     interview_selected_value = Number(this.id);
 
-    value = $("#"+(interview_selected_value)+" .stage_one_select").val()
+    value = $("#"+(interview_selected_value)+".stage_one_select").val()
     if (value == "等待AI结果") {
     } else if (value == "继续下轮过程") {
         $('#nextModal').modal('toggle');
@@ -419,7 +418,6 @@ $(document).ready(function() {
       var post_id = post_selected_value;
       var status = 1;
 
-      var interview_id = interview_selected_value;
       $('#dialModal').modal('hide');
       submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, table);
     });
@@ -446,9 +444,6 @@ $(document).ready(function() {
 
       $('#nextModal').modal('hide');
       var status = 3 // status++
-      alert("hello world")
-      alert(status)
-
       submit_interview_by_id(interview_id, "/api/interviews/", status, table);
     });
   });
