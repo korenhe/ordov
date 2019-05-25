@@ -171,58 +171,54 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Invite</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">AI机器人配置</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        Show candidate informations here.
+        <?--Show candidate informations here.-->
 
+        <!--
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item">
             <a class="nav-link active" id="agree-tab" href="#agree" data-toggle="tab" role="tab" aria-controls="agree" aria-selected="true">同意</a></li>
           <li class="nav-item">
             <a class="nav-link" id="disagree-tab" href="#disagree" data-toggle="tab" role="tab" aria-controls="disagree" aria-selected="false">不同意</a></li>
         </ul>
+        -->
 
         <div class="tab-content" id="myTabContent">
           <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
             <form>
               <div class="form-group">
-                <label for="text_date" class="col-form-label">Date</label>
-                <input type="text" class="form-control" id="text_date">
+                <input type="text" class="form-control" id="text_date" placeholder="开始时间">
               </div>
 
               <div class="form-group">
-                <label for="text_time" class="col-form-label">Time</label>
-                <input type="text" class="form-control" id="text_time">
+                <input type="text" class="form-control" id="text_task_id" placeholder="任务名称">
               </div>
 
               <div class="form-group">
-                <label for="text_contact" class="col-form-label">Contact</label>
-                <input type="text" class="form-control" id="text_contact">
+                <input type="text" class="form-control" id="text_huashu_id" placeholder="话术ID">
               </div>
 
               <div class="form-group">
-                <label for="text_address" class="col-form-label">Address</label>
-                <textarea class="form-control" id="text_address"></textarea>
+                <input type="text" class="form-control" id="text_robot_id" placeholder="机器人ID">
               </div>
 
               <div class="form-group">
-                <label for="text_certification" class="col-form-label">Certification</label>
-                <textarea class="form-control" id="text_certification"></textarea>
+                <input type="text" class="form-control" id="text_name" placeholder="客户姓名">
               </div>
 
               <div class="form-group">
-                <label for="text_attention" class="col-form-label">Matters need attention</label>
-                <textarea class="form-control" id="text_attention"></textarea>
+                <input type="text" class="form-control" id="text_phone_number" placeholder="客户电话">
               </div>
 
             </form>
           </div>
 
-          <div class="tab-pane fade" id="disagree", role="tabpanel" aria-labelledby="disagree-tab">
+          <div class="tab-pane fade" id="disagree", role="tabpanel" aria-labelledby="disagree-tab" style="display:none;">
             <form>
 
               <div class="form-group">
@@ -255,8 +251,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" id="dialFormSubmit" class="btn btn-primary">OK</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
