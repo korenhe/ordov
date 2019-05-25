@@ -185,7 +185,7 @@ $(document).ready(function() {
                -->
                 <select class="stage_one_select form-control" id="` + row.id + `">
                     <option>等待AI结果</option>
-                    <option>继续下一过程</option>
+                    <option>继续下轮过程</option>
                     <option>终止面试</option>
                 </select>
 
@@ -326,6 +326,7 @@ $(document).ready(function() {
     value = $("#"+(interview_selected_value)+" .stage_one_select").val()
     if (value == "等待AI结果") {
     } else if (value == "继续下轮过程") {
+        $('#nextModal').modal('toggle');
     } else if (value == "终止面试") {
         $('#stopModal').modal('toggle');
     }
@@ -433,7 +434,22 @@ $(document).ready(function() {
       $('#stopModal').modal('hide');
       var status = -1 // current status, not updated
 
-      stop_interview_by_id(resume_id, post_id, "/api/interviews/", status, table);
+      stop_interview_by_id(interview_id, "/api/interviews/", status, table);
+    });
+  });
+
+  $(function() {
+    $('#nextSubmit').click(function(e){
+      e.preventDefault();
+
+      var interview_id = interview_selected_value;
+
+      $('#nextModal').modal('hide');
+      var status = 3 // status++
+      alert("hello world")
+      alert(status)
+
+      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
     });
   });
 
