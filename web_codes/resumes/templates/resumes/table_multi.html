@@ -41,7 +41,22 @@
       <div class="card-body">
         <?-- Inner Filter -->
         <form name='filter_form' method='post' action="#">
+
           <div class="row col-md-24 register-form">
+            <div class="col-md-2 form-group">
+              <label> 状态 </label>
+              <select class="form-control" id="status_id">
+                <option value="0">不限</option>
+                <option value="1">筛选</option>
+                <option value="2">邀约</option>
+                <option value="3">面试</option>
+                <option value="4">OFFER</option>
+                <option value="5">入职</option>
+                <option value="6">考察</option>
+                <option value="7">回款</option>
+              </select>
+            </div>
+
             <div class="col-md-2 form-group">
               <label> 最低学历 </label>
               <select class="form-control" id="degree_id">
@@ -53,6 +68,7 @@
                 <option>博士</option>
               </select>
             </div>
+
             <div class="col-md-2 form-group">
               <label> 性别 </label>
               <select class="form-control" id="gender_id">

@@ -107,6 +107,7 @@ $(document).ready(function() {
         d.degree_id = $('#degree_id').val();
         d.age_id = $('#age_id').val();
         d.gender_id = $('#gender_id').val();
+        d.status_id = $('#status_id').val();
         d.post_id = post_selected_value;
       },
     },
@@ -270,7 +271,7 @@ $(document).ready(function() {
     table.draw();
   });
 
-  $('#degree_id, #gender_id').change(function() {
+  $('#degree_id, #gender_id, #status_id').change(function() {
     table.draw();
   });
 

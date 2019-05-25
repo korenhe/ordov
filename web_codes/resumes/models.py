@@ -108,9 +108,17 @@ def query_resumes_by_args(**kwargs):
 
     degree_min = kwargs.get('degree_id', None)[0] or 0
 
+    status_min = int(kwargs.get('status_id', [0])[0])
+
     gender_f = kwargs.get('gender_id', None)[0]
 
-    queryset = Resume.objects.all()
+    post_id = int(kwargs.get('post_id', [0])[0])
+
+    if status_min:
+        queryset = Resume.objects.filter(interview__status__gte=status_min)
+    else:
+        queryset = Resume.objects.all()
+
     total = queryset.count()
 
     # filter and orderby
@@ -121,9 +129,12 @@ def query_resumes_by_args(**kwargs):
             queryset = queryset.filter(models.Q(gender__contains='f'))
 
     degree_id = DEGREE_CHOICES_MAP.get(degree_min, 0)
+
     queryset = queryset.filter(models.Q(degree__gte=degree_id) &
                                models.Q(age__gte=age_min))
 
+
+    # search_value box
     if search_value:
         queryset = queryset.filter(models.Q(username__icontains=search_value) |
                                    models.Q(phone_number__icontains=search_value) |
