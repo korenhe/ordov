@@ -14,9 +14,32 @@ function getCookie(name) {
   return cookieValue;
 }
 
-function submit_interview(resume_id, post_id, status_value, table) {
+function submit_interview_by_id(interview_id, url, status_value, table) {
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", "/api/interviews/");
+  xhr.open("PATCH", url + interview_id + '/');
+  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+  var csrftoken = getCookie('csrftoken');
+
+  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+
+  data = {
+    "is_active":true,
+    "status": status_value,
+    "result":"Pending",
+  };
+
+  console.log(data);
+  xhr.onloadend = function() {
+    //done
+    table.draw();
+  };
+
+  xhr.send(JSON.stringify(data));
+}
+
+function submit_interview_by_compound(resume_id, post_id, url, status_value, table) {
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", url);
   xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
   var csrftoken = getCookie('csrftoken');
 
@@ -47,6 +70,7 @@ $(document).ready(function() {
   var post_selected_value = 0;
   var resume_selected = false;
   var resume_selected_value = 0;
+  var interview_selected_value = 0;
 
   var table = $('#dataTable_resume').DataTable({
     "processing": true,
@@ -76,6 +100,8 @@ $(document).ready(function() {
        "checkboxes": {
        },
       },
+      {"data": "interview_id",
+       "visible": false},
       {"data": "candidate_id",
        "visible": false},
       {"data": "id"},
@@ -121,7 +147,7 @@ $(document).ready(function() {
          /* -------------------------------------------------------------------------------- */
          else if (row.interview_status == 1) {
            return `
-<button class="dial_button btn btn-success border-0" data-toggle="modal" data-target="#dialModal" id="` + row.id + `">
+<button class="dial_button btn btn-success border-0" data-toggle="modal" data-target="#dialModal" id="` + row.interview_id + `">
   <span class="text">Dial</span>
 </button>
 `;
@@ -194,6 +220,10 @@ $(document).ready(function() {
     resume_selected_value = Number(this.id);
   });
 
+  $(document).on('click', '.dial_button', function() {
+    interview_selected_value = Number(this.id);
+  });
+
   // post table
   $('#dataTable_post tbody').on('click', 'tr', function() {
     var id = this.id;
@@ -201,6 +231,8 @@ $(document).ready(function() {
     if (id === post_selected_value && post_selected === true) {
       $(this).toggleClass('selected');
       post_selected = false;
+
+      document.getElementById("text_company_name").innerHTML = "选择要操作的岗位";
     } else {
       $(this).toggleClass('selected');
 
@@ -221,7 +253,7 @@ $(document).ready(function() {
     // submit to interview interface
     /*
     for (var i = 0; i < resumes_selected.length; i++) {
-      submit_interview(Number(resumes_selected[i], Number(post_selected_value)), table);
+    submit_interview(Number(resumes_selected[i], Number(post_selected_value)), table);
     }
     */
   });
@@ -236,7 +268,7 @@ $(document).ready(function() {
       alert("Resume:" + resume_id + " :Post:" + post_id);
       $('#inviteModal').modal('hide');
       //$('#formResults').text($('#myForm').serialize());
-      submit_interview(resume_id, post_id, status, table);
+      submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, table);
       /*
         $.post('http://path/to/post',
         $('#myForm').serialize(),
@@ -244,6 +276,21 @@ $(document).ready(function() {
         // do something here with response;
         });
       */
+    });
+  });
+
+  $(function(){
+    $('#dialFormSubmit').click(function(e){
+      e.preventDefault();
+
+      var interview_id = interview_selected_value;
+      alert("Interview:" + interview_id);
+      $('#dialModal').modal('hide');
+      var status = 2;
+
+      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+      //$('#formResults').text($('#myForm').serialize());
+      //submit_interview(resume_id, post_id, "/api/interviews/", status, table);
     });
   });
 

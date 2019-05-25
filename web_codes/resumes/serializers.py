@@ -7,6 +7,7 @@ from interviews.models import Interview, STATUS_CHOICES
 class ResumeSerializer(serializers.ModelSerializer):
     candidate = CandidateSerializer(required=False)
     candidate_id = serializers.SerializerMethodField()
+    interview_id = serializers.SerializerMethodField()
     interview_status = serializers.SerializerMethodField()
     interview_status_name = serializers.SerializerMethodField()
     is_match = serializers.SerializerMethodField()
@@ -34,6 +35,16 @@ class ResumeSerializer(serializers.ModelSerializer):
                 return 0
         else:
             return -1
+
+    def get_interview_id(self, resume):
+        post_id = self.context.get('post_id')
+
+        #obj = Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)
+        objs = Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)
+        if (objs):
+            return objs[0].id
+        else:
+            return None
 
     def get_interview_status(self, resume):
         post_id = self.context.get('post_id')
@@ -64,6 +75,7 @@ class ResumeSerializer(serializers.ModelSerializer):
         fields = (
             # MethodField
 
+            'interview_id',
             'candidate_id',
             'id',
             'interview_status',
