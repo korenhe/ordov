@@ -115,6 +115,7 @@ $(document).ready(function() {
       {"data": "major"},
 
       {"data": "is_match",
+       "orderable": false,
        render: function(data, type, row, meta) {
          if (row.is_match == 1) {
            return "Match"
@@ -125,10 +126,13 @@ $(document).ready(function() {
            return "Match"
          }
        }},
-      {"data": "interview_status_name"},
+      {"data": "interview_status_name",
+       "orderable": false
+      },
 
       /* ================================================================================ */
       {"data": "interview_status",
+       "orderable": false,
        render: function(data, type, row, meta) {
 
          /* -------------------------------------------------------------------------------- */
@@ -151,7 +155,49 @@ $(document).ready(function() {
   <span class="text">Dial</span>
 </button>
 `;
-         } else {
+         }
+         /* -------------------------------------------------------------------------------- */
+         else if (row.interview_status == 2) {
+           return `
+<button class="interview_button btn btn-success border-0" data-toggle="modal" data-target="#interviewModal" id="` + row.interview_id + `">
+  <span class="text">Interview</span>
+</button>
+`;
+         }
+         /* -------------------------------------------------------------------------------- */
+         else if (row.interview_status == 3) {
+           return `
+<button class="offer_button btn btn-success border-0" data-toggle="modal" data-target="#offerModal" id="` + row.interview_id + `">
+  <span class="text">Offer</span>
+</button>
+`;
+         }
+         /* -------------------------------------------------------------------------------- */
+         else if (row.interview_status == 4) {
+           return `
+<button class="entry_button btn btn-success border-0" data-toggle="modal" data-target="#entryModal" id="` + row.interview_id + `">
+  <span class="text">Entry</span>
+</button>
+`;
+         }
+         /* -------------------------------------------------------------------------------- */
+         else if (row.interview_status == 5) {
+           return `
+<button class="inspect_button btn btn-success border-0" data-toggle="modal" data-target="#inspectModal" id="` + row.interview_id + `">
+  <span class="text">Inspect</span>
+</button>
+`;
+         }
+         /* -------------------------------------------------------------------------------- */
+         else if (row.interview_status == 6) {
+           return `
+<button class="payback_button btn btn-success border-0" data-toggle="modal" data-target="#paybackModal" id="` + row.interview_id + `">
+  <span class="text">Payback</span>
+</button>
+`;
+         }
+         /* -------------------------------------------------------------------------------- */
+         else {
            return "Not yet";
          }
        }},
@@ -224,6 +270,26 @@ $(document).ready(function() {
     interview_selected_value = Number(this.id);
   });
 
+  $(document).on('click', '.interview_button', function() {
+    interview_selected_value = Number(this.id);
+  });
+
+  $(document).on('click', '.offer_button', function() {
+    interview_selected_value = Number(this.id);
+  });
+
+  $(document).on('click', '.entry_button', function() {
+    interview_selected_value = Number(this.id);
+  });
+
+  $(document).on('click', '.inspect_button', function() {
+    interview_selected_value = Number(this.id);
+  });
+
+  $(document).on('click', '.payback_button', function() {
+    interview_selected_value = Number(this.id);
+  });
+
   // post table
   $('#dataTable_post tbody').on('click', 'tr', function() {
     var id = this.id;
@@ -284,13 +350,76 @@ $(document).ready(function() {
       e.preventDefault();
 
       var interview_id = interview_selected_value;
-      alert("Interview:" + interview_id);
+
       $('#dialModal').modal('hide');
       var status = 2;
 
       submit_interview_by_id(interview_id, "/api/interviews/", status, table);
-      //$('#formResults').text($('#myForm').serialize());
-      //submit_interview(resume_id, post_id, "/api/interviews/", status, table);
+    });
+  });
+
+  $(function(){
+    $('#interviewFormSubmit').click(function(e){
+      e.preventDefault();
+
+      var interview_id = interview_selected_value;
+
+      $('#interviewModal').modal('hide');
+      var status = 3;
+
+      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+    });
+  });
+
+  $(function(){
+    $('#offerFormSubmit').click(function(e){
+      e.preventDefault();
+
+      var interview_id = interview_selected_value;
+
+      $('#offerModal').modal('hide');
+      var status = 4;
+
+      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+    });
+  });
+
+  $(function(){
+    $('#entryFormSubmit').click(function(e){
+      e.preventDefault();
+
+      var interview_id = interview_selected_value;
+
+      $('#entryModal').modal('hide');
+      var status = 5;
+
+      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+    });
+  });
+
+  $(function(){
+    $('#inspectFormSubmit').click(function(e){
+      e.preventDefault();
+
+      var interview_id = interview_selected_value;
+
+      $('#inspectModal').modal('hide');
+      var status = 6;
+
+      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+    });
+  });
+
+  $(function(){
+    $('#paybackFormSubmit').click(function(e){
+      e.preventDefault();
+
+      var interview_id = interview_selected_value;
+
+      $('#paybackModal').modal('hide');
+      var status = 7;
+
+      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
     });
   });
 

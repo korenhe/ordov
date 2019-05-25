@@ -75,18 +75,21 @@ class Resume(models.Model):
         return self.username
 
 ORDER_COLUMN_CHOICES = Choices(
-    ('0', 'id'),
-    ('1', 'candidate_id'),
-    ('2', 'id'),
-    ('3', 'username'),
-    ('4', 'gender'),
-    ('5', 'age'),
-    ('6', 'phone_number'),
-    ('7', 'email'),
-    ('8', 'school'),
-    ('9', 'degree'),
-    ('10', 'major'),
-    ('11', 'id'),
+    ('0', 'id'), #CK
+    ('1', 'interview_id'), #IID
+    ('2', 'candidate_id'), #CID
+    ('3', 'id'), #ID
+    ('4', 'username'), # *Name
+    ('5', 'gender'), # Gender
+    ('6', 'age'), # Age
+    ('7', 'phone_number'), #Phone
+    ('8', 'email'), #email
+    ('9', 'school'), #school
+    ('10', 'degree'), #degree
+    ('11', 'major'), # *Major
+    ('12', 'is_match'), # ismatch
+    ('13', 'status'), # status
+    ('14', 'id'), # action
 )
 
 def query_resumes_by_args(**kwargs):

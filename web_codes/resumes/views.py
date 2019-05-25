@@ -41,7 +41,7 @@ class ResumeViewSet(viewsets.ModelViewSet):
 
         resume = query_resumes_by_args(**request.query_params)
 
-        post_id = int(request.query_params.get('post_id', None)[0])
+        post_id = int(request.query_params.get('post_id', [0])[0])
 
         serializer = ResumeSerializer(
             resume['items'],
