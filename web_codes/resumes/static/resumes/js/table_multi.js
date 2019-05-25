@@ -272,8 +272,11 @@ $(document).ready(function() {
 
   $(document).on('change', '.stage_one_select', function() {
 	resume_selected_value = Number(this.id);
+    interview_selected_value = Number(this.id);
+
     /* Attention: how to select one item by variable */
-    value = $(".stage_one_select:eq("+(resume_selected_value-1)+")").val()
+    /*value = $(".stage_one_select:eq("+(resume_selected_value-1)+")").val() */
+    value = $("#"+(interview_selected_value)+" .stage_one_select").val()
     if (value == "AI沟通") {
        $('#dialModal').modal('toggle');
     } else if (value == "短信沟通") {
@@ -365,13 +368,13 @@ $(document).ready(function() {
   $(function(){
     $('#dialFormSubmit').click(function(e){
       e.preventDefault();
-
-      var interview_id = interview_selected_value;
-
-      $('#dialModal').modal('hide');
+      var resume_id = resume_selected_value;
+      var post_id = post_selected_value;
       var status = 2;
 
-      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+      var interview_id = interview_selected_value;
+      $('#dialModal').modal('hide');
+      submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, table);
     });
   });
 
