@@ -10,7 +10,7 @@ from model_utils import Choices
 
 STATUS_CHOICES = (
     (0, '筛选'),
-    (1, '邀约'),
+    (1, 'AI面试中'),
     (2, '面试'),
     (3, 'OFFER'),
     (4, '入职'),
@@ -29,6 +29,7 @@ STATUS_ONDUTY_CHOICES = (
 # 某公司和某个人对应着关系
 # 一次面试按理说的话，也是有很多
 # 每一次的面试记录也都要留下来
+# 面试有许多过程，每个过程分成三种状态, pending, pass, over
 
 class Interview(models.Model):
     class Meta:

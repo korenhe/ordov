@@ -14,6 +14,30 @@ function getCookie(name) {
   return cookieValue;
 }
 
+function stop_interview_by_id(interview_id, url, status_value, table) {
+  var xhr = new XMLHttpRequest();
+  xhr.open("PATCH", url + interview_id + '/');
+  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+  var csrftoken = getCookie('csrftoken');
+
+  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+
+  data = {
+    "is_active":false,
+    "status": status_value,
+    "result":"Stop",
+  };
+
+  console.log(data);
+  xhr.onloadend = function() {
+    //done
+    table.draw();
+  };
+
+  xhr.send(JSON.stringify(data));
+}
+
+
 function submit_interview_by_id(interview_id, url, status_value, table) {
   var xhr = new XMLHttpRequest();
   xhr.open("PATCH", url + interview_id + '/');
@@ -142,7 +166,7 @@ $(document).ready(function() {
                 <span class="text">不合适</span>
                 </button>
 
-                <select class="stage_one_select form-control" id="` + row.id + `">
+                <select class="stage_zero_select form-control" id="` + row.id + `">
                     <option>待选状态</option>
                     <option>AI沟通</option>
                     <option>短信沟通</option>
@@ -154,9 +178,17 @@ $(document).ready(function() {
          /* -------------------------------------------------------------------------------- */
          else if (row.interview_status == 1) {
            return `
+               <!--
                 <button class="dial_button btn btn-success border-0" data-toggle="modal" data-target="#dialModal" id="` + row.interview_id + `">
   <span class="text">打电话</span>
 </button>
+               -->
+                <select class="stage_one_select form-control" id="` + row.id + `">
+                    <option>等待AI结果</option>
+                    <option>继续下一过程</option>
+                    <option>终止面试</option>
+                </select>
+
 `;
          }
          /* -------------------------------------------------------------------------------- */
@@ -270,18 +302,32 @@ $(document).ready(function() {
     alert(resume_selected_value)
   });
 
-  $(document).on('change', '.stage_one_select', function() {
+  $(document).on('change', '.stage_zero_select', function() {
 	resume_selected_value = Number(this.id);
     interview_selected_value = Number(this.id);
 
     /* Attention: how to select one item by variable */
-    /*value = $(".stage_one_select:eq("+(resume_selected_value-1)+")").val() */
-    value = $("#"+(interview_selected_value)+" .stage_one_select").val()
+    /*value = $(".stage_zero_select:eq("+(resume_selected_value-1)+")").val() */
+    /* TODO: There is a Bug here, the first there item could NOT be triggered*/
+    value = $("#"+(interview_selected_value)+" .stage_zero_select").val()
     if (value == "AI沟通") {
        $('#dialModal').modal('toggle');
     } else if (value == "短信沟通") {
     } else if (value == "人工沟通") {
     } else if (value == "不符合要求") {
+    }
+
+  });
+
+  $(document).on('change', '.stage_one_select', function() {
+    resume_selected_value = Number(this.id);
+    interview_selected_value = Number(this.id);
+
+    value = $("#"+(interview_selected_value)+" .stage_one_select").val()
+    if (value == "等待AI结果") {
+    } else if (value == "继续下轮过程") {
+    } else if (value == "终止面试") {
+        $('#stopModal').modal('toggle');
     }
 
   });
@@ -370,11 +416,24 @@ $(document).ready(function() {
       e.preventDefault();
       var resume_id = resume_selected_value;
       var post_id = post_selected_value;
-      var status = 2;
+      var status = 1;
 
       var interview_id = interview_selected_value;
       $('#dialModal').modal('hide');
       submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, table);
+    });
+  });
+
+  $(function() {
+    $('#stopFormSubmit').click(function(e){
+      e.preventDefault();
+
+      var interview_id = interview_selected_value;
+
+      $('#stopModal').modal('hide');
+      var status = -1 // current status, not updated
+
+      stop_interview_by_id(resume_id, post_id, "/api/interviews/", status, table);
     });
   });
 
