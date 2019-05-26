@@ -85,12 +85,46 @@ function submit_interview_by_compound(resume_id, post_id, url, status_value, tab
   xhr.send(JSON.stringify(data));
 }
 
-function show_post_modal(interview_id) {
-  var post_id = 2;
+function show_post_modal(post_id) {
   $.ajax({
-    url:'api/posts/',
+    url:'/api/posts/' + post_id + '/',
     type: 'GET',
+    data: null,
+    success: function(response) {
 
+      /* here the abbreviation is not work, don't know why. Since the getElementbyid method is the most effience one, use it. */
+      //$('#text_postinfo_company').value = response.department.company.name;
+      //document.querySelector('#text_postinfo_company').value = response.department.company.name;
+      document.getElementById("text_postinfo_company").value = response.department.company.name;
+      document.getElementById("text_postinfo_department").value = response.department.name;
+      document.getElementById("text_postinfo_post").value = response.name;
+      document.getElementById("text_postinfo_description").value = response.description;
+
+      $('#postModal').modal('toggle');
+    },
+    error: function() {
+      console.log("get post info failed");
+    },
+  });
+}
+
+function show_resume_modal(resume_id) {
+  $.ajax({
+    url:'/api/resumes/' + resume_id + '/',
+    type: 'GET',
+    data: null,
+    success: function(response) {
+
+      document.getElementById("text_resumeinfo_username").value = response.username;
+      document.getElementById("text_resumeinfo_degree").value = response.degree;
+      document.getElementById("text_resumeinfo_school").value = response.school;
+      document.getElementById("text_resumeinfo_phone_number").value = response.phone_number;
+
+      $('#resumeModal').modal('toggle');
+    },
+    error: function() {
+      console.log("get resume info failed");
+    },
   });
 }
 
@@ -134,11 +168,9 @@ $(document).ready(function() {
        "checkboxes": {
        },
       },
-      {"data": "interview_id",
-       "visible": false},
-      {"data": "candidate_id",
-       "visible": false},
-      {"data": "id"},
+      {"data": "interview_id", "visible": false},
+      {"data": "candidate_id", "visible": false},
+      {"data": "id"}, // resume id
       {"data": "username"},
       {"data": "gender", "visible":false},
       {"data": "age"},
@@ -209,7 +241,7 @@ $(document).ready(function() {
          /* -------------------------------------------------------------------------------- */
          else if (row.interview_status == 3) {
            return `
-                <select class="stage_three_select form-control" id="` + row.interview_id + `">
+                <select class="stage_three_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `">
                     <option>面试过程中</option>
                     <option>查看职位信息</option>
                     <option>查看应聘者信息</option>
@@ -350,17 +382,17 @@ $(document).ready(function() {
     value = $("#"+(interview_selected_value)+".stage_three_select").val()
     if (value == "面试过程中") {
     } else if (value == "查看职位信息") {
-      //$('#postModal').modal('toggle');
       // show post
-      show_post_modal(interview_selected_value);
+      show_post_modal(post_selected_value);
     } else if (value == "查看应聘者信息") {
-        $('#candidateModal').modal('toggle');
+      $('#resumeModal').modal('toggle');
+      resume_id = this.dataset.resume_id;
+      show_resume_modal(resume_id);
     } else if (value == "SUCCESS:填写面试报告") {
-        $('#interviewModal2').modal('toggle');
+      $('#interviewModal2').modal('toggle');
     } else if (value == "FAIL:终止面试") {
-        $('#stopModal').modal('toggle');
+      $('#stopModal').modal('toggle');
     }
-
   });
 
   $(document).on('click', '.dial_button', function() {
