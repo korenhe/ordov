@@ -85,6 +85,15 @@ function submit_interview_by_compound(resume_id, post_id, url, status_value, tab
   xhr.send(JSON.stringify(data));
 }
 
+function show_post_modal(interview_id) {
+  var post_id = 2;
+  $.ajax({
+    url:'api/posts/',
+    type: 'GET',
+
+  });
+}
+
 $(document).ready(function() {
 
   //$('.collapse').collapse();
@@ -304,7 +313,8 @@ $(document).ready(function() {
     alert(resume_selected_value)
   });
 
-  $(document).on('change', '.stage_zero_select', function() {
+  // use 'click' here, otherwise, if user select 'next' and then closed, he should change to other stats then back to 'next' to trigger the event.
+  $(document).on('click', '.stage_zero_select', function() {
 	resume_selected_value = Number(this.id);
 
     /* Attention: how to select one item by variable */
@@ -321,7 +331,7 @@ $(document).ready(function() {
 
   });
 
-  $(document).on('change', '.stage_one_select', function() {
+  $(document).on('click', '.stage_one_select', function() {
     interview_selected_value = Number(this.id);
 
     value = $("#"+(interview_selected_value)+".stage_one_select").val()
@@ -334,13 +344,15 @@ $(document).ready(function() {
 
   });
 
-  $(document).on('change', '.stage_three_select', function() {
+  $(document).on('click', '.stage_three_select', function() {
     interview_selected_value = Number(this.id);
 
     value = $("#"+(interview_selected_value)+".stage_three_select").val()
     if (value == "面试过程中") {
     } else if (value == "查看职位信息") {
-        $('#postModal').modal('toggle');
+      //$('#postModal').modal('toggle');
+      // show post
+      show_post_modal(interview_selected_value);
     } else if (value == "查看应聘者信息") {
         $('#candidateModal').modal('toggle');
     } else if (value == "SUCCESS:填写面试报告") {
