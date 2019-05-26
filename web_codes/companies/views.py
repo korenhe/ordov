@@ -130,8 +130,38 @@ def UpdatePost(request):
             "name": post_name,
             "level": ""
         }
+        """
+        Do Not Use the serializer here
+        """
+        companyTarget = None
+        departTarget = None
+        postTarget = None
+        company_info = {
+            "cType":"",
+            "name": company_name,
+            "scale": 0,
+            "area": "",
+            "description": "",
+            "short_name": company_name
+        }
+        department_info = {
+            "description": "",
+            "name": department_name
+        }
+        post_info = {
+            "description": post_name,
+            "name": post_name,
+            "level": ""
+        }
+
+        companyTarget, created = Company.objects.update_or_create(**company_info)
+        departmentTarget, created = Department.objects.update_or_create(company=companyTarget, **department_info)
+        postTarget, created = Post.objects.update_or_create(company=companyTarget, department=departmentTarget, **post_info)
+
+        """
         serializer = PostSerializer(data=post_info)
         if serializer.is_valid(raise_exception=True):
             post_saved = serializer.save()
         else:
             print("Fail to serialize the post")
+        """
