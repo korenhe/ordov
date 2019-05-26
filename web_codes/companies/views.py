@@ -13,6 +13,8 @@ from rest_framework import viewsets, status
 from .models import Company, Department, Post, query_posts_by_args
 from .serializers import CompanySerializer, DepartmentSerializer, PostSerializer
 
+from ordov.choices import (DEGREE_CHOICES, DEGREE_CHOICES_MAP)
+
 class CompanyView(APIView):
     def get(self, request):
         companies = Company.objects.all()
@@ -108,11 +110,18 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def UpdatePost(request):
     if request.method == 'POST':
-        print("post",request.POST)
+        print("post------",request.POST)
         company_name = request.POST['company_name']
         department_name = request.POST['department_name']
         post_name = request.POST['post_name']
-        print("company:", company_name, " department:", department_name, " post:", post_name)
+        min_degree = request.POST['min_degree']
+        province = request.POST['working_place_province']
+        city = request.POST['working_place_city']
+        district = request.POST['working_place_district']
+        ageMin = int(request.POST['min_age_id'])
+        salary_offer = request.POST['min_salary']
+        print("company:", company_name, " department:", department_name, " post:", post_name, "min_degree", min_degree, "min_age ", ageMin)
+        print("province", province, " city: ", city, " district:", district )
         post_info = {
             "department": {
                 "description": "",
@@ -151,6 +160,12 @@ def UpdatePost(request):
         post_info = {
             "description": post_name,
             "name": post_name,
+            "degree": DEGREE_CHOICES_MAP.get(min_degree),
+            "address_provice": province,
+            "address_city": city,
+            "address_distinct": district,
+            "ageMin": ageMin,
+            "salary_offer": salary_offer,
             "level": ""
         }
 

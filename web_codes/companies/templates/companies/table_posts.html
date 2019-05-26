@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-<form name='filter_form'>
+<form name='filter_form' id="post_filter_form">
     {% csrf_token %}
     <div class="row col-md-24 register-form">
       <div class="col-md-3 form-group">
@@ -11,13 +11,56 @@
       </div>
       <div class="col-md-3 form-group">
         <label> 部门名称 </label>
-        <input type="text" name="department" id="department_id" placeholder="部门名称" value="">
+        <input type="text" name="department_name" id="department_id" placeholder="部门名称" value="">
       </div>
       <div class="col-md-3 form-group">
         <label> 岗位名称 </label>
-        <input type="text" name="post" id="post_id" placeholder="岗位名称" value="">
+        <input type="text" name="post_name" id="post_id" placeholder="岗位名称" value="">
       </div>
     </div>
+
+    <div class="row col-md-24 register-form">
+      <h6> 过滤条件 </h6>
+    </div>
+
+    <div class="row col-md-24 register-form">
+      <div class="col-md-3 form-group">
+        <label> 最小年龄 </label>
+        <input type="text" name="min_age_id" placeholder="年龄" value="">
+      </div>
+      <div class="col-md-3 form-group">
+        <label> 月薪 </label>
+        <input type="text" name="min_salary" placeholder="元/月" value="">
+      </div>
+      <div class="col-md-3 form-group">
+        <label> 最低学历 </label>
+		<select class="form-control" name="min_degree" id="min_degree_id">
+			<option>不限</option>
+			<option>初中</option>
+			<option>高中</option>
+			<option>本科</option>
+			<option>硕士</option>
+			<option>博士</option>
+		</select>
+      </div>
+	</div>
+
+    <div class="row col-md-24 register-form">
+      <h6> 工作地点 </h6>
+    </div>
+
+    <div class="row col-md-24 register-form">
+      <div class="col-md-3 form-group">
+        <input type="text" name="working_place_province" placeholder="省" value="">
+      </div>
+      <div class="col-md-3 form-group">
+        <input type="text" name="working_place_city" placeholder="市" value="">
+      </div>
+      <div class="col-md-3 form-group">
+        <input type="text" name="working_place_district" placeholder="区/县" value="">
+      </div>
+   </div>
+
     <div class="row col-md-24">
       <div class="col-md-3 form-group">
         <button type='submit' class="btn btn-primary" id='post_button_id'>确认发布</button>
@@ -95,11 +138,7 @@
    $.ajax({
      "url": "/post/post/update",
      "type":"POST",
-     "data": {
-       "company_name" : $('#company_name_id').val(),
-       "department_name" : $('#department_id').val(),
-       "post_name" : $('#post_id').val()
-     },
+	 "data":$('#post_filter_form').serialize(),
    });
  }
 </script>
