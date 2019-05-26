@@ -99,3 +99,14 @@ def invitation_result(request, resume_id):
     context = {}
 
     return HttpResponseRedirect(reverse('app_manager:t_interviews'), context)
+
+from django.http import JsonResponse
+def resume_statistic(request, post_id):
+    resumes_total = Resume.objects.count()
+    interviews_total = Resume.objects.filter(interview__status__gte=1, interview__post__id=post_id).count()
+
+    data = {
+        "resumes_total": resumes_total,
+        "interviews_total": interviews_total,
+    }
+    return JsonResponse(data)

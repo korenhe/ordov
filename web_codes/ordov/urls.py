@@ -29,12 +29,13 @@ router.register(r'candidates', candidatesViews.CandidateViewSet)
 router.register(r'posts', companiesViews.PostViewSet)
 router.register(r'interviews', interviewsViews.InterviewViewSet)
 
+# Look at here: all path pattern should be ENDUP with '/'
 urlpatterns = [
     path('accounts/signup/', accountsViews.signup, name='signup'),
     path('accounts/login/', accountsViews.MyLoginView.as_view(), name='login'),
     path('accounts/', include('allauth.urls')),
-    path('candidates/resume/update', candidatesViews.updateResume, name='candidate_update_resume'),
-    path('candidates/resume/success', candidatesViews.apply_success, name='candidate_apply_success'),
+    path('candidates/resume/update/', candidatesViews.updateResume, name='candidate_update_resume'),
+    path('candidates/resume/success/', candidatesViews.apply_success, name='candidate_apply_success'),
 
     path('admin/', admin.site.urls),
 
@@ -45,5 +46,5 @@ urlpatterns = [
     path('applicant/', include('recruit_applicant.urls'), name='applicant'),
 
     path('api/', include(router.urls)),
-    path('post/post/update', companiesViews.UpdatePost),
+    path('post/post/update/', companiesViews.UpdatePost),
 ]

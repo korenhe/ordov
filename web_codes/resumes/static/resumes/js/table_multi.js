@@ -14,120 +14,6 @@ function getCookie(name) {
   return cookieValue;
 }
 
-function stop_interview_by_id(interview_id, url, status_value, table) {
-  var xhr = new XMLHttpRequest();
-  xhr.open("PATCH", url + interview_id + '/');
-  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  var csrftoken = getCookie('csrftoken');
-
-  xhr.setRequestHeader("X-CSRFToken", csrftoken);
-
-  data = {
-    "is_active":false,
-    "status": status_value,
-    "result":"Stop",
-  };
-
-  console.log(data);
-  xhr.onloadend = function() {
-    //done
-    table.draw();
-  };
-
-  xhr.send(JSON.stringify(data));
-}
-
-
-function submit_interview_by_id(interview_id, url, status_value, table) {
-  var xhr = new XMLHttpRequest();
-  xhr.open("PATCH", url + interview_id + '/');
-  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  var csrftoken = getCookie('csrftoken');
-
-  xhr.setRequestHeader("X-CSRFToken", csrftoken);
-
-  data = {
-    "is_active":true,
-    "status": status_value,
-    "result":"Pending",
-  };
-
-  console.log(data);
-  xhr.onloadend = function() {
-    //done
-    table.draw();
-  };
-
-  xhr.send(JSON.stringify(data));
-}
-
-function submit_interview_by_compound(resume_id, post_id, url, status_value, table) {
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", url);
-  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-  var csrftoken = getCookie('csrftoken');
-
-  xhr.setRequestHeader("X-CSRFToken", csrftoken);
-
-  data = {"resume": resume_id,
-          "post": post_id,
-          "is_active":true,
-          "status": status_value,
-          "result":"Pending",
-         };
-
-  console.log(data);
-  xhr.onloadend = function() {
-    //done
-    table.draw();
-  };
-
-  xhr.send(JSON.stringify(data));
-}
-
-function show_post_modal(post_id) {
-  $.ajax({
-    url:'/api/posts/' + post_id + '/',
-    type: 'GET',
-    data: null,
-    success: function(response) {
-
-      /* here the abbreviation is not work, don't know why. Since the getElementbyid method is the most effience one, use it. */
-      //$('#text_postinfo_company').value = response.department.company.name;
-      //document.querySelector('#text_postinfo_company').value = response.department.company.name;
-      document.getElementById("text_postinfo_company").value = response.department.company.name;
-      document.getElementById("text_postinfo_department").value = response.department.name;
-      document.getElementById("text_postinfo_post").value = response.name;
-      document.getElementById("text_postinfo_description").value = response.description;
-
-      $('#postModal').modal('toggle');
-    },
-    error: function() {
-      console.log("get post info failed");
-    },
-  });
-}
-
-function show_resume_modal(resume_id) {
-  $.ajax({
-    url:'/api/resumes/' + resume_id + '/',
-    type: 'GET',
-    data: null,
-    success: function(response) {
-
-      document.getElementById("text_resumeinfo_username").value = response.username;
-      document.getElementById("text_resumeinfo_degree").value = response.degree;
-      document.getElementById("text_resumeinfo_school").value = response.school;
-      document.getElementById("text_resumeinfo_phone_number").value = response.phone_number;
-
-      $('#resumeModal').modal('toggle');
-    },
-    error: function() {
-      console.log("get resume info failed");
-    },
-  });
-}
-
 $(document).ready(function() {
 
   //$('.collapse').collapse();
@@ -310,11 +196,11 @@ $(document).ready(function() {
   });
 
   $('#age_id').keyup(function() {
-    table.draw();
+    page_refresh(table);
   });
 
   $('#degree_id, #gender_id, #status_id').change(function() {
-    table.draw();
+    page_refresh(table);
   });
 
   // resume table
@@ -325,6 +211,140 @@ $(document).ready(function() {
     }
 
   });
+
+  function page_refresh(table) {
+    // update statistic info
+    var xx = t_resume_statistic_url;
+    $.ajax({
+      url: "/manager/resumes/statistic/" + post_selected_value + "/",
+      type: 'GET',
+      data: null,
+      success: function(response) {
+        document.getElementById("badge_statistic_stage_0").innerHTML = response.resumes_total;
+        document.getElementById("badge_statistic_stage_1").innerHTML = response.interviews_total;
+      },
+      error: function() {
+        console.log("get statistic info failed");
+      },
+    });
+
+    table.draw();
+  }
+
+  function stop_interview_by_id(interview_id, url, status_value, table) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("PATCH", url + interview_id + '/');
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    var csrftoken = getCookie('csrftoken');
+
+    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+
+    data = {
+      "is_active":false,
+      "status": status_value,
+      "result":"Stop",
+    };
+
+    console.log(data);
+    xhr.onloadend = function() {
+      //done
+      page_refresh(table);
+    };
+
+    xhr.send(JSON.stringify(data));
+  }
+
+
+  function submit_interview_by_id(interview_id, url, status_value, table) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("PATCH", url + interview_id + '/');
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    var csrftoken = getCookie('csrftoken');
+
+    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+
+    data = {
+      "is_active":true,
+      "status": status_value,
+      "result":"Pending",
+    };
+
+    console.log(data);
+    xhr.onloadend = function() {
+      //done
+      page_refresh(table);
+    };
+
+    xhr.send(JSON.stringify(data));
+  }
+
+  function submit_interview_by_compound(resume_id, post_id, url, status_value, table) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    var csrftoken = getCookie('csrftoken');
+
+    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+
+    data = {"resume": resume_id,
+            "post": post_id,
+            "is_active":true,
+            "status": status_value,
+            "result":"Pending",
+           };
+
+    console.log(data);
+    xhr.onloadend = function() {
+      //done
+      page_refresh(table);
+    };
+
+    xhr.send(JSON.stringify(data));
+  }
+
+  function show_post_modal(post_id) {
+    $.ajax({
+      url:'/api/posts/' + post_id + '/',
+      type: 'GET',
+      data: null,
+      success: function(response) {
+
+        /* here the abbreviation is not work, don't know why. Since the getElementbyid method is the most effience one, use it. */
+        //$('#text_postinfo_company').value = response.department.company.name;
+        //document.querySelector('#text_postinfo_company').value = response.department.company.name;
+        document.getElementById("text_postinfo_company").value = response.department.company.name;
+        document.getElementById("text_postinfo_department").value = response.department.name;
+        document.getElementById("text_postinfo_post").value = response.name;
+        document.getElementById("text_postinfo_description").value = response.description;
+
+        $('#postModal').modal('toggle');
+      },
+      error: function() {
+        console.log("get post info failed");
+      },
+    });
+  }
+
+  function show_resume_modal(resume_id) {
+    $.ajax({
+      url:'/api/resumes/' + resume_id + '/',
+      type: 'GET',
+      data: null,
+      success: function(response) {
+
+        document.getElementById("text_resumeinfo_username").value = response.username;
+        document.getElementById("text_resumeinfo_degree").value = response.degree;
+        document.getElementById("text_resumeinfo_school").value = response.school;
+        document.getElementById("text_resumeinfo_phone_number").value = response.phone_number;
+
+        $('#resumeModal').modal('toggle');
+      },
+      error: function() {
+        console.log("get resume info failed");
+      },
+    });
+  }
+
   /*
     $('#dataTable tbody').on('click', 'tr', function() {
     var id = this.id;
@@ -360,7 +380,6 @@ $(document).ready(function() {
     } else if (value == "人工沟通") {
     } else if (value == "不符合要求") {
     }
-
   });
 
   $(document).on('click', '.stage_one_select', function() {
@@ -438,7 +457,7 @@ $(document).ready(function() {
       post_selected_value = id;
 
       var tr = document.getElementById(id);
-      table.draw();
+      page_refresh(table);
 
       document.getElementById("text_company_name").innerHTML = tr.innerText;
     }

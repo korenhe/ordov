@@ -33,6 +33,7 @@ class ResumeView(APIView):
             {"success": "Resume '{}' created successfully".format(resume_saved.username)}
         )
 
+
 class ResumeViewSet(viewsets.ModelViewSet):
     queryset = Resume.objects.all().order_by('id')
     serializer_class = ResumeSerializer

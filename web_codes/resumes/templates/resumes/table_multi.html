@@ -3,6 +3,40 @@
 {% block content %}
 
 <div id="accordion">
+  <!-- Global Filter -->
+  <div class="list-group list-group-horizontal">
+
+    <li class="list-group-item list-group-item-action active" data-toggle="list">
+      ALL
+      <span id="badge_statistic_stage_0" class="badge badge-primary badge-pill"></span>
+    </li>
+    <li class="list-group-item list-group-item-action" data-toggle="list">
+      Stage1
+      <span id="badge_statistic_stage_1" class="badge badge-primary badge-pill"></span>
+    </li>
+    <li class="list-group-item list-group-item-action" data-toggle="list">
+      Stage2
+      <span class="badge badge-primary badge-pill"></span>
+    </li>
+    <li class="list-group-item list-group-item-action" data-toggle="list">
+      Stage3
+      <span class="badge badge-primary badge-pill"></span>
+    </li>
+    <li class="list-group-item list-group-item-action" data-toggle="list">
+      Stage4
+      <span class="badge badge-primary badge-pill"></span>
+    </li>
+    <li class="list-group-item list-group-item-action" data-toggle="list">
+      Stage5
+      <span class="badge badge-primary badge-pill"></span>
+    </li>
+    <li class="list-group-item list-group-item-action" data-toggle="list">
+      Stage6
+      <span class="badge badge-primary badge-pill"></span>
+    </li>
+  </div>
+  <!-- Global Filter -->
+
   <?-- Post -->
   <div class="card">
     <div class="card-header" id="headingOne">
@@ -924,5 +958,8 @@
 {% endblock %}
 
 {% block extra_js %}
+<script>
+ var t_resume_statistic_url = "{% url 'app_manager:t_resume_statistic' 1 %}";
+</script>
 <script src="{% static 'resumes/js/table_multi.js' %}"></script>
 {% endblock%}
