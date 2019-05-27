@@ -15,7 +15,7 @@ def test_load_excel():
 def load_excel(filename):
     data = xlrd.open_workbook(filename, formatting_info=True)
     table = data.sheets()[0]
-    headerList = map(lambda x:x.value, table.row(1))
+    headerList = map(lambda x:x.value, table.row(0))
     headerSet = set(headerList)
 
     # Found the basic info and update the pos
@@ -35,9 +35,9 @@ def load_excel(filename):
 
     curValidPhone = ""
     validItem = True
-    for rownum in range(2, table.nrows):
+    for rownum in range(1, table.nrows):
         curRowList = list(map(lambda x:x.value, table.row(rownum)))
-        phone = curRowList[iPos['PHONE']].strip()
+        phone = str(curRowList[iPos['PHONE']]).strip()
         if not phone == "":
             curValidPhone = phone
             # firstly, the basic resume info should be updated

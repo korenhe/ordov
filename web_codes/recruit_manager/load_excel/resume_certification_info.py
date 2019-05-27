@@ -6,9 +6,9 @@ from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from experiences.serializers import LanguageSerializer, CertificationSerializer
 
 def update_language_info(resume, phone):
-    lang_name = resume[iPos['LANGUAGE_NAME']].strip()
+    lang_name = str(resume[iPos['LANGUAGE_NAME']]).strip()
     lang_certification = resume[iPos['LANGUAGE_CERTIFICATION']]
-    lang_description = resume[iPos['LANGUAGE_DESCRIPTION']].strip()
+    lang_description = str(resume[iPos['LANGUAGE_DESCRIPTION']]).strip()
 
     resumeTarget = None
     try:

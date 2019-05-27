@@ -11,7 +11,7 @@ import json
 def create_or_update_basic_info(resume, phone):
 
     user = resume[iPos['NAME']].strip()
-    phone = resume[iPos['PHONE']].strip()
+    phone = str(resume[iPos['PHONE']]).strip()
 
     # step0: check if the phone is registered
     # For resumes from excel, we regard phone_number as 'primary key'
@@ -28,34 +28,37 @@ def create_or_update_basic_info(resume, phone):
 
     print("No Item for", phone, ", Create it")
     # step1: get basic info from resume
-    resume_way = resume[iPos['RESUME_WAY']].strip()
-    resume_way2 = resume[iPos['RESUME_WAY2']].strip()
-    gender = resume[iPos['GENDER']].strip()
+    resume_way = str(resume[iPos['RESUME_WAY']]).strip()
+    resume_way2 = str(resume[iPos['RESUME_WAY2']]).strip()
+    gender = str(resume[iPos['GENDER']]).strip()
     qq = resume[iPos['QQ']]
-    email = resume[iPos['EMAIL']].strip()
+    email = str(resume[iPos['EMAIL']]).strip()
 
     birth_year = resume[iPos['BIRTH_YEAR']]
     birth_month = resume[iPos['BIRTH_MONTH']]
     birth_day = resume[iPos['BIRTH_DAY']]
-    identity = resume[iPos['IDENTITY']].strip()
+    identity = str(resume[iPos['IDENTITY']]).strip()
 
-    degree = resume[iPos['DEGREE']].strip()
-    major = resume[iPos['MAJOR']].strip()
-    school = resume[iPos['SCHOOL']].strip()
-    graduate_time = resume[iPos['GRADUATE_TIME']].strip()
-    live_stat = resume[iPos['LIVE_STATE']].strip()
-    self_description = resume[iPos['SELF_DESCRIPTION']].strip()
+    degree = str(resume[iPos['DEGREE']]).strip()
+    major = str(resume[iPos['MAJOR']]).strip()
+    school = str(resume[iPos['SCHOOL']]).strip()
+    graduate_time = str(resume[iPos['GRADUATE_TIME']]).strip()
+    live_stat = str(resume[iPos['LIVE_STATE']]).strip()
+    self_description = str(resume[iPos['SELF_DESCRIPTION']]).strip()
 
-    birth_province = resume[iPos['BIRTH_PLACE_PROVINCE']].strip()
-    birth_city= resume[iPos['BIRTH_PLACE_CITY']].strip()
-    birth_district = resume[iPos['BIRTH_PLACE_DISTRICT']].strip()
-    birth_place = resume[iPos['BIRTH_PLACE_STREET']].strip()
+    birth_province = str(resume[iPos['BIRTH_PLACE_PROVINCE']]).strip()
+    birth_city= str(resume[iPos['BIRTH_PLACE_CITY']]).strip()
+    birth_district = str(resume[iPos['BIRTH_PLACE_DISTRICT']]).strip()
+    birth_place = str(resume[iPos['BIRTH_PLACE_STREET']]).strip()
 
     current_settle_province = resume[iPos['CURRENT_SETTLE_PROVINCE']]
     current_settle_city = resume[iPos['CURRENT_SETTLE_CITY']]
     current_settle_district = resume[iPos['CURRENT_SETTLE_DISTRICT']]
     current_settle_street = resume[iPos['CURRENT_SETTLE_STREET']]
-    marriage = resume[iPos['MARRIAGE']].strip()
+    marriage = str(resume[iPos['MARRIAGE']].strip())
+    # TODO FIX
+    marriage = "已婚"
+    ageStr = str(resume[iPos['AGE']])
 
     # step2: preDeal the basic info
     if gender == '男':
@@ -66,10 +69,8 @@ def create_or_update_basic_info(resume, phone):
     degreeNO = validate_degree(degree)
 
     age = 0
-    if not birth_year == '':
-        print("birth_year: ", birth_year,"|")
-        birth_year = int(birth_year)
-        age = 2019 - brith_year
+    if not age == '':
+        age = int(float(ageStr))
     if not birth_month == '':
         birth_month = int(birth_month)
     if not birth_day == '':

@@ -11,19 +11,19 @@ def update_education_info(resume, phone):
     if phone is "":
         return
     # step1: get raw data
-    edu_start = resume[iPos['EDUCATION_START_TIME']].strip()
-    edu_end = resume[iPos['EDUCATION_END_TIME']].strip()
-    edu_school = resume[iPos['EDUCATION_SCHOOL']].strip()
-    edu_colleage = resume[iPos['EDUCATION_COLLEGE']].strip()
-    edu_major = resume[iPos['EDUCATION_MAJOR']].strip()
-    edu_type = resume[iPos['EDUCATION_TYPE']].strip()
-    degree = resume[iPos['EDUCATION_DEGREE']].strip()
-    edu_reference = resume[iPos['EDUCATION_REFERENCE']].strip()
-    edu_reference_phone = resume[iPos['EDUCATION_REFERENCE_PHONE']].strip()
-    edu_provice = resume[iPos['EDUCATION_PROVICE']].strip()
-    edu_city = resume[iPos['EDUCATION_CITY']].strip()
-    edu_district = resume[iPos['EDUCATION_DISTRICT']].strip()
-    edu_street = resume[iPos['EDUCATION_STREET']].strip()
+    edu_start = str(resume[iPos['EDUCATION_START_TIME']]).strip()
+    edu_end = str(resume[iPos['EDUCATION_END_TIME']]).strip()
+    edu_school = str(resume[iPos['EDUCATION_SCHOOL']]).strip()
+    edu_colleage = str(resume[iPos['EDUCATION_COLLEGE']]).strip()
+    edu_major = str(resume[iPos['EDUCATION_MAJOR']]).strip()
+    edu_type = str(resume[iPos['EDUCATION_TYPE']]).strip()
+    degree = str(resume[iPos['EDUCATION_DEGREE']]).strip()
+    edu_reference = str(resume[iPos['EDUCATION_REFERENCE']]).strip()
+    edu_reference_phone = str(resume[iPos['EDUCATION_REFERENCE_PHONE']]).strip()
+    edu_provice = str(resume[iPos['EDUCATION_PROVICE']]).strip()
+    edu_city = str(resume[iPos['EDUCATION_CITY']]).strip()
+    edu_district = str(resume[iPos['EDUCATION_DISTRICT']]).strip()
+    edu_street = str(resume[iPos['EDUCATION_STREET']]).strip()
 
     # step2: refresh data
     print("pre edu_start:", edu_start, "|")
@@ -45,6 +45,7 @@ def update_education_info(resume, phone):
         return
 
     print("resumeTarget", resumeTarget)
+    print("edu_start: ", edu_start, " edu_end:", edu_end)
 
     #"resume" : resumeTarget,
     education = {

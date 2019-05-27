@@ -10,6 +10,7 @@ def validate_date(date_str):
     elif len(fields) == 2:
         return fields[0] + "-" + fields[1] + "-01"
     elif len(fields) == 1:
+        return "1970-01-01"
         return fields[0] + "-" + "01-01"
 
 def validate_degree(degree):
