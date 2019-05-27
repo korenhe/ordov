@@ -29,13 +29,6 @@ $(document).ready(function() {
   var table = $('#dataTable_resume').DataTable({
     "processing": true,
     "serverSide": true,
-    "stateSave": true,
-    stateSaveCallback: function(settings,data) {
-      localStorage.setItem( 'DataTables_' + settings.sInstance, JSON.stringify(data) )
-    },
-    stateLoadCallback: function(settings) {
-      return JSON.parse( localStorage.getItem( 'DataTables_' + settings.sInstance ) )
-    },
 
     "ajax": {
       "url": "/api/resumes/",
@@ -65,15 +58,33 @@ $(document).ready(function() {
       },
       {"data": "interview_id", "visible": false},
       {"data": "candidate_id", "visible": false},
-      {"data": "id"}, // resume id
-      {"data": "username"},
-      {"data": "gender", "visible":false},
-      {"data": "age"},
+      {"data": "id",
+       "width": "1%"}, // resume id
+      {"data": "username",
+       "width": "5%"},
+      {"data": "gender",
+       "width": "1%",
+       render: function(data, type, row, meta) {
+         if (data == "Male") {
+           return "男"
+         } else if (data == "Female"){
+           return "女"
+         } else {
+           // For default
+           return "--"
+         }
+       },
+      },
+      {"data": "age",
+       "width": "1%"},
       {"data": "phone_number", "visible":false},
       {"data": "email", "visible": false},
-      {"data": "school", "visible": false},
-      {"data": "degree"},
-      {"data": "major"},
+      {"data": "school",
+       "width": "5%"},
+      {"data": "degree",
+       "width": "5%"},
+      {"data": "major",
+       "width": "5%"},
 
       {"data": "is_match",
        "orderable": false,
@@ -89,12 +100,14 @@ $(document).ready(function() {
          }
        }},
       {"data": "interview_status_name",
-       "orderable": false
+       "orderable": false,
+       "width": "5%"
       },
 
       /* ================================================================================ */
       {"data": "interview_status",
        "orderable": false,
+       "width": "10%",
        render: function(data, type, row, meta) {
 
          /* -------------------------------------------------------------------------------- */
