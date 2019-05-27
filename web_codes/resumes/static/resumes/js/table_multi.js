@@ -24,6 +24,7 @@ $(document).ready(function() {
   var resume_selected = false;
   var resume_selected_value = 0;
   var interview_selected_value = 0;
+  var filter_status_value = 0;
 
   var table = $('#dataTable_resume').DataTable({
     "processing": true,
@@ -36,7 +37,8 @@ $(document).ready(function() {
         d.degree_id = $('#degree_id').val();
         d.age_id = $('#age_id').val();
         d.gender_id = $('#gender_id').val();
-        d.status_id = $('#status_id').val();
+        //var list_elements = document.getElementsByClassName("list-group-item active");
+        d.status_id = filter_status_value;
         d.post_id = post_selected_value;
       },
     },
@@ -199,7 +201,12 @@ $(document).ready(function() {
     page_refresh(table);
   });
 
-  $('#degree_id, #gender_id, #status_id').change(function() {
+  $('.list-group-item').on('click', function(e) {
+    filter_status_value = this.value;
+    page_refresh(table);
+  });
+
+  $('#degree_id, #gender_id').change(function() {
     page_refresh(table);
   });
 
@@ -221,7 +228,9 @@ $(document).ready(function() {
       data: null,
       success: function(response) {
         document.getElementById("badge_statistic_stage_0").innerHTML = response.resumes_total;
-        document.getElementById("badge_statistic_stage_1").innerHTML = response.interviews_total;
+        for (var i = 1; i < 8; i++) {
+          document.getElementById("badge_statistic_stage_" + i).innerHTML = response.interviews_status_filters[i-1];
+        }
       },
       error: function() {
         console.log("get statistic info failed");

@@ -3,63 +3,68 @@
 {% block content %}
 
 <div id="accordion">
-  <!-- Global Filter -->
-  <div class="list-group list-group-horizontal">
-
-    <li class="list-group-item list-group-item-action active" data-toggle="list">
-      ALL
-      <span id="badge_statistic_stage_0" class="badge badge-primary badge-pill"></span>
-    </li>
-    <li class="list-group-item list-group-item-action" data-toggle="list">
-      Stage1
-      <span id="badge_statistic_stage_1" class="badge badge-primary badge-pill"></span>
-    </li>
-    <li class="list-group-item list-group-item-action" data-toggle="list">
-      Stage2
-      <span class="badge badge-primary badge-pill"></span>
-    </li>
-    <li class="list-group-item list-group-item-action" data-toggle="list">
-      Stage3
-      <span class="badge badge-primary badge-pill"></span>
-    </li>
-    <li class="list-group-item list-group-item-action" data-toggle="list">
-      Stage4
-      <span class="badge badge-primary badge-pill"></span>
-    </li>
-    <li class="list-group-item list-group-item-action" data-toggle="list">
-      Stage5
-      <span class="badge badge-primary badge-pill"></span>
-    </li>
-    <li class="list-group-item list-group-item-action" data-toggle="list">
-      Stage6
-      <span class="badge badge-primary badge-pill"></span>
-    </li>
-  </div>
-  <!-- Global Filter -->
 
   <?-- Post -->
   <div class="card">
     <div class="card-header" id="headingOne">
-        <h5 class="mb-0">
-          <button id="text_company_name" class="btn btn-link" data-toggle="collapse" data-target="#collapsePost" aria-expanded="true" aria-controls="collapsePost">
-              选择要操作的岗位
-          </button>
-        </h5>
-      </div>
+      <h5 class="mb-0">
+        <button id="text_company_name" class="btn btn-link" data-toggle="collapse" data-target="#collapsePost" aria-expanded="true" aria-controls="collapsePost">
+          选择要操作的岗位
+        </button>
+      </h5>
+    </div>
 
-      <div id="collapsePost" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable_post" width="100%" cellspacing="0">
-              <thead>
-                <tr><th>ID</th><th>Company</th><th>Department</th><th>Name</th></tr>
-              </thead>
-            </table>
-          </div>
+    <div id="collapsePost" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable_post" width="100%" cellspacing="0">
+            <thead>
+              <tr><th>ID</th><th>Company</th><th>Department</th><th>Name</th></tr>
+            </thead>
+          </table>
         </div>
       </div>
+    </div>
   </div>
   <?-- Post -->
+
+  <!-- Global Filter -->
+  <div class="list-group list-group-horizontal">
+
+    <li class="list-group-item list-group-item-action active" data-toggle="list" value="0">
+      全部
+      <span id="badge_statistic_stage_0" class="badge badge-primary badge-pill"></span>
+    </li>
+    <li class="list-group-item list-group-item-action" data-toggle="list" value="1">
+      筛选
+      <span id="badge_statistic_stage_1" class="badge badge-primary badge-pill"></span>
+    </li>
+    <li class="list-group-item list-group-item-action" data-toggle="list" value="2">
+      邀约
+      <span id="badge_statistic_stage_2" class="badge badge-primary badge-pill"></span>
+    </li>
+    <li class="list-group-item list-group-item-action" data-toggle="list" value="3">
+      面试
+      <span id="badge_statistic_stage_3" class="badge badge-primary badge-pill"></span>
+    </li>
+    <li class="list-group-item list-group-item-action" data-toggle="list" value="4">
+      OFFER
+      <span id="badge_statistic_stage_4" class="badge badge-primary badge-pill"></span>
+    </li>
+    <li class="list-group-item list-group-item-action" data-toggle="list" value="5">
+      入职
+      <span id="badge_statistic_stage_5" class="badge badge-primary badge-pill"></span>
+    </li>
+    <li class="list-group-item list-group-item-action" data-toggle="list" value="6">
+      考察
+      <span id="badge_statistic_stage_6" class="badge badge-primary badge-pill"></span>
+    </li>
+    <li class="list-group-item list-group-item-action" data-toggle="list" value="7">
+      回款
+      <span id="badge_statistic_stage_7" class="badge badge-primary badge-pill"></span>
+    </li>
+  </div>
+  <!-- Global Filter -->
 
   <?-- Filter -->
   <div class="card">
@@ -75,22 +80,7 @@
       <div class="card-body">
         <?-- Inner Filter -->
         <form name='filter_form' method='post' action="#">
-
           <div class="row col-md-24 register-form">
-            <div class="col-md-2 form-group">
-              <label> 状态 </label>
-              <select class="form-control" id="status_id">
-                <option value="0">不限</option>
-                <option value="1">筛选</option>
-                <option value="2">邀约</option>
-                <option value="3">面试</option>
-                <option value="4">OFFER</option>
-                <option value="5">入职</option>
-                <option value="6">考察</option>
-                <option value="7">回款</option>
-              </select>
-            </div>
-
             <div class="col-md-2 form-group">
               <label> 最低学历 </label>
               <select class="form-control" id="degree_id">
@@ -124,15 +114,15 @@
                 <option>杭州</option>
               </select>
             </div>
-          </div>
-          <div class="row col-md-24 register-form" style="display:none;">
-            <div class="col-md-2 form-group">
-              <label> 工作年限 </label>
-              <input type="text" name="work_time_id" id="work_time_id" placeholder="年限" value="">
-            </div>
-            <div class="col-md-2 form-group">
-              <label> 起薪 </label>
-              <input type="text" name="salary_id" id="salary_id" placeholder="填入起薪" value="">
+            <div class="row col-md-24 register-form" style="display:none;">
+              <div class="col-md-2 form-group">
+                <label> 工作年限 </label>
+                <input type="text" name="work_time_id" id="work_time_id" placeholder="年限" value="">
+              </div>
+              <div class="col-md-2 form-group">
+                <label> 起薪 </label>
+                <input type="text" name="salary_id" id="salary_id" placeholder="填入起薪" value="">
+              </div>
             </div>
           </div>
         </form>
@@ -192,768 +182,767 @@
     </div>
   </div>
   <?-- Candidates -->
-</div>
 
-<!-- INVITE -->
+  <!-- INVITE -->
 
-<div class="modal fade" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">AI</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+  <div class="modal fade" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">AI</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Send AI Invitation
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" id="inviteFormSubmit" class="btn btn-primary">AI Invite</button>
+        </div>
       </div>
-      <div class="modal-body">
-        Send AI Invitation
+    </div>
+  </div>
+
+  <!-- DIAL -->
+  <div class="modal fade" id="dialModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">AI机器人配置</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+
+          <!--
+               <ul class="nav nav-tabs" id="myTab" role="tablist">
+               <li class="nav-item">
+               <a class="nav-link active" id="agree-tab" href="#agree" data-toggle="tab" role="tab" aria-controls="agree" aria-selected="true">同意</a></li>
+               <li class="nav-item">
+               <a class="nav-link" id="disagree-tab" href="#disagree" data-toggle="tab" role="tab" aria-controls="disagree" aria-selected="false">不同意</a></li>
+               </ul>
+          -->
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_date" placeholder="开始时间">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_task_id" placeholder="任务名称">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_huashu_id" placeholder="话术ID">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_robot_id" placeholder="机器人ID">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_name" placeholder="客户姓名">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_phone_number" placeholder="客户电话">
+                </div>
+
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="disagree", role="tabpanel" aria-labelledby="disagree-tab" style="display:none;">
+              <form>
+
+                <div class="form-group">
+                  <label for="text_d_address" class="col-form-label">Address</label>
+                  <input type="text" class="form-control" id="text_d_address">
+                </div>
+
+                <div class="form-group">
+                  <label for="text_d_industry" class="col-form-label">Industry</label>
+                  <input type="text" class="form-control" id="text_d_industry">
+                </div>
+
+                <div class="form-group">
+                  <label for="text_d_salary" class="col-form-label">Salary</label>
+                  <input type="text" class="form-control" id="text_d_salary">
+                </div>
+
+                <div class="form-group">
+                  <label for="text_d_insurance" class="col-form-label">Insurance</label>
+                  <input type="text" class="form-control" id="text_d_insurance">
+                </div>
+
+                <div class="form-group">
+                  <label for="text_d_others" class="col-form-label">Other</label>
+                  <textarea class="form-control" id="text_d_others"></textarea>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="dialFormSubmit" class="btn btn-primary">OK</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
       </div>
-      <div class="modal-footer">
+    </div>
+  </div>
+
+
+  <!-- Post Info -->
+  <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">岗位信息</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_postinfo_company" placeholder="公司名">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_postinfo_department" placeholder="部门名">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_postinfo_post" placeholder="岗位名称">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_postinfo_description" placeholder="岗位简介">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Resume Info -->
+  <div class="modal fade" id="resumeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">应聘者信息</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_resumeinfo_username" placeholder="姓名">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_resumeinfo_degree" placeholder="学历">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_resumeinfo_school" placeholder="学校">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_resumeinfo_phone_number" placeholder="电话">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interview Info -->
+  <div class="modal fade" id="interviewModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">面试结论</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_date" placeholder="应聘者技术表现">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_task_id" placeholder="应聘者情商表现">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_huashu_id" placeholder="备注">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="interviewFormSubmit2" class="btn btn-primary">进入下一阶段: 发放offer</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- STOP -->
+  <div class="modal fade" id="stopModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">终止面试(请如实填写以下内容)</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="stopInterview", role="tabpanel" aria-labelledby="stop-tab">
+              <form>
+                <div class="checkbox">
+                  <label><input type="checkbox" value="">行业不满意</label>
+                </div>
+                <div class="checkbox">
+                  <label><input type="checkbox" value="">岗位不满意</label>
+                </div>
+                <div class="checkbox">
+                  <label><input type="checkbox" value="">作息不满意</label>
+                </div>
+                <div class="checkbox">
+                  <label><input type="checkbox" value="">薪资不满意</label>
+                </div>
+                <div class="checkbox">
+                  <label><input type="checkbox" value="">社保不满意</label>
+                </div>
+                <div class="form-group">
+                  <label for="text_d_address" class="col-form-label">期望行业</label>
+                  <input type="text" class="form-control" id="expected_area">
+                </div>
+
+                <div class="form-group">
+                  <label for="text_d_industry" class="col-form-label">期望岗位</label>
+                  <input type="text" class="form-control" id="expected_post">
+                </div>
+
+                <div class="form-group">
+                  <label for="text_d_salary" class="col-form-label">期望作息</label>
+                  <input type="text" class="form-control" id="expected_zuoxi">
+                </div>
+
+                <div class="form-group">
+                  <label for="text_d_insurance" class="col-form-label">期望薪资</label>
+                  <input type="text" class="form-control" id="expected_salary">
+                </div>
+
+                <div class="form-group">
+                  <label for="text_d_insurance" class="col-form-label">期望社保</label>
+                  <input type="text" class="form-control" id="expected_shebao">
+                </div>
+
+                <div class="form-group">
+                  <label for="text_d_insurance" class="col-form-label">其他</label>
+                  <input type="text" class="form-control" id="expected_shebao">
+                </div>
+
+                <div class="form-group">
+                  <label for="text_d_insurance" class="col-form-label">应聘者评价</label>
+                  <input type="text" class="form-control" id="expected_shebao">
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="stopFormSubmit" class="btn btn-primary">OK</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEXT -->
+  <div class="modal fade" id="nextModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <h5 class="modal-title" id="exampleModalLongTitle">确定进入下个面试阶段</h5>
+        <button type="button" id="nextSubmit" class="btn btn-primary">OK</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" id="inviteFormSubmit" class="btn btn-primary">AI Invite</button>
       </div>
     </div>
   </div>
-</div>
 
-<!-- DIAL -->
-<div class="modal fade" id="dialModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">AI机器人配置</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <?--Show candidate informations here.-->
-
-        <!--
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" id="agree-tab" href="#agree" data-toggle="tab" role="tab" aria-controls="agree" aria-selected="true">同意</a></li>
-          <li class="nav-item">
-            <a class="nav-link" id="disagree-tab" href="#disagree" data-toggle="tab" role="tab" aria-controls="disagree" aria-selected="false">不同意</a></li>
-        </ul>
-        -->
-
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
-            <form>
-              <div class="form-group">
-                <input type="text" class="form-control" id="text_date" placeholder="开始时间">
-              </div>
-
-              <div class="form-group">
-                <input type="text" class="form-control" id="text_task_id" placeholder="任务名称">
-              </div>
-
-              <div class="form-group">
-                <input type="text" class="form-control" id="text_huashu_id" placeholder="话术ID">
-              </div>
-
-              <div class="form-group">
-                <input type="text" class="form-control" id="text_robot_id" placeholder="机器人ID">
-              </div>
-
-              <div class="form-group">
-                <input type="text" class="form-control" id="text_name" placeholder="客户姓名">
-              </div>
-
-              <div class="form-group">
-                <input type="text" class="form-control" id="text_phone_number" placeholder="客户电话">
-              </div>
-
-            </form>
-          </div>
-
-          <div class="tab-pane fade" id="disagree", role="tabpanel" aria-labelledby="disagree-tab" style="display:none;">
-            <form>
-
-              <div class="form-group">
-                <label for="text_d_address" class="col-form-label">Address</label>
-                <input type="text" class="form-control" id="text_d_address">
-              </div>
-
-              <div class="form-group">
-                <label for="text_d_industry" class="col-form-label">Industry</label>
-                <input type="text" class="form-control" id="text_d_industry">
-              </div>
-
-              <div class="form-group">
-                <label for="text_d_salary" class="col-form-label">Salary</label>
-                <input type="text" class="form-control" id="text_d_salary">
-              </div>
-
-              <div class="form-group">
-                <label for="text_d_insurance" class="col-form-label">Insurance</label>
-                <input type="text" class="form-control" id="text_d_insurance">
-              </div>
-
-              <div class="form-group">
-                <label for="text_d_others" class="col-form-label">Other</label>
-                <textarea class="form-control" id="text_d_others"></textarea>
-              </div>
-            </form>
-          </div>
-
+  <!-- INTERVIEW -->
+  <div class="modal fade" id="interviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Interview</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" id="dialFormSubmit" class="btn btn-primary">OK</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+        <div class="modal-body">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="obsence-tab" href="#obsence" data-toggle="tab" role="tab" aria-controls="obsence" aria-selected="true">未到场</a></li>
+            <li class="nav-item">
+              <a class="nav-link" id="fail-tab" href="#fail" data-toggle="tab" role="tab" aria-controls="fail" aria-selected="false">未通过</a></li>
+            <li class="nav-item">
+              <a class="nav-link" id="pass-tab" href="#pass" data-toggle="tab" role="tab" aria-controls="pass" aria-selected="false">通过</a></li>
+          </ul>
 
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="obsence" role="tabpanel" aria-labelledby="obsence-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_date" class="col-form-label">Date</label>
+                  <input type="text" class="form-control" id="text_date">
+                </div>
 
-<!-- Post Info -->
-<div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">岗位信息</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <?--Show candidate informations here.-->
+                <div class="form-group">
+                  <label for="text_time" class="col-form-label">Time</label>
+                  <input type="text" class="form-control" id="text_time">
+                </div>
 
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
-            <form>
-              <div class="form-group">
-                <input type="text" class="form-control" id="text_postinfo_company" placeholder="公司名">
-              </div>
+                <div class="form-group">
+                  <label for="text_contact" class="col-form-label">Contact</label>
+                  <input type="text" class="form-control" id="text_contact">
+                </div>
 
-              <div class="form-group">
-                <input type="text" class="form-control" id="text_postinfo_department" placeholder="部门名">
-              </div>
+                <div class="form-group">
+                  <label for="text_address" class="col-form-label">Address</label>
+                  <textarea class="form-control" id="text_address"></textarea>
+                </div>
 
-              <div class="form-group">
-                <input type="text" class="form-control" id="text_postinfo_post" placeholder="岗位名称">
-              </div>
+                <div class="form-group">
+                  <label for="text_certification" class="col-form-label">Certification</label>
+                  <textarea class="form-control" id="text_certification"></textarea>
+                </div>
 
-              <div class="form-group">
-                <input type="text" class="form-control" id="text_postinfo_description" placeholder="岗位简介">
-              </div>
-            </form>
+                <div class="form-group">
+                  <label for="text_attention" class="col-form-label">Matters need attention</label>
+                  <textarea class="form-control" id="text_attention"></textarea>
+                </div>
+
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="fail", role="tabpanel" aria-labelledby="fail-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_d_others" class="col-form-label">Reason</label>
+                  <textarea class="form-control" id="text_d_reason"></textarea>
+                </div>
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="pass", role="tabpanel" aria-labelledby="pass-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_d_others" class="col-form-label">Result</label>
+                  <textarea class="form-control" id="text_p_result"></textarea>
+                </div>
+              </form>
+            </div>
+
           </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" id="interviewFormSubmit" class="btn btn-primary">OK</button>
         </div>
       </div>
     </div>
   </div>
-</div>
 
+  <!-- OFFER -->
+  <div class="modal fade" id="offerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Offer</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="agree-tab" href="#agree" data-toggle="tab" role="tab" aria-controls="agree" aria-selected="true">同意</a></li>
+            <li class="nav-item">
+              <a class="nav-link" id="disagree-tab" href="#disagree" data-toggle="tab" role="tab" aria-controls="disagree" aria-selected="false">不同意</a></li>
+          </ul>
 
-<!-- Resume Info -->
-<div class="modal fade" id="resumeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">应聘者信息</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <?--Show candidate informations here.-->
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_date" class="col-form-label">Date</label>
+                  <input type="text" class="form-control" id="text_date">
+                </div>
 
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
-            <form>
-              <div class="form-group">
-                <input type="text" class="form-control" id="text_resumeinfo_username" placeholder="姓名">
-              </div>
+                <div class="form-group">
+                  <label for="text_time" class="col-form-label">Time</label>
+                  <input type="text" class="form-control" id="text_time">
+                </div>
 
-              <div class="form-group">
-                <input type="text" class="form-control" id="text_resumeinfo_degree" placeholder="学历">
-              </div>
+                <div class="form-group">
+                  <label for="text_contact" class="col-form-label">Contact</label>
+                  <input type="text" class="form-control" id="text_contact">
+                </div>
 
-              <div class="form-group">
-                <input type="text" class="form-control" id="text_resumeinfo_school" placeholder="学校">
-              </div>
+                <div class="form-group">
+                  <label for="text_address" class="col-form-label">Address</label>
+                  <textarea class="form-control" id="text_address"></textarea>
+                </div>
 
-              <div class="form-group">
-                <input type="text" class="form-control" id="text_resumeinfo_phone_number" placeholder="电话">
-              </div>
-            </form>
+                <div class="form-group">
+                  <label for="text_certification" class="col-form-label">Certification</label>
+                  <textarea class="form-control" id="text_certification"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="text_attention" class="col-form-label">Matters need attention</label>
+                  <textarea class="form-control" id="text_attention"></textarea>
+                </div>
+
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="disagree", role="tabpanel" aria-labelledby="disagree-tab">
+              <form>
+
+                <div class="form-group">
+                  <label for="text_d_address" class="col-form-label">Address</label>
+                  <input type="text" class="form-control" id="text_d_address">
+                </div>
+
+                <div class="form-group">
+                  <label for="text_d_industry" class="col-form-label">Industry</label>
+                  <input type="text" class="form-control" id="text_d_industry">
+                </div>
+
+                <div class="form-group">
+                  <label for="text_d_salary" class="col-form-label">Salary</label>
+                  <input type="text" class="form-control" id="text_d_salary">
+                </div>
+
+                <div class="form-group">
+                  <label for="text_d_insurance" class="col-form-label">Insurance</label>
+                  <input type="text" class="form-control" id="text_d_insurance">
+                </div>
+
+                <div class="form-group">
+                  <label for="text_d_others" class="col-form-label">Other</label>
+                  <textarea class="form-control" id="text_d_others"></textarea>
+                </div>
+              </form>
+            </div>
+
           </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" id="offerFormSubmit" class="btn btn-primary">OK</button>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- Interview Info -->
-<div class="modal fade" id="interviewModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">面试结论</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <?--Show candidate informations here.-->
+  <!-- ENTRY -->
+  <div class="modal fade" id="entryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Entry</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="obsence-tab" href="#obsence" data-toggle="tab" role="tab" aria-controls="obsence" aria-selected="true">放弃入职</a></li>
+            <li class="nav-item">
+              <a class="nav-link" id="fail-tab" href="#fail" data-toggle="tab" role="tab" aria-controls="fail" aria-selected="false">更期入职</a></li>
+            <li class="nav-item">
+              <a class="nav-link" id="pass-tab" href="#pass" data-toggle="tab" role="tab" aria-controls="pass" aria-selected="false">入职到场</a></li>
+          </ul>
 
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
-            <form>
-              <div class="form-group">
-                <input type="text" class="form-control" id="text_date" placeholder="应聘者技术表现">
-              </div>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="obsence" role="tabpanel" aria-labelledby="obsence-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_date" class="col-form-label">Date</label>
+                  <input type="text" class="form-control" id="text_date">
+                </div>
 
-              <div class="form-group">
-                <input type="text" class="form-control" id="text_task_id" placeholder="应聘者情商表现">
-              </div>
+                <div class="form-group">
+                  <label for="text_time" class="col-form-label">Time</label>
+                  <input type="text" class="form-control" id="text_time">
+                </div>
 
-              <div class="form-group">
-                <input type="text" class="form-control" id="text_huashu_id" placeholder="备注">
-              </div>
-            </form>
+                <div class="form-group">
+                  <label for="text_contact" class="col-form-label">Contact</label>
+                  <input type="text" class="form-control" id="text_contact">
+                </div>
+
+                <div class="form-group">
+                  <label for="text_address" class="col-form-label">Address</label>
+                  <textarea class="form-control" id="text_address"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="text_certification" class="col-form-label">Certification</label>
+                  <textarea class="form-control" id="text_certification"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="text_attention" class="col-form-label">Matters need attention</label>
+                  <textarea class="form-control" id="text_attention"></textarea>
+                </div>
+
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="fail", role="tabpanel" aria-labelledby="fail-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_d_others" class="col-form-label">Reason</label>
+                  <textarea class="form-control" id="text_d_reason"></textarea>
+                </div>
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="pass", role="tabpanel" aria-labelledby="pass-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_d_others" class="col-form-label">Result</label>
+                  <textarea class="form-control" id="text_p_result"></textarea>
+                </div>
+              </form>
+            </div>
+
           </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" id="interviewFormSubmit2" class="btn btn-primary">进入下一阶段: 发放offer</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- STOP -->
-<div class="modal fade" id="stopModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">终止面试(请如实填写以下内容)</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="stopInterview", role="tabpanel" aria-labelledby="stop-tab">
-            <form>
-              <div class="checkbox">
-                <label><input type="checkbox" value="">行业不满意</label>
-              </div>
-              <div class="checkbox">
-                <label><input type="checkbox" value="">岗位不满意</label>
-              </div>
-              <div class="checkbox">
-                <label><input type="checkbox" value="">作息不满意</label>
-              </div>
-              <div class="checkbox">
-                <label><input type="checkbox" value="">薪资不满意</label>
-              </div>
-              <div class="checkbox">
-                <label><input type="checkbox" value="">社保不满意</label>
-              </div>
-              <div class="form-group">
-                <label for="text_d_address" class="col-form-label">期望行业</label>
-                <input type="text" class="form-control" id="expected_area">
-              </div>
-
-              <div class="form-group">
-                <label for="text_d_industry" class="col-form-label">期望岗位</label>
-                <input type="text" class="form-control" id="expected_post">
-              </div>
-
-              <div class="form-group">
-                <label for="text_d_salary" class="col-form-label">期望作息</label>
-                <input type="text" class="form-control" id="expected_zuoxi">
-              </div>
-
-              <div class="form-group">
-                <label for="text_d_insurance" class="col-form-label">期望薪资</label>
-                <input type="text" class="form-control" id="expected_salary">
-              </div>
-
-              <div class="form-group">
-                <label for="text_d_insurance" class="col-form-label">期望社保</label>
-                <input type="text" class="form-control" id="expected_shebao">
-              </div>
-
-              <div class="form-group">
-                <label for="text_d_insurance" class="col-form-label">其他</label>
-                <input type="text" class="form-control" id="expected_shebao">
-              </div>
-
-              <div class="form-group">
-                <label for="text_d_insurance" class="col-form-label">应聘者评价</label>
-                <input type="text" class="form-control" id="expected_shebao">
-              </div>
-
-            </form>
-          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" id="entryFormSubmit" class="btn btn-primary">OK</button>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" id="stopFormSubmit" class="btn btn-primary">OK</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
     </div>
   </div>
-</div>
 
-<!-- NEXT -->
-<div class="modal fade" id="nextModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <h5 class="modal-title" id="exampleModalLongTitle">确定进入下个面试阶段</h5>
-      <button type="button" id="nextSubmit" class="btn btn-primary">OK</button>
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    </div>
-  </div>
-</div>
+  <!-- INSPECT -->
+  <div class="modal fade" id="inspectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Inspect</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="obsence-tab" href="#obsence" data-toggle="tab" role="tab" aria-controls="obsence" aria-selected="true">放弃考察</a></li>
+            <li class="nav-item">
+              <a class="nav-link" id="fail-tab" href="#fail" data-toggle="tab" role="tab" aria-controls="fail" aria-selected="false">未通过</a></li>
+            <li class="nav-item">
+              <a class="nav-link" id="pass-tab" href="#pass" data-toggle="tab" role="tab" aria-controls="pass" aria-selected="false">通过</a></li>
+          </ul>
 
-<!-- INTERVIEW -->
-<div class="modal fade" id="interviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Interview</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" id="obsence-tab" href="#obsence" data-toggle="tab" role="tab" aria-controls="obsence" aria-selected="true">未到场</a></li>
-          <li class="nav-item">
-            <a class="nav-link" id="fail-tab" href="#fail" data-toggle="tab" role="tab" aria-controls="fail" aria-selected="false">未通过</a></li>
-          <li class="nav-item">
-            <a class="nav-link" id="pass-tab" href="#pass" data-toggle="tab" role="tab" aria-controls="pass" aria-selected="false">通过</a></li>
-        </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="obsence" role="tabpanel" aria-labelledby="obsence-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_date" class="col-form-label">Date</label>
+                  <input type="text" class="form-control" id="text_date">
+                </div>
 
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="obsence" role="tabpanel" aria-labelledby="obsence-tab">
-            <form>
-              <div class="form-group">
-                <label for="text_date" class="col-form-label">Date</label>
-                <input type="text" class="form-control" id="text_date">
-              </div>
+                <div class="form-group">
+                  <label for="text_time" class="col-form-label">Time</label>
+                  <input type="text" class="form-control" id="text_time">
+                </div>
 
-              <div class="form-group">
-                <label for="text_time" class="col-form-label">Time</label>
-                <input type="text" class="form-control" id="text_time">
-              </div>
+                <div class="form-group">
+                  <label for="text_contact" class="col-form-label">Contact</label>
+                  <input type="text" class="form-control" id="text_contact">
+                </div>
 
-              <div class="form-group">
-                <label for="text_contact" class="col-form-label">Contact</label>
-                <input type="text" class="form-control" id="text_contact">
-              </div>
+                <div class="form-group">
+                  <label for="text_address" class="col-form-label">Address</label>
+                  <textarea class="form-control" id="text_address"></textarea>
+                </div>
 
-              <div class="form-group">
-                <label for="text_address" class="col-form-label">Address</label>
-                <textarea class="form-control" id="text_address"></textarea>
-              </div>
+                <div class="form-group">
+                  <label for="text_certification" class="col-form-label">Certification</label>
+                  <textarea class="form-control" id="text_certification"></textarea>
+                </div>
 
-              <div class="form-group">
-                <label for="text_certification" class="col-form-label">Certification</label>
-                <textarea class="form-control" id="text_certification"></textarea>
-              </div>
+                <div class="form-group">
+                  <label for="text_attention" class="col-form-label">Matters need attention</label>
+                  <textarea class="form-control" id="text_attention"></textarea>
+                </div>
 
-              <div class="form-group">
-                <label for="text_attention" class="col-form-label">Matters need attention</label>
-                <textarea class="form-control" id="text_attention"></textarea>
-              </div>
+              </form>
+            </div>
 
-            </form>
+            <div class="tab-pane fade" id="fail", role="tabpanel" aria-labelledby="fail-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_d_others" class="col-form-label">Reason</label>
+                  <textarea class="form-control" id="text_d_reason"></textarea>
+                </div>
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="pass", role="tabpanel" aria-labelledby="pass-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_d_others" class="col-form-label">Result</label>
+                  <textarea class="form-control" id="text_p_result"></textarea>
+                </div>
+              </form>
+            </div>
+
           </div>
-
-          <div class="tab-pane fade" id="fail", role="tabpanel" aria-labelledby="fail-tab">
-            <form>
-              <div class="form-group">
-                <label for="text_d_others" class="col-form-label">Reason</label>
-                <textarea class="form-control" id="text_d_reason"></textarea>
-              </div>
-            </form>
-          </div>
-
-          <div class="tab-pane fade" id="pass", role="tabpanel" aria-labelledby="pass-tab">
-            <form>
-              <div class="form-group">
-                <label for="text_d_others" class="col-form-label">Result</label>
-                <textarea class="form-control" id="text_p_result"></textarea>
-              </div>
-            </form>
-          </div>
-
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" id="inspectFormSubmit" class="btn btn-primary">OK</button>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" id="interviewFormSubmit" class="btn btn-primary">OK</button>
-      </div>
     </div>
   </div>
-</div>
 
-<!-- OFFER -->
-<div class="modal fade" id="offerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Offer</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" id="agree-tab" href="#agree" data-toggle="tab" role="tab" aria-controls="agree" aria-selected="true">同意</a></li>
-          <li class="nav-item">
-            <a class="nav-link" id="disagree-tab" href="#disagree" data-toggle="tab" role="tab" aria-controls="disagree" aria-selected="false">不同意</a></li>
-        </ul>
+  <!-- PAYBACK -->
+  <div class="modal fade" id="paybackModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Payback</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="agree-tab" href="#agree" data-toggle="tab" role="tab" aria-controls="agree" aria-selected="true">同意</a></li>
+            <li class="nav-item">
+              <a class="nav-link" id="disagree-tab" href="#disagree" data-toggle="tab" role="tab" aria-controls="disagree" aria-selected="false">不同意</a></li>
+          </ul>
 
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
-            <form>
-              <div class="form-group">
-                <label for="text_date" class="col-form-label">Date</label>
-                <input type="text" class="form-control" id="text_date">
-              </div>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_date" class="col-form-label">Date</label>
+                  <input type="text" class="form-control" id="text_date">
+                </div>
 
-              <div class="form-group">
-                <label for="text_time" class="col-form-label">Time</label>
-                <input type="text" class="form-control" id="text_time">
-              </div>
+                <div class="form-group">
+                  <label for="text_time" class="col-form-label">Time</label>
+                  <input type="text" class="form-control" id="text_time">
+                </div>
 
-              <div class="form-group">
-                <label for="text_contact" class="col-form-label">Contact</label>
-                <input type="text" class="form-control" id="text_contact">
-              </div>
+                <div class="form-group">
+                  <label for="text_contact" class="col-form-label">Contact</label>
+                  <input type="text" class="form-control" id="text_contact">
+                </div>
 
-              <div class="form-group">
-                <label for="text_address" class="col-form-label">Address</label>
-                <textarea class="form-control" id="text_address"></textarea>
-              </div>
+                <div class="form-group">
+                  <label for="text_address" class="col-form-label">Address</label>
+                  <textarea class="form-control" id="text_address"></textarea>
+                </div>
 
-              <div class="form-group">
-                <label for="text_certification" class="col-form-label">Certification</label>
-                <textarea class="form-control" id="text_certification"></textarea>
-              </div>
+                <div class="form-group">
+                  <label for="text_certification" class="col-form-label">Certification</label>
+                  <textarea class="form-control" id="text_certification"></textarea>
+                </div>
 
-              <div class="form-group">
-                <label for="text_attention" class="col-form-label">Matters need attention</label>
-                <textarea class="form-control" id="text_attention"></textarea>
-              </div>
+                <div class="form-group">
+                  <label for="text_attention" class="col-form-label">Matters need attention</label>
+                  <textarea class="form-control" id="text_attention"></textarea>
+                </div>
 
-            </form>
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="disagree", role="tabpanel" aria-labelledby="disagree-tab">
+              <form>
+
+                <div class="form-group">
+                  <label for="text_d_address" class="col-form-label">Address</label>
+                  <input type="text" class="form-control" id="text_d_address">
+                </div>
+
+                <div class="form-group">
+                  <label for="text_d_industry" class="col-form-label">Industry</label>
+                  <input type="text" class="form-control" id="text_d_industry">
+                </div>
+
+                <div class="form-group">
+                  <label for="text_d_salary" class="col-form-label">Salary</label>
+                  <input type="text" class="form-control" id="text_d_salary">
+                </div>
+
+                <div class="form-group">
+                  <label for="text_d_insurance" class="col-form-label">Insurance</label>
+                  <input type="text" class="form-control" id="text_d_insurance">
+                </div>
+
+                <div class="form-group">
+                  <label for="text_d_others" class="col-form-label">Other</label>
+                  <textarea class="form-control" id="text_d_others"></textarea>
+                </div>
+              </form>
+            </div>
+
           </div>
-
-          <div class="tab-pane fade" id="disagree", role="tabpanel" aria-labelledby="disagree-tab">
-            <form>
-
-              <div class="form-group">
-                <label for="text_d_address" class="col-form-label">Address</label>
-                <input type="text" class="form-control" id="text_d_address">
-              </div>
-
-              <div class="form-group">
-                <label for="text_d_industry" class="col-form-label">Industry</label>
-                <input type="text" class="form-control" id="text_d_industry">
-              </div>
-
-              <div class="form-group">
-                <label for="text_d_salary" class="col-form-label">Salary</label>
-                <input type="text" class="form-control" id="text_d_salary">
-              </div>
-
-              <div class="form-group">
-                <label for="text_d_insurance" class="col-form-label">Insurance</label>
-                <input type="text" class="form-control" id="text_d_insurance">
-              </div>
-
-              <div class="form-group">
-                <label for="text_d_others" class="col-form-label">Other</label>
-                <textarea class="form-control" id="text_d_others"></textarea>
-              </div>
-            </form>
-          </div>
-
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" id="paybackFormSubmit" class="btn btn-primary">OK</button>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" id="offerFormSubmit" class="btn btn-primary">OK</button>
-      </div>
     </div>
   </div>
-</div>
-
-<!-- ENTRY -->
-<div class="modal fade" id="entryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Entry</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" id="obsence-tab" href="#obsence" data-toggle="tab" role="tab" aria-controls="obsence" aria-selected="true">放弃入职</a></li>
-          <li class="nav-item">
-            <a class="nav-link" id="fail-tab" href="#fail" data-toggle="tab" role="tab" aria-controls="fail" aria-selected="false">更期入职</a></li>
-          <li class="nav-item">
-            <a class="nav-link" id="pass-tab" href="#pass" data-toggle="tab" role="tab" aria-controls="pass" aria-selected="false">入职到场</a></li>
-        </ul>
-
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="obsence" role="tabpanel" aria-labelledby="obsence-tab">
-            <form>
-              <div class="form-group">
-                <label for="text_date" class="col-form-label">Date</label>
-                <input type="text" class="form-control" id="text_date">
-              </div>
-
-              <div class="form-group">
-                <label for="text_time" class="col-form-label">Time</label>
-                <input type="text" class="form-control" id="text_time">
-              </div>
-
-              <div class="form-group">
-                <label for="text_contact" class="col-form-label">Contact</label>
-                <input type="text" class="form-control" id="text_contact">
-              </div>
-
-              <div class="form-group">
-                <label for="text_address" class="col-form-label">Address</label>
-                <textarea class="form-control" id="text_address"></textarea>
-              </div>
-
-              <div class="form-group">
-                <label for="text_certification" class="col-form-label">Certification</label>
-                <textarea class="form-control" id="text_certification"></textarea>
-              </div>
-
-              <div class="form-group">
-                <label for="text_attention" class="col-form-label">Matters need attention</label>
-                <textarea class="form-control" id="text_attention"></textarea>
-              </div>
-
-            </form>
-          </div>
-
-          <div class="tab-pane fade" id="fail", role="tabpanel" aria-labelledby="fail-tab">
-            <form>
-              <div class="form-group">
-                <label for="text_d_others" class="col-form-label">Reason</label>
-                <textarea class="form-control" id="text_d_reason"></textarea>
-              </div>
-            </form>
-          </div>
-
-          <div class="tab-pane fade" id="pass", role="tabpanel" aria-labelledby="pass-tab">
-            <form>
-              <div class="form-group">
-                <label for="text_d_others" class="col-form-label">Result</label>
-                <textarea class="form-control" id="text_p_result"></textarea>
-              </div>
-            </form>
-          </div>
-
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" id="entryFormSubmit" class="btn btn-primary">OK</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- INSPECT -->
-<div class="modal fade" id="inspectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Inspect</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" id="obsence-tab" href="#obsence" data-toggle="tab" role="tab" aria-controls="obsence" aria-selected="true">放弃考察</a></li>
-          <li class="nav-item">
-            <a class="nav-link" id="fail-tab" href="#fail" data-toggle="tab" role="tab" aria-controls="fail" aria-selected="false">未通过</a></li>
-          <li class="nav-item">
-            <a class="nav-link" id="pass-tab" href="#pass" data-toggle="tab" role="tab" aria-controls="pass" aria-selected="false">通过</a></li>
-        </ul>
-
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="obsence" role="tabpanel" aria-labelledby="obsence-tab">
-            <form>
-              <div class="form-group">
-                <label for="text_date" class="col-form-label">Date</label>
-                <input type="text" class="form-control" id="text_date">
-              </div>
-
-              <div class="form-group">
-                <label for="text_time" class="col-form-label">Time</label>
-                <input type="text" class="form-control" id="text_time">
-              </div>
-
-              <div class="form-group">
-                <label for="text_contact" class="col-form-label">Contact</label>
-                <input type="text" class="form-control" id="text_contact">
-              </div>
-
-              <div class="form-group">
-                <label for="text_address" class="col-form-label">Address</label>
-                <textarea class="form-control" id="text_address"></textarea>
-              </div>
-
-              <div class="form-group">
-                <label for="text_certification" class="col-form-label">Certification</label>
-                <textarea class="form-control" id="text_certification"></textarea>
-              </div>
-
-              <div class="form-group">
-                <label for="text_attention" class="col-form-label">Matters need attention</label>
-                <textarea class="form-control" id="text_attention"></textarea>
-              </div>
-
-            </form>
-          </div>
-
-          <div class="tab-pane fade" id="fail", role="tabpanel" aria-labelledby="fail-tab">
-            <form>
-              <div class="form-group">
-                <label for="text_d_others" class="col-form-label">Reason</label>
-                <textarea class="form-control" id="text_d_reason"></textarea>
-              </div>
-            </form>
-          </div>
-
-          <div class="tab-pane fade" id="pass", role="tabpanel" aria-labelledby="pass-tab">
-            <form>
-              <div class="form-group">
-                <label for="text_d_others" class="col-form-label">Result</label>
-                <textarea class="form-control" id="text_p_result"></textarea>
-              </div>
-            </form>
-          </div>
-
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" id="inspectFormSubmit" class="btn btn-primary">OK</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- PAYBACK -->
-<div class="modal fade" id="paybackModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Payback</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" id="agree-tab" href="#agree" data-toggle="tab" role="tab" aria-controls="agree" aria-selected="true">同意</a></li>
-          <li class="nav-item">
-            <a class="nav-link" id="disagree-tab" href="#disagree" data-toggle="tab" role="tab" aria-controls="disagree" aria-selected="false">不同意</a></li>
-        </ul>
-
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
-            <form>
-              <div class="form-group">
-                <label for="text_date" class="col-form-label">Date</label>
-                <input type="text" class="form-control" id="text_date">
-              </div>
-
-              <div class="form-group">
-                <label for="text_time" class="col-form-label">Time</label>
-                <input type="text" class="form-control" id="text_time">
-              </div>
-
-              <div class="form-group">
-                <label for="text_contact" class="col-form-label">Contact</label>
-                <input type="text" class="form-control" id="text_contact">
-              </div>
-
-              <div class="form-group">
-                <label for="text_address" class="col-form-label">Address</label>
-                <textarea class="form-control" id="text_address"></textarea>
-              </div>
-
-              <div class="form-group">
-                <label for="text_certification" class="col-form-label">Certification</label>
-                <textarea class="form-control" id="text_certification"></textarea>
-              </div>
-
-              <div class="form-group">
-                <label for="text_attention" class="col-form-label">Matters need attention</label>
-                <textarea class="form-control" id="text_attention"></textarea>
-              </div>
-
-            </form>
-          </div>
-
-          <div class="tab-pane fade" id="disagree", role="tabpanel" aria-labelledby="disagree-tab">
-            <form>
-
-              <div class="form-group">
-                <label for="text_d_address" class="col-form-label">Address</label>
-                <input type="text" class="form-control" id="text_d_address">
-              </div>
-
-              <div class="form-group">
-                <label for="text_d_industry" class="col-form-label">Industry</label>
-                <input type="text" class="form-control" id="text_d_industry">
-              </div>
-
-              <div class="form-group">
-                <label for="text_d_salary" class="col-form-label">Salary</label>
-                <input type="text" class="form-control" id="text_d_salary">
-              </div>
-
-              <div class="form-group">
-                <label for="text_d_insurance" class="col-form-label">Insurance</label>
-                <input type="text" class="form-control" id="text_d_insurance">
-              </div>
-
-              <div class="form-group">
-                <label for="text_d_others" class="col-form-label">Other</label>
-                <textarea class="form-control" id="text_d_others"></textarea>
-              </div>
-            </form>
-          </div>
-
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" id="paybackFormSubmit" class="btn btn-primary">OK</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 {% endblock %}
 
