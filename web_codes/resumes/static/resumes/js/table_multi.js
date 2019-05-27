@@ -172,11 +172,10 @@ $(document).ready(function() {
 
   var table_post = $('#dataTable_post').DataTable({
     "lengthChange": false,
-    "pageLength" : 5,
-
-    "processing": true,
+    "pageLength" : 15,
+    "pagingType": "scrolling",
+    "processing": false,
     "serverSide": true,
-
     "ajax": {
       "url": "/api/posts/",
       "type": "GET",
@@ -190,10 +189,7 @@ $(document).ready(function() {
     },
 
     "columns": [
-      {"data": "id"},
       {"data": "department.company.name"},
-      {"data": "department.name"},
-      {"data": "name"},
     ],
   });
 
