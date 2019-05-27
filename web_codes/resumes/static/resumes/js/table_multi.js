@@ -29,6 +29,13 @@ $(document).ready(function() {
   var table = $('#dataTable_resume').DataTable({
     "processing": true,
     "serverSide": true,
+    "stateSave": true,
+    stateSaveCallback: function(settings,data) {
+      localStorage.setItem( 'DataTables_' + settings.sInstance, JSON.stringify(data) )
+    },
+    stateLoadCallback: function(settings) {
+      return JSON.parse( localStorage.getItem( 'DataTables_' + settings.sInstance ) )
+    },
 
     "ajax": {
       "url": "/api/resumes/",
@@ -70,6 +77,7 @@ $(document).ready(function() {
 
       {"data": "is_match",
        "orderable": false,
+       "width": "20%",
        render: function(data, type, row, meta) {
          if (row.is_match == 1) {
            return "Match"
@@ -171,11 +179,16 @@ $(document).ready(function() {
   });
 
   var table_post = $('#dataTable_post').DataTable({
+    "dom": '<"top"i>rt<"bottom"flp><"clear">',
     "lengthChange": false,
     "pageLength" : 15,
-    "pagingType": "scrolling",
+    "pagingType": "simple",
     "processing": false,
     "serverSide": true,
+
+    "scrollX": false,
+    "searching": true,
+
     "ajax": {
       "url": "/api/posts/",
       "type": "GET",
@@ -189,9 +202,12 @@ $(document).ready(function() {
     },
 
     "columns": [
-      {"data": "department.company.name"},
+      {"data": "department.company.name",
+      },
     ],
   });
+
+  /* ======================================== Process Begin Here */
 
   $('#age_id').keyup(function() {
     page_refresh(table);
@@ -233,7 +249,7 @@ $(document).ready(function() {
       },
     });
 
-    table.draw();
+    table.draw(false);
   }
 
   function stop_interview_by_id(interview_id, url, status_value, table) {
