@@ -560,6 +560,48 @@
   </div>
 
 
+  <!-- entryed Info -->
+  <div class="modal fade" id="probationSuccModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">通过考察期</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="probationSuccSubmit" class="btn btn-primary">进入下一阶段: 回款</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Probation Fail Info -->
+  <div class="modal fade" id="probationFailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">未通过考察期</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="entry_date" placeholder="未通过原因">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="entry_date" placeholder="评价">
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="probationFailSubmit" class="btn btn-primary">确认</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Interview Info -->
   <div class="modal fade" id="interviewModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

@@ -193,11 +193,14 @@ $(document).ready(function() {
 `;
          }
          /* -------------------------------------------------------------------------------- */
-         else if (row.interview_status == 5) {
+         else if (row.interview_status == 6) {
            return `
-<button class="inspect_button btn btn-success border-0" data-toggle="modal" data-target="#inspectModal" id="` + row.interview_id + `">
-  <span class="text">考察期</span>
-</button>
+                <select class="stage_six_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `">
+                    <option>考察期</option>
+                    <option>通过考察</option>
+                    <option>未通过考察</option>
+                    <option>放弃考察</option>
+                </select>
 `;
          }
          /* -------------------------------------------------------------------------------- */
@@ -521,6 +524,20 @@ $(document).ready(function() {
     }
   });
 
+  $(document).on('click', '.stage_six_select', function() {
+    interview_selected_value = Number(this.id);
+
+    value = $("#"+(interview_selected_value)+".stage_six_select").val()
+    if (value == "考察期") {
+    } else if (value == "通过考察") {
+      $('#probationSuccModal').modal('toggle')
+    } else if (value == "未通过考察") {
+      $('#probationFailModal').modal('toggle')
+    } else if (value == "放弃考察") {
+      $('#stopModal').modal('toggle');
+    }
+  });
+
   $(document).on('click', '.dial_button', function() {
     interview_selected_value = Number(this.id);
   });
@@ -688,6 +705,34 @@ $(document).ready(function() {
 
       $('#entryUpdateModal').modal('hide');
       var status = 5;
+
+      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+    });
+  });
+
+  $(function(){
+    // only update the entry info
+    $('#probationSuccSubmit').click(function(e){
+      e.preventDefault();
+
+      var interview_id = interview_selected_value;
+
+      $('#probationSuccModal').modal('hide');
+      var status = 7;
+
+      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+    });
+  });
+
+  $(function(){
+    // only update the entry info
+    $('#probationFailSubmit').click(function(e){
+      e.preventDefault();
+
+      var interview_id = interview_selected_value;
+
+      $('#probationFailModal').modal('hide');
+      var status = -1;
 
       submit_interview_by_id(interview_id, "/api/interviews/", status, table);
     });
