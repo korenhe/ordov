@@ -146,6 +146,7 @@ $(document).ready(function() {
          else if (row.interview_status == 2) {
            return `
 				<select class="stage_two_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `">
+                    <option>邀约过程中</option>
 					<option>自动拨号</option>
 					<option>企业介绍</option>
 					<option>应聘者信息</option>
@@ -162,15 +163,26 @@ $(document).ready(function() {
            return `
                 <select class="stage_three_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `">
                     <option>面试过程中</option>
+                    <option>面试未到场</option>
+                    <option>面试通过</option>
+                    <option>面试未通过</option>
                     <option>查看职位信息</option>
                     <option>查看应聘者信息</option>
-                    <option>SUCCESS:填写面试报告</option>
-                    <option>FAIL:终止面试</option>
                 </select>
 `;
          }
          /* -------------------------------------------------------------------------------- */
          else if (row.interview_status == 4) {
+           return `
+                <select class="stage_four_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `">
+                    <option>发放offer</option>
+                    <option>接收offer</option>
+                    <option>放弃offer</option>
+                </select>
+`;
+         }
+         /* -------------------------------------------------------------------------------- */
+         else if (row.interview_status == 5) {
            return `
 <button class="entry_button btn btn-success border-0" data-toggle="modal" data-target="#entryModal" id="` + row.interview_id + `">
   <span class="text">入职</span>
@@ -471,9 +483,23 @@ $(document).ready(function() {
       $('#resumeModal').modal('toggle');
       resume_id = this.dataset.resume_id;
       show_resume_modal(resume_id);
-    } else if (value == "SUCCESS:填写面试报告") {
+    } else if (value == "面试通过") {
       $('#interviewModal2').modal('toggle');
-    } else if (value == "FAIL:终止面试") {
+    } else if (value == "面试未通过") {
+      $('#stopModal').modal('toggle');
+    } else if (value == "面试未到场") {
+      $('#stopModal').modal('toggle');
+    }
+  });
+
+  $(document).on('click', '.stage_four_select', function() {
+    interview_selected_value = Number(this.id);
+
+    value = $("#"+(interview_selected_value)+".stage_four_select").val()
+    if (value == "发放offer") {
+    } else if (value == "接收offer") {
+      $('#offerModal').modal('toggle')
+    } else if (value == "放弃offer") {
       $('#stopModal').modal('toggle');
     }
   });
@@ -601,13 +627,27 @@ $(document).ready(function() {
       var interview_id = interview_selected_value;
 
       $('#interviewModal2').modal('hide');
-      var status = 4 // status++
+      var status = 4;
 
       /* submit sub_interview_process_table, then the interview table is updated
          at the same time in the serverside */
       submit_interview_by_id(interview_id, "/api/interviews/", status, table);
     });
   });
+
+  $(function(){
+    $('#offerSubmit').click(function(e){
+      e.preventDefault();
+
+      var interview_id = interview_selected_value;
+
+      $('#offerModal').modal('hide');
+      var status = 5;
+
+      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+    });
+  });
+
 
   $(function() {
     $('#inviteSubmit2').click(function(e){
@@ -628,7 +668,7 @@ $(document).ready(function() {
       var interview_id = interview_selected_value;
 
       $('#interviewModal').modal('hide');
-      var status = 3;
+      var status = 4;
 
       submit_interview_by_id(interview_id, "/api/interviews/", status, table);
     });
