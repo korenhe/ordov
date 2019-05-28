@@ -200,6 +200,7 @@ $(document).ready(function() {
     "serverSide": true,
 
     "scrollX": false,
+    "scrollCollapse": false,
     "searching": true,
 
     "ajax": {
@@ -240,8 +241,8 @@ $(document).ready(function() {
     if (post_selected == false) {
       alert("Please select Post first.");
       e.stopPropagation();
+    } else {
     }
-
   });
 
   function page_refresh(table) {
@@ -572,6 +573,9 @@ $(document).ready(function() {
 
       $('#interviewModal2').modal('hide');
       var status = 4 // status++
+
+      /* submit sub_interview_process_table, then the interview table is updated
+         at the same time in the serverside */
       submit_interview_by_id(interview_id, "/api/interviews/", status, table);
     });
   });

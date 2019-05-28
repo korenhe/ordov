@@ -25,7 +25,7 @@
     </div>
     <?-- Post -->
 
-    <div class="col">
+    <div class="col-10">
       <!-- Global Filter -->
       <div class="list-group list-group-horizontal">
 
@@ -73,11 +73,11 @@
         <div class="card-body">
           <div class="row">
             <?-- Inner Filter -->
-            <div class="col-md-2 input-group mb-3">
+            <div class="col-md-4 input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">最低学历</span>
               </div>
-              <select class="form-control" id="degree_id">
+              <select class="form-control" id="degree_id" aria-labelledby="basic-addon1">
                 <option>不限</option>
                 <option>初中</option>
                 <option>高中</option>
@@ -87,7 +87,7 @@
               </select>
             </div>
 
-            <div class="col-md-2 input-group mb-3">
+            <div class="col-md-4 input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon2">性别</span>
               </div>
@@ -98,14 +98,14 @@
               </select>
             </div>
 
-            <div class="col-md-2 input-group mb-3">
+            <div class="col-md-4 input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon3">最小年龄</span>
               </div>
               <input type="text" class="form-control" name="age_id" id="age_id" placeholder="年龄" value=""></input>
             </div>
 
-            <div class="col-md-2 form-group" style="display:none;">
+            <div class="col-md-3 form-group" style="display:none;">
               <label> 工作地点 </label>
               <select class="form-control" id="province_id">
                 <option>不限</option>
