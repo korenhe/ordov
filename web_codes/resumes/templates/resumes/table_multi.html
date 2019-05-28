@@ -645,6 +645,165 @@
   </div>
 
 
+  <!-- PayBack Info -->
+  <div class="modal fade" id="pbRegModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">打款登记</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_date" placeholder="打款金额">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_task_id" placeholder="上传截图">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_huashu_id" placeholder="备注">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="pbRegSubmit" class="btn btn-primary">确定</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PayBack Info -->
+  <div class="modal fade" id="pbDoneModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">打款完成</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_huashu_id" placeholder="备注">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="pbDoneSubmit" class="btn btn-primary">完成打款, 整个面试过程结束</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PayBack Info -->
+  <div class="modal fade" id="pbBadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">坏账</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_huashu_id" placeholder="备注">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="pbBadSubmit" class="btn btn-primary">确定</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- PayBack Info -->
+  <div class="modal fade" id="pbBillModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">坏账</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="pbBillCompany" placeholder="公司名称">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="pbBillUnicode" placeholder="识别号">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="pbBillAddress" placeholder="地址">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="pbBillPhone" placeholder="联系方式">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="pbBillBank" placeholder="银行">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="pbBillCard" placeholder="卡号">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="pbBillAmount" placeholder="金额">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="pbBillCusAddress" placeholder="寄票地址">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="contact" placeholder="联系人">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="contact_phone" placeholder="联系电话">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="pbBillSubmit" class="btn btn-primary">确定</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- STOP -->
   <div class="modal fade" id="stopModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

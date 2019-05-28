@@ -204,11 +204,15 @@ $(document).ready(function() {
 `;
          }
          /* -------------------------------------------------------------------------------- */
-         else if (row.interview_status == 6) {
+         else if (row.interview_status == 7) {
            return `
-<button class="payback_button btn btn-success border-0" data-toggle="modal" data-target="#paybackModal" id="` + row.interview_id + `">
-  <span class="text">入职反馈</span>
-</button>
+                <select class="stage_seven_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `">
+                    <option>回款阶段</option>
+                    <option>打款登记</option>
+                    <option>完成打款</option>
+                    <option>坏账</option>
+                    <option>发票申请</option>
+                </select>
 `;
          }
          /* -------------------------------------------------------------------------------- */
@@ -538,6 +542,22 @@ $(document).ready(function() {
     }
   });
 
+  $(document).on('click', '.stage_seven_select', function() {
+    interview_selected_value = Number(this.id);
+
+    value = $("#"+(interview_selected_value)+".stage_seven_select").val()
+    if (value == "回款阶段") {
+    } else if (value == "打款登记") {
+      $('#pbRegModal').modal('toggle')
+    } else if (value == "完成打款") {
+      $('#pbDoneModal').modal('toggle')
+    } else if (value == "坏账") {
+      $('#pbBadModal').modal('toggle');
+    } else if (value == "发票申请") {
+      $('#pbBillModal').modal('toggle');
+    }
+  });
+
   $(document).on('click', '.dial_button', function() {
     interview_selected_value = Number(this.id);
   });
@@ -738,6 +758,61 @@ $(document).ready(function() {
     });
   });
 
+  $(function(){
+    // only update the entry info
+    $('#pbBillSubmit').click(function(e){
+      e.preventDefault();
+
+      var interview_id = interview_selected_value;
+
+      $('#pbBillModal').modal('hide');
+      var status = 7;
+
+      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+    });
+  });
+
+  $(function(){
+    // only update the entry info
+    $('#pbBadSubmit').click(function(e){
+      e.preventDefault();
+
+      var interview_id = interview_selected_value;
+
+      $('#pbBadModal').modal('hide');
+      var status = 7;
+
+      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+    });
+  });
+
+  $(function(){
+    // only update the entry info
+    $('#pbDoneSubmit').click(function(e){
+      e.preventDefault();
+
+      var interview_id = interview_selected_value;
+
+      $('#pbDoneModal').modal('hide');
+      var status = 8;
+
+      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+    });
+  });
+
+  $(function(){
+    // only update the entry info
+    $('#pbRegSubmit').click(function(e){
+      e.preventDefault();
+
+      var interview_id = interview_selected_value;
+
+      $('#pbRegModal').modal('hide');
+      var status = 7;
+
+      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+    });
+  });
   //------------------------------------------Current
 
   $(function() {
