@@ -184,9 +184,12 @@ $(document).ready(function() {
          /* -------------------------------------------------------------------------------- */
          else if (row.interview_status == 5) {
            return `
-<button class="entry_button btn btn-success border-0" data-toggle="modal" data-target="#entryModal" id="` + row.interview_id + `">
-  <span class="text">入职</span>
-</button>
+                <select class="stage_five_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `">
+                    <option>入职过程</option>
+                    <option>入职到场</option>
+                    <option>放弃入职</option>
+                    <option>更期入职</option>
+                </select>
 `;
          }
          /* -------------------------------------------------------------------------------- */
@@ -504,6 +507,20 @@ $(document).ready(function() {
     }
   });
 
+  $(document).on('click', '.stage_five_select', function() {
+    interview_selected_value = Number(this.id);
+
+    value = $("#"+(interview_selected_value)+".stage_five_select").val()
+    if (value == "入职过程") {
+    } else if (value == "入职到场") {
+      $('#entryedModal').modal('toggle')
+    } else if (value == "放弃入职") {
+      $('#stopModal').modal('toggle')
+    } else if (value == "更期入职") {
+      $('#entryUpdateModal').modal('toggle');
+    }
+  });
+
   $(document).on('click', '.dial_button', function() {
     interview_selected_value = Number(this.id);
   });
@@ -648,6 +665,35 @@ $(document).ready(function() {
     });
   });
 
+
+  $(function(){
+    $('#entryedSubmit').click(function(e){
+      e.preventDefault();
+
+      var interview_id = interview_selected_value;
+
+      $('#entryedModal').modal('hide');
+      var status = 6;
+
+      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+    });
+  });
+
+  $(function(){
+    // only update the entry info
+    $('#entryUpdateSubmit').click(function(e){
+      e.preventDefault();
+
+      var interview_id = interview_selected_value;
+
+      $('#entryUpdateModal').modal('hide');
+      var status = 5;
+
+      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+    });
+  });
+
+  //------------------------------------------Current
 
   $(function() {
     $('#inviteSubmit2').click(function(e){
