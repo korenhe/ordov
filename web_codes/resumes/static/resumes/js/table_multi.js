@@ -121,7 +121,7 @@ $(document).ready(function() {
                     <option>待选状态</option>
                     <option>AI沟通</option>
                     <option>短信沟通</option>
-                    <option>人工沟通</option>
+                    <option>简历匹配</option>
                     <option>不合适</option>
                 </select>
           `;
@@ -145,6 +145,16 @@ $(document).ready(function() {
          /* -------------------------------------------------------------------------------- */
          else if (row.interview_status == 2) {
            return `
+				<select class="stage_two_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `">
+					<option>自动拨号</option>
+					<option>企业介绍</option>
+					<option>应聘者信息</option>
+					<option>同意面试</option>
+					<option>放弃面试</option>
+                    <option>深度沟通</option>
+                    <option>电话未接通</option>
+				</select>
+
 `;
          }
          /* -------------------------------------------------------------------------------- */
@@ -412,7 +422,8 @@ $(document).ready(function() {
     if (value == "AI沟通") {
        $('#dialModal').modal('toggle');
     } else if (value == "短信沟通") {
-    } else if (value == "人工沟通") {
+    } else if (value == "简历匹配") {
+       $('#nextModal').modal('toggle')
     } else if (value == "不符合要求") {
     }
   });
@@ -428,6 +439,24 @@ $(document).ready(function() {
         $('#stopModal').modal('toggle');
     }
 
+  });
+
+  $(document).on('change', '.stage_two_select', function() {
+    interview_selected_value = Number(this.id);
+
+    value = $("#"+(interview_selected_value)+".stage_two_select").val()
+    if (value == "自动拨号") {
+    } else if (value == "企业介绍") {
+      show_post_modal(post_selected_value);
+    } else if (value == "应聘者信息") {
+      $('#resumeModal').modal('toggle');
+      resume_id = this.dataset.resume_id;
+      show_resume_modal(resume_id);
+    } else if (value == "同意面试") {
+      $('#inviteModal2').modal('toggle');
+    } else if (value == "放弃面试") {
+      $('#stopModal').modal('toggle');
+    }
   });
 
   $(document).on('click', '.stage_three_select', function() {
@@ -556,12 +585,12 @@ $(document).ready(function() {
   $(function() {
     $('#nextSubmit').click(function(e){
       e.preventDefault();
-
-      var interview_id = interview_selected_value;
+      var resume_id = resume_selected_value;
+      var post_id = post_selected_value;
+      var status = 2;
 
       $('#nextModal').modal('hide');
-      var status = 3 // status++
-      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+      submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, table);
     });
   });
 
@@ -580,6 +609,17 @@ $(document).ready(function() {
     });
   });
 
+  $(function() {
+    $('#inviteSubmit2').click(function(e){
+    e.preventDefault();
+
+    var interview_id = interview_selected_value;
+
+    $('#inviteModal2').modal('hide');
+      var status = 3 // interview
+      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+    });
+  });
 
   $(function(){
     $('#interviewFormSubmit').click(function(e){

@@ -373,6 +373,62 @@
   </div>
 
   <!-- Interview Info -->
+  <div class="modal fade" id="inviteModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">同意面试</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="interview_date" placeholder="面试日期">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="interview_time" placeholder="面试时间">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="contact_" placeholder="联系人">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="interview_place" placeholder="面试地点">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="interview_post" placeholder="面试岗位">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="material_need" placeholder="携带资料">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="attention" placeholder="注意事项">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="first_impression" placeholder="第一印象">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="append" placeholder="备注">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="sendMessage" class="btn btn-primary">发送面试信息给应聘者</button>
+          <button type="button" id="inviteSubmit2" class="btn btn-primary">进入下一阶段: 面试</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interview Info -->
   <div class="modal fade" id="interviewModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
