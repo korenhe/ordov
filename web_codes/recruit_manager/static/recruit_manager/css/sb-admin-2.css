@@ -2014,7 +2014,7 @@ pre code {
   width: 100%;
   height: calc(1.5em + 0.75rem + 2px);
   padding: 0.375rem 0.75rem;
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   font-weight: 400;
   line-height: 1.5;
   color: #6e707e;
@@ -3764,7 +3764,7 @@ input[type="button"].btn-block {
   align-items: center;
   padding: 0.375rem 0.75rem;
   margin-bottom: 0;
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   font-weight: 400;
   line-height: 1.5;
   color: #6e707e;
@@ -12008,10 +12008,20 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 select.form-control:not([size]):not([multiple]) {
-    height: calc(1.775rem);
+    height: calc(1.5em + 0.75rem + 2px);
 }
 
 .table-condensed td {
     padding: 0.3rem;
     vertical-align: middle;
+}
+
+div.dataTables_wrapper div.post_search div.dataTables_filter input {
+    display: table;
+    box-sizing : border-box;
+    width: 95%;
+}
+
+div.dataTables_wrapper div.post_search div.dataTables_filter label {
+    display: inline-table;
 }

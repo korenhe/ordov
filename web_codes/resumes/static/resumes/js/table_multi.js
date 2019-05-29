@@ -224,7 +224,7 @@ $(document).ready(function() {
   });
 
   var table_post = $('#dataTable_post').DataTable({
-    "dom": '<"top"i>rt<"bottom"flp><"clear">',
+    "dom": '<"top"i>rt<"bottom"l<"post_search" f>p><"clear">',
     "lengthChange": false,
     "pageLength" : 15,
     "pagingType": "simple",
