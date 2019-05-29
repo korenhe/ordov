@@ -667,10 +667,12 @@ $(document).ready(function() {
       e.preventDefault();
       var resume_id = resume_selected_value;
       var post_id = post_selected_value;
+      var interview_id = interview_selected_value;
       var status = 2;
 
       $('#nextModal').modal('hide');
-      submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, table);
+      //submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, table);
+      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
     });
   });
 
