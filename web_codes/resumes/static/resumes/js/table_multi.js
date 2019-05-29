@@ -61,7 +61,7 @@ $(document).ready(function() {
       {"data": "id",
        "width": "1%"}, // resume id
       {"data": "username",
-       "width": "5%"},
+       "width": "1%"},
       {"data": "gender",
        "width": "1%",
        render: function(data, type, row, meta) {
@@ -107,7 +107,7 @@ $(document).ready(function() {
       /* ================================================================================ */
       {"data": "interview_status",
        "orderable": false,
-       "width": "10%",
+       "width": "15%",
        render: function(data, type, row, meta) {
 
          /* -------------------------------------------------------------------------------- */
@@ -667,7 +667,7 @@ $(document).ready(function() {
       e.preventDefault();
       var resume_id = resume_selected_value;
       var post_id = post_selected_value;
-      var interview_id = interview_selected_value;
+            var interview_id = interview_selected_value;
       var status = 2;
 
       $('#nextModal').modal('hide');
