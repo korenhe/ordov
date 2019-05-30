@@ -213,20 +213,16 @@
         <div class="modal-body">
           <?--Show candidate informations here.-->
 
-          <!--
-               <ul class="nav nav-tabs" id="myTab" role="tablist">
-               <li class="nav-item">
-               <a class="nav-link active" id="agree-tab" href="#agree" data-toggle="tab" role="tab" aria-controls="agree" aria-selected="true">同意</a></li>
-               <li class="nav-item">
-               <a class="nav-link" id="disagree-tab" href="#disagree" data-toggle="tab" role="tab" aria-controls="disagree" aria-selected="false">不同意</a></li>
-               </ul>
-          -->
-
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
               <form>
+
                 <div class="form-group">
-                  <input type="text" class="form-control" id="text_date" placeholder="开始时间">
+                <span class="label label-default">面试日期</span>
+                <div class="input-group date form_datetime" data-date="2019-05-20T10:00:00Z" data-date-format="yyyy-mm-dd-HH:ii p" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
                 </div>
 
                 <div class="form-group">
@@ -1338,4 +1334,19 @@
  var t_resume_statistic_url = "{% url 'app_manager:t_resume_statistic' 1 %}";
 </script>
 <script src="{% static 'resumes/js/table_multi.js' %}"></script>
+<script type="text/javascript">
+    $('.form_datetime').datetimepicker({
+        //language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        initialDate:new Date(),
+        orientation:'bottom',
+        showMeridian: 1
+    });
+</script>
+
 {% endblock%}
