@@ -256,16 +256,16 @@ $(document).ready(function() {
   /* ======================================== Process Begin Here */
 
   $('#age_id').keyup(function() {
-    page_refresh(table);
+    page_refresh(table, true);
   });
 
   $('.list-group-item').on('click', function(e) {
     filter_status_value = this.value;
-    page_refresh(table);
+    page_refresh(table, true);
   });
 
   $('#degree_id, #gender_id').change(function() {
-    page_refresh(table);
+    page_refresh(table, true);
   });
 
   // resume table
@@ -277,7 +277,7 @@ $(document).ready(function() {
     }
   });
 
-  function page_refresh(table) {
+  function page_refresh(table, reset_flag = false) {
     // update statistic info
     var xx = t_resume_statistic_url;
     $.ajax({
@@ -295,7 +295,7 @@ $(document).ready(function() {
       },
     });
 
-    table.draw(false);
+    table.draw(reset_flag);
   }
 
   function stop_interview_by_id(interview_id, url, status_value, table) {
