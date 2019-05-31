@@ -392,6 +392,24 @@ $(document).ready(function() {
     });
   }
 
+  function show_ai_config_modal(resume_id) {
+    $.ajax({
+      url:'/api/resumes/' + resume_id + '/',
+      type: 'GET',
+      data: null,
+      success: function(response) {
+
+        document.getElementById("text_name").value = response.username;
+        document.getElementById("text_phone_number").value = response.phone_number;
+
+        $('#dialModal').modal('toggle');
+      },
+      error: function() {
+        console.log("get resume info failed");
+      },
+    });
+  }
+
   function show_resume_modal(resume_id) {
     $.ajax({
       url:'/api/resumes/' + resume_id + '/',
@@ -442,7 +460,7 @@ $(document).ready(function() {
 
     value = $("#"+(resume_selected_value)+".stage_zero_select").val()
     if (value == "AI沟通") {
-       $('#dialModal').modal('toggle');
+       show_ai_config_modal(resume_selected_value)
     } else if (value == "短信沟通") {
     } else if (value == "简历匹配") {
        $('#nextModal').modal('toggle')
@@ -916,5 +934,7 @@ $(document).ready(function() {
         }
       }
     });
+   //-----------
+   //------------modal
    //-----------
 });
