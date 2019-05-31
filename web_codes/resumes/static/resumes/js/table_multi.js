@@ -558,6 +558,11 @@ $(document).ready(function() {
     }
   });
 
+  $(document).on('change', '#ai_task_id', function() {
+      var condition = $("#ai_task_id").find("option:selected").text()
+      // should update the huashu ID corresponsely
+  });
+
   $(document).on('click', '.dial_button', function() {
     interview_selected_value = Number(this.id);
   });
@@ -894,4 +899,22 @@ $(document).ready(function() {
     });
   });
 
+
+  //-------- select
+    $.ajax({
+      type: "GET",
+      url:'/interview/ai/task',
+      async:false,
+      dataType: "json",
+      success: function(data){
+        $('#ai_task_id').html("")
+        $('#ai_task_id').prepend('<option value="">请选择任务</option>');
+        if (data !='') {
+          $.each(data.ai_taskId,function(index, ele) {
+            $('#ai_task_id').append('<option value="ai_task_id' + index + '">' + ele + '</option>');
+          });
+        }
+      }
+    });
+   //-----------
 });

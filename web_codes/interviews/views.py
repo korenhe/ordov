@@ -13,6 +13,7 @@ from .models import Interview, query_interviews_by_args, STATUS_CHOICES
 from .serializers import InterviewSerializer
 from companies.models import Post
 from resumes.models import Resume
+from django.http import JsonResponse
 
 # Create your views here.
 class InterviewViewSet(viewsets.ModelViewSet):
@@ -66,3 +67,14 @@ class InterviewTable(generic.ListView):
         context = super(InterviewTable, self).get_context_data(**kwargs)
         context['template_table_name'] = 'Interview'
         return context
+def Task(request):
+    if request.method == 'GET':
+        print('GET.......')
+        task_array = []
+        task_array.append(u"深圳富士通")
+        task_array.append(u"北京创图")
+        task_array.append(u"上海任宁")
+        data = {
+           "ai_taskId": task_array
+        }
+        return JsonResponse(data)
