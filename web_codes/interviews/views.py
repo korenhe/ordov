@@ -20,8 +20,43 @@ class InterviewViewSet(viewsets.ModelViewSet):
     queryset = Interview.objects.all().order_by('id')
     serializer_class = InterviewSerializer
 
+    def create(self, request, **kwargs):
+        # Update the interview stat here
+        is_active = request.data['is_active']
+        status = request.data['status']
+        postid = request.data['resume']
+        resumeid = request.data['post']
+        # -1 and -2 has special usage in our system
+        # -1 means increating automically
+        # -2 means stop
+        print(is_active, " - ", status,  " - ", postid, " - ", resumeid)
+        interviewTarget = None
+        if status == -1:
+            try:
+                interviewTarget = queryset.get(post=postid, resume=resumeid)
+            except (ObjectDoesNotExist):
+                pass
+        if interviewTarget == None and status == -2:
+            status = 0
+        elif status == -1: # increase automically
+            curStat = interviewTarget['status']
+            status = curStat + 1
+
+        print(is_active, " - ", status,  " - ", postid, " - ", resumeid)
+
+        iMap = request.data
+        iMap['status'] = status
+        interviewSerializer = InterviewSerializer(data=iMap)
+        if interviewSerializer.is_valid(raise_exception=True):
+            interviewSaved = interviewSerializer.save()
+        else:
+            pass
+        # we should update the
+        return Response({}, status=rest_status.HTTP_200_OK, template_name=None, content_type=None)
+
     def list(self, request, **kwargs):
 
+        print(" InterviewViewSet ......----->")
         interview = query_interviews_by_args(**request.query_params)
 
         serializer = InterviewSerializer(interview['items'], many=True)
@@ -69,7 +104,6 @@ class InterviewTable(generic.ListView):
         return context
 def Task(request):
     if request.method == 'GET':
-        print('GET.......')
         task_array = []
         task_array.append(u"深圳富士通")
         task_array.append(u"北京创图")

@@ -114,10 +114,23 @@ $(document).ready(function() {
          if (row.interview_status == 0) {
            return `
                 <button class="invite_button btn btn-success border-0" id="` + row.id + `" style="display:none;">
-                <span class="text">不合适</span>
+                <span class="text">合适</span>
+                </button>
+                <button class="invite_button btn btn-success border-0" id="` + row.id + `" style="display:none;">
+                <span class="text">操作</span>
                 </button>
 
-                <select class="stage_zero_select form-control" id="` + row.id + `">
+				<div class="btn-group">
+                <select class="stage_zero_select form-control" id="` + row.id + `" ">
+                    <option>操作</option>
+                    <option>AI沟通</option>
+                    <option>短信沟通</option>
+                </select>
+				<button type="button" class="stage_zero_pass btn btn-sm " id="` + row.id + `">通过</button>
+				<button type="button" class="stage_zero_fail btn btn-sm " id="` + row.id + `">结束</button>
+				</div>
+
+                <select class="stage_zero_select form-control" id="` + row.id + `" style="display:none;">
                     <option>待选状态</option>
                     <option>AI沟通</option>
                     <option>短信沟通</option>
@@ -345,6 +358,30 @@ $(document).ready(function() {
     xhr.send(JSON.stringify(data));
   }
 
+  function stop_interview_by_compound(resume_id, post_id, url, status_value, table) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    var csrftoken = getCookie('csrftoken');
+
+    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+
+    data = {"resume": resume_id,
+            "post": post_id,
+            "is_active":false,
+            "status": -2,
+            "result":"Stopped",
+           };
+
+    console.log(data);
+    xhr.onloadend = function() {
+      //done
+      page_refresh(table);
+    };
+
+    xhr.send(JSON.stringify(data));
+  }
+
   function submit_interview_by_compound(resume_id, post_id, url, status_value, table) {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url);
@@ -448,6 +485,16 @@ $(document).ready(function() {
   $(document).on('click', '.invite_button', function() {
     resume_selected_value = Number(this.id);
     alert(resume_selected_value)
+  });
+
+  $(document).on('click', '.stage_zero_pass', function() {
+    resume_selected_value = Number(this.id);
+    alert(resume_selected_value)
+  });
+  $(document).on('click', '.stage_zero_fail', function() {
+    resume_selected_value = Number(this.id);
+    var statusI = -2
+    stop_interview_by_compound(resume_selected_value, post_selected_value, "/api/interviews/", statusI, table)
   });
 
   // use 'click' here, otherwise, if user select 'next' and then closed, he should change to other stats then back to 'next' to trigger the event.
