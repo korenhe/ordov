@@ -51,6 +51,23 @@ class Interview(models.Model):
     def __str__(self):
         return '<interview C: %s B: %s' % (self.resume.resume_id, self.post.name)
 
+class Offer(models.Model):
+
+    interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
+
+    salary = models.CharField(max_length=50, null=True, blank=True)
+    entry_date = models.DateTimeField(blank=True, null=True)
+    baoxian = models.CharField(max_length=50, null=True, blank=True)
+
+    linkman = models.CharField(max_length=50, blank=True, null=True)
+    linkman_phone = models.CharField(max_length=15, null=True, blank=True)
+
+    beizhu = models.TextField(max_length=500, blank=True, null=True, default='')
+
+
+
 ORDER_COLUMN_CHOICES = Choices(
     ('0', 'id'),
     ('1', 'resume'),
