@@ -38,7 +38,7 @@ class Company(models.Model):
     #introduce_radio = models.
 
     # choice
-    areaPtr = models.ForeignKey(Area, on_delete=models.CASCADE)
+    areaPtr = models.ForeignKey(Area, on_delete=models.CASCADE, blank=True, null=True)
     area = models.CharField(max_length=50, blank=True, null=True)
     cType = models.CharField(max_length=50, blank=True, null=True)
 

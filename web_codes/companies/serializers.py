@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Company, Department, Post
+from .models import Area, Company, Department, Post
 
 class AreaSerializer(serializers.ModelSerializer):
     class Meta:

@@ -54,7 +54,7 @@ class Interview(models.Model):
 class InterviewLogCommon(models.Model):
     interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
     status = models.IntegerField(choices=STATUS_CHOICES, default=0)
-    passInter = models.BooleanField(default=1)
+    passInter = models.BooleanField(default=0)
     result = models.TextField(max_length=500, blank=True, null=True, default='')
 
 class Offer(models.Model):
