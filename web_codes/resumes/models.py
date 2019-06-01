@@ -120,6 +120,8 @@ def query_resumes_by_args(**kwargs):
         print(queryset)
     else:
         queryset = Resume.objects.all()
+    # remove all the status=0 item
+    queryset = Resume.objects.exclude(interview__status=0, interview__post__id=post_id)
 
     total = queryset.count()
 
