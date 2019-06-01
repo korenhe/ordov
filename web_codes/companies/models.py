@@ -8,6 +8,10 @@ from ordov.choices import DEGREE_CHOICES
 
 # Create your models here.
 
+class Area(models.Model):
+    name = models.CharField(max_length=50, primary_key=True)
+    description = models.TextField(blank=True, null=True, default='')
+
 class Company(models.Model):
     name = models.CharField(max_length=50, primary_key=True)
     short_name = models.CharField(max_length=50, blank=True, null=True)
@@ -34,6 +38,7 @@ class Company(models.Model):
     #introduce_radio = models.
 
     # choice
+    areaPtr = models.ForeignKey(Area, on_delete=models.CASCADE)
     area = models.CharField(max_length=50, blank=True, null=True)
     cType = models.CharField(max_length=50, blank=True, null=True)
 

@@ -2,6 +2,13 @@ from rest_framework import serializers
 
 from .models import Company, Department, Post
 
+class AreaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Area
+        fields = (
+            'name',
+            'description',
+            )
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
