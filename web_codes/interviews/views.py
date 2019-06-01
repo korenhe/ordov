@@ -10,7 +10,11 @@ from rest_framework import viewsets
 from rest_framework import status as rest_status
 
 from .models import Interview, query_interviews_by_args, STATUS_CHOICES
+from .models import InterviewSub_Interview, InterviewSub_Interview_Pass
+
 from .serializers import InterviewSerializer
+from .serializers import InterviewSub_InterviewSerializer, InterviewSub_Interview_PassSerializer
+
 from companies.models import Post
 from resumes.models import Resume
 from django.http import JsonResponse
@@ -102,6 +106,7 @@ class InterviewTable(generic.ListView):
         context = super(InterviewTable, self).get_context_data(**kwargs)
         context['template_table_name'] = 'Interview'
         return context
+
 def Task(request):
     if request.method == 'GET':
         task_array = []
@@ -112,3 +117,11 @@ def Task(request):
            "ai_taskId": task_array
         }
         return JsonResponse(data)
+
+class InterviewSub_InterviewViewSet(viewsets.ModelViewSet):
+    queryset = InterviewSub_Interview.objects.all()
+    serializer_class = InterviewSub_InterviewSerializer
+
+class InterviewSub_Interview_PassViewSet(viewsets.ModelViewSet):
+    queryset = InterviewSub_Interview_Pass.objects.all()
+    serializer_class = InterviewSub_Interview_PassSerializer

@@ -49,7 +49,7 @@ class Interview(models.Model):
     is_match = models.BooleanField(default=1)
 
     def __str__(self):
-        return '<interview C: %s B: %s' % (self.resume.resume_id, self.post.name)
+        return '<interview %s:%s:%s' % (self.resume.username, self.post.company.name, self.post.name)
 
 class InterviewLogCommon(models.Model):
     interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
@@ -119,7 +119,10 @@ def query_interviews_by_args(**kwargs):
         'draw' : draw,
     }
 
-class Interview_Invite_Agree(models.Model):
+class InterviewSub_Invite(models.Model):
+    pass
+
+class InterviewSub_Invite_Agree(models.Model):
     interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
 
     date = models.DateField()
@@ -130,7 +133,7 @@ class Interview_Invite_Agree(models.Model):
     attention = models.CharField(max_length=500, blank=True, null=True)
     other = models.CharField(max_length=500, blank=True, null=True)
 
-class Interview_Invite_Disagree(models.Model):
+class InterviewSub_Invite_Disagree(models.Model):
     interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
 
     address = models.CharField(max_length=50, blank=True, null=True)
@@ -138,6 +141,20 @@ class Interview_Invite_Disagree(models.Model):
     salary = models.CharField(max_length=50, blank=True, null=True)
     insurance = models.CharField(max_length=50, blank=True, null=True)
     other = models.CharField(max_length=500, blank=True, null=True)
+
+# Interview Result Modal
+class InterviewSub_Interview(models.Model):
+    interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
+
+    result_type = models.IntegerField(null=True)
+
+class InterviewSub_Interview_Pass(models.Model):
+    interviewsub = models.ForeignKey(InterviewSub_Interview, on_delete=models.CASCADE)
+
+    reason = models.CharField(max_length=50, blank=True, null=True)
+    description = models.CharField(max_length=50, blank=True, null=True)
+    comments = models.CharField(max_length=50, blank=True, null=True)
+    notes = models.CharField(max_length=50, blank=True, null=True)
 
 class OnDuty(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

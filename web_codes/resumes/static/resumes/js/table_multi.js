@@ -382,6 +382,46 @@ $(document).ready(function() {
     xhr.send(JSON.stringify(data));
   }
 
+  function submit_interviewsub_by_id(interview_id, url, status_value, table) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    var csrftoken = getCookie('csrftoken');
+
+    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+
+    /*
+      {
+      "interviewsub": {
+      "interview": 53,
+      "result_type": 3
+      },
+      "reason": "shuang",
+      "description": "something.",
+      "comments": "shuang",
+      "notes": "a"
+      }
+     */
+    data = {
+      "interviewsub": {
+        "interview": interview_id,
+        "result_type": 3
+      },
+      "reason": "shuang",
+      "description": "something.",
+      "comments": "shuang",
+      "notes": "a"
+    };
+
+    console.log(data);
+    xhr.onloadend = function() {
+      //done
+      page_refresh(table);
+    };
+
+    xhr.send(JSON.stringify(data));
+  }
+
   function submit_interview_by_compound(resume_id, post_id, url, status_value, table) {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url);
@@ -559,7 +599,7 @@ $(document).ready(function() {
       resume_id = this.dataset.resume_id;
       show_resume_modal(resume_id);
     } else if (value == "面试通过") {
-      $('#interviewModal2').modal('toggle');
+      $('#interviewResultModal').modal('toggle');
     } else if (value == "面试未通过") {
       $('#stopModal').modal('toggle');
     } else if (value == "面试未到场") {
@@ -752,12 +792,13 @@ $(document).ready(function() {
 
       var interview_id = interview_selected_value;
 
-      $('#interviewModal2').modal('hide');
+      $('#interviewResultModal').modal('hide');
       var status = 4;
 
       /* submit sub_interview_process_table, then the interview table is updated
          at the same time in the serverside */
-      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+      //submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+      submit_interviewsub_by_id(interview_id, "/interviews/api/interviewsub_pass/", status, table);
     });
   });
 

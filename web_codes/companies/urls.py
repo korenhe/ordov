@@ -2,7 +2,6 @@ from django.urls import path
 
 from .views import CompanyView, DepartmentView, PostView
 
-
 app_name = "companies"
 
 # app_name will help us do a reverse look-up latter.
