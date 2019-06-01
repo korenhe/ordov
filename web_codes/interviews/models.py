@@ -18,6 +18,8 @@ STATUS_CHOICES = (
     (6, '考察'),
     (7, '回款'),
     (8, '完成'),
+    (-2, '停止'),
+    (-1, '自增'),
 )
 
 STATUS_ONDUTY_CHOICES = (

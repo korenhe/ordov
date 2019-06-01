@@ -158,16 +158,16 @@ $(document).ready(function() {
          /* -------------------------------------------------------------------------------- */
          else if (row.interview_status == 2) {
            return `
-				<select class="stage_two_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `">
-                    <option>邀约过程中</option>
-					<option>自动拨号</option>
-					<option>企业介绍</option>
-					<option>应聘者信息</option>
-					<option>同意面试</option>
-					<option>放弃面试</option>
+				<div class="btn-group">
+                <select class="stage_two_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `">
+                    <option>操作</option>
+                    <option>拨号面试</option>
                     <option>深度沟通</option>
                     <option>电话未接通</option>
-				</select>
+                </select>
+				<button type="button" class="stage_two_pass btn btn-sm " id="` + row.interview_id + `">通过</button>
+				<button type="button" class="stage_two_fail btn btn-sm " id="` + row.interview_id + `">结束</button>
+				</div>
 
 `;
          }
@@ -299,7 +299,7 @@ $(document).ready(function() {
       data: null,
       success: function(response) {
         document.getElementById("badge_statistic_stage_0").innerHTML = response.resumes_total;
-        for (var i = 1; i < 8; i++) {
+        for (var i = 1; i < 11; i++) {
           document.getElementById("badge_statistic_stage_" + i).innerHTML = response.interviews_status_filters[i-1];
         }
       },
@@ -322,7 +322,7 @@ $(document).ready(function() {
     data = {
       "is_active":false,
       "status": status_value,
-      "result":"Stop",
+      "result":"Stopped",
     };
 
     console.log(data);
@@ -334,6 +334,28 @@ $(document).ready(function() {
     xhr.send(JSON.stringify(data));
   }
 
+  function stop_interview_by_id2(interview_id, url, status_value, table) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("PATCH", url + interview_id + '/');
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    var csrftoken = getCookie('csrftoken');
+
+    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+
+    data = {
+      "is_active":true,
+      "status": status_value,
+      "result":"Pending",
+    };
+
+    console.log(data);
+    xhr.onloadend = function() {
+      //done
+      page_refresh(table);
+    };
+
+    xhr.send(JSON.stringify(data));
+  }
 
   function submit_interview_by_id(interview_id, url, status_value, table) {
     var xhr = new XMLHttpRequest();
@@ -429,6 +451,47 @@ $(document).ready(function() {
     });
   }
 
+
+  function show_callCandidate_modal(post_id, resume_id) {
+    $.ajax({
+      url:'/api/posts/' + post_id + '/',
+      type: 'GET',
+      data: null,
+      success: function(response) {
+
+        /* here the abbreviation is not work, don't know why. Since the getElementbyid method is the most effience one, use it. */
+        //$('#text_postinfo_company').value = response.department.company.name;
+        //document.querySelector('#text_postinfo_company').value = response.department.company.name;
+        document.getElementById("text_postinfo_company").value = response.department.company.name;
+        document.getElementById("text_postinfo_department").value = response.department.name;
+        document.getElementById("text_postinfo_post").value = response.name;
+        document.getElementById("text_postinfo_description").value = response.description;
+      },
+      error: function() {
+        console.log("get post info failed");
+      },
+    });
+
+    $.ajax({
+      url:'/api/resumes/' + resume_id + '/',
+      type: 'GET',
+      data: null,
+      success: function(response) {
+
+        document.getElementById("candidate_text_resumeinfo_username").value = response.username;
+        document.getElementById("candidate_text_resumeinfo_degree").value = response.degree;
+        document.getElementById("candidate_text_resumeinfo_school").value = response.school;
+        document.getElementById("candidate_text_resumeinfo_phone_number").value = response.phone_number;
+
+      },
+      error: function() {
+        console.log("get resume info failed");
+      },
+    });
+    $('#dailToCandidateModal').modal('toggle');
+  }
+
+
   function show_ai_config_modal(resume_id) {
     $.ajax({
       url:'/api/resumes/' + resume_id + '/',
@@ -489,12 +552,35 @@ $(document).ready(function() {
 
   $(document).on('click', '.stage_zero_pass', function() {
     resume_selected_value = Number(this.id);
-    alert(resume_selected_value)
+    var statusI = -1
+    submit_interview_by_compound(resume_selected_value, post_selected_value, "/api/interviews/", statusI, table)
+
   });
+
   $(document).on('click', '.stage_zero_fail', function() {
     resume_selected_value = Number(this.id);
     var statusI = -2
     stop_interview_by_compound(resume_selected_value, post_selected_value, "/api/interviews/", statusI, table)
+  });
+
+  $(document).on('click', '.stage_two_pass', function() {
+    interview_selected_value = Number(this.id);
+    $('#inviteModal2').modal('toggle')
+    /*
+    interview_id = Number(this.id);
+    var statusI = 3
+    submit_interview_by_id(interview_id, "/api/interviews/", statusI, table)
+    */
+
+  });
+  $(document).on('click', '.stage_two_fail', function() {
+    interview_selected_value = Number(this.id);
+    $('#stopModal').modal('toggle')
+    /*
+    resume_selected_value = Number(this.id);
+    var statusI = -2
+    stop_interview_by_id(resume_selected_value, post_selected_value, "/api/interviews/", statusI, table)
+    */
   });
 
   // use 'click' here, otherwise, if user select 'next' and then closed, he should change to other stats then back to 'next' to trigger the event.
@@ -530,11 +616,11 @@ $(document).ready(function() {
 
   $(document).on('change', '.stage_two_select', function() {
     interview_selected_value = Number(this.id);
-
     value = $("#"+(interview_selected_value)+".stage_two_select").val()
     if (value == "自动拨号") {
-    } else if (value == "企业介绍") {
-      show_post_modal(post_selected_value);
+    } else if (value == "拨号面试") {
+      resume_id = this.dataset.resume_id;
+      show_callCandidate_modal(post_selected_value, resume_id)
     } else if (value == "应聘者信息") {
       $('#resumeModal').modal('toggle');
       resume_id = this.dataset.resume_id;
@@ -726,8 +812,7 @@ $(document).ready(function() {
       var interview_id = interview_selected_value;
 
       $('#stopModal').modal('hide');
-      var status = -1 // current status, not updated
-
+      var status = -2 // current status, not updated
       stop_interview_by_id(interview_id, "/api/interviews/", status, table);
     });
   });
@@ -737,7 +822,7 @@ $(document).ready(function() {
       e.preventDefault();
       var resume_id = resume_selected_value;
       var post_id = post_selected_value;
-            var interview_id = interview_selected_value;
+      var interview_id = interview_selected_value;
       var status = 2;
 
       $('#nextModal').modal('hide');
@@ -898,6 +983,15 @@ $(document).ready(function() {
       submit_interview_by_id(interview_id, "/api/interviews/", status, table);
     });
   });
+
+
+  $(function() {
+    $('#agree_interview').click(function(e){
+        $('#dailToCandidateModal').modal('hide');
+        $('#inviteModal2').modal('show');
+    });
+  });
+
 
   $(function(){
     $('#interviewFormSubmit').click(function(e){

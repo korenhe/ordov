@@ -61,6 +61,14 @@
           回款
           <span id="badge_statistic_stage_7" class="badge badge-primary badge-pill"></span>
         </li>
+        <li class="list-group-item list-group-item-action" data-toggle="list" value="8">
+          完成
+          <span id="badge_statistic_stage_8" class="badge badge-primary badge-pill"></span>
+        </li>
+        <li class="list-group-item list-group-item-action" data-toggle="list" value="9">
+          不合适
+          <span id="badge_statistic_stage_9" class="badge badge-primary badge-pill"></span>
+        </li>
       </div>
       <!-- Global Filter -->
 
@@ -295,6 +303,91 @@
     </div>
   </div>
 
+
+  <!-- Dial to Candidate -->
+  <div class="modal fade" id="dailToCandidateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">电话邀约</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        <!--
+          <ul>
+          <li> <button type="button" id="dailToCandidate" class="btn btn-primary">拨号</button> </li>
+          <li> <input type="text" class="form-control" id="text_resumeinfo_phone_number" placeholder="电话"> </li>
+          <ul>
+          -->
+
+
+
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="post-tab" href="#post" data-toggle="tab" role="tab" aria-controls="post" aria-selected="true">岗位信息</a></li>
+            <li class="nav-item">
+              <a class="nav-link" id="candiate-tab" href="#candidate" data-toggle="tab" role="tab" aria-controls="candidate" aria-selected="false">应聘者信息</a></li>
+          </ul>
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="post" role="tabpanel" aria-labelledby="post-tab">
+              <form>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_postinfo_company" placeholder="公司名">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_postinfo_department" placeholder="部门名">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_postinfo_post" placeholder="岗位名称">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_postinfo_description" placeholder="岗位简介">
+                </div>
+
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="candidate", role="tabpanel" aria-labelledby="candidate-tab">
+              <form>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="candidate_text_resumeinfo_username" placeholder="姓名">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="candidate_text_resumeinfo_degree" placeholder="学历">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="candidate_text_resumeinfo_school" placeholder="学校">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="candidate_text_resumeinfo_phone_number" placeholder="电话">
+                </div>
+
+              </form>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="dail_candidate" class="btn btn-default"> 拨号</button>
+          <button type="button" id="agree_interview" class="btn btn-default">同意面试</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <!-- Post Info -->
   <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -307,6 +400,7 @@
         </div>
         <div class="modal-body">
           <?--Show candidate informations here.-->
+          <button type="button" id="dailToCandidate" class="btn btn-primary">拨号</button>
 
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
@@ -378,7 +472,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">同意面试</h5>
+          <h5 class="modal-title" id="exampleModalLongTitle">填写面试信息</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -389,12 +483,15 @@
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
               <form>
+
                 <div class="form-group">
-                  <input type="text" class="form-control" id="interview_date" placeholder="面试日期">
+                <span class="label label-default">面试日期</span>
+                <div class="input-group date form_datetime" data-date="2019-05-20T10:00:00Z" data-date-format="yyyy-mm-dd-HH:ii p" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                 </div>
-                <div class="form-group">
-                  <input type="text" class="form-control" id="interview_time" placeholder="面试时间">
                 </div>
+
                 <div class="form-group">
                   <input type="text" class="form-control" id="contact_" placeholder="联系人">
                 </div>
@@ -872,7 +969,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" id="stopFormSubmit" class="btn btn-primary">OK</button>
+          <button type="button" id="stopFormSubmit" class="btn btn-primary">结束面试</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>

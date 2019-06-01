@@ -105,8 +105,9 @@ def resume_statistic(request, post_id):
     resumes_total = Resume.objects.count()
     interviews_status_filters = []
 
-    for i in range(1, 8):
+    for i in range(1, 9):
         interviews_status_filters.append(Resume.objects.filter(interview__status__gte=i, interview__post__id=post_id).count())
+    interviews_status_filters.append(Resume.objects.filter(interview__status__lte=0, interview__post__id=post_id).count())
 
     data = {
         "resumes_total": resumes_total,

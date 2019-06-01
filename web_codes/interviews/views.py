@@ -14,6 +14,7 @@ from .serializers import InterviewSerializer
 from companies.models import Post
 from resumes.models import Resume
 from django.http import JsonResponse
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 # Create your views here.
 class InterviewViewSet(viewsets.ModelViewSet):
@@ -31,16 +32,20 @@ class InterviewViewSet(viewsets.ModelViewSet):
         # -2 means stop
         print(is_active, " - ", status,  " - ", postid, " - ", resumeid)
         interviewTarget = None
-        if status == -1:
+        if status == -1 or status == -2:
             try:
-                interviewTarget = queryset.get(post=postid, resume=resumeid)
+                interviewTarget = Interview.objects.get(post=postid, resume=resumeid)
             except (ObjectDoesNotExist):
                 pass
         if interviewTarget == None and status == -2:
             status = 0
+        elif interviewTarget == None and status == -1:
+            status = 2
         elif status == -1: # increase automically
             curStat = interviewTarget['status']
             status = curStat + 1
+        elif status == -2: # stop
+            status = interviewTarget['status']
 
         print(is_active, " - ", status,  " - ", postid, " - ", resumeid)
 
