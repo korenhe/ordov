@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Interview, Offer
+from .models import Interview, Offer, InterviewLogCommon
 
 class InterviewSerializer(serializers.ModelSerializer):
     id = serializers.SerializerMethodField()
@@ -31,4 +31,14 @@ class OfferSerializer(serializers.ModelSerializer):
             'linkman',
             'linkman_phone',
             'beizhu',
+        )
+
+class InterviewLogCommonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InterviewLogCommon
+        fields = (
+            'interview',
+            'status',
+            'passInter',
+            'result',
         )

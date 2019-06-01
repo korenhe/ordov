@@ -51,6 +51,12 @@ class Interview(models.Model):
     def __str__(self):
         return '<interview C: %s B: %s' % (self.resume.resume_id, self.post.name)
 
+class InterviewLogCommon(models.Model):
+    interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
+    status = models.IntegerField(choices=STATUS_CHOICES, default=0)
+    passInter = models.BooleanField(default=1)
+    result = models.TextField(max_length=500, blank=True, null=True, default='')
+
 class Offer(models.Model):
 
     interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
@@ -65,8 +71,6 @@ class Offer(models.Model):
     linkman_phone = models.CharField(max_length=15, null=True, blank=True)
 
     beizhu = models.TextField(max_length=500, blank=True, null=True, default='')
-
-
 
 ORDER_COLUMN_CHOICES = Choices(
     ('0', 'id'),
