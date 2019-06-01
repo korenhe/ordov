@@ -147,11 +147,19 @@ $(document).ready(function() {
   <span class="text">打电话</span>
 </button>
                -->
-                <select class="stage_one_select form-control" id="` + row.interview_id + `">
+                <select class="stage_one_select form-control" id="` + row.interview_id + `" style="display:none;">
                     <option>等待AI结果</option>
                     <option>继续下轮过程</option>
                     <option>终止面试</option>
                 </select>
+
+				<div class="btn-group">
+                <select class="stage_one_select form-control" id="` + row.interview_id + `">
+                    <option>操作</option>
+                </select>
+				<button type="button" class="stage_one_pass btn btn-sm " id="` + row.interview_id + `">通过</button>
+				<button type="button" class="stage_one_fail btn btn-sm " id="` + row.interview_id + `">结束</button>
+				</div>
 
 `;
          }
@@ -174,58 +182,69 @@ $(document).ready(function() {
          /* -------------------------------------------------------------------------------- */
          else if (row.interview_status == 3) {
            return `
+				<div class="btn-group">
                 <select class="stage_three_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `">
-                    <option>面试过程中</option>
+                    <option>操作</option>
                     <option>面试未到场</option>
-                    <option>面试通过</option>
-                    <option>面试未通过</option>
-                    <option>查看职位信息</option>
-                    <option>查看应聘者信息</option>
                 </select>
+				<button type="button" class="stage_three_pass btn btn-sm " id="` + row.interview_id + `">通过</button>
+				<button type="button" class="stage_three_fail btn btn-sm " id="` + row.interview_id + `">结束</button>
+				</div>
 `;
          }
          /* -------------------------------------------------------------------------------- */
          else if (row.interview_status == 4) {
            return `
+				<div class="btn-group">
                 <select class="stage_four_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `">
-                    <option>发放offer</option>
-                    <option>接收offer</option>
-                    <option>放弃offer</option>
+                    <option>操作</option>
+                    <option>更新offer</option>
                 </select>
+				<button type="button" class="stage_four_pass btn btn-sm " id="` + row.interview_id + `">接受</button>
+				<button type="button" class="stage_four_fail btn btn-sm " id="` + row.interview_id + `">放弃</button>
+				</div>
 `;
          }
          /* -------------------------------------------------------------------------------- */
          else if (row.interview_status == 5) {
            return `
+				<div class="btn-group">
                 <select class="stage_five_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `">
-                    <option>入职过程</option>
-                    <option>入职到场</option>
-                    <option>放弃入职</option>
+                    <option>操作</option>
                     <option>更期入职</option>
                 </select>
+				<button type="button" class="stage_five_pass btn btn-sm " id="` + row.interview_id + `">已入职</button>
+				<button type="button" class="stage_five_fail btn btn-sm " id="` + row.interview_id + `">放弃</button>
+				</div>
 `;
          }
          /* -------------------------------------------------------------------------------- */
          else if (row.interview_status == 6) {
            return `
+				<div class="btn-group">
                 <select class="stage_six_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `">
-                    <option>考察期</option>
-                    <option>通过考察</option>
-                    <option>未通过考察</option>
+                    <option>操作</option>
                     <option>放弃考察</option>
                 </select>
+				<button type="button" class="stage_six_pass btn btn-sm " id="` + row.interview_id + `">通过</button>
+				<button type="button" class="stage_six_fail btn btn-sm " id="` + row.interview_id + `">未通过</button>
+				</div>
+
 `;
          }
          /* -------------------------------------------------------------------------------- */
          else if (row.interview_status == 7) {
            return `
+				<div class="btn-group">
                 <select class="stage_seven_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `">
-                    <option>回款阶段</option>
+                    <option>操作</option>
                     <option>打款登记</option>
-                    <option>完成打款</option>
-                    <option>坏账</option>
                     <option>发票申请</option>
+                    <option>坏账</option>
                 </select>
+				<button type="button" class="stage_seven_pass btn btn-sm " id="` + row.interview_id + `">完成</button>
+				<button type="button" class="stage_seven_fail btn btn-sm " id="` + row.interview_id + `">退出</button>
+				</div>
 `;
          }
          /* -------------------------------------------------------------------------------- */
@@ -563,24 +582,70 @@ $(document).ready(function() {
     stop_interview_by_compound(resume_selected_value, post_selected_value, "/api/interviews/", statusI, table)
   });
 
+  $(document).on('click', '.stage_one_pass', function() {
+    interview_selected_value = Number(this.id);
+    $('#nextModal').modal('toggle')
+  });
+  $(document).on('click', '.stage_one_fail', function() {
+    interview_selected_value = Number(this.id);
+    $('#stopModal').modal('toggle')
+  });
+
   $(document).on('click', '.stage_two_pass', function() {
     interview_selected_value = Number(this.id);
     $('#inviteModal2').modal('toggle')
-    /*
-    interview_id = Number(this.id);
-    var statusI = 3
-    submit_interview_by_id(interview_id, "/api/interviews/", statusI, table)
-    */
-
   });
   $(document).on('click', '.stage_two_fail', function() {
     interview_selected_value = Number(this.id);
     $('#stopModal').modal('toggle')
-    /*
-    resume_selected_value = Number(this.id);
-    var statusI = -2
-    stop_interview_by_id(resume_selected_value, post_selected_value, "/api/interviews/", statusI, table)
-    */
+  });
+
+  $(document).on('click', '.stage_three_pass', function() {
+    interview_selected_value = Number(this.id);
+    $('#interviewModal2').modal('toggle')
+  });
+  $(document).on('click', '.stage_three_fail', function() {
+    interview_selected_value = Number(this.id);
+    $('#stopModal').modal('toggle')
+  });
+
+
+  $(document).on('click', '.stage_four_pass', function() {
+    interview_selected_value = Number(this.id);
+    $('#offerModal').modal('toggle')
+  });
+  $(document).on('click', '.stage_four_fail', function() {
+    interview_selected_value = Number(this.id);
+    $('#stopModal').modal('toggle')
+  });
+
+
+  $(document).on('click', '.stage_five_pass', function() {
+    interview_selected_value = Number(this.id);
+    $('#entryedModal').modal('toggle')
+  });
+  $(document).on('click', '.stage_five_fail', function() {
+    interview_selected_value = Number(this.id);
+    $('#stopModal').modal('toggle')
+  });
+
+  $(document).on('click', '.stage_six_pass', function() {
+    interview_selected_value = Number(this.id);
+    $('#probationSuccModal').modal('toggle')
+  });
+  $(document).on('click', '.stage_six_fail', function() {
+    interview_selected_value = Number(this.id);
+    $('#probationFailModal').modal('toggle')
+  });
+
+
+  $(document).on('click', '.stage_seven_pass', function() {
+    interview_selected_value = Number(this.id);
+    $('#pbDoneModal').modal('toggle')
+  });
+  $(document).on('click', '.stage_seven_fail', function() {
+    interview_selected_value = Number(this.id);
+    $('#stopModal').modal('toggle')
   });
 
   // use 'click' here, otherwise, if user select 'next' and then closed, he should change to other stats then back to 'next' to trigger the event.
@@ -658,7 +723,7 @@ $(document).ready(function() {
 
     value = $("#"+(interview_selected_value)+".stage_four_select").val()
     if (value == "发放offer") {
-    } else if (value == "接收offer") {
+    } else if (value == "更新offer") {
       $('#offerModal').modal('toggle')
     } else if (value == "放弃offer") {
       $('#stopModal').modal('toggle');
@@ -909,7 +974,7 @@ $(document).ready(function() {
       var interview_id = interview_selected_value;
 
       $('#probationFailModal').modal('hide');
-      var status = -1;
+      var status = -2;
 
       submit_interview_by_id(interview_id, "/api/interviews/", status, table);
     });
