@@ -299,7 +299,7 @@ $(document).ready(function() {
       data: null,
       success: function(response) {
         document.getElementById("badge_statistic_stage_0").innerHTML = response.resumes_total;
-        for (var i = 1; i < 8; i++) {
+        for (var i = 1; i < 11; i++) {
           document.getElementById("badge_statistic_stage_" + i).innerHTML = response.interviews_status_filters[i-1];
         }
       },
