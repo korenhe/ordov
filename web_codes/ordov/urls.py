@@ -20,6 +20,7 @@ from resumes import views as resumesViews
 from accounts import views as accountsViews
 from companies import views as companiesViews
 from interviews import views as interviewsViews
+from experiences import views as experiencesViews
 
 from rest_framework import routers
 
@@ -28,6 +29,7 @@ router.register(r'resumes', resumesViews.ResumeViewSet)
 router.register(r'candidates', candidatesViews.CandidateViewSet)
 router.register(r'posts', companiesViews.PostViewSet)
 router.register(r'interviews', interviewsViews.InterviewViewSet)
+router.register(r'experiences', experiencesViews.ExperienceViewSet)
 
 # Look at here: all path pattern should be ENDUP with '/'
 urlpatterns = [

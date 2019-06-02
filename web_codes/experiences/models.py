@@ -22,9 +22,9 @@ class Experience(models.Model):
     department_name = models.CharField(max_length=50, blank=True, null=True)
     post_name = models.CharField(max_length=50, blank=True, null=True)
 
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, default='')
-    department = models.ForeignKey(Department, on_delete=models.CASCADE, blank=True, null=True, default='')
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, blank=True, null=True, default='')
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, blank=True, null=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, blank=True, null=True)
 
     # TODO: merge province/city/
     work_province = models.CharField(max_length=20, blank=True, null=True)
@@ -54,7 +54,7 @@ class Experience(models.Model):
     reserved2 = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
-        return 'company: {}'.format(self.company_name)
+        return '{}: {}'.format(self.start, self.company_name)
 
 class Project(models.Model):
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, default='')

@@ -5,7 +5,6 @@ from resumes.models import Resume
 from resumes.serializers import ResumeSerializer
 
 class ExperienceSerializer(serializers.ModelSerializer):
-    resume = ResumeSerializer(required=True)
     class Meta:
         model = Experience
         fields = (
@@ -30,13 +29,7 @@ class ExperienceSerializer(serializers.ModelSerializer):
             'witness',
             'witness_phone'
         )
-    def create(self, validated_data):
-        resume_data = validated_data.pop('resume')
-        resume = ResumeSerializer.create(ResumeSerializer(), validated_data = resume_data)
-        #TODO: do more logic for company/department/post serialize
-        experience, created = Experience.objects.update_or_create(
-            resume=resume, company=None, department=None, post=None, **validated_data)
-        return experience
+
 class ProjectSerializer(serializers.ModelSerializer):
     resume = ResumeSerializer(required=True)
     class Meta:

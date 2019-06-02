@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import viewsets, status
 
 # Create your views here.
 
@@ -27,6 +28,10 @@ class ExperienceView(APIView):
         return Response(
             {"success": "Experience '{}' created successfully".format(experience_saved.company_name)}
         )
+
+class ExperienceViewSet(viewsets.ModelViewSet):
+    queryset = Experience.objects.all()
+    serializer_class = ExperienceSerializer
 
 class ProjectView(APIView):
     def get(self, request):
