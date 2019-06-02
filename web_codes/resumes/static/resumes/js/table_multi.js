@@ -254,13 +254,10 @@ $(document).ready(function() {
          else if (row.interview_status == 7) {
            return `
 				<div class="btn-group">
-                <select class="stage_seven_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `">
-                    <option>操作</option>
-                    <option>打款登记</option>
-                    <option>发票申请</option>
-                </select>
-				<button type="button" class="stage_seven_pass btn btn-sm " id="` + row.interview_id + `">完成</button>
-				<button type="button" class="stage_seven_fail btn btn-sm " id="` + row.interview_id + `">坏账</button>
+				<button type="button" class="stage_seven_register btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">登记</button>
+				<button type="button" class="stage_seven_bill btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">发票</button>
+				<button type="button" class="stage_seven_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">完成</button>
+				<button type="button" class="stage_seven_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">坏账</button>
 				</div>
 `;
          }
@@ -724,6 +721,14 @@ $(document).ready(function() {
   });
 
 
+  $(document).on('click', '.stage_seven_register', function() {
+    interview_selected_value = Number(this.id);
+    $('#pbRegModal').modal('toggle')
+  });
+  $(document).on('click', '.stage_seven_bill', function() {
+    interview_selected_value = Number(this.id);
+    $('#pbBillModal').modal('toggle')
+  });
   $(document).on('click', '.stage_seven_pass', function() {
     interview_selected_value = Number(this.id);
     $('#pbDoneModal').modal('toggle')

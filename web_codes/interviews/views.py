@@ -46,10 +46,12 @@ class InterviewViewSet(viewsets.ModelViewSet):
         elif interviewTarget == None and status == -1:
             status = 2
         elif status == -1: # increase automically
-            curStat = interviewTarget['status']
+            print(interviewTarget)
+            print(type(interviewTarget))
+            curStat = interviewTarget.status
             status = curStat + 1
         elif status == -2: # stop
-            status = interviewTarget['status']
+            status = interviewTarget.status
 
         print(is_active, " - ", status,  " - ", postid, " - ", resumeid)
 

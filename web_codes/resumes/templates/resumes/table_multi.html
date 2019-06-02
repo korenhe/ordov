@@ -852,7 +852,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">坏账</h5>
+          <h5 class="modal-title" id="exampleModalLongTitle">发票信息</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -935,8 +935,17 @@
             <div class="tab-pane fade show active" id="area" role="tabpanel" aria-labelledby="area-tab">
               <form>
                 <div class="form-group">
-                  <label for="text_expect_area" class="col-form-label">期望行业</label>
-                  <textarea class="form-control" id="text_expect_area_id"></textarea>
+                  <label for="text_expect_area" class="col-form-label">选择期望行业</label>
+
+                  <select class="form-control" id="text_expect_area_id">
+                    <option></option>
+                    <option>计算机软件</option>
+                    <option>通信</option>
+                    <option>建筑</option>
+                    <option>房地产</option>
+                    <option>家居装修</option>
+                  </select>
+
                 </div>
               </form>
             </div>
@@ -944,8 +953,14 @@
             <div class="tab-pane fade" id="gangwei", role="tabpanel" aria-labelledby="gangwei-tab">
               <form>
                 <div class="form-group">
-                  <label for="text_expect_post" class="col-form-label">期望岗位</label>
-                  <textarea class="form-control" id="text_expect_post_id"></textarea>
+                  <label for="text_expect_post" class="col-form-label">选择期望岗位</label>
+                  <select class="form-control" id="text_expect_post_id">
+                    <option></option>
+                    <option>普通员工</option>
+                    <option>项目经理</option>
+                    <option>总监</option>
+                  </select>
+
                 </div>
               </form>
             </div>
@@ -954,7 +969,13 @@
               <form>
                 <div class="form-group">
                   <label for="text_expect_zuoxi" class="col-form-label">期望作息时间</label>
-                  <textarea class="form-control" id="text_expect_zuoxi_id"></textarea>
+                  <select class="form-control" id="text_expect_zuoxi_id">
+                    <option></option>
+                    <option>做五休二</option>
+                    <option>单双休</option>
+                    <option>单休</option>
+                    <option>无休</option>
+                  </select>
                 </div>
               </form>
             </div>
@@ -971,8 +992,22 @@
             <div class="tab-pane fade" id="shebao", role="tabpanel" aria-labelledby="shebao-tab">
               <form>
                 <div class="form-group">
-                  <label for="text_expect_shebao" class="col-form-label">期望社保</label>
-                  <textarea class="form-control" id="text_expect_shebao_id"></textarea>
+                  <label for="text_expect_shebao" class="col-form-label">期望社保购买地</label>
+                  <select class="form-control" id="text_expect_shebao_place_id">
+                    <option></option>
+                    <option>本地最低</option>
+                    <option>本地实缴</option>
+                    <option>外地最低</option>
+                    <option>外地实缴</option>
+                    <option>不购买</option>
+                  </select>
+                  <label for="text_expect_shebao" class="col-form-label">期望社保购买时间</label>
+                  <select class="form-control" id="text_expect_shebao_time_id">
+                    <option></option>
+                    <option>转正购买</option>
+                    <option>入职购买</option>
+                    <option>不购买</option>
+                  </select>
                 </div>
               </form>
             </div>
@@ -986,7 +1021,6 @@
       </div>
     </div>
   </div>
-
 
 
   <!-- STOP -->
