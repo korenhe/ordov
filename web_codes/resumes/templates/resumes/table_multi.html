@@ -379,6 +379,8 @@
           </div>
         </div>
         <div class="modal-footer">
+          <button type="button" id="dail_deeper_communicate" class="btn btn-default">深度沟通</button>
+          <button type="button" id="dail_not_linked" class="btn btn-default">未接通</button>
           <button type="button" id="dail_candidate" class="btn btn-default"> 拨号</button>
           <button type="button" id="agree_interview" class="btn btn-default">同意面试</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -902,6 +904,90 @@
       </div>
     </div>
   </div>
+
+
+
+  <!-- OFFER -->
+  <div class="modal fade" id="stopModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="exampleModalLongTitle">面试终止(请如实填写以下问题)</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="area-tab" href="#area" data-toggle="tab" role="tab" aria-controls="area" aria-selected="true">行业不满意</a></li>
+            <li class="nav-item">
+              <a class="nav-link" id="zuoxi-tab" href="#zuoxi" data-toggle="tab" role="tab" aria-controls="zuoxi" aria-selected="false">作息不满意</a></li>
+            <li class="nav-item">
+              <a class="nav-link" id="salary-tab" href="#salary" data-toggle="tab" role="tab" aria-controls="salary" aria-selected="false">薪资不满意</a></li>
+            <li class="nav-item">
+              <a class="nav-link" id="shebao-tab" href="#shebao" data-toggle="tab" role="tab" aria-controls="shebao" aria-selected="false">社保不满意</a></li>
+            <li class="nav-item">
+              <a class="nav-link" id="gangwei-tab" href="#gangwei" data-toggle="tab" role="tab" aria-controls="gangwei" aria-selected="false">岗位不满意</a></li>
+          </ul>
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="area" role="tabpanel" aria-labelledby="area-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_expect_area" class="col-form-label">期望行业</label>
+                  <textarea class="form-control" id="text_expect_area_id"></textarea>
+                </div>
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="gangwei", role="tabpanel" aria-labelledby="gangwei-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_expect_post" class="col-form-label">期望岗位</label>
+                  <textarea class="form-control" id="text_expect_post_id"></textarea>
+                </div>
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="zuoxi", role="tabpanel" aria-labelledby="zuoxi-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_expect_zuoxi" class="col-form-label">期望作息时间</label>
+                  <textarea class="form-control" id="text_expect_zuoxi_id"></textarea>
+                </div>
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="salary", role="tabpanel" aria-labelledby="salary-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_expect_salary" class="col-form-label">期望薪水(元/月)</label>
+                  <textarea class="form-control" id="text_expect_salary_id"></textarea>
+                </div>
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="shebao", role="tabpanel" aria-labelledby="shebao-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_expect_shebao" class="col-form-label">期望社保</label>
+                  <textarea class="form-control" id="text_expect_shebao_id"></textarea>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" id="offerFormSubmit" class="btn btn-primary">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 
   <!-- STOP -->
   <div class="modal fade" id="stopModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

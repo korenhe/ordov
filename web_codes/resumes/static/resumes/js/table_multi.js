@@ -133,11 +133,13 @@ $(document).ready(function() {
                 </button>
 
 				<div class="btn-group">
-                <select class="stage_zero_select form-control" id="` + row.id + `" ">
+                <select class="stage_zero_select form-control" id="` + row.id + `" style="display:none;">
                     <option>操作</option>
                     <option>AI沟通</option>
                     <option>短信沟通</option>
                 </select>
+				<button type="button" class="stage_zero_ai btn btn-sm " id="` + row.id + `">AI</button>
+				<button type="button" class="stage_zero_sms btn btn-sm " id="` + row.id + `">短信</button>
 				<button type="button" class="stage_zero_pass btn btn-sm " id="` + row.id + `">通过</button>
 				<button type="button" class="stage_zero_fail btn btn-sm " id="` + row.id + `">结束</button>
 				</div>
@@ -166,7 +168,7 @@ $(document).ready(function() {
                 </select>
 
 				<div class="btn-group">
-                <select class="stage_one_select form-control" id="` + row.interview_id + `">
+                <select class="stage_one_select form-control" id="` + row.interview_id + `" style='display:none;'>
                     <option>操作</option>
                 </select>
 				<button type="button" class="stage_one_pass btn btn-sm " id="` + row.interview_id + `">通过</button>
@@ -179,14 +181,14 @@ $(document).ready(function() {
          else if (row.interview_status == 2) {
            return `
 				<div class="btn-group">
-                <select class="stage_two_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `">
-                    <option>操作</option>
+                <select class="stage_two_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `" style="display:none;">
                     <option>拨号面试</option>
                     <option>深度沟通</option>
                     <option>电话未接通</option>
                 </select>
-				<button type="button" class="stage_two_pass btn btn-sm " id="` + row.interview_id + `">通过</button>
-				<button type="button" class="stage_two_fail btn btn-sm " id="` + row.interview_id + `">结束</button>
+				<button type="button" class="stage_two_dail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">拨号面试</button>
+				<button type="button" class="stage_two_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">通过</button>
+				<button type="button" class="stage_two_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">结束</button>
 				</div>
 
 `;
@@ -195,12 +197,13 @@ $(document).ready(function() {
          else if (row.interview_status == 3) {
            return `
 				<div class="btn-group">
-                <select class="stage_three_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `">
+                <select class="stage_three_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `" style="display:none;">
                     <option>操作</option>
                     <option>面试未到场</option>
                 </select>
-				<button type="button" class="stage_three_pass btn btn-sm " id="` + row.interview_id + `">通过</button>
-				<button type="button" class="stage_three_fail btn btn-sm " id="` + row.interview_id + `">结束</button>
+				<button type="button" class="stage_three_miss btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">未到场</button>
+				<button type="button" class="stage_three_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">通过</button>
+				<button type="button" class="stage_three_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">未通过</button>
 				</div>
 `;
          }
@@ -208,12 +211,13 @@ $(document).ready(function() {
          else if (row.interview_status == 4) {
            return `
 				<div class="btn-group">
-                <select class="stage_four_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `">
+                <select class="stage_four_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `" style="display:none;">
                     <option>操作</option>
                     <option>更新offer</option>
                 </select>
-				<button type="button" class="stage_four_pass btn btn-sm " id="` + row.interview_id + `">接受</button>
-				<button type="button" class="stage_four_fail btn btn-sm " id="` + row.interview_id + `">放弃</button>
+				<button type="button" class="stage_four_update btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">更新</button>
+				<button type="button" class="stage_four_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">接受</button>
+				<button type="button" class="stage_four_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">放弃</button>
 				</div>
 `;
          }
@@ -221,12 +225,13 @@ $(document).ready(function() {
          else if (row.interview_status == 5) {
            return `
 				<div class="btn-group">
-                <select class="stage_five_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `">
+                <select class="stage_five_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `" style="display:none;">
                     <option>操作</option>
                     <option>更期入职</option>
                 </select>
-				<button type="button" class="stage_five_pass btn btn-sm " id="` + row.interview_id + `">已入职</button>
-				<button type="button" class="stage_five_fail btn btn-sm " id="` + row.interview_id + `">放弃</button>
+				<button type="button" class="stage_five_update btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">更期入职</button>
+				<button type="button" class="stage_five_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">已入职</button>
+				<button type="button" class="stage_five_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">放弃</button>
 				</div>
 `;
          }
@@ -234,12 +239,13 @@ $(document).ready(function() {
          else if (row.interview_status == 6) {
            return `
 				<div class="btn-group">
-                <select class="stage_six_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `">
+                <select class="stage_six_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `" style="display:none;">
                     <option>操作</option>
                     <option>放弃考察</option>
                 </select>
-				<button type="button" class="stage_six_pass btn btn-sm " id="` + row.interview_id + `">通过</button>
-				<button type="button" class="stage_six_fail btn btn-sm " id="` + row.interview_id + `">未通过</button>
+				<button type="button" class="stage_six_giveup btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">放弃考察</button>
+				<button type="button" class="stage_six_pass btn btn-sm " id="` + row.interview_id + `" + data-resume_id="` + row.id + `">通过</button>
+				<button type="button" class="stage_six_fail btn btn-sm " id="` + row.interview_id + `" + data-resume_id="` + row.id + `">未通过</button>
 				</div>
 
 `;
@@ -252,10 +258,9 @@ $(document).ready(function() {
                     <option>操作</option>
                     <option>打款登记</option>
                     <option>发票申请</option>
-                    <option>坏账</option>
                 </select>
 				<button type="button" class="stage_seven_pass btn btn-sm " id="` + row.interview_id + `">完成</button>
-				<button type="button" class="stage_seven_fail btn btn-sm " id="` + row.interview_id + `">退出</button>
+				<button type="button" class="stage_seven_fail btn btn-sm " id="` + row.interview_id + `">坏账</button>
 				</div>
 `;
          }
@@ -622,6 +627,14 @@ $(document).ready(function() {
     alert(resume_selected_value)
   });
 
+  $(document).on('click', '.stage_zero_ai', function() {
+	resume_selected_value = Number(this.id);
+    show_ai_config_modal(resume_selected_value)
+  });
+
+  $(document).on('click', '.stage_zero_sms', function() {
+  });
+
   $(document).on('click', '.stage_zero_pass', function() {
     resume_selected_value = Number(this.id);
     var statusI = -1
@@ -644,6 +657,11 @@ $(document).ready(function() {
     $('#stopModal').modal('toggle')
   });
 
+  $(document).on('click', '.stage_two_dail', function() {
+    interview_selected_value = Number(this.id);
+    resume_id = this.dataset.resume_id;
+    show_callCandidate_modal(post_selected_value, resume_id)
+  });
   $(document).on('click', '.stage_two_pass', function() {
     interview_selected_value = Number(this.id);
     $('#inviteModal2').modal('toggle')
@@ -653,16 +671,23 @@ $(document).ready(function() {
     $('#stopModal').modal('toggle')
   });
 
+  $(document).on('click', '.stage_three_miss', function() {
+    interview_selected_value = Number(this.id);
+    $('#stopModal').modal('toggle');
+  });
   $(document).on('click', '.stage_three_pass', function() {
     interview_selected_value = Number(this.id);
-    $('#interviewModal2').modal('toggle')
+    $('#interviewResultModal').modal('toggle')
   });
   $(document).on('click', '.stage_three_fail', function() {
     interview_selected_value = Number(this.id);
     $('#stopModal').modal('toggle')
   });
 
-
+  $(document).on('click', '.stage_four_update', function() {
+    interview_selected_value = Number(this.id);
+    $('#offerModal').modal('toggle')
+  });
   $(document).on('click', '.stage_four_pass', function() {
     interview_selected_value = Number(this.id);
     $('#offerModal').modal('toggle')
@@ -672,7 +697,10 @@ $(document).ready(function() {
     $('#stopModal').modal('toggle')
   });
 
-
+  $(document).on('click', '.stage_five_update', function() {
+    interview_selected_value = Number(this.id);
+    $('#entryUpdateModal').modal('toggle');
+  });
   $(document).on('click', '.stage_five_pass', function() {
     interview_selected_value = Number(this.id);
     $('#entryedModal').modal('toggle')
@@ -682,6 +710,10 @@ $(document).ready(function() {
     $('#stopModal').modal('toggle')
   });
 
+  $(document).on('click', '.stage_six_giveup', function() {
+    interview_selected_value = Number(this.id);
+    $('#stopModal').modal('toggle');
+  });
   $(document).on('click', '.stage_six_pass', function() {
     interview_selected_value = Number(this.id);
     $('#probationSuccModal').modal('toggle')
@@ -698,7 +730,8 @@ $(document).ready(function() {
   });
   $(document).on('click', '.stage_seven_fail', function() {
     interview_selected_value = Number(this.id);
-    $('#stopModal').modal('toggle')
+    $('#pbBadModal').modal('toggle');
+    //$('#stopModal').modal('toggle')
   });
 
   // use 'click' here, otherwise, if user select 'next' and then closed, he should change to other stats then back to 'next' to trigger the event.
