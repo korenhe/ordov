@@ -108,14 +108,14 @@ def query_resumes_by_args(**kwargs):
 
     degree_min = kwargs.get('degree_id', [0])[0] or 0
 
-    status_min = int(kwargs.get('status_id', [0])[0])
+    status_id = int(kwargs.get('status_id', [0])[0])
 
     gender_f = kwargs.get('gender_id', [''])[0]
 
     post_id = int(kwargs.get('post_id', [0])[0])
 
-    if status_min:
-        queryset = Resume.objects.filter(interview__status__gte=status_min, interview__post__id=post_id)
+    if status_id:
+        queryset = Resume.objects.filter(interview__status=status_id, interview__post__id=post_id)
         print("================================================================================")
         print(queryset)
     else:
