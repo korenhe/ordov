@@ -61,7 +61,19 @@ $(document).ready(function() {
       {"data": "id",
        "width": "1%"}, // resume id
       {"data": "username",
-       "width": "1%"},
+       "width": "1%",
+       render: function(data, type, row, meta) {
+         //var url = t_resume_detail_url;
+         if (post_selected)
+           return `
+<a class="nav-link" href="/manager/resumes/` + row.id + `">` + data + `</a>
+`;
+         else
+           return `
+<a class="nav-link disabled" href="/manager/resumes/` + row.id + `">` + data + `</a>
+`;
+       }
+      },
       {"data": "gender",
        "width": "1%",
        render: function(data, type, row, meta) {
@@ -303,7 +315,8 @@ $(document).ready(function() {
   // resume table
   $('#dataTable_resume tbody').on('click', 'tr', function(e) {
     if (post_selected == false) {
-      alert("Please select Post first.");
+      //alert("Please select Post first.");
+      alert("请先选择职位.");
       e.stopPropagation();
     } else {
     }
