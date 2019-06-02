@@ -98,19 +98,9 @@ $(document).ready(function() {
       {"data": "major",
        "width": "5%"},
 
-      {"data": "is_match",
+      {"data": "workexp",
        "orderable": false,
-       "width": "20%",
-       render: function(data, type, row, meta) {
-         if (row.is_match == 1) {
-           return "Match"
-         } else if (row.is_match == 0){
-           return "Not Match"
-         } else {
-           // For default
-           return "Match"
-         }
-       }},
+       "width": "20%"},
       {"data": "interview_status_name",
        "orderable": false,
        "width": "5%"

@@ -10,7 +10,7 @@ class ResumeSerializer(serializers.ModelSerializer):
     interview_id = serializers.SerializerMethodField()
     interview_status = serializers.SerializerMethodField()
     interview_status_name = serializers.SerializerMethodField()
-    is_match = serializers.SerializerMethodField()
+    workexp = serializers.SerializerMethodField()
 
     def get_candidate_id(self, resume):
         if resume.candidate:
@@ -22,24 +22,19 @@ class ResumeSerializer(serializers.ModelSerializer):
         return resume.id
 
     # by post id, can be is_in_interview for post1 but not for post2
-    def get_is_match(self, resume):
-        post_id = self.context.get('post_id')
+    def get_workexp(self, resume):
+        resume = Resume.objects.get(pk=resume.id)
+        exps = resume.experience_set.all()
 
-        #obj = Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)
-        objs = Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)
-        if (objs):
-            assert len(objs) == 1
-            if objs[0].is_match:
-                return 1
-            else:
-                return 0
+        if exps:
+            expression = '</br>'.join([str(exp) for exp in exps])
+            return expression
         else:
-            return -1
+            return "--"
 
     def get_interview_id(self, resume):
         post_id = self.context.get('post_id')
 
-        #obj = Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)
         objs = Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)
         if (objs):
             return objs[0].id
@@ -49,7 +44,6 @@ class ResumeSerializer(serializers.ModelSerializer):
     def get_interview_status(self, resume):
         post_id = self.context.get('post_id')
 
-        #obj = Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)
         objs = Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)
         if (objs):
             assert len(objs) == 1
@@ -61,7 +55,6 @@ class ResumeSerializer(serializers.ModelSerializer):
     def get_interview_status_name(self, resume):
         post_id = self.context.get('post_id')
 
-        #obj = Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)
         objs = Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)
         if (objs):
             assert len(objs) == 1
@@ -80,7 +73,7 @@ class ResumeSerializer(serializers.ModelSerializer):
             'id',
             'interview_status',
             'interview_status_name',
-            'is_match',
+            'workexp',
 
             # CascadeField
             'candidate',
