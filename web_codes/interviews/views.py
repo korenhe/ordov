@@ -10,10 +10,14 @@ from rest_framework import viewsets
 from rest_framework import status as rest_status
 
 from .models import Interview, query_interviews_by_args, STATUS_CHOICES
-from .models import InterviewSub_Interview, InterviewSub_Interview_Pass
 
 from .serializers import InterviewSerializer
+
+from .models import InterviewSub_Interview, InterviewSub_Interview_Pass
 from .serializers import InterviewSub_InterviewSerializer, InterviewSub_Interview_PassSerializer
+
+from .models import InterviewSub_Offer, InterviewSub_Offer_Agree
+from .serializers import InterviewSub_OfferSerializer, InterviewSub_Offer_AgreeSerializer
 
 from companies.models import Post
 from resumes.models import Resume
@@ -126,3 +130,11 @@ class InterviewSub_InterviewViewSet(viewsets.ModelViewSet):
 class InterviewSub_Interview_PassViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Interview_Pass.objects.all()
     serializer_class = InterviewSub_Interview_PassSerializer
+
+class InterviewSub_OfferViewSet(viewsets.ModelViewSet):
+    queryset = InterviewSub_Offer.objects.all()
+    serializer_class = InterviewSub_OfferSerializer
+
+class InterviewSub_Offer_AgreeViewSet(viewsets.ModelViewSet):
+    queryset = InterviewSub_Offer_Agree.objects.all()
+    serializer_class = InterviewSub_Offer_AgreeSerializer

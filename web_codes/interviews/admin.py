@@ -3,11 +3,18 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 from .models import Interview
+from .models import InterviewLogCommon
 from .models import InterviewSub_Interview, InterviewSub_Interview_Pass
+from .models import InterviewSub_Offer, InterviewSub_Offer_Agree
 from .models import OnDuty
 
 # Register your models here.
 admin.site.register(Interview)
+admin.site.register(InterviewLogCommon)
+
 admin.site.register(InterviewSub_Interview)
 admin.site.register(InterviewSub_Interview_Pass)
+admin.site.register(InterviewSub_Offer)
+admin.site.register(InterviewSub_Offer_Agree)
+
 admin.site.register(OnDuty)

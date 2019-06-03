@@ -468,6 +468,49 @@ $(document).ready(function() {
     xhr.send(JSON.stringify(data));
   }
 
+  function submit_offersub_by_id(interview_id, url, status_value, table) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    var csrftoken = getCookie('csrftoken');
+
+    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+
+    /*
+    "offersub": null,
+    "date": null,
+    "contact": "",
+    "contact_phone": "",
+    "address": "",
+    "postname": "",
+    "certification": "",
+    "salary": "",
+    "notes": ""
+     */
+    data = {
+      "offersub": {
+        "interview": interview_id,
+        "result_type": 3
+      },
+      "date": null,
+      "contact": "abc",
+      "contact_phone": "123",
+      "address": "xx",
+      "postname": "yy",
+      "certification": "zz",
+      "salary": "4444",
+      "notes": ""
+    };
+
+    console.log(data);
+    xhr.onloadend = function() {
+      //done
+      page_refresh(table);
+    };
+
+    xhr.send(JSON.stringify(data));
+  }
+
   function submit_interview_by_compound(resume_id, post_id, url, status_value, table) {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url);
@@ -1002,10 +1045,10 @@ $(document).ready(function() {
       $('#offerModal').modal('hide');
       var status = 5;
 
-      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+      //submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+      submit_offersub_by_id(interview_id, "/interviews/api/offersub_agree/", status, table);
     });
   });
-
 
   $(function(){
     $('#entryedSubmit').click(function(e){
