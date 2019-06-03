@@ -4,64 +4,201 @@
 
 <form name='filter_form' id="post_filter_form">
     {% csrf_token %}
-    <div class="row col-md-24 register-form">
-      <div class="col-md-3 form-group">
-        <label> 公司名称 </label>
-        <input type="text" name="company_name" id="company_name_id" placeholder="公司名" value="">
-      </div>
-      <div class="col-md-3 form-group">
-        <label> 部门名称 </label>
-        <input type="text" name="department_name" id="department_id" placeholder="部门名称" value="">
-      </div>
-      <div class="col-md-3 form-group">
-        <label> 岗位名称 </label>
-        <input type="text" name="post_name" id="post_id" placeholder="岗位名称" value="">
-      </div>
-    </div>
 
-    <div class="row col-md-24 register-form">
-      <h6> 过滤条件 </h6>
-    </div>
 
-    <div class="row col-md-24 register-form">
-      <div class="col-md-3 form-group">
-        <label> 最小年龄 </label>
-        <input type="text" name="min_age_id" placeholder="年龄" value="">
+	<div clasv class="card">
+        <div class="card-header" id="headingTwo">
+             <strong>填写项目信息</strong>
+        </div>
+        <div class="card-body" style="padding: 0.5rem;">
+          <div class="row">
+            <?-- Inner Filter -->
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">项目名称</span>
+              </div>
+			  <input type="text" class="form-control" name="project_name" id="project_id" value="">
+            </div>
+		  </div>
+        </div>
       </div>
-      <div class="col-md-3 form-group">
-        <label> 月薪 </label>
-        <input type="text" name="min_salary" placeholder="元/月" value="">
-      </div>
-      <div class="col-md-3 form-group">
-        <label> 最低学历 </label>
-		<select class="form-control" name="min_degree" id="min_degree_id">
-			<option>不限</option>
-			<option>初中</option>
-			<option>高中</option>
-			<option>本科</option>
-			<option>硕士</option>
-			<option>博士</option>
-		</select>
-      </div>
-	</div>
 
-    <div class="row col-md-24 register-form">
-      <h6> 工作地点 </h6>
-    </div>
 
-    <div class="row col-md-24 register-form">
-      <div class="col-md-3 form-group">
-        <input type="text" name="working_place_province" placeholder="省" value="">
-      </div>
-      <div class="col-md-3 form-group">
-        <input type="text" name="working_place_city" placeholder="市" value="">
-      </div>
-      <div class="col-md-3 form-group">
-        <input type="text" name="working_place_district" placeholder="区/县" value="">
-      </div>
-   </div>
 
-    <div class="row col-md-24">
+	<?--Project Info-->
+	<div clasv class="card">
+        <div class="card-header" id="headingTwo">
+             <strong>填写公司信息</strong>
+        </div>
+        <div class="card-body" style="padding: 0.5rem;">
+		  <div class="row">
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">公司名称</span>
+              </div>
+			  <input type="text" class="form-control" name="company_name" id="company_id" value="">
+            </div>
+
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">部门名称</span>
+              </div>
+			  <input type="text" class="form-control" name="department_name" id="department_id" value="">
+            </div>
+
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">岗位名称</span>
+              </div>
+			  <input type="text" class="form-control" name="post_name" id="post_id" value="">
+            </div>
+            <?-- Innter Filter-->
+          </div>
+        </div>
+      </div>
+      <?-- Filter -->
+
+	<?--Project Info-->
+	<div clasv class="card">
+        <div class="card-header" id="headingTwo">
+              <strong>岗位要求设置</strong>
+        </div>
+
+        <div class="card-body" style="padding: 0.5rem;">
+          <div class="row">
+            <?-- Inner Filter -->
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">最低学历</span>
+              </div>
+              <select class="form-control" id="degree_id_min" name="degree_id_min" aria-labelledby="basic-addon1">
+                <option>不限</option>
+                <option>初中</option>
+                <option>高中</option>
+                <option>本科</option>
+                <option>硕士</option>
+                <option>博士</option>
+              </select>
+            </div>
+
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2">最小年龄</span>
+              </div>
+              <input type="text" class="form-control" name="age_id_min" id="age_id_min" placeholder="最低年龄" value=""></input>
+            </div>
+
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2">毕业区间Start</span>
+              </div>
+              <input type="text" class="form-control" name="graduate_time_start" id="gradudate_time_start_id" placeholder="" value=""></input>
+            </div>
+
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2">性别</span>
+              </div>
+              <select class="form-control" id="gender_id">
+                <option>不限</option>
+                <option>男</option>
+                <option>女</option>
+              </select>
+            </div>
+
+            <?-- Innter Filter-->
+          </div>
+          <div class="row mt-1">
+          </div>
+          <div class="row mt-1">
+            <?-- Inner Filter -->
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2">最高学历</span>
+              </div>
+              <select class="form-control" id="degree_id_max" name="degree_id_max" aria-labelledby="basic-addon2">
+                <option>不限</option>
+                <option>初中</option>
+                <option>高中</option>
+                <option>本科</option>
+                <option>硕士</option>
+                <option>博士</option>
+              </select>
+            </div>
+
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon4">最大年龄</span>
+              </div>
+              <input type="text" class="form-control" name="age_id_max" id="age_id_max" placeholder="最高年龄" value=""></input>
+            </div>
+
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2">毕业区间. End</span>
+              </div>
+              <input type="text" class="form-control" name="graduate_time_end" id="gradudate_time_end_id" placeholder="" value=""></input>
+            </div>
+
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2">起薪</span>
+              </div>
+              <input type="text" class="form-control" name="min_salary_id" id="min_salary_id" placeholder="元/月" value=""></input>
+            </div>
+
+		   </div>
+
+		   <div class="row mt-2">
+
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">工作地点.省</span>
+              </div>
+              <input type="text" class="form-control" name="working_place_province" id="province_id" placeholder="省" value=""></input>
+            </div>
+
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">工作地点.市</span>
+              </div>
+              <input type="text" class="form-control" name="working_place_city" id="city_id" placeholder="市" value=""></input>
+            </div>
+
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">工作地点.区</span>
+              </div>
+              <input type="text" class="form-control" name="working_place_district" id="district_id" placeholder="区" value=""></input>
+            </div>
+
+	         <div class="col-md-3 form-group" style="display:none;">
+              <label> 工作地点 </label>
+              <select class="form-control" id="province_id">
+                <option>不限</option>
+                <option>北京</option>
+                <option>上海</option>
+                <option>杭州</option>
+              </select>
+            </div>
+
+            <div class="row col-md-24 register-form" style="display:none;">
+              <div class="col-md-2 form-group">
+                <label> 工作年限 </label>
+                <input type="text" name="work_time_id" id="work_time_id" placeholder="年限" value="">
+              </div>
+              <div class="col-md-2 form-group">
+                <label> 起薪 </label>
+                <input type="text" name="salary_id" id="salary_id" placeholder="填入起薪" value="">
+              </div>
+            </div>
+            <?-- Innter Filter-->
+          </div>
+        </div>
+      </div>
+      <?-- Filter -->
+
+    <div class="row col-md-24 mt-1">
       <div class="col-md-3 form-group">
         <button type='submit' class="btn btn-primary" id='post_button_id'>确认发布</button>
       </div>

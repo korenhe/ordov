@@ -110,17 +110,21 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def UpdatePost(request):
     if request.method == 'POST':
+        project_name = request.POST['project_name']
         company_name = request.POST['company_name']
         department_name = request.POST['department_name']
         post_name = request.POST['post_name']
-        min_degree = request.POST['min_degree']
+
+        min_degree = request.POST['degree_id_min']
+        max_degree = request.POST['degree_id_max']
+
         province = request.POST['working_place_province']
         city = request.POST['working_place_city']
         district = request.POST['working_place_district']
         ageMin = 0
-        if not request.POST['min_age_id'] == "":
-            ageMin = int(request.POST['min_age_id'])
-        salary_offer = request.POST['min_salary']
+        if not request.POST['age_id_min'] == "":
+            ageMin = int(request.POST['age_id_min'])
+        salary_offer = request.POST['min_salary_id']
 
         post_info = {
             "department": {
