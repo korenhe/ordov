@@ -42,7 +42,6 @@ def upload(request):
 
         # Main logic: Parse the excel
         PROJECT_DIR = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
-        print("PORJECT_DIR", PROJECT_DIR)
 
         uploaded_file_url = fs.url(filename)
         load_excel.load_excel(PROJECT_DIR+uploaded_file_url)
@@ -102,11 +101,12 @@ def invitation_result(request, resume_id):
 
 from django.http import JsonResponse
 def resume_statistic(request, post_id):
-    resumes_total = Resume.objects.count()
+    resumes_total = Resume.objects.exclude(interview__status=0, interview__post__id=post_id).count()
     interviews_status_filters = []
 
     for i in range(1, 9):
         interviews_status_filters.append(Resume.objects.filter(interview__status=i, interview__post__id=post_id).count())
+
     interviews_status_filters.append(Resume.objects.filter(interview__status__lte=0, interview__post__id=post_id).count())
 
     data = {

@@ -18,7 +18,6 @@ class ExperienceView(APIView):
         return Response ({"experiences": serializer.data})
 
     def post(self, request):
-        print(request.POST)
         experience = request.data.get('experience')
 
         serializer = ExperienceSerializer(data=experience)
@@ -41,7 +40,6 @@ class ProjectView(APIView):
         return Response ({"project": serializer.data})
 
     def post(self, request):
-        print(request.POST)
         project = request.data.get('project')
 
         serializer = ProjectSerializer(data=project)
@@ -60,7 +58,6 @@ class LanguageView(APIView):
         return Response ({"language": serializer.data})
 
     def post(self, request):
-        print(request.POST)
         language = request.data.get('language')
 
         serializer = LanguageSerializer(data=language)
@@ -80,7 +77,6 @@ class CertificationView(APIView):
         return Response ({"certification": serializer.data})
 
     def post(self, request):
-        print(request.POST)
         certification = request.data.get('certification')
 
         serializer = CertificationSerializer(data=certification)

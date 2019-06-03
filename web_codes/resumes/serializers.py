@@ -103,7 +103,6 @@ class ResumeSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
 #        try:
-#            print(validated_data)
 #            candidate_data = validated_data.pop('candidate')
 #            candidate = CandidateSerializer.create(CandidateSerializer(), validated_data=candidate_data)
 
@@ -123,7 +122,6 @@ class ResumeSerializer(serializers.ModelSerializer):
                 return None
             resumeTarget = Resume.objects.get(phone_number=phone)
         except:
-            print("resume item exit")
             pass
         if resumeTarget is None:
             candidate_data = validated_data.pop('candidate')

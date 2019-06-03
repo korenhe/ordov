@@ -34,7 +34,7 @@ class InterviewViewSet(viewsets.ModelViewSet):
         # -1 and -2 has special usage in our system
         # -1 means increating automically
         # -2 means stop
-        print(is_active, " - ", status,  " - ", postid, " - ", resumeid)
+
         interviewTarget = None
         if status == -1 or status == -2:
             try:
@@ -46,14 +46,10 @@ class InterviewViewSet(viewsets.ModelViewSet):
         elif interviewTarget == None and status == -1:
             status = 2
         elif status == -1: # increase automically
-            print(interviewTarget)
-            print(type(interviewTarget))
             curStat = interviewTarget.status
             status = curStat + 1
         elif status == -2: # stop
             status = interviewTarget.status
-
-        print(is_active, " - ", status,  " - ", postid, " - ", resumeid)
 
         iMap = request.data
         iMap['status'] = status
@@ -66,8 +62,6 @@ class InterviewViewSet(viewsets.ModelViewSet):
         return Response({}, status=rest_status.HTTP_200_OK, template_name=None, content_type=None)
 
     def list(self, request, **kwargs):
-
-        print(" InterviewViewSet ......----->")
         interview = query_interviews_by_args(**request.query_params)
 
         serializer = InterviewSerializer(interview['items'], many=True)
