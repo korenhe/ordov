@@ -79,7 +79,7 @@
         </div>
 
         <div class="card-body" style="padding: 0.5rem;">
-          <div class="row">
+          <div class="row" style="display:none;">
             <?-- Inner Filter -->
             <div class="col-md-4 input-group">
               <div class="input-group-prepend">
@@ -135,6 +135,109 @@
             </div>
             <?-- Innter Filter-->
           </div>
+
+          <div class="row">
+
+		   <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">最低学历</span>
+              </div>
+              <select class="form-control" id="degree_id_min" name="degree_id_min" aria-labelledby="basic-addon1">
+                <option>不限</option>
+                <option>初中</option>
+                <option>高中</option>
+                <option>本科</option>
+                <option>硕士</option>
+                <option>博士</option>
+              </select>
+            </div>
+
+			<div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2">最小年龄</span>
+              </div>
+              <input type="text" class="form-control" name="age_id_min" id="age_id_min" placeholder="最低年龄" value=""></input>
+            </div>
+
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2">毕业区间Start</span>
+              </div>
+              <input type="text" class="form-control" name="graduate_time_start" id="gradudate_time_start_id" placeholder="" value=""></input>
+            </div>
+
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">工作地点.省</span>
+              </div>
+              <input type="text" class="form-control" name="working_place_province" id="province_id" placeholder="省" value=""></input>
+            </div>
+
+          </div>
+
+          <div class="row">
+
+           <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2">最高学历</span>
+              </div>
+              <select class="form-control" id="degree_id_max" name="degree_id_max" aria-labelledby="basic-addon2">
+                <option>不限</option>
+                <option>初中</option>
+                <option>高中</option>
+                <option>本科</option>
+                <option>硕士</option>
+                <option>博士</option>
+              </select>
+            </div>
+
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon4">最大年龄</span>
+              </div>
+              <input type="text" class="form-control" name="age_id_max" id="age_id_max" placeholder="最高年龄" value=""></input>
+            </div>
+
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2">毕业区间. End</span>
+              </div>
+              <input type="text" class="form-control" name="graduate_time_end" id="gradudate_time_end_id" placeholder="" value=""></input>
+            </div>
+
+			<div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">工作地点.市</span>
+              </div>
+              <input type="text" class="form-control" name="working_place_city" id="city_id" placeholder="市" value=""></input>
+            </div>
+
+          </div>
+		  <div class="row">
+
+			<div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2">性别</span>
+              </div>
+              <select class="form-control" id="gender_id">
+                <option>不限</option>
+                <option>男</option>
+                <option>女</option>
+              </select>
+			</div>
+			<div class="col-md-3 input-group">
+			</div>
+			<div class="col-md-3 input-group">
+			</div>
+			<div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">工作地点.区</span>
+              </div>
+              <input type="text" class="form-control" name="working_place_district" id="district_id" placeholder="区" value=""></input>
+            </div>
+		  </div>
+		  <div class="row">
+		  </div>
         </div>
       </div>
       <?-- Filter -->
