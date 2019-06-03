@@ -97,20 +97,14 @@
 
             <div class="col-md-3 input-group">
               <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon2">性别</span>
+                <span class="input-group-text" id="basic-addon3">工作地点.省</span>
               </div>
-              <select class="form-control" id="gender_id">
-                <option>不限</option>
-                <option>男</option>
-                <option>女</option>
-              </select>
+              <input type="text" class="form-control" name="working_place_province" id="province_id" placeholder="省" value=""></input>
             </div>
 
             <?-- Innter Filter-->
           </div>
-          <div class="row mt-1">
-          </div>
-          <div class="row mt-1">
+          <div class="row">
             <?-- Inner Filter -->
             <div class="col-md-3 input-group">
               <div class="input-group-prepend">
@@ -142,27 +136,34 @@
 
             <div class="col-md-3 input-group">
               <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">工作地点.市</span>
+              </div>
+              <input type="text" class="form-control" name="working_place_city" id="city_id" placeholder="市" value=""></input>
+            </div>
+
+		   </div>
+
+		   <div class="row">
+
+            <div class="col-md-3 input-group" style="margin-top:4px">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2">性别</span>
+              </div>
+              <select class="form-control" id="gender_id">
+                <option>不限</option>
+                <option>男</option>
+                <option>女</option>
+              </select>
+            </div>
+
+            <div class="col-md-3 input-group" style="margin-top:4px">
+              <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon2">起薪</span>
               </div>
               <input type="text" class="form-control" name="min_salary_id" id="min_salary_id" placeholder="元/月" value=""></input>
             </div>
 
-		   </div>
-
-		   <div class="row mt-2">
-
             <div class="col-md-3 input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon3">工作地点.省</span>
-              </div>
-              <input type="text" class="form-control" name="working_place_province" id="province_id" placeholder="省" value=""></input>
-            </div>
-
-            <div class="col-md-3 input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon3">工作地点.市</span>
-              </div>
-              <input type="text" class="form-control" name="working_place_city" id="city_id" placeholder="市" value=""></input>
             </div>
 
             <div class="col-md-3 input-group">
