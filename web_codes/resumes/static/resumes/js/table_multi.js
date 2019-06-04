@@ -694,7 +694,7 @@ $(document).ready(function() {
   });
   $(document).on('click', '.stage_two_pass', function() {
     interview_selected_value = Number(this.id);
-    $('#inviteModal2').modal('toggle')
+    $('#appointmentModal').modal('toggle')
   });
   $(document).on('click', '.stage_two_fail', function() {
     interview_selected_value = Number(this.id);
@@ -815,7 +815,7 @@ $(document).ready(function() {
       resume_id = this.dataset.resume_id;
       show_resume_modal(resume_id);
     } else if (value == "同意面试") {
-      $('#inviteModal2').modal('toggle');
+      $('#appointmentModal').modal('toggle');
     } else if (value == "放弃面试") {
       $('#stopModal').modal('toggle');
     }
@@ -1021,7 +1021,7 @@ $(document).ready(function() {
   });
 
   $(function() {
-    $('#interviewFormSubmit2').click(function(e){
+    $('#interviewResultFormSubmit').click(function(e){
       e.preventDefault();
 
       var interview_id = interview_selected_value;
@@ -1163,12 +1163,12 @@ $(document).ready(function() {
   //------------------------------------------Current
 
   $(function() {
-    $('#inviteSubmit2').click(function(e){
+    $('#appointmentSubmit').click(function(e){
     e.preventDefault();
 
     var interview_id = interview_selected_value;
 
-    $('#inviteModal2').modal('hide');
+    $('#appointmentModal').modal('hide');
       var status = 3 // interview
       submit_interview_by_id(interview_id, "/api/interviews/", status, table);
     });
@@ -1178,7 +1178,7 @@ $(document).ready(function() {
   $(function() {
     $('#agree_interview').click(function(e){
         $('#dailToCandidateModal').modal('hide');
-        $('#inviteModal2').modal('show');
+        $('#appointmentModal').modal('show');
     });
   });
 
