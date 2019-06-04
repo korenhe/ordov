@@ -349,7 +349,6 @@ $(document).ready(function() {
       "result":"Stopped",
     };
 
-    console.log(data);
     xhr.onloadend = function() {
       //done
       page_refresh(table);
@@ -372,7 +371,6 @@ $(document).ready(function() {
       "result":"Pending",
     };
 
-    console.log(data);
     xhr.onloadend = function() {
       //done
       page_refresh(table);
@@ -395,7 +393,6 @@ $(document).ready(function() {
       "result":"Pending",
     };
 
-    console.log(data);
     xhr.onloadend = function() {
       //done
       page_refresh(table);
@@ -419,7 +416,6 @@ $(document).ready(function() {
             "result":"Stopped",
            };
 
-    console.log(data);
     xhr.onloadend = function() {
       //done
       page_refresh(table);
@@ -428,7 +424,7 @@ $(document).ready(function() {
     xhr.send(JSON.stringify(data));
   }
 
-  function submit_interviewsub_by_id(interview_id, url, status_value, table) {
+  function submit_interviewsub_by_id(url, table, data) {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url);
     xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
@@ -436,73 +432,6 @@ $(document).ready(function() {
 
     xhr.setRequestHeader("X-CSRFToken", csrftoken);
 
-    /*
-      {
-      "interviewsub": {
-      "interview": 53,
-      "result_type": 3
-      },
-      "reason": "shuang",
-      "description": "something.",
-      "comments": "shuang",
-      "notes": "a"
-      }
-     */
-    data = {
-      "interviewsub": {
-        "interview": interview_id,
-        "result_type": 3
-      },
-      "reason": "shuang",
-      "description": "something.",
-      "comments": "shuang",
-      "notes": "a"
-    };
-
-    console.log(data);
-    xhr.onloadend = function() {
-      //done
-      page_refresh(table);
-    };
-
-    xhr.send(JSON.stringify(data));
-  }
-
-  function submit_offersub_by_id(interview_id, url, status_value, table) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", url);
-    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-    var csrftoken = getCookie('csrftoken');
-
-    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-
-    /*
-    "offersub": null,
-    "date": null,
-    "contact": "",
-    "contact_phone": "",
-    "address": "",
-    "postname": "",
-    "certification": "",
-    "salary": "",
-    "notes": ""
-     */
-    data = {
-      "offersub": {
-        "interview": interview_id,
-        "result_type": 3
-      },
-      "date": null,
-      "contact": "abc",
-      "contact_phone": "123",
-      "address": "xx",
-      "postname": "yy",
-      "certification": "zz",
-      "salary": "4444",
-      "notes": ""
-    };
-
-    console.log(data);
     xhr.onloadend = function() {
       //done
       page_refresh(table);
@@ -526,7 +455,6 @@ $(document).ready(function() {
             "result":"Pending",
            };
 
-    console.log(data);
     xhr.onloadend = function() {
       //done
       page_refresh(table);
@@ -1027,12 +955,35 @@ $(document).ready(function() {
       var interview_id = interview_selected_value;
 
       $('#interviewResultModal').modal('hide');
-      var status = 4;
+      //var status = 4;
+
+      /*
+        {
+        "interview_sub": {
+        "interview": 53,
+        "result_type": 3
+        },
+        "reason": "shuang",
+        "description": "something.",
+        "comments": "shuang",
+        "notes": "a"
+        }
+      */
+      data = {
+        "interview_sub": {
+          "interview": interview_id,
+          "result_type": 3
+        },
+        "reason": "shuang",
+        "description": "something.",
+        "comments": "shuang",
+        "notes": "a"
+      };
 
       /* submit sub_interview_process_table, then the interview table is updated
          at the same time in the serverside */
       //submit_interview_by_id(interview_id, "/api/interviews/", status, table);
-      submit_interviewsub_by_id(interview_id, "/interviews/api/interviewsub_pass/", status, table);
+      submit_interviewsub_by_id("/interviews/api/interview_sub_pass/", table, data);
     });
   });
 
@@ -1043,10 +994,36 @@ $(document).ready(function() {
       var interview_id = interview_selected_value;
 
       $('#offerModal').modal('hide');
-      var status = 5;
+      //var status = 5;
+
+      /*
+        "offer_sub": null,
+        "date": null,
+        "contact": "",
+        "contact_phone": "",
+        "address": "",
+        "postname": "",
+        "certification": "",
+        "salary": "",
+        "notes": ""
+      */
+      data = {
+        "offer_sub": {
+          "interview": interview_id,
+          "result_type": 3
+        },
+        "date": null,
+        "contact": "abc",
+        "contact_phone": "123",
+        "address": "xx",
+        "postname": "yy",
+        "certification": "zz",
+        "salary": "4444",
+        "notes": ""
+      };
 
       //submit_interview_by_id(interview_id, "/api/interviews/", status, table);
-      submit_offersub_by_id(interview_id, "/interviews/api/offersub_agree/", status, table);
+      submit_interviewsub_by_id("/interviews/api/offer_sub_agree/", table, data);
     });
   });
 
@@ -1164,13 +1141,45 @@ $(document).ready(function() {
 
   $(function() {
     $('#appointmentSubmit').click(function(e){
-    e.preventDefault();
+      e.preventDefault();
 
-    var interview_id = interview_selected_value;
+      var interview_id = interview_selected_value;
 
-    $('#appointmentModal').modal('hide');
-      var status = 3 // interview
-      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+      $('#appointmentModal').modal('hide');
+      //var status = 3 // interview
+
+      /*
+        {
+        "appointment_sub": {
+        "interview": null,
+        "result_type": null
+        },
+        "date": null,
+        "contact": "",
+        "address": "",
+        "postname": "",
+        "certification": "",
+        "attention": "",
+        "first_impression": "",
+        "notes": ""
+        }
+      */
+      data = {
+        "appointment_sub": {
+          "interview": interview_id,
+          "result_type": 3
+        },
+        "date": null,
+        "contact": "abc",
+        "address": "def",
+        "postname": "hij",
+        "certification": "klm",
+        "attention": "nop",
+        "first_impression": "qrs",
+        "notes": "tuv"
+      };
+
+      submit_interviewsub_by_id("/interviews/api/appointment_sub_agree/", table, data);
     });
   });
 

@@ -13,6 +13,9 @@ from .models import Interview, query_interviews_by_args, STATUS_CHOICES
 
 from .serializers import InterviewSerializer
 
+from .models import InterviewSub_Appointment, InterviewSub_Appointment_Agree
+from .serializers import InterviewSub_AppointmentSerializer, InterviewSub_Appointment_AgreeSerializer
+
 from .models import InterviewSub_Interview, InterviewSub_Interview_Pass
 from .serializers import InterviewSub_InterviewSerializer, InterviewSub_Interview_PassSerializer
 
@@ -123,6 +126,18 @@ def Task(request):
         }
         return JsonResponse(data)
 
+# Interview Appointment SubModal
+# ---------------------------------------- Pretty Split Line ----------------------------------------
+class InterviewSub_AppointmentViewSet(viewsets.ModelViewSet):
+    queryset = InterviewSub_Appointment.objects.all()
+    serializer_class = InterviewSub_AppointmentSerializer
+
+class InterviewSub_Appointment_AgreeViewSet(viewsets.ModelViewSet):
+    queryset = InterviewSub_Appointment_Agree.objects.all()
+    serializer_class = InterviewSub_Appointment_AgreeSerializer
+
+# Interview Result SubModal
+# ---------------------------------------- Pretty Split Line ----------------------------------------
 class InterviewSub_InterviewViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Interview.objects.all()
     serializer_class = InterviewSub_InterviewSerializer
@@ -131,6 +146,8 @@ class InterviewSub_Interview_PassViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Interview_Pass.objects.all()
     serializer_class = InterviewSub_Interview_PassSerializer
 
+# Interview Offer SubModal
+# ---------------------------------------- Pretty Split Line ----------------------------------------
 class InterviewSub_OfferViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Offer.objects.all()
     serializer_class = InterviewSub_OfferSerializer

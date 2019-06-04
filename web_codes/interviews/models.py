@@ -106,6 +106,7 @@ def query_interviews_by_args(**kwargs):
         'draw' : draw,
     }
 
+# ---------------------------------------- Pretty Top Line ----------------------------------------
 class InterviewSub_Invite(models.Model):
     pass
 
@@ -129,25 +130,49 @@ class InterviewSub_Invite_Disagree(models.Model):
     insurance = models.CharField(max_length=50, blank=True, null=True)
     other = models.CharField(max_length=500, blank=True, null=True)
 
-# Interview Result Modal
+# Interview Appointment SubModal
+# ---------------------------------------- Pretty Split Line ----------------------------------------
+class InterviewSub_Appointment(models.Model):
+    interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
+    result_type = models.IntegerField(null=True)
+
+class InterviewSub_Appointment_Agree(models.Model):
+    appointment_sub = models.ForeignKey(InterviewSub_Appointment, on_delete=models.CASCADE)
+
+    date = models.DateTimeField(blank=True, null=True)
+    contact = models.CharField(max_length=50, blank=True, null=True)
+
+    address = models.CharField(max_length=50, null=True, blank=True)
+    postname = models.CharField(max_length=50, null=True, blank=True)
+
+    certification = models.CharField(max_length=50, null=True, blank=True)
+    attention = models.CharField(max_length=50, null=True, blank=True)
+    first_impression = models.CharField(max_length=50, null=True, blank=True)
+
+    notes = models.TextField(max_length=500, blank=True, null=True)
+
+# Interview Result SubModal
+# ---------------------------------------- Pretty Split Line ----------------------------------------
 class InterviewSub_Interview(models.Model):
     interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
     result_type = models.IntegerField(null=True)
 
 class InterviewSub_Interview_Pass(models.Model):
-    interviewsub = models.ForeignKey(InterviewSub_Interview, on_delete=models.CASCADE)
+    interview_sub = models.ForeignKey(InterviewSub_Interview, on_delete=models.CASCADE)
 
     reason = models.CharField(max_length=50, blank=True, null=True)
     description = models.CharField(max_length=50, blank=True, null=True)
     comments = models.CharField(max_length=50, blank=True, null=True)
     notes = models.CharField(max_length=50, blank=True, null=True)
 
+# Interview Offer SubModal
+# ---------------------------------------- Pretty Split Line ----------------------------------------
 class InterviewSub_Offer(models.Model):
     interview = models.ForeignKey(Interview, on_delete=models.CASCADE, default=0)
     result_type = models.IntegerField(null=True)
 
 class InterviewSub_Offer_Agree(models.Model):
-    offersub = models.ForeignKey(InterviewSub_Offer, on_delete=models.CASCADE, default=0)
+    offer_sub = models.ForeignKey(InterviewSub_Offer, on_delete=models.CASCADE, default=0)
 
     date = models.DateTimeField(blank=True, null=True)
 
@@ -162,6 +187,7 @@ class InterviewSub_Offer_Agree(models.Model):
 
     notes = models.TextField(max_length=500, blank=True, null=True)
 
+# ---------------------------------------- Pretty Bottom Line ----------------------------------------
 class OnDuty(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
