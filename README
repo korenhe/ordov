@@ -1,4 +1,5 @@
-python manage.py makemigrations accounts candidates companies experiences interviews resumes
+* setup & run
+python manage.py makemigrations
 
 $ cd docker_launcher
 $ docker-compose build .
@@ -6,7 +7,6 @@ $ docker-compose up db
 wait db show "accept connnection"
 
 $ docker-compose up web
-
 
 Below only need for the first launch:
 
@@ -17,3 +17,9 @@ $ docker exec -ti 'idxxx' /bin/bash
 execute the migrate commands
 $ python manage.py makemigrations xxx
 $ python manage.py migrate
+
+* map database folder to host
+
+$ docker rm <db_container>
+then
+$ docker-compose up db
