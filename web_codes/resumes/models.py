@@ -6,6 +6,8 @@ from .choices import (BIRTH_YEAR_CHOICES, MAJOR_CHOICES, MARRIAGE_CHOICES, EDUCA
 from ordov.choices import (DEGREE_CHOICES, DEGREE_CHOICES_MAP)
 from candidates.models import Candidate
 from model_utils import Choices
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+from companies.models import Post
 
 # Create your models here.
 
@@ -93,7 +95,6 @@ ORDER_COLUMN_CHOICES = Choices(
 )
 
 def query_resumes_by_args(**kwargs):
-    print("---------->", kwargs)
     draw = int(kwargs.get('draw', [0])[0])
     length = int(kwargs.get('length', [10])[0])
     start = int(kwargs.get('start', [0])[0])
@@ -130,6 +131,26 @@ def query_resumes_by_args(**kwargs):
         queryset = Resume.objects.all()
         queryset = queryset.exclude(interview__status=0, interview__post__id=post_id)
 
+    # step1: Filter from post request
+    post_request = None
+    try:
+        post_request = Post.objects.get(id=post_id)
+    except (ObjectDoesNotExist, MultipleObjectsReturned):
+        pass
+    if not post_request is None:
+        post_age_min = post_request.age_min
+        post_age_max = post_request.age_max
+        post_degree_min = post_request.degree_min
+        post_degree_max = post_request.degree_max
+        post_province = post_request.address_provice
+        post_city = post_request.address_city
+        post_district = post_request.address_distinct
+
+        queryset = queryset.filter(models.Q(degree__gte=post_degree_min) &
+                               models.Q(degree__lte=post_degree_max) &
+                               models.Q(age__gte=post_age_min) &
+                               models.Q(age__lte=post_age_max))
+    # step2: Filter from user-defined
     total = queryset.count()
 
     # filter and orderby

@@ -138,6 +138,11 @@ def UpdatePost(request):
         if not request.POST['age_id_max'] == "":
             ageMax = int(request.POST['age_id_max'])
 
+        degreeMin = DEGREE_CHOICES_MAP.get(min_degree, 0)
+        degreeMax = 100
+        if not max_degree.find(u'不限') >= 0:
+            degreeMax= DEGREE_CHOICES_MAP.get(max_degree, 100)
+
         graduate_S = 0
         if not graduate_start == "":
             graduate_S = int(graduate_start)
@@ -189,8 +194,8 @@ def UpdatePost(request):
             "description": post_name,
             "name": post_name,
             "degree": DEGREE_CHOICES_MAP.get(min_degree),
-            "degree_min": DEGREE_CHOICES_MAP.get(min_degree),
-            "degree_max": DEGREE_CHOICES_MAP.get(max_degree),
+            "degree_min": degreeMin,
+            "degree_max": degreeMax,
             "address_provice": province,
             "address_city": city,
             "address_distinct": district,
