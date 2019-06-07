@@ -42,8 +42,8 @@ class Experience(models.Model):
     subornates = models.IntegerField(default=0)
     # the following three fields should be in post field
     # TODO: move these fields to Post
-    pType = models.CharField(max_length=50, blank=True, null=True, default='')
-    pFeature = models.CharField(max_length=50, blank=True, null=True, default='')
+    p_type = models.CharField(max_length=50, blank=True, null=True, default='')
+    p_feature = models.CharField(max_length=50, blank=True, null=True, default='')
 
     witness = models.CharField(max_length=20, blank=True, null=True)
     witness_post = models.CharField(max_length=20, blank=True, null=True)
@@ -52,6 +52,10 @@ class Experience(models.Model):
     # reserved fields
     reserved1 = models.CharField(max_length=50, blank=True, null=True)
     reserved2 = models.CharField(max_length=50, blank=True, null=True)
+
+    # table related info
+    last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
 
     def __str__(self):
         return '{}: {}'.format(self.start, self.company_name)
@@ -72,12 +76,19 @@ class Project(models.Model):
     duty = models.CharField(max_length=50, blank=True, null=True)
     summary = models.TextField(max_length=500, blank=True, null=True, default='')
 
+    # table related info
+    last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+
 class Language(models.Model):
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, default='')
     name = models.CharField(max_length=10, blank=True, null=True, default='')
     cert = models.CharField(max_length=20, blank=True, null=True, default='')
     description = models.TextField(max_length=100, blank=True, null=True, default='')
 
+    # table related info
+    last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
 
 class Certification(models.Model):
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, default='')
@@ -86,3 +97,6 @@ class Certification(models.Model):
     institution = models.CharField(max_length=50, blank=True, null=True, default='')
     description = models.TextField(max_length=100, blank=True, null=True, default='')
 
+    # table related info
+    last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)

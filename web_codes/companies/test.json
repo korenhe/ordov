@@ -6,7 +6,7 @@
     "description": "不只是500强",
     "scale": 180000,
     "area": "ICT",
-    "cType": "科技"
+    "c_type": "科技"
   }
 }
 
@@ -22,7 +22,7 @@
       "description": "不只是500强",
       "scale": 180000,
       "area": "ICT",
-      "cType": "科技"
+      "c_type": "科技"
     },
     "name": "CloudBU",
     "description": "RDS"
@@ -41,7 +41,7 @@
           "description": "不只是500强",
           "scale": 180000,
           "area": "ICT",
-          "cType": "科技"
+          "c_type": "科技"
         },
         "name": "CloudBU",
         "description": "RDS"

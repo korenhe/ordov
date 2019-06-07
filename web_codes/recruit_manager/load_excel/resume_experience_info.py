@@ -62,8 +62,8 @@ def update_experience_info(resume, phone):
         "department_name" : exp_department,
         "post_name" : exp_post_name,
 
-        "pType" : exp_post_type,
-        "pFeature" : exp_post_feature,
+        "p_type" : exp_post_type,
+        "p_feature" : exp_post_feature,
 
         "subornates" : exp_post_subornates,
         "level" : exp_post_rank,

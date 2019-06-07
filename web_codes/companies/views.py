@@ -117,20 +117,41 @@ def UpdatePost(request):
 
         min_degree = request.POST['degree_id_min']
         max_degree = request.POST['degree_id_max']
+        min_age = request.POST['age_id_min']
+        max_age = request.POST['age_id_max']
+        graduate_start = request.POST['graduate_time_start']
+        graduate_end = request.POST['graduate_time_end']
 
         province = request.POST['working_place_province']
         city = request.POST['working_place_city']
         district = request.POST['working_place_district']
+
+        gender = request.POST['gender_id']
+        salary = request.POST['min_salary_id']
+        linkman_name = request.POST['linkman_name']
+        linkman_phone = request.POST['linkman_phone']
+
         ageMin = 0
         if not request.POST['age_id_min'] == "":
             ageMin = int(request.POST['age_id_min'])
+        ageMax = 100
+        if not request.POST['age_id_max'] == "":
+            ageMax = int(request.POST['age_id_max'])
+
+        graduate_S = 0
+        if not graduate_start == "":
+            graduate_S = int(graduate_start)
+        graduate_E = 2080
+        if not graduate_end == "":
+            graduate_E = int(graduate_end)
+
         salary_offer = request.POST['min_salary_id']
 
         post_info = {
             "department": {
                 "description": "",
                 "company": {
-                    "cType":"",
+                    "c_type":"",
                     "name": company_name,
                     "scale": 0,
                     "area": "",
@@ -141,7 +162,10 @@ def UpdatePost(request):
             },
             "description": post_name,
             "name": post_name,
-            "level": ""
+            "address_provice": province,
+            "address_city": city,
+            "address_district": district,
+            "salary_offer": salary_offer
         }
         """
         Do Not Use the serializer here
@@ -150,7 +174,7 @@ def UpdatePost(request):
         departTarget = None
         postTarget = None
         company_info = {
-            "cType":"",
+            "c_type":"",
             "name": company_name,
             "scale": 0,
             "area": "",
@@ -165,11 +189,20 @@ def UpdatePost(request):
             "description": post_name,
             "name": post_name,
             "degree": DEGREE_CHOICES_MAP.get(min_degree),
+            "degree_min": DEGREE_CHOICES_MAP.get(min_degree),
+            "degree_max": DEGREE_CHOICES_MAP.get(max_degree),
             "address_provice": province,
             "address_city": city,
             "address_distinct": district,
-            "ageMin": ageMin,
+            "age_min": ageMin,
+            "age_max": ageMax,
+            "graduatetime_min": graduate_S,
+            "graduatetime_max": graduate_E,
             "salary_offer": salary_offer,
+            "gender": gender,
+            "linkman": linkman_name,
+            "linkman_phone": linkman_phone,
+            "project_name": project_name,
             "level": ""
         }
 

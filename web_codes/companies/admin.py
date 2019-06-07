@@ -5,7 +5,7 @@ from django.contrib import admin
 from .models import Company, Department, Post
 
 class CompanyAdmin(admin.ModelAdmin):
-    list_display=('name','short_name','scale','area', 'cType', 'description')
+    list_display=('name','short_name','scale','area', 'c_type', 'description')
 
 class DepartmentAdmin(admin.ModelAdmin):
     list_display=('name','description')

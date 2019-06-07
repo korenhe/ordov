@@ -19,7 +19,7 @@ class CompanySerializer(serializers.ModelSerializer):
             'scale',
 
             'area',
-            'cType',
+            'c_type',
             )
 
 class DepartmentSerializer(serializers.ModelSerializer):

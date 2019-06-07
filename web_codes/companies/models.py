@@ -12,6 +12,10 @@ class Area(models.Model):
     name = models.CharField(max_length=50, primary_key=True)
     description = models.TextField(blank=True, null=True, default='')
 
+    # table related info
+    last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+
 class Company(models.Model):
     name = models.CharField(max_length=50, primary_key=True)
     short_name = models.CharField(max_length=50, blank=True, null=True)
@@ -38,9 +42,13 @@ class Company(models.Model):
     #introduce_radio = models.
 
     # choice
-    areaPtr = models.ForeignKey(Area, on_delete=models.CASCADE, blank=True, null=True)
+    area_ptr = models.ForeignKey(Area, on_delete=models.CASCADE, blank=True, null=True)
     area = models.CharField(max_length=50, blank=True, null=True)
-    cType = models.CharField(max_length=50, blank=True, null=True)
+    c_type = models.CharField(max_length=50, blank=True, null=True)
+
+    # table related info
+    last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
 
     def __str__(self):
         return self.name
@@ -54,6 +62,10 @@ class Department(models.Model):
     reserved1 = models.CharField(max_length=50, blank=True, null=True, default='')
     reserved2 = models.CharField(max_length=50, blank=True, null=True, default='')
 
+    # table related info
+    last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+
     def __str__(self):
         return self.name
 
@@ -62,10 +74,11 @@ class Post(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
+    project_name = models.CharField(max_length=50, blank=True, null=True)
 
-    pType = models.CharField(max_length=50, blank=True, null=True, default='')
-    pFeature = models.CharField(max_length=50, blank=True, null=True, default='')
-    pXingzhi = models.CharField(max_length=50, blank=True, null=True, default='')
+    p_type = models.CharField(max_length=50, blank=True, null=True, default='')
+    p_feature = models.CharField(max_length=50, blank=True, null=True, default='')
+    p_xingzhi = models.CharField(max_length=50, blank=True, null=True, default='')
     description = models.CharField(max_length=1000, blank=True, null=True, default='')
     # the level field should be in experience table
     level = models.CharField(max_length=20, blank=True, null=True, default='')
@@ -82,8 +95,13 @@ class Post(models.Model):
 
     # Requirement for the post
     degree = models.IntegerField(blank=True, null=True, choices=DEGREE_CHOICES)
-    ageMin = models.IntegerField(blank=True, null=True)
-    ageMax = models.IntegerField(blank=True, null=True)
+    degree_min = models.IntegerField(blank=True, null=True, choices=DEGREE_CHOICES)
+    degree_max = models.IntegerField(blank=True, null=True, choices=DEGREE_CHOICES)
+    graduatetime_min = models.IntegerField(blank=True, null=True)
+    graduatetime_max = models.IntegerField(blank=True, null=True)
+    age_min = models.IntegerField(blank=True, null=True)
+    age_max = models.IntegerField(blank=True, null=True)
+    gender = models.CharField(max_length=10, blank=True, null=True)
     recruit_count = models.IntegerField(blank=True, null=True)
     salary_offer = models.CharField(max_length=20, blank=True, null=True, default='')
     observe_time = models.IntegerField(blank=True, null=True)
@@ -94,6 +112,10 @@ class Post(models.Model):
     # reserved
     reserved1 = models.CharField(max_length=50, blank=True, null=True, default='')
     reserved2 = models.CharField(max_length=50, blank=True, null=True, default='')
+
+    # table related info
+    last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
 
     def __str__(self):
         return "%s,%s,%s" % (self.name, self.department.name, self.company.name)

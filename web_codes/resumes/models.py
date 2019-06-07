@@ -186,5 +186,9 @@ class Education(models.Model):
     instructor = models.CharField(max_length=50, blank=True, null=True)
     instructor_phone = models.CharField(max_length=15, null=True, blank=True)
 
+    # table related info
+    last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+
     def __str__(self):
         return self.degree
