@@ -34,9 +34,16 @@ $(document).ready(function() {
       "url": "/api/resumes/",
       "type": "GET",
       "data": function (d) {
-        d.degree_id = $('#degree_id').val();
-        d.age_id = $('#age_id').val();
+        d.degree_id_min = $('#degree_id_min').val();
+        d.degree_id_max = $('#degree_id_max').val();
+        d.age_id_min = $('#age_id_min').val();
+        d.age_id_max = $('#age_id_max').val();
+        d.graduate_time_min = $('#graduate_time_start').val();
+        d.graduate_time_max = $('#graduate_time_end').val();
         d.gender_id = $('#gender_id').val();
+        d.province = $('#working_place_province').val();
+        d.city = $('#working_place_city').val();
+        d.district = $('#working_place_district').val();
         //var list_elements = document.getElementsByClassName("list-group-item active");
         d.status_id = filter_status_value;
         d.post_id = post_selected_value;
@@ -291,7 +298,12 @@ $(document).ready(function() {
 
   /* ======================================== Process Begin Here */
 
-  $('#age_id').keyup(function() {
+  $('#age_id_min, #age_id_max, #graduate_time_start, #graduate_time_end').keyup(function() {
+    page_refresh(table, true);
+  });
+
+
+  $('#working_place_province, #working_place_city, #working_place_district').keyup(function() {
     page_refresh(table, true);
   });
 
@@ -300,7 +312,7 @@ $(document).ready(function() {
     page_refresh(table, true);
   });
 
-  $('#degree_id, #gender_id').change(function() {
+  $('#degree_id_min, #gender_id, #degree_id_max').change(function() {
     page_refresh(table, true);
   });
 

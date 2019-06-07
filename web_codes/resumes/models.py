@@ -93,6 +93,7 @@ ORDER_COLUMN_CHOICES = Choices(
 )
 
 def query_resumes_by_args(**kwargs):
+    print("---------->", kwargs)
     draw = int(kwargs.get('draw', [0])[0])
     length = int(kwargs.get('length', [10])[0])
     start = int(kwargs.get('start', [0])[0])
@@ -104,9 +105,14 @@ def query_resumes_by_args(**kwargs):
     if order == 'desc':
         order_column = '-' + order_column
 
-    age_min = kwargs.get('age_id', [0])[0] or 0
+    age_min = kwargs.get('age_id_min', [''])[0] or 0
+    age_max = kwargs.get('age_id_max', [''])[0] or 1000
 
-    degree_min = kwargs.get('degree_id', [0])[0] or 0
+    degree_min = kwargs.get('degree_id_min', [''])[0]
+    degree_max = kwargs.get('degree_id_max', [''])[0]
+
+    graduate_time_min = kwargs.get('graduate_time_min', [0])[0] or 0
+    graduate_time_max = kwargs.get('graduate_time_max', [0])[0] or 0
 
     status_id = int(kwargs.get('status_id', [0])[0])
 
@@ -133,10 +139,23 @@ def query_resumes_by_args(**kwargs):
         elif gender_f.find(u'女') >= 0:
             queryset = queryset.filter(models.Q(gender__contains='f'))
 
-    degree_id = DEGREE_CHOICES_MAP.get(degree_min, 0)
+    degree_id_min = DEGREE_CHOICES_MAP.get(degree_min, 0)
+    degree_id_max = 100
 
-    queryset = queryset.filter(models.Q(degree__gte=degree_id) &
-                               models.Q(age__gte=age_min))
+    age_id_min = 0
+    if not age_min == '':
+        age_id_min = int(age_min)
+    age_id_max = 0
+    if not age_max == '':
+        age_id_max = int(age_max)
+
+    if not degree_max.find(u'不限') >= 0:
+        degree_id_max = DEGREE_CHOICES_MAP.get(degree_max, 100)
+
+    queryset = queryset.filter(models.Q(degree__gte=degree_id_min) &
+                               models.Q(degree__lte=degree_id_max) &
+                               models.Q(age__gte=age_id_min) &
+                               models.Q(age__lte=age_id_max))
 
 
     # search_value box
