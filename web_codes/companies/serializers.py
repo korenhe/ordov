@@ -59,6 +59,7 @@ class PostSerializer(serializers.ModelSerializer):
             'department',
 
             'name',
+            'project_name',
             'description',
         )
 

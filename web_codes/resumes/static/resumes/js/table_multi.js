@@ -291,7 +291,7 @@ $(document).ready(function() {
     },
 
     "columns": [
-      {"data": "department.company.name",
+      {"data": "project_name",
       },
     ],
   });
@@ -878,7 +878,7 @@ $(document).ready(function() {
       $(this).toggleClass('selected');
       post_selected = false;
 
-      document.getElementById("text_company_name").innerHTML = "选择要操作的岗位";
+      document.getElementById("text_company_name").innerHTML = "选择项目";
     } else {
       $(this).toggleClass('selected');
 

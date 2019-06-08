@@ -115,6 +115,9 @@ def UpdatePost(request):
         department_name = request.POST['department_name']
         post_name = request.POST['post_name']
 
+        if project_name == "" or company_name == "" or department_name == "" or post_name == "":
+            return
+
         min_degree = request.POST['degree_id_min']
         max_degree = request.POST['degree_id_max']
         min_age = request.POST['age_id_min']
