@@ -198,11 +198,16 @@ def query_resumes_by_args(**kwargs):
 
     # search_value box
     if search_value:
-        queryset = queryset.filter(models.Q(username__icontains=search_value) |
-                                   models.Q(phone_number__icontains=search_value) |
-                                   models.Q(email__icontains=search_value) |
-                                   models.Q(school__icontains=search_value) |
-                                   models.Q(major__icontains=search_value))
+        # split the fields by blank
+        # max 4 field to check
+        fields = search_value.split()
+        for i in range(0, min(len(fields), 4)):
+            field = fields[i]
+            queryset = queryset.filter(models.Q(username__icontains=field) |
+                                   models.Q(phone_number__icontains=field) |
+                                   models.Q(email__icontains=field) |
+                                   models.Q(school__icontains=field) |
+                                   models.Q(major__icontains=field))
 
     # ------
     count = queryset.count()
