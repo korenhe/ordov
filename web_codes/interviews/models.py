@@ -228,6 +228,9 @@ class InterviewSub_Payback_Invoice(models.Model):
     contact = models.CharField(max_length=50, blank=True, null=True)
     contact_phone = models.CharField(max_length=15, null=True, blank=True)
 
+# Interview Terminate SubModal
+# ---------------------------------------- Pretty Split Line ----------------------------------------
+
 # ---------------------------------------- Pretty Bottom Line ----------------------------------------
 class OnDuty(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

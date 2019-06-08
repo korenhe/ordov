@@ -846,30 +846,6 @@ $(document).ready(function() {
       // should update the huashu ID corresponsely
   });
 
-  $(document).on('click', '.dial_button', function() {
-    interview_selected_value = Number(this.id);
-  });
-
-  $(document).on('click', '.interview_button', function() {
-    interview_selected_value = Number(this.id);
-  });
-
-  $(document).on('click', '.offer_button', function() {
-    interview_selected_value = Number(this.id);
-  });
-
-  $(document).on('click', '.entry_button', function() {
-    interview_selected_value = Number(this.id);
-  });
-
-  $(document).on('click', '.inspect_button', function() {
-    interview_selected_value = Number(this.id);
-  });
-
-  $(document).on('click', '.payback_button', function() {
-    interview_selected_value = Number(this.id);
-  });
-
   // post table
   $('#dataTable_post tbody').on('click', 'tr', function() {
     var id = this.id;
@@ -893,15 +869,6 @@ $(document).ready(function() {
 
       document.getElementById("text_company_name").innerHTML = tr.innerText;
     }
-  });
-
-  $('#id_button_submit').on('click', function() {
-    // submit to interview interface
-    /*
-    for (var i = 0; i < resumes_selected.length; i++) {
-    submit_interview(Number(resumes_selected[i], Number(post_selected_value)), table);
-    }
-    */
   });
 
   $(function(){
@@ -1228,72 +1195,6 @@ $(document).ready(function() {
         $('#stopModal').modal('show');
     });
   });
-
-  $(function(){
-    $('#interviewFormSubmit').click(function(e){
-      e.preventDefault();
-
-      var interview_id = interview_selected_value;
-
-      $('#interviewModal').modal('hide');
-      var status = 4;
-
-      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
-    });
-  });
-
-  $(function(){
-    $('#offerFormSubmit').click(function(e){
-      e.preventDefault();
-
-      var interview_id = interview_selected_value;
-
-      $('#offerModal').modal('hide');
-      var status = 4;
-
-      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
-    });
-  });
-
-  $(function(){
-    $('#entryFormSubmit').click(function(e){
-      e.preventDefault();
-
-      var interview_id = interview_selected_value;
-
-      $('#entryModal').modal('hide');
-      var status = 5;
-
-      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
-    });
-  });
-
-  $(function(){
-    $('#inspectFormSubmit').click(function(e){
-      e.preventDefault();
-
-      var interview_id = interview_selected_value;
-
-      $('#inspectModal').modal('hide');
-      var status = 6;
-
-      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
-    });
-  });
-
-  $(function(){
-    $('#paybackFormSubmit').click(function(e){
-      e.preventDefault();
-
-      var interview_id = interview_selected_value;
-
-      $('#paybackModal').modal('hide');
-      var status = 7;
-
-      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
-    });
-  });
-
 
   //-------- select
     $.ajax({
