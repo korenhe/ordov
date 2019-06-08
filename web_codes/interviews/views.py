@@ -22,6 +22,9 @@ from .serializers import InterviewSub_InterviewSerializer, InterviewSub_Intervie
 from .models import InterviewSub_Offer, InterviewSub_Offer_Agree
 from .serializers import InterviewSub_OfferSerializer, InterviewSub_Offer_AgreeSerializer
 
+from .models import InterviewSub_Payback, InterviewSub_Payback_Finish
+from .serializers import InterviewSub_PaybackSerializer, InterviewSub_Payback_FinishSerializer
+
 from companies.models import Post
 from resumes.models import Resume
 from django.http import JsonResponse
@@ -155,3 +158,13 @@ class InterviewSub_OfferViewSet(viewsets.ModelViewSet):
 class InterviewSub_Offer_AgreeViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Offer_Agree.objects.all()
     serializer_class = InterviewSub_Offer_AgreeSerializer
+
+# Interview Payback SubModal
+# ---------------------------------------- Pretty Split Line ----------------------------------------
+class InterviewSub_PaybackViewSet(viewsets.ModelViewSet):
+    queryset = InterviewSub_Payback.objects.all()
+    serializer_class = InterviewSub_PaybackSerializer
+
+class InterviewSub_Payback_FinishViewSet(viewsets.ModelViewSet):
+    queryset = InterviewSub_Payback_Finish.objects.all()
+    serializer_class = InterviewSub_Payback_FinishSerializer

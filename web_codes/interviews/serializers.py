@@ -6,6 +6,7 @@ from .models import InterviewLogCommon
 from .models import InterviewSub_Appointment, InterviewSub_Appointment_Agree
 from .models import InterviewSub_Interview, InterviewSub_Interview_Pass
 from .models import InterviewSub_Offer, InterviewSub_Offer_Agree
+from .models import InterviewSub_Payback, InterviewSub_Payback_Finish
 
 class InterviewSerializer(serializers.ModelSerializer):
     id = serializers.SerializerMethodField()
@@ -159,3 +160,40 @@ class InterviewSub_Offer_AgreeSerializer(serializers.ModelSerializer):
         interview.save()
 
         return offer_sub_agree
+
+# Interview Payback SubModal
+# ---------------------------------------- Pretty Split Line ----------------------------------------
+
+class InterviewSub_PaybackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InterviewSub_Payback
+        fields = (
+            'interview',
+            'result_type',
+        )
+
+class InterviewSub_Payback_FinishSerializer(serializers.ModelSerializer):
+    payback_sub = InterviewSub_PaybackSerializer(required=True)
+    class Meta:
+        model = InterviewSub_Payback_Finish
+        fields = (
+            'payback_sub',
+            'notes',
+        )
+
+    def create(self, validated_data):
+        payback_sub_data = validated_data.pop('payback_sub')
+
+        payback_sub_ = InterviewSub_PaybackSerializer.create(InterviewSub_PaybackSerializer(),
+                                                             validated_data=payback_sub_data)
+
+        payback_sub_finish, created = InterviewSub_Payback_Finish.objects.update_or_create(
+            payback_sub=payback_sub_,
+            **validated_data)
+
+        # update interview table
+        interview = Interview.objects.get(pk=payback_sub_.interview.id)
+        interview.status = 8
+        interview.save()
+
+        return payback_sub_finish

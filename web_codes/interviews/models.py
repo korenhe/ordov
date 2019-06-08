@@ -187,6 +187,47 @@ class InterviewSub_Offer_Agree(models.Model):
 
     notes = models.TextField(max_length=500, blank=True, null=True)
 
+# Interview Payback SubModal
+# ---------------------------------------- Pretty Split Line ----------------------------------------
+class InterviewSub_Payback(models.Model):
+    interview = models.ForeignKey(Interview, on_delete=models.CASCADE, default=0)
+    result_type = models.IntegerField(null=True)
+
+class InterviewSub_Payback_Register(models.Model):
+    payback_sub = models.ForeignKey(InterviewSub_Payback, on_delete=models.CASCADE, default=0)
+
+    amount = models.IntegerField(null=True)
+    pm_amount = models.IntegerField(null=True)
+    invitor_amount = models.IntegerField(null=True)
+    img = models.CharField(max_length=50, null=True, blank=True)
+    notes = models.TextField(max_length=500, blank=True, null=True)
+
+class InterviewSub_Payback_Finish(models.Model):
+    payback_sub = models.ForeignKey(InterviewSub_Payback, on_delete=models.CASCADE, default=0)
+
+    notes = models.TextField(max_length=500, blank=True, null=True)
+
+class InterviewSub_Payback_Baddebt(models.Model):
+    payback_sub = models.ForeignKey(InterviewSub_Payback, on_delete=models.CASCADE, default=0)
+
+    notes = models.TextField(max_length=500, blank=True, null=True)
+
+class InterviewSub_Payback_Invoice(models.Model):
+    payback_sub = models.ForeignKey(InterviewSub_Payback, on_delete=models.CASCADE, default=0)
+
+    companyname = models.CharField(max_length=50, null=True, blank=True)
+    idn = models.CharField(max_length=50, null=True, blank=True)
+    address = models.CharField(max_length=50, null=True, blank=True)
+    phone = models.CharField(max_length=15, null=True, blank=True)
+
+    bank = models.CharField(max_length=50, null=True, blank=True)
+    cardid = models.CharField(max_length=50, null=True, blank=True)
+    amount = models.IntegerField(null=True)
+    mail_address = models.CharField(max_length=50, null=True, blank=True)
+
+    contact = models.CharField(max_length=50, blank=True, null=True)
+    contact_phone = models.CharField(max_length=15, null=True, blank=True)
+
 # ---------------------------------------- Pretty Bottom Line ----------------------------------------
 class OnDuty(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

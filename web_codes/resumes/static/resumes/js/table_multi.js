@@ -699,19 +699,19 @@ $(document).ready(function() {
 
   $(document).on('click', '.stage_seven_register', function() {
     interview_selected_value = Number(this.id);
-    $('#pbRegModal').modal('toggle')
+    $('#pbRegisterModal').modal('toggle')
   });
   $(document).on('click', '.stage_seven_bill', function() {
     interview_selected_value = Number(this.id);
-    $('#pbBillModal').modal('toggle')
+    $('#pbInvoiceModal').modal('toggle')
   });
   $(document).on('click', '.stage_seven_pass', function() {
     interview_selected_value = Number(this.id);
-    $('#pbDoneModal').modal('toggle')
+    $('#pbFinishModal').modal('toggle')
   });
   $(document).on('click', '.stage_seven_fail', function() {
     interview_selected_value = Number(this.id);
-    $('#pbBadModal').modal('toggle');
+    $('#pbBaddebtModal').modal('toggle');
     //$('#stopModal').modal('toggle')
   });
 
@@ -831,13 +831,13 @@ $(document).ready(function() {
     value = $("#"+(interview_selected_value)+".stage_seven_select").val()
     if (value == "回款阶段") {
     } else if (value == "打款登记") {
-      $('#pbRegModal').modal('toggle')
+      $('#pbRegisterModal').modal('toggle')
     } else if (value == "完成打款") {
-      $('#pbDoneModal').modal('toggle')
+      $('#pbFinishModal').modal('toggle')
     } else if (value == "坏账") {
-      $('#pbBadModal').modal('toggle');
+      $('#pbBaddebtModal').modal('toggle');
     } else if (value == "发票申请") {
-      $('#pbBillModal').modal('toggle');
+      $('#pbInvoiceModal').modal('toggle');
     }
   });
 
@@ -1099,12 +1099,12 @@ $(document).ready(function() {
 
   $(function(){
     // only update the entry info
-    $('#pbBillSubmit').click(function(e){
+    $('#pbInvoiceSubmit').click(function(e){
       e.preventDefault();
 
       var interview_id = interview_selected_value;
 
-      $('#pbBillModal').modal('hide');
+      $('#pbInvoiceModal').modal('hide');
       var status = 7;
 
       submit_interview_by_id(interview_id, "/api/interviews/", status, table);
@@ -1113,12 +1113,12 @@ $(document).ready(function() {
 
   $(function(){
     // only update the entry info
-    $('#pbBadSubmit').click(function(e){
+    $('#pbBaddebtSubmit').click(function(e){
       e.preventDefault();
 
       var interview_id = interview_selected_value;
 
-      $('#pbBadModal').modal('hide');
+      $('#pbBaddebtModal').modal('hide');
       var status = 7;
 
       submit_interview_by_id(interview_id, "/api/interviews/", status, table);
@@ -1127,26 +1127,42 @@ $(document).ready(function() {
 
   $(function(){
     // only update the entry info
-    $('#pbDoneSubmit').click(function(e){
+    $('#pbFinishSubmit').click(function(e){
       e.preventDefault();
 
       var interview_id = interview_selected_value;
 
-      $('#pbDoneModal').modal('hide');
-      var status = 8;
+      $('#pbFinishModal').modal('hide');
 
-      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+      /*
+        {
+        "payback_sub": {
+        "interview": null,
+        "result_type": null
+        },
+        "notes": ""
+        }
+      */
+      data = {
+        "payback_sub": {
+        "interview": interview_id,
+        "result_type": 3
+        },
+        "notes": "xxxxdfdfd"
+      };
+
+      submit_interviewsub_by_id("/interviews/api/payback_sub_finish/", table, data);
     });
   });
 
   $(function(){
     // only update the entry info
-    $('#pbRegSubmit').click(function(e){
+    $('#pbRegisterSubmit').click(function(e){
       e.preventDefault();
 
       var interview_id = interview_selected_value;
 
-      $('#pbRegModal').modal('hide');
+      $('#pbRegisterModal').modal('hide');
       var status = 7;
 
       submit_interview_by_id(interview_id, "/api/interviews/", status, table);

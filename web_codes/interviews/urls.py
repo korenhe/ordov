@@ -4,6 +4,7 @@ from rest_framework import routers
 from .views import InterviewSub_AppointmentViewSet, InterviewSub_Appointment_AgreeViewSet
 from .views import InterviewSub_InterviewViewSet, InterviewSub_Interview_PassViewSet
 from .views import InterviewSub_OfferViewSet, InterviewSub_Offer_AgreeViewSet
+from .views import InterviewSub_PaybackViewSet, InterviewSub_Payback_FinishViewSet
 
 router = routers.DefaultRouter()
 
@@ -15,6 +16,9 @@ router.register(r'interview_sub_pass', InterviewSub_Interview_PassViewSet)
 
 router.register(r'offer_sub', InterviewSub_OfferViewSet)
 router.register(r'offer_sub_agree', InterviewSub_Offer_AgreeViewSet)
+
+router.register(r'payback_sub', InterviewSub_PaybackViewSet)
+router.register(r'payback_sub_finish', InterviewSub_Payback_FinishViewSet)
 
 app_name = "interviews"
 
