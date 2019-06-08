@@ -143,6 +143,7 @@ def query_resumes_by_args(**kwargs):
         post_age_max = post_request.age_max
         post_degree_min = post_request.degree_min
         post_degree_max = post_request.degree_max
+        post_gender = post_request.gender
         post_province = post_request.address_provice
         post_city = post_request.address_city
         post_district = post_request.address_distinct
@@ -151,6 +152,10 @@ def query_resumes_by_args(**kwargs):
                                models.Q(degree__lte=post_degree_max) &
                                models.Q(age__gte=post_age_min) &
                                models.Q(age__lte=post_age_max))
+        if post_gender.find(u'男') >= 0:
+            queryset = queryset.filter(models.Q(gender__contains='m'))
+        elif post_gender.find(u'女') >= 0:
+            queryset = queryset.filter(models.Q(gender__contains='f'))
     # step2: Filter from user-defined
     total = queryset.count()
 
