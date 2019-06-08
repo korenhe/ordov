@@ -117,20 +117,26 @@ class Post(models.Model):
     last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
 
+    def save(self, *args, **kwargs):
+        if not self.project_name:
+            self.project_name = Company.objects.get(pk=self.company).name + '-' + self.name
+        super(Post, self).save(*args, **kwargs)
+
     def __str__(self):
         return "%s,%s,%s" % (self.name, self.department.name, self.company.name)
 
 ORDER_COLUMN_CHOICES = Choices(
     ('0', 'id'),
-    ('1', 'company'),
-    ('2', 'department'),
-    ('3', 'name'),
+    ('1', 'department'),
+    ('2', 'name'),
+    ('3', 'project_name'),
     ('4', 'description'),
 )
 
 def query_posts_by_args(**kwargs):
+    print("================================================================================-")
     draw = int(kwargs.get('draw', [0])[0])
-    length = int(kwargs.get('length', [0])[0])
+    length = int(kwargs.get('length', [15])[0])
     start = int(kwargs.get('start', [0])[0])
     search_value = kwargs.get('search[value]', [0])[0]
     order_column = kwargs.get('order[0][column]', [0])[0]
@@ -154,7 +160,6 @@ def query_posts_by_args(**kwargs):
     count = queryset.count()
 
     queryset = queryset.order_by(order_column)[start:start + length]
-
     # final decoration
 
     return {
