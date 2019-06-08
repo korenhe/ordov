@@ -61,6 +61,7 @@ class Resume(models.Model):
     major = models.CharField(max_length=30, blank=True, null=True)
     school = models.CharField(max_length=30, blank=True, null=True)
     graduate_time = models.CharField(max_length=30, blank=True, null=True)
+    graduate_year = models.IntegerField(null=True, blank=True)
 
     # Text Fieled
     self_description = models.TextField(max_length=500, blank=True, null=True, default='')
@@ -112,8 +113,8 @@ def query_resumes_by_args(**kwargs):
     degree_min = kwargs.get('degree_id_min', [''])[0]
     degree_max = kwargs.get('degree_id_max', [''])[0]
 
-    graduate_time_min = kwargs.get('graduate_time_min', [0])[0] or 0
-    graduate_time_max = kwargs.get('graduate_time_max', [0])[0] or 0
+    graduate_time_min = kwargs.get('graduate_time_min', [''])[0]
+    graduate_time_max = kwargs.get('graduate_time_max', [''])[0]
 
     status_id = int(kwargs.get('status_id', [0])[0])
 
@@ -177,6 +178,17 @@ def query_resumes_by_args(**kwargs):
                                models.Q(degree__lte=degree_id_max) &
                                models.Q(age__gte=age_id_min) &
                                models.Q(age__lte=age_id_max))
+    # graducate_time filter
+    graduate_time_min_int = 0
+    graduate_time_max_int = 100000
+    if not graduate_time_min == "" and graduate_time_min.find(u'不限') < 0:
+        graduate_time_min_int = int(graduate_time_min)
+    if not graduate_time_max == "" and graduate_time_max.find(u'不限') < 0:
+        graduate_time_max_int = int(graduate_time_max)
+
+    queryset = queryset.filter(models.Q(graduate_year__gte=graduate_time_min_int) &
+                               models.Q(graduate_year__lte=graduate_time_max_int))
+    # graducate_time filter
 
 
     # search_value box

@@ -144,10 +144,10 @@ def UpdatePost(request):
             degreeMax= DEGREE_CHOICES_MAP.get(max_degree, 100)
 
         graduate_S = 0
-        if not graduate_start == "":
+        if not graduate_start == "" and graduate_start.find(u'不限') < 0:
             graduate_S = int(graduate_start)
         graduate_E = 2080
-        if not graduate_end == "":
+        if not graduate_end == "" and graduate_end.find(u'不限') < 0:
             graduate_E = int(graduate_end)
 
         salary_offer = request.POST['min_salary_id']

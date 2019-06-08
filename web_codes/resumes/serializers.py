@@ -99,6 +99,10 @@ class ResumeSerializer(serializers.ModelSerializer):
             'degree',
             'major',
             'school',
+
+            'graduate_time',
+            'graduate_year',
+
         )
 
     def create(self, validated_data):

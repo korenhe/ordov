@@ -298,10 +298,9 @@ $(document).ready(function() {
 
   /* ======================================== Process Begin Here */
 
-  $('#age_id_min, #age_id_max, #graduate_time_start, #graduate_time_end').keyup(function() {
+  $('#age_id_min, #age_id_max').keyup(function() {
     page_refresh(table, true);
   });
-
 
   $('#working_place_province, #working_place_city, #working_place_district').keyup(function() {
     page_refresh(table, true);
@@ -313,6 +312,10 @@ $(document).ready(function() {
   });
 
   $('#degree_id_min, #gender_id, #degree_id_max').change(function() {
+    page_refresh(table, true);
+  });
+
+  $('#graduate_time_start, #graduate_time_end').change(function() {
     page_refresh(table, true);
   });
 

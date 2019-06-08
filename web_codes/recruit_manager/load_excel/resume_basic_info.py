@@ -76,6 +76,9 @@ def create_or_update_basic_info(resume, phone):
     if not birth_day == '':
         birth_day = int(birth_day)
 
+    graduate_time = "1980-03-23"
+    graduate_year = 1988
+
     # step3: create the basic info
     resume = {
 		"candidate": {},
@@ -99,6 +102,7 @@ def create_or_update_basic_info(resume, phone):
 		"school" : school,
 
 		"graduate_time" : graduate_time,
+        "graduate_year" : graduate_year,
 		"live_state" : live_stat,
 		"self_description" : self_description,
 
