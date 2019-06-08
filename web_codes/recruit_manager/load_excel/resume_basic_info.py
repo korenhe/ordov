@@ -56,7 +56,13 @@ def create_or_update_basic_info(resume, phone):
     current_settle_district = resume[iPos['CURRENT_SETTLE_DISTRICT']]
     current_settle_street = resume[iPos['CURRENT_SETTLE_STREET']]
     marriage = str(resume[iPos['MARRIAGE']].strip())
+
+    expected_province = resume[iPos['EXPECT_PLACE_PROVICE']]
+    expected_city = resume[iPos['EXPECT_PLACE_CITY']]
+    expected_district = resume[iPos['EXPECT_PLACE_DISTRICT']]
+    expected_street = resume[iPos['EXPECT_PLACE_STREET']]
     # TODO FIX
+
     marriage = "已婚"
     ageStr = str(resume[iPos['AGE']])
 
@@ -113,6 +119,11 @@ def create_or_update_basic_info(resume, phone):
 		"current_settle_city" : current_settle_city,
 		"current_settle_district" : current_settle_district,
 		"current_settle_street" : current_settle_street,
+
+        "expected_province" : expected_province,
+        "expected_city" : expected_city,
+        "expected_district" : expected_district,
+        "expected_street" : expected_street,
 
 		"marriage" : marriage,
     }

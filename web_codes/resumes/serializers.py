@@ -100,6 +100,10 @@ class ResumeSerializer(serializers.ModelSerializer):
             'major',
             'school',
 
+            'expected_province',
+            'expected_city',
+            'expected_district',
+
             'graduate_time',
             'graduate_year',
 

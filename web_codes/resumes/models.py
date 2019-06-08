@@ -56,6 +56,11 @@ class Resume(models.Model):
     expected_post = models.CharField(max_length=50, null=True, blank=True)
     expected_positon = models.CharField(max_length=50, null=True, blank=True)
 
+    expected_province = models.CharField(max_length=50, null=True, blank=True)
+    expected_city = models.CharField(max_length=50, null=True, blank=True)
+    expected_district = models.CharField(max_length=50, null=True, blank=True)
+    expected_street = models.CharField(max_length=50, null=True, blank=True)
+
     # education related
     degree = models.IntegerField(blank=True, null=True, choices=DEGREE_CHOICES)
     major = models.CharField(max_length=30, blank=True, null=True)
@@ -116,6 +121,11 @@ def query_resumes_by_args(**kwargs):
     graduate_time_min = kwargs.get('graduate_time_min', [''])[0]
     graduate_time_max = kwargs.get('graduate_time_max', [''])[0]
 
+    expected_province = kwargs.get('province', [''])[0]
+    expected_city = kwargs.get('city', [''])[0]
+    expected_district = kwargs.get('district', [''])[0]
+    print("expected: ", expected_province, expected_city, expected_district)
+
     status_id = int(kwargs.get('status_id', [0])[0])
 
     gender_f = kwargs.get('gender_id', [''])[0]
@@ -140,7 +150,6 @@ def query_resumes_by_args(**kwargs):
         pass
 
     if post_request:
-        print(post_request)
         post_age_min = post_request.age_min or 0
         post_age_max = post_request.age_max or 100
         post_degree_min = post_request.degree_min or 0
@@ -195,6 +204,14 @@ def query_resumes_by_args(**kwargs):
     if not graduate_time_max == "" and graduate_time_max.find(u'不限') < 0:
         graduate_time_max_int = int(graduate_time_max)
         queryset = queryset.filter(models.Q(graduate_year__gte=graduate_time_max_int))
+
+    # expected_province/city/district filter
+    if not expected_province == "":
+        queryset = queryset.filter(models.Q(expected_province__icontains=expected_province))
+    if not expected_city == "":
+        queryset = queryset.filter(models.Q(expected_city__icontains=expected_city))
+    if not expected_district == "":
+        queryset = queryset.filter(models.Q(expected_district__icontains=expected_district))
 
     # search_value box
     if search_value:
