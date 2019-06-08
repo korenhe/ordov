@@ -473,7 +473,7 @@
           <button type="button" id="dail_not_linked" class="btn btn-default">未接通</button>
           <button type="button" id="dail_candidate" class="btn btn-default"> 拨号</button>
           <button type="button" id="agree_interview" class="btn btn-default">同意面试</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="button" id="giveup_interview" class="btn btn-default">放弃面试</button>
         </div>
       </div>
     </div>
@@ -597,9 +597,6 @@
                 </div>
                 <div class="form-group">
                   <input type="text" class="form-control" id="text_appointment_attention" placeholder="注意事项">
-                </div>
-                <div class="form-group">
-                  <input type="text" class="form-control" id="text_appointment_first_impression" placeholder="第一印象">
                 </div>
                 <div class="form-group">
                   <input type="text" class="form-control" id="text_appointment_notes" placeholder="备注">
@@ -810,18 +807,7 @@
             <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
               <form>
                 <div class="form-group">
-                  <input type="text" class="form-control" id="text_interviewresult_reason" placeholder="通过原因">
-                </div>
-
-                <div class="form-group">
-                  <input type="text" class="form-control" id="text_interviewresult_description" placeholder="应聘者情商表现">
-                </div>
-                <div class="form-group">
                   <input type="text" class="form-control" id="text_interviewresult_comments" placeholder="面试评价">
-                </div>
-
-                <div class="form-group">
-                  <input type="text" class="form-control" id="text_interview_notes" placeholder="备注">
                 </div>
               </form>
             </div>
@@ -853,14 +839,20 @@
             <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
               <form>
                 <div class="form-group">
-                  <input type="text" class="form-control" id="text_date" placeholder="打款金额">
+                  <input type="text" class="form-control" id="payback_amount" placeholder="打款金额">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="payback_pm_amount" placeholder="邀约人分成">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="payback_invitor_amount" placeholder="邀约人分成">
                 </div>
 
                 <div class="form-group">
-                  <input type="text" class="form-control" id="text_task_id" placeholder="上传截图">
+                  <input type="text" class="form-control" id="payback_img" placeholder="上传截图">
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control" id="text_huashu_id" placeholder="备注">
+                  <input type="text" class="form-control" id="payback_comments" placeholder="备注">
                 </div>
               </form>
             </div>

@@ -1206,6 +1206,12 @@ $(document).ready(function() {
     });
   });
 
+  $(function() {
+    $('#giveup_interview').click(function(e){
+        $('#dailToCandidateModal').modal('hide');
+        $('#stopModal').modal('show');
+    });
+  });
 
   $(function(){
     $('#interviewFormSubmit').click(function(e){
