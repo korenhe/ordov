@@ -22,6 +22,9 @@ from .serializers import InterviewSub_InterviewSerializer, InterviewSub_Intervie
 from .models import InterviewSub_Offer, InterviewSub_Offer_Agree
 from .serializers import InterviewSub_OfferSerializer, InterviewSub_Offer_AgreeSerializer
 
+from .models import InterviewSub_Probation, InterviewSub_Probation_Fail
+from .serializers import InterviewSub_ProbationSerializer, InterviewSub_Probation_FailSerializer
+
 from .models import InterviewSub_Payback, InterviewSub_Payback_Finish
 from .serializers import InterviewSub_PaybackSerializer, InterviewSub_Payback_FinishSerializer
 
@@ -158,6 +161,16 @@ class InterviewSub_OfferViewSet(viewsets.ModelViewSet):
 class InterviewSub_Offer_AgreeViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Offer_Agree.objects.all()
     serializer_class = InterviewSub_Offer_AgreeSerializer
+
+# Interview Probation SubModal
+# ---------------------------------------- Pretty Split Line ----------------------------------------
+class InterviewSub_ProbationViewSet(viewsets.ModelViewSet):
+    queryset = InterviewSub_Probation.objects.all()
+    serializer_class = InterviewSub_ProbationSerializer
+
+class InterviewSub_Probation_FailViewSet(viewsets.ModelViewSet):
+    queryset = InterviewSub_Probation_Fail.objects.all()
+    serializer_class = InterviewSub_Probation_FailSerializer
 
 # Interview Payback SubModal
 # ---------------------------------------- Pretty Split Line ----------------------------------------

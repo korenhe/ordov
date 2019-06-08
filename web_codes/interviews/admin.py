@@ -9,6 +9,7 @@ from .models import InterviewSub_Appointment, InterviewSub_Appointment_Agree
 from .models import InterviewSub_Interview, InterviewSub_Interview_Pass
 from .models import InterviewSub_Offer, InterviewSub_Offer_Agree
 from .models import InterviewSub_Payback, InterviewSub_Payback_Finish
+from .models import InterviewSub_Probation, InterviewSub_Probation_Fail
 
 from .models import OnDuty
 
@@ -24,6 +25,9 @@ admin.site.register(InterviewSub_Interview_Pass)
 
 admin.site.register(InterviewSub_Offer)
 admin.site.register(InterviewSub_Offer_Agree)
+
+admin.site.register(InterviewSub_Probation)
+admin.site.register(InterviewSub_Probation_Fail)
 
 admin.site.register(InterviewSub_Payback)
 admin.site.register(InterviewSub_Payback_Finish)

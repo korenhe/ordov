@@ -6,6 +6,7 @@ from .models import InterviewLogCommon
 from .models import InterviewSub_Appointment, InterviewSub_Appointment_Agree
 from .models import InterviewSub_Interview, InterviewSub_Interview_Pass
 from .models import InterviewSub_Offer, InterviewSub_Offer_Agree
+from .models import InterviewSub_Probation, InterviewSub_Probation_Fail
 from .models import InterviewSub_Payback, InterviewSub_Payback_Finish
 
 class InterviewSerializer(serializers.ModelSerializer):
@@ -160,6 +161,45 @@ class InterviewSub_Offer_AgreeSerializer(serializers.ModelSerializer):
         interview.save()
 
         return offer_sub_agree
+
+# Interview Probation SubModal
+# ---------------------------------------- Pretty Split Line ----------------------------------------
+class InterviewSub_ProbationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InterviewSub_Probation
+        fields = (
+            'interview',
+            'result_type',
+        )
+
+class InterviewSub_Probation_FailSerializer(serializers.ModelSerializer):
+    probation_sub = InterviewSub_ProbationSerializer(required=True)
+    class Meta:
+        model = InterviewSub_Probation_Fail
+        fields = (
+            'probation_sub',
+
+            'reason',
+            'comments',
+        )
+
+    # Negative so no need to update status, but need to update is_active
+    def create(self, validated_data):
+        probation_sub_data = validated_data.pop('probation_sub')
+
+        probation_sub_ = InterviewSub_ProbationSerializer.create(InterviewSub_ProbationSerializer(),
+                                                        validated_data=probation_sub_data)
+
+        probation_sub_fail, created = InterviewSub_Probation_Fail.objects.update_or_create(
+            probation_sub=probation_sub_,
+            **validated_data)
+
+        # update interview table
+        interview = Interview.objects.get(pk=probation_sub_.interview.id)
+        interview.status = 5
+        interview.save()
+
+        return probation_sub_fail
 
 # Interview Payback SubModal
 # ---------------------------------------- Pretty Split Line ----------------------------------------

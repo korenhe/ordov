@@ -187,6 +187,22 @@ class InterviewSub_Offer_Agree(models.Model):
 
     notes = models.TextField(max_length=500, blank=True, null=True)
 
+# Interview Entryed SubModal
+# ---------------------------------------- Pretty Split Line ----------------------------------------
+# Entry update info should be updated to Interviewsub_offer_agree?
+
+# Interview Probation SubModal
+# ---------------------------------------- Pretty Split Line ----------------------------------------
+class InterviewSub_Probation(models.Model):
+    interview = models.ForeignKey(Interview, on_delete=models.CASCADE, default=0)
+    result_type = models.IntegerField(null=True)
+
+class InterviewSub_Probation_Fail(models.Model):
+    offer_sub = models.ForeignKey(InterviewSub_Probation, on_delete=models.CASCADE, default=0)
+
+    reason = models.CharField(max_length=50, blank=True, null=True)
+    comments = models.CharField(max_length=50, blank=True, null=True)
+
 # Interview Payback SubModal
 # ---------------------------------------- Pretty Split Line ----------------------------------------
 class InterviewSub_Payback(models.Model):

@@ -1060,6 +1060,7 @@ $(document).ready(function() {
       $('#probationFailModal').modal('hide');
       var status = -2;
 
+      // TBD, mod after status = -2 is removed
       submit_interview_by_id(interview_id, "/api/interviews/", status, table);
     });
   });
