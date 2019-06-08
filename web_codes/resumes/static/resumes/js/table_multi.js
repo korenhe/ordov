@@ -337,7 +337,7 @@ $(document).ready(function() {
       type: 'GET',
       data: null,
       success: function(response) {
-        document.getElementById("badge_statistic_stage_0").innerHTML = response.resumes_total;
+        document.getElementById("badge_statistic_stage_0").innerHTML = response.resumes_waitting;
         for (var i = 1; i < 10; i++) {
           document.getElementById("badge_statistic_stage_" + i).innerHTML = response.interviews_status_filters[i-1];
         }

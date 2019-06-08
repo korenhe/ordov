@@ -102,6 +102,7 @@ def invitation_result(request, resume_id):
 from django.http import JsonResponse
 def resume_statistic(request, post_id):
     resumes_total = Resume.objects.exclude(interview__status=0, interview__post__id=post_id).count()
+    resumes_waitting = Resume.objects.exclude(interview__post__id=post_id).count()
     interviews_status_filters = []
 
     for i in range(1, 9):
@@ -111,6 +112,7 @@ def resume_statistic(request, post_id):
 
     data = {
         "resumes_total": resumes_total,
+        "resumes_waitting": resumes_waitting,
         "interviews_status_filters": interviews_status_filters,
     }
     return JsonResponse(data)
