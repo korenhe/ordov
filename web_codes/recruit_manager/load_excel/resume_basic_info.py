@@ -4,7 +4,7 @@ from resumes.models import Resume
 from resumes.serializers import ResumeSerializer
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
-from .common import validate_degree
+from .common import validate_degree, get_year_from_date
 
 import json
 
@@ -76,8 +76,7 @@ def create_or_update_basic_info(resume, phone):
     if not birth_day == '':
         birth_day = int(birth_day)
 
-    graduate_time = "1980-03-23"
-    graduate_year = 1988
+    graduate_year = get_year_from_date(graduate_time)
 
     # step3: create the basic info
     resume = {

@@ -13,6 +13,12 @@ def validate_date(date_str):
         return "1970-01-01"
         return fields[0] + "-" + "01-01"
 
+def get_year_from_date(date_str):
+    fields = date_str.split("-")
+    if len(fields) == 3:
+        return int(fields[0])
+    return 1970
+
 def validate_degree(degree):
     degreeNO=0
     if degree.find('小学') >=0:
