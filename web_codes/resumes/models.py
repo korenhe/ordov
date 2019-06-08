@@ -191,13 +191,10 @@ def query_resumes_by_args(**kwargs):
     graduate_time_max_int = 100000
     if not graduate_time_min == "" and graduate_time_min.find(u'不限') < 0:
         graduate_time_min_int = int(graduate_time_min)
+        queryset = queryset.filter(models.Q(graduate_year__gte=graduate_time_min_int))
     if not graduate_time_max == "" and graduate_time_max.find(u'不限') < 0:
         graduate_time_max_int = int(graduate_time_max)
-
-    queryset = queryset.filter(models.Q(graduate_year__gte=graduate_time_min_int) &
-                               models.Q(graduate_year__lte=graduate_time_max_int))
-    # graducate_time filter
-
+        queryset = queryset.filter(models.Q(graduate_year__gte=graduate_time_max_int))
 
     # search_value box
     if search_value:

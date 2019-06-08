@@ -144,7 +144,6 @@ def query_posts_by_args(**kwargs):
     total = queryset.count()
 
     # filter and orderby
-
     if search_value:
         queryset = queryset.filter(models.Q(department__company__name__icontains=search_value) |
                                    models.Q(department__name__icontains=search_value) |
