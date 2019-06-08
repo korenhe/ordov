@@ -129,12 +129,12 @@ ORDER_COLUMN_CHOICES = Choices(
 )
 
 def query_posts_by_args(**kwargs):
-    draw = int(kwargs.get('draw', None)[0])
-    length = int(kwargs.get('length', None)[0])
-    start = int(kwargs.get('start', None)[0])
-    search_value = kwargs.get('search[value]', None)[0]
-    order_column = kwargs.get('order[0][column]', None)[0]
-    order = kwargs.get('order[0][dir]', None)[0]
+    draw = int(kwargs.get('draw', [0])[0])
+    length = int(kwargs.get('length', [0])[0])
+    start = int(kwargs.get('start', [0])[0])
+    search_value = kwargs.get('search[value]', [0])[0]
+    order_column = kwargs.get('order[0][column]', [0])[0]
+    order = kwargs.get('order[0][dir]', [0])[0]
 
     order_column = ORDER_COLUMN_CHOICES[int(order_column)][1]
     if order == 'desc':
