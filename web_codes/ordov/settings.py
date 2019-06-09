@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'interviews',
     'smart_analyse',
 
+    'third_party',
+
     'resumes.apps.ResumesConfig',
     'recruit_manager.apps.RecruitManagerConfig',
     'recruit_applicant.apps.RecruitApplicantConfig',
