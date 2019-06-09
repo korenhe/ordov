@@ -168,6 +168,15 @@ def query_resumes_by_args(**kwargs):
         elif post_gender.find(u'女') >= 0:
             queryset = queryset.filter(models.Q(gender__contains='f'))
 
+        # post_province/city/district filter
+        if not post_province == "":
+            queryset = queryset.filter(models.Q(expected_province__icontains=post_province))
+        if not post_city == "":
+            queryset = queryset.filter(models.Q(expected_city__icontains=post_city))
+        if not post_district == "":
+            queryset = queryset.filter(models.Q(expected_district__icontains=post_district))
+
+
     # step2: Filter from user-defined
     total = queryset.count()
 
