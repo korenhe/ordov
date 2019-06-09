@@ -57,6 +57,8 @@ $(document).ready(function() {
 
     },
 
+    /* default column 0 to desc ordering, how link 0 with the column id?*/
+    "order": [[0, "desc"]],
     "columns": [
       {"data": null,
        "visible": false,
