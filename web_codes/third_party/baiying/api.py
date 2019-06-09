@@ -56,6 +56,7 @@ def get_companys():
     response_obj = urllib.request.urlopen(request_obj)
     html_code = response_obj.read().decode('utf-8')
     jsonjson = json.loads(html_code)
+    print(html_code)
     return html_code
 
 
@@ -158,7 +159,6 @@ def importTaskCustomer(companyId, taskId, username, phone_number):
     }
 
     json_result = json.dumps(taskInfo).encode(encoding='utf-8')
-    print(json_result)
     header_dict = {"Content-Type": "application/json"}
     request_obj = urllib.request.Request(url=BASE_URL + "/openapi/v2/task/importTaskCustomer", data=json_result, headers=header_dict)
 
@@ -168,6 +168,6 @@ def importTaskCustomer(companyId, taskId, username, phone_number):
 
     response_obj = urllib.request.urlopen(request_obj)
     html_code = response_obj.read().decode('utf-8')
+    print("importTaskCustomer: ", html_code)
 
-
-#print(get_companys())
+print("-------", get_companys())

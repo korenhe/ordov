@@ -37,6 +37,7 @@ from companies.models import Post
 from resumes.models import Resume
 
 from rest_framework import status
+from third_party.views import getBaiyingTaskList, importTaskCustomer
 
 # Create your views here.
 class InterviewViewSet(viewsets.ModelViewSet):
@@ -90,16 +91,34 @@ class InterviewTable(generic.ListView):
         context['template_table_name'] = 'Interview'
         return context
 
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
 def Task(request):
     if request.method == 'GET':
-        task_array = []
-        task_array.append(u"深圳富士通")
-        task_array.append(u"北京创图")
-        task_array.append(u"上海任宁")
+        task_array = getBaiyingTaskList()
         data = {
            "ai_taskId": task_array
         }
         return JsonResponse(data)
+    elif request.method == 'POST':
+        print("post------------", request.POST)
+        ai_task = request.POST['ai_task_id']
+        candidate_name = request.POST['candidate_name']
+        candidate_phone = request.POST['candidate_phone']
+        if ai_task == "" or candidate_name == "" or candidate_phone == "":
+            return
+        # This is test
+        # replace phone with my phone number
+        candidate_phone = "18515013796"
+
+        # split the ai_task_id
+        fields = ai_task.split()
+        if len(fields) < 2:
+            return
+        taskid = fields[len(fields)-1]
+        print("to Import", taskid, candidate_name, candidate_phone)
+        importTaskCustomer(15960, taskid, candidate_name, candidate_phone) 
+
 
 # Interview Appointment SubModal
 # ---------------------------------------- Pretty Split Line ----------------------------------------

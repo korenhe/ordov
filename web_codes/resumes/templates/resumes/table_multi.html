@@ -307,15 +307,7 @@
 
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
-              <form>
-
-                <div class="form-group">
-                <span class="label label-default">面试日期</span>
-                <div class="input-group date form_datetime" data-date="2019-05-20T10:00:00Z" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_input1">
-                    <input class="form-control" size="16" type="text" value="" readonly>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                </div>
-                </div>
+              <form name='ai_config_form' id="ai_config_form">
 
                 <div class="form-group">
                 <span class="label label-default">任务名称</span>
@@ -324,57 +316,15 @@
                 </div>
 
                 <div class="form-group">
-                <span class="label label-default">话术ID</span>
-                <select name="ai_task_id" id="huashu_id" class="form-control" data-live-search="true">
-                </select>
-                </div>
-
-                <div class="form-group">
-                <span class="label label-default">机器人ID</span>
-                <select name="ai_task_id" id="huashu_id" class="form-control" data-live-search="true">
-                </select>
-                </div>
-
-                <div class="form-group">
                   <span class="label label-default">应聘者</span>
-                  <input type="text" class="form-control" id="text_name">
+                  <input type="text" name="ai_candidate_name" class="form-control" id="text_name">
                 </div>
 
                 <div class="form-group">
                   <span class="label label-default">电话</span>
-                  <input type="text" class="form-control" id="text_phone_number">
+                  <input type="text" name="ai_candidate_phone" class="form-control" id="text_phone_number">
                 </div>
 
-              </form>
-            </div>
-
-            <div class="tab-pane fade" id="disagree", role="tabpanel" aria-labelledby="disagree-tab" style="display:none;">
-              <form>
-
-                <div class="form-group">
-                  <label for="text_d_address" class="col-form-label">Address</label>
-                  <input type="text" class="form-control" id="text_d_address">
-                </div>
-
-                <div class="form-group">
-                  <label for="text_d_industry" class="col-form-label">Industry</label>
-                  <input type="text" class="form-control" id="text_d_industry">
-                </div>
-
-                <div class="form-group">
-                  <label for="text_d_salary" class="col-form-label">Salary</label>
-                  <input type="text" class="form-control" id="text_d_salary">
-                </div>
-
-                <div class="form-group">
-                  <label for="text_d_insurance" class="col-form-label">Insurance</label>
-                  <input type="text" class="form-control" id="text_d_insurance">
-                </div>
-
-                <div class="form-group">
-                  <label for="text_d_others" class="col-form-label">Other</label>
-                  <textarea class="form-control" id="text_d_others"></textarea>
-                </div>
               </form>
             </div>
 

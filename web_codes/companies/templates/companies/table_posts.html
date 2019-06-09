@@ -262,7 +262,14 @@
               <input type="text" class="form-control" name="linkman_phone" id="linkman_phone" placeholder="" value=""></input>
             </div>
 
+
+
             <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2">百应任务</span>
+              </div>
+              <select class="form-control" id="baiying_task_id" name="baiying_task_id" aria-labelledby="basic-addon2">
+              </select>
             </div>
 
             <?-- Innter Filter-->
@@ -352,5 +359,22 @@
 	 "data":$('#post_filter_form').serialize(),
    });
  }
+
+  $.ajax({
+      type: "GET",
+      url:'/interview/ai/task',
+      async:false,
+      dataType: "json",
+      success: function(data){
+        $('#baiying_task_id').html("")
+        $('#baiying_task_id').prepend('<option value="">请选择任务</option>');
+        if (data !='') {
+          $.each(data.ai_taskId,function(index, ele) {
+            $('#baiying_task_id').append('<option value="baiying_task_id' + index + '">' + ele + '</option>');
+          });
+        }
+      }
+    });
+
 </script>
 {% endblock%}

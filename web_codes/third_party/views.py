@@ -29,3 +29,7 @@ def getBaiyingTaskList():
     return taskList
     
     # Step3: 
+
+def importTaskCustomer(companyId, taskId, username, phone_number):
+    baiying.importTaskCustomer(companyId, taskId, username, phone_number)
+

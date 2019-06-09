@@ -723,12 +723,6 @@ $(document).ready(function() {
     $('#pbBaddebtModal').modal('toggle');
   });
 
-  /* TBD: is this useful? */
-  $(document).on('change', '#ai_task_id', function() {
-    var condition = $("#ai_task_id").find("option:selected").text()
-    // should update the huashu ID corresponsely
-  });
-
   // post table
   $('#dataTable_post tbody').on('click', 'tr', function() {
     var id = this.id;
@@ -778,6 +772,17 @@ $(document).ready(function() {
   function do_dial_submit(resume_id) {
     var post_id = post_selected_value;
     var status = 1;
+
+    $.ajax({
+      type: "POST",
+      url:'/interview/ai/task/',
+      data: function(d) {
+        d.ai_task_id = $('#ai_task_id').val();
+        d.candidate_name = $('#text_name').val();
+        d.candidate_phone = $('#text_phone_number').val();
+      },
+    });
+
     $('#dialModal').modal('hide');
 
     submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, 'AI面试');
