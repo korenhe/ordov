@@ -58,7 +58,7 @@ class Experience(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
 
     def __str__(self):
-        return '{}: {}'.format(self.start, self.company_name)
+        return '{}: {} {}'.format(self.start, self.company_name, self.post_name)
 
 class Project(models.Model):
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, default='')
