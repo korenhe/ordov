@@ -352,7 +352,7 @@ $(document).ready(function() {
     table.draw(reset_flag);
   }
 
-  function stop_interview_by_id(interview_id, url, status_value, table) {
+  function stop_interview_by_id(interview_id, url, table) {
     var xhr = new XMLHttpRequest();
     xhr.open("PATCH", url + interview_id + '/');
     xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
@@ -362,7 +362,6 @@ $(document).ready(function() {
 
     data = {
       "is_active":false,
-      "status": status_value,
       "result":"Stopped",
     };
 
@@ -429,7 +428,7 @@ $(document).ready(function() {
     data = {"resume": resume_id,
             "post": post_id,
             "is_active":false,
-            "status": -2,
+            "status": status_value,
             "result":"Stopped",
            };
 
@@ -612,14 +611,14 @@ $(document).ready(function() {
 
   $(document).on('click', '.stage_zero_pass', function() {
     resume_selected_value = Number(this.id);
-    var statusI = -1
+    var statusI = 2
     submit_interview_by_compound(resume_selected_value, post_selected_value, "/api/interviews/", statusI, table)
 
   });
 
   $(document).on('click', '.stage_zero_fail', function() {
     resume_selected_value = Number(this.id);
-    var statusI = -2
+    var statusI = 0
     stop_interview_by_compound(resume_selected_value, post_selected_value, "/api/interviews/", statusI, table)
   });
 
@@ -913,8 +912,7 @@ $(document).ready(function() {
       var interview_id = interview_selected_value;
 
       $('#stopModal').modal('hide');
-      var status = -2 // current status, not updated
-      stop_interview_by_id(interview_id, "/api/interviews/", status, table);
+      stop_interview_by_id(interview_id, "/api/interviews/", table);
     });
   });
 

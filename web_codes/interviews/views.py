@@ -38,42 +38,6 @@ class InterviewViewSet(viewsets.ModelViewSet):
     queryset = Interview.objects.all().order_by('id')
     serializer_class = InterviewSerializer
 
-    def create(self, request, **kwargs):
-        # Update the interview stat here
-        is_active = request.data['is_active']
-        status = request.data['status']
-        postid = request.data['resume']
-        resumeid = request.data['post']
-        # -1 and -2 has special usage in our system
-        # -1 means increating automically
-        # -2 means stop
-
-        interviewTarget = None
-        if status == -1 or status == -2:
-            try:
-                interviewTarget = Interview.objects.get(post=postid, resume=resumeid)
-            except (ObjectDoesNotExist):
-                pass
-        if interviewTarget == None and status == -2:
-            status = 0
-        elif interviewTarget == None and status == -1:
-            status = 2
-        elif status == -1: # increase automically
-            curStat = interviewTarget.status
-            status = curStat + 1
-        elif status == -2: # stop
-            status = interviewTarget.status
-
-        iMap = request.data
-        iMap['status'] = status
-        interviewSerializer = InterviewSerializer(data=iMap)
-        if interviewSerializer.is_valid(raise_exception=True):
-            interviewSaved = interviewSerializer.save()
-        else:
-            pass
-        # we should update the
-        return Response({}, status=rest_status.HTTP_200_OK, template_name=None, content_type=None)
-
     def list(self, request, **kwargs):
         interview = query_interviews_by_args(**request.query_params)
 

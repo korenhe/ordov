@@ -134,10 +134,10 @@ def query_resumes_by_args(**kwargs):
 
     if status_id:
         if status_id >= 0:
-            queryset = Resume.objects.filter(interview__status=status_id, interview__post__id=post_id)
+            queryset = Resume.objects.filter(interview__status=status_id, interview__post__id=post_id, interview__is_active=True)
             queryset = queryset.exclude(interview__status=0, interview__post__id=post_id)
         else:
-            queryset = Resume.objects.filter(interview__status__lte = 0, interview__post__id=post_id)
+            queryset = Resume.objects.filter(interview__status__lte = 0, interview__post__id=post_id, interview__is_active=True)
     else:
         queryset = Resume.objects.all()
         queryset = queryset.exclude(interview__status=0, interview__post__id=post_id)
