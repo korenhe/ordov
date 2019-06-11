@@ -169,11 +169,11 @@ def query_resumes_by_args(**kwargs):
             queryset = queryset.filter(models.Q(gender__contains='f'))
 
         # post_province/city/district filter
-        if not post_province == "":
+        if post_province and post_province != "":
             queryset = queryset.filter(models.Q(expected_province__icontains=post_province))
-        if not post_city == "":
+        if post_city and post_city != "":
             queryset = queryset.filter(models.Q(expected_city__icontains=post_city))
-        if not post_district == "":
+        if post_district and post_district != "":
             queryset = queryset.filter(models.Q(expected_district__icontains=post_district))
 
 
