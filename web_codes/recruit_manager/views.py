@@ -8,9 +8,10 @@ import os
 import time
 
 from candidates.models import Candidate
-from companies.models import Company
+from companies.models import Company, Post
 from interviews.models import Interview
 from resumes.models import Resume
+from django.db import models
 from .load_excel import load_excel
 
 # Create your views here.
@@ -56,7 +57,7 @@ class CandidateTable(generic.ListView):
     template_name = 'candidates/table_candidates.html'
     paginate_by = 10
 
-    def get_queryset(self):
+    def get_queryset_waitting(self):
         candidate_list = Candidate.objects.all().prefetch_related('resume_set')
         return candidate_list
 
@@ -102,8 +103,45 @@ def invitation_result(request, resume_id):
 from django.http import JsonResponse
 def resume_statistic(request, post_id):
     resumes_total = Resume.objects.exclude(interview__status=0, interview__post__id=post_id).count()
-    resumes_waitting = Resume.objects.exclude(interview__post__id=post_id).count()
+
+    queryset_waitting = Resume.objects.exclude(interview__post__id=post_id)
+    post_request = None
+    try:
+        post_request = Post.objects.get(id=post_id)
+    except (ObjectDoesNotExist, MultipleObjectsReturned):
+        pass
+
+    if post_request:
+        post_age_min = post_request.age_min or 0
+        post_age_max = post_request.age_max or 100
+        post_degree_min = post_request.degree_min or 0
+        post_degree_max = post_request.degree_max or 100
+        post_gender = post_request.gender or ""
+        post_province = post_request.address_provice
+        post_city = post_request.address_city
+        post_district = post_request.address_distinct
+
+        queryset_waitting = queryset_waitting.filter(models.Q(degree__gte=post_degree_min) &
+                                   models.Q(degree__lte=post_degree_max) &
+                                   models.Q(age__gte=post_age_min) &
+                                   models.Q(age__lte=post_age_max))
+        if post_gender.find(u'男') >= 0:
+            queryset_waitting = queryset_waitting.filter(models.Q(gender__contains='m'))
+        elif post_gender.find(u'女') >= 0:
+            queryset_waitting = queryset_waitting.filter(models.Q(gender__contains='f'))
+
+        # post_province/city/district filter
+        if post_province != "":
+            queryset_waitting = queryset_waitting.filter(models.Q(expected_province__icontains=post_province))
+        if post_city != "":
+            queryset_waitting = queryset_waitting.filter(models.Q(expected_city__icontains=post_city))
+        if post_district != "":
+            queryset_waitting = queryset_waitting.filter(models.Q(expected_district__icontains=post_district))
+
+
+    resumes_waitting = queryset_waitting.count()
     # resumes_waitting should exclude the post filter ones
+
     interviews_status_filters = []
 
     for i in range(1, 9):
