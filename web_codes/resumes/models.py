@@ -233,7 +233,9 @@ def query_resumes_by_args(**kwargs):
                                    models.Q(phone_number__icontains=field) |
                                    models.Q(email__icontains=field) |
                                    models.Q(school__icontains=field) |
-                                   models.Q(major__icontains=field))
+                                   models.Q(major__icontains=field) |
+                                   models.Q(experience__post_name__icontains=field) |
+                                   models.Q(experience__company_name__icontains=field))
 
     # ------
     count = queryset.count()
