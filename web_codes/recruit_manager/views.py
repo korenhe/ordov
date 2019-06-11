@@ -103,12 +103,13 @@ from django.http import JsonResponse
 def resume_statistic(request, post_id):
     resumes_total = Resume.objects.exclude(interview__status=0, interview__post__id=post_id).count()
     resumes_waitting = Resume.objects.exclude(interview__post__id=post_id).count()
+    # resumes_waitting should exclude the post filter ones
     interviews_status_filters = []
 
     for i in range(1, 9):
-        interviews_status_filters.append(Resume.objects.filter(interview__status=i, interview__post__id=post_id).count())
+        interviews_status_filters.append(Resume.objects.filter(interview__status=i, interview__post__id=post_id, interview__is_active=True).count())
 
-    interviews_status_filters.append(Resume.objects.filter(interview__status__lte=0, interview__post__id=post_id).count())
+    interviews_status_filters.append(Resume.objects.filter(interview__post__id=post_id, interview__is_active=False).count())
 
     data = {
         "resumes_total": resumes_total,
