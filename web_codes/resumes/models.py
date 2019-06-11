@@ -132,15 +132,15 @@ def query_resumes_by_args(**kwargs):
 
     post_id = int(kwargs.get('post_id', [0])[0])
 
-    if status_id:
-        if status_id >= 0:
-            queryset = Resume.objects.filter(interview__status=status_id, interview__post__id=post_id, interview__is_active=True)
-            queryset = queryset.exclude(interview__status=0, interview__post__id=post_id)
-        else:
-            queryset = Resume.objects.filter(interview__status__lte = 0, interview__post__id=post_id, interview__is_active=True)
+    if status_id == 0:
+        queryset = Resume.objects.exclude(interview__post__id=post_id)
+    elif status_id > 0:
+        queryset = Resume.objects.filter(interview__status=status_id, interview__post__id=post_id, interview__is_active=True)
+        queryset = queryset.exclude(interview__status=0, interview__post__id=post_id)
+    elif status_id < 0:
+        queryset = Resume.objects.filter(interview__status__gte=0, interview__post__id=post_id, interview__is_active=False)
     else:
         queryset = Resume.objects.all()
-        queryset = queryset.exclude(interview__status=0, interview__post__id=post_id)
 
     # step1: Filter from post request
     post_request = None
