@@ -247,6 +247,8 @@ class InterviewSub_Payback_Invoice(models.Model):
 # Interview Terminate SubModal
 # ---------------------------------------- Pretty Split Line ----------------------------------------
 
+
+
 # ---------------------------------------- Pretty Bottom Line ----------------------------------------
 class OnDuty(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

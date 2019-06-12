@@ -352,62 +352,14 @@ $(document).ready(function() {
     table.draw(reset_flag);
   }
 
-  function stop_interview_by_id(interview_id, url, table) {
+  function xhr_common_send(method, url, data) {
     var xhr = new XMLHttpRequest();
-    xhr.open("PATCH", url + interview_id + '/');
+    xhr.open(method, url);
+
     xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
     var csrftoken = getCookie('csrftoken');
 
     xhr.setRequestHeader("X-CSRFToken", csrftoken);
-
-    data = {
-      "is_active":false,
-      "result":"Stopped",
-    };
-
-    xhr.onloadend = function() {
-      //done
-      page_refresh(table);
-    };
-
-    xhr.send(JSON.stringify(data));
-  }
-
-  function stop_interview_by_id2(interview_id, url, status_value, table) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("PATCH", url + interview_id + '/');
-    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-    var csrftoken = getCookie('csrftoken');
-
-    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-
-    data = {
-      "is_active":true,
-      "status": status_value,
-      "result":"Pending",
-    };
-
-    xhr.onloadend = function() {
-      //done
-      page_refresh(table);
-    };
-
-    xhr.send(JSON.stringify(data));
-  }
-
-  function submit_interview_by_id(interview_id, url, status_value, table) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("PATCH", url + interview_id + '/');
-    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-    var csrftoken = getCookie('csrftoken');
-
-    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-
-    data = {
-      "is_active":true,
-      "status": status_value,
-      "result":"Pending",
-    };
 
     xhr.onloadend = function() {
       //done
@@ -418,52 +370,24 @@ $(document).ready(function() {
   }
 
   function stop_interview_by_compound(resume_id, post_id, url, status_value, table) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", url);
-    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-    var csrftoken = getCookie('csrftoken');
-
-    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-
     data = {"resume": resume_id,
             "post": post_id,
             "is_active":false,
             "status": status_value,
             "result":"Stopped",
            };
-
-    xhr.onloadend = function() {
-      //done
-      page_refresh(table);
-    };
-
-    xhr.send(JSON.stringify(data));
+    xhr_common_send("POST", url, data);
   }
 
-  function submit_interviewsub_by_id(url, table, data) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", url);
-    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-    var csrftoken = getCookie('csrftoken');
+  function stop_interview_by_id(interview_id, url, table) {
+    data = {"is_active":false,
+            "result":"Stopped",
+           };
 
-    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-
-    xhr.onloadend = function() {
-      //done
-      page_refresh(table);
-    };
-
-    xhr.send(JSON.stringify(data));
+    xhr_common_send("PATCH", url + interview_id + '/', data);
   }
 
   function submit_interview_by_compound(resume_id, post_id, url, status_value, table) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", url);
-    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-    var csrftoken = getCookie('csrftoken');
-
-    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-
     data = {"resume": resume_id,
             "post": post_id,
             "is_active":true,
@@ -471,12 +395,21 @@ $(document).ready(function() {
             "result":"Pending",
            };
 
-    xhr.onloadend = function() {
-      //done
-      page_refresh(table);
-    };
+    xhr_common_send("POST", url, data);
+  }
 
-    xhr.send(JSON.stringify(data));
+  function submit_interview_by_id(interview_id, url, status_value, table) {
+    data = {"is_active":true,
+            "status": status_value,
+            "result":"Pending",
+           };
+
+    xhr_common_send("PATCH", url + interview_id + '/');
+  }
+
+  /* Save Interview Sub Table */
+  function submit_interviewsub_by_id(url, table, data) {
+    xhr_common_send("POST", url, data);
   }
 
   function show_post_modal(post_id) {
@@ -1058,10 +991,8 @@ $(document).ready(function() {
       var interview_id = interview_selected_value;
 
       $('#probationFailModal').modal('hide');
-      var status = -2;
 
-      // TBD, mod after status = -2 is removed
-      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+      stop_interview_by_id(interview_id, "/api/interviews/", table);
     });
   });
 
