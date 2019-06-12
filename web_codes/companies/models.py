@@ -134,7 +134,6 @@ ORDER_COLUMN_CHOICES = Choices(
 )
 
 def query_posts_by_args(**kwargs):
-    print("================================================================================-")
     draw = int(kwargs.get('draw', [0])[0])
     length = int(kwargs.get('length', [15])[0])
     start = int(kwargs.get('start', [0])[0])

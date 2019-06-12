@@ -124,7 +124,7 @@ def query_resumes_by_args(**kwargs):
     expected_province = kwargs.get('province', [''])[0]
     expected_city = kwargs.get('city', [''])[0]
     expected_district = kwargs.get('district', [''])[0]
-    print("expected: ", expected_province, expected_city, expected_district)
+    #print("expected: ", expected_province, expected_city, expected_district)
 
     status_id = int(kwargs.get('status_id', [0])[0])
 

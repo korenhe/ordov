@@ -131,11 +131,11 @@ def resume_statistic(request, post_id):
             queryset_waitting = queryset_waitting.filter(models.Q(gender__contains='f'))
 
         # post_province/city/district filter
-        if post_province != "":
+        if post_province and post_province != "":
             queryset_waitting = queryset_waitting.filter(models.Q(expected_province__icontains=post_province))
-        if post_city != "":
+        if post_city and post_city != "":
             queryset_waitting = queryset_waitting.filter(models.Q(expected_city__icontains=post_city))
-        if post_district != "":
+        if post_district and post_district != "":
             queryset_waitting = queryset_waitting.filter(models.Q(expected_district__icontains=post_district))
 
 
