@@ -30,8 +30,8 @@ class Company(models.Model):
 
     address_province = models.CharField(max_length=10, blank=True, null=True)
     address_city = models.CharField(max_length=10, blank=True, null=True)
-    address_distinct = models.CharField(max_length=10, blank=True, null=True)
-    address_stress = models.CharField(max_length=20, blank=True, null=True)
+    address_district = models.CharField(max_length=10, blank=True, null=True)
+    address_street = models.CharField(max_length=20, blank=True, null=True)
 
     phone_number = models.CharField(max_length=15, null=True, blank=True)
     email = models.CharField(max_length=50, blank=True, null=True)
@@ -90,8 +90,8 @@ class Post(models.Model):
 
     address_province = models.CharField(max_length=10, blank=True, null=True)
     address_city = models.CharField(max_length=10, blank=True, null=True)
-    address_distinct = models.CharField(max_length=10, blank=True, null=True)
-    address_stress = models.CharField(max_length=20, blank=True, null=True)
+    address_district = models.CharField(max_length=10, blank=True, null=True)
+    address_street = models.CharField(max_length=20, blank=True, null=True)
 
     # Requirement for the post
     degree = models.IntegerField(blank=True, null=True, choices=DEGREE_CHOICES)

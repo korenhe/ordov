@@ -201,7 +201,7 @@ def UpdatePost(request):
             "degree_max": degreeMax,
             "address_province": province,
             "address_city": city,
-            "address_distinct": district,
+            "address_district": district,
             "age_min": ageMin,
             "age_max": ageMax,
             "graduatetime_min": graduate_S,

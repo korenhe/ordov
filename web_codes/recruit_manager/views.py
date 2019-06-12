@@ -119,7 +119,7 @@ def resume_statistic(request, post_id):
         post_gender = post_request.gender or ""
         post_province = post_request.address_province
         post_city = post_request.address_city
-        post_district = post_request.address_distinct
+        post_district = post_request.address_district
 
         queryset_waitting = queryset_waitting.filter(models.Q(degree__gte=post_degree_min) &
                                    models.Q(degree__lte=post_degree_max) &

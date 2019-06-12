@@ -32,7 +32,7 @@ class Resume(models.Model):
     # birth place (jiguan in chinese)
     birth_province = models.CharField(max_length=10, blank=True, null=True)
     birth_city = models.CharField(max_length=10, blank=True, null=True)
-    birth_distinct = models.CharField(max_length=10, blank=True, null=True)
+    birth_district = models.CharField(max_length=10, blank=True, null=True)
     birth_place = models.CharField(max_length=50, blank=True, null=True)
 
     # social info
@@ -46,7 +46,7 @@ class Resume(models.Model):
     # resident info
     current_settle_province = models.CharField(max_length=10, blank=True, null=True)
     current_settle_city = models.CharField(max_length=10, blank=True, null=True)
-    current_settle_distinct = models.CharField(max_length=10, blank=True, null=True)
+    current_settle_district = models.CharField(max_length=10, blank=True, null=True)
     current_settle_street = models.CharField(max_length=20, blank=True, null=True)
     birth_place = models.CharField(max_length=50, blank=True, null=True)
 
@@ -157,7 +157,7 @@ def query_resumes_by_args(**kwargs):
         post_gender = post_request.gender or ""
         post_province = post_request.address_province
         post_city = post_request.address_city
-        post_district = post_request.address_distinct
+        post_district = post_request.address_district
 
         queryset = queryset.filter(models.Q(degree__gte=post_degree_min) &
                                    models.Q(degree__lte=post_degree_max) &
@@ -269,7 +269,7 @@ class Education(models.Model):
     # resident info
     province = models.CharField(max_length=10, blank=True, null=True)
     city = models.CharField(max_length=10, blank=True, null=True)
-    distinct = models.CharField(max_length=10, blank=True, null=True)
+    district = models.CharField(max_length=10, blank=True, null=True)
     street = models.CharField(max_length=20, blank=True, null=True)
     place = models.CharField(max_length=50, blank=True, null=True)
 

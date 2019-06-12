@@ -155,7 +155,7 @@ class EducationSerializer(serializers.ModelSerializer):
             'edu_type',
             'province',
             'city',
-            'distinct',
+            'district',
             'street',
             'place',
             'instructor',
