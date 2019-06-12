@@ -170,7 +170,7 @@ def UpdatePost(request):
             },
             "description": post_name,
             "name": post_name,
-            "address_provice": province,
+            "address_province": province,
             "address_city": city,
             "address_district": district,
             "salary_offer": salary_offer
@@ -199,7 +199,7 @@ def UpdatePost(request):
             "degree": DEGREE_CHOICES_MAP.get(min_degree),
             "degree_min": degreeMin,
             "degree_max": degreeMax,
-            "address_provice": province,
+            "address_province": province,
             "address_city": city,
             "address_distinct": district,
             "age_min": ageMin,

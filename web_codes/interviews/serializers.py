@@ -8,6 +8,7 @@ from .models import InterviewSub_Interview, InterviewSub_Interview_Pass
 from .models import InterviewSub_Offer, InterviewSub_Offer_Agree
 from .models import InterviewSub_Probation, InterviewSub_Probation_Fail
 from .models import InterviewSub_Payback, InterviewSub_Payback_Finish
+from .models import InterviewSub_Terminate
 
 class InterviewSerializer(serializers.ModelSerializer):
     id = serializers.SerializerMethodField()
@@ -237,3 +238,25 @@ class InterviewSub_Payback_FinishSerializer(serializers.ModelSerializer):
         interview.save()
 
         return payback_sub_finish
+
+# Interview Terminate SubModal
+class InterviewSub_TerminateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InterviewSub_Terminate
+        fields = (
+            'interview',
+
+            'expected_industry',
+            'expected_post',
+            'expected_shift',
+            'expected_salary',
+
+            'expected_notes',
+
+            'expected_province',
+            'expected_city',
+            'expected_district',
+
+            'expected_insurance',
+            'expected_insurance_schedule'
+        )

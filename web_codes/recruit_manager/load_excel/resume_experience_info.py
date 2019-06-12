@@ -31,7 +31,7 @@ def update_experience_info(resume, phone):
     exp_post_deduct_salary = str(resume[iPos['EXPERIENCE_POST_DEDUCT_SALARY']]).strip()
     exp_post_zuoxi = str(resume[iPos['EXPERIENCE_POST_ZUOXI']]).strip()
     exp_post_leave_reason = str(resume[iPos['EXPERIENCE_POST_LEAVE_REASON']]).strip()
-    exp_post_provice = str(resume[iPos['EXPERIENCE_POST_PROVICE']]).strip()
+    exp_post_province = str(resume[iPos['EXPERIENCE_POST_PROVICE']]).strip()
     exp_post_city = str(resume[iPos['EXPERIENCE_POST_CITY']]).strip()
     exp_post_district = str(resume[iPos['EXPERIENCE_POST_DISTRICT']]).strip()
 
@@ -73,7 +73,7 @@ def update_experience_info(resume, phone):
         "shift" : exp_post_zuoxi,
         "leave_reason" : exp_post_leave_reason,
 
-        "work_province" : exp_post_provice,
+        "work_province" : exp_post_province,
         "work_city" : exp_post_city,
         "work_district" : exp_post_district,
 

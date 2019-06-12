@@ -20,7 +20,7 @@ def update_education_info(resume, phone):
     degree = str(resume[iPos['EDUCATION_DEGREE']]).strip()
     edu_reference = str(resume[iPos['EDUCATION_REFERENCE']]).strip()
     edu_reference_phone = str(resume[iPos['EDUCATION_REFERENCE_PHONE']]).strip()
-    edu_provice = str(resume[iPos['EDUCATION_PROVICE']]).strip()
+    edu_province = str(resume[iPos['EDUCATION_PROVICE']]).strip()
     edu_city = str(resume[iPos['EDUCATION_CITY']]).strip()
     edu_district = str(resume[iPos['EDUCATION_DISTRICT']]).strip()
     edu_street = str(resume[iPos['EDUCATION_STREET']]).strip()
@@ -59,11 +59,11 @@ def update_education_info(resume, phone):
         "degree" : degreeNO,
         "edu_type" : edu_type,
 
-        "province" : edu_provice,
+        "province" : edu_province,
         "city" : edu_city,
         "district" : edu_district,
         "street" : edu_street,
-        "place" : edu_provice + edu_city + edu_district + edu_street,
+        "place" : edu_province + edu_city + edu_district + edu_street,
 
         "instructor" : edu_reference,
         "instructor_phone" : edu_reference_phone,

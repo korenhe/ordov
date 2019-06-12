@@ -117,7 +117,7 @@ def resume_statistic(request, post_id):
         post_degree_min = post_request.degree_min or 0
         post_degree_max = post_request.degree_max or 100
         post_gender = post_request.gender or ""
-        post_province = post_request.address_provice
+        post_province = post_request.address_province
         post_city = post_request.address_city
         post_district = post_request.address_distinct
 

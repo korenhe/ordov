@@ -6,6 +6,7 @@ from .views import InterviewSub_InterviewViewSet, InterviewSub_Interview_PassVie
 from .views import InterviewSub_OfferViewSet, InterviewSub_Offer_AgreeViewSet
 from .views import InterviewSub_ProbationViewSet, InterviewSub_Probation_FailViewSet
 from .views import InterviewSub_PaybackViewSet, InterviewSub_Payback_FinishViewSet
+from .views import InterviewSub_TerminateViewSet
 
 router = routers.DefaultRouter()
 
@@ -23,6 +24,8 @@ router.register(r'probation_sub_fail', InterviewSub_Probation_FailViewSet)
 
 router.register(r'payback_sub', InterviewSub_PaybackViewSet)
 router.register(r'payback_sub_finish', InterviewSub_Payback_FinishViewSet)
+
+router.register(r'terminate_sub', InterviewSub_TerminateViewSet)
 
 app_name = "interviews"
 

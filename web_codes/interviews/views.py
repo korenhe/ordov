@@ -28,6 +28,9 @@ from .serializers import InterviewSub_ProbationSerializer, InterviewSub_Probatio
 from .models import InterviewSub_Payback, InterviewSub_Payback_Finish
 from .serializers import InterviewSub_PaybackSerializer, InterviewSub_Payback_FinishSerializer
 
+from .models import InterviewSub_Terminate
+from .serializers import InterviewSub_TerminateSerializer
+
 from companies.models import Post
 from resumes.models import Resume
 from django.http import JsonResponse
@@ -145,3 +148,9 @@ class InterviewSub_PaybackViewSet(viewsets.ModelViewSet):
 class InterviewSub_Payback_FinishViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Payback_Finish.objects.all()
     serializer_class = InterviewSub_Payback_FinishSerializer
+
+# Interview Terminate SubModal
+# ---------------------------------------- Pretty Split Line ----------------------------------------
+class InterviewSub_TerminateViewSet(viewsets.ModelViewSet):
+    queryset = InterviewSub_Terminate.objects.all()
+    serializer_class = InterviewSub_TerminateSerializer

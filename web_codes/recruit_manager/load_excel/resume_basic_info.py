@@ -115,7 +115,7 @@ def create_or_update_basic_info(resume, phone):
 		"birth_city" : birth_city,
 		"birth_district" : birth_district,
 
-		"current_settle_provice" : current_settle_province,
+		"current_settle_province" : current_settle_province,
 		"current_settle_city" : current_settle_city,
 		"current_settle_district" : current_settle_district,
 		"current_settle_street" : current_settle_street,

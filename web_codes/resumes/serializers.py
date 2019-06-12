@@ -153,7 +153,7 @@ class EducationSerializer(serializers.ModelSerializer):
             'major',
             'degree',
             'edu_type',
-            'provice',
+            'province',
             'city',
             'distinct',
             'street',

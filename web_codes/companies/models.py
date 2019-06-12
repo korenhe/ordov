@@ -28,7 +28,7 @@ class Company(models.Model):
     # unified social credit code
     uscc = models.CharField(max_length=50, blank=True, null=True)
 
-    address_provice = models.CharField(max_length=10, blank=True, null=True)
+    address_province = models.CharField(max_length=10, blank=True, null=True)
     address_city = models.CharField(max_length=10, blank=True, null=True)
     address_distinct = models.CharField(max_length=10, blank=True, null=True)
     address_stress = models.CharField(max_length=20, blank=True, null=True)
@@ -83,12 +83,12 @@ class Post(models.Model):
     # the level field should be in experience table
     level = models.CharField(max_length=20, blank=True, null=True, default='')
     subsidy = models.CharField(max_length=20, blank=True, null=True, default='')
-    sum_salaray = models.CharField(max_length=20, blank=True, null=True, default='')
+    sum_salary = models.CharField(max_length=20, blank=True, null=True, default='')
     year_yard = models.CharField(max_length=20, blank=True, null=True, default='')
     social_security = models.CharField(max_length=20, blank=True, null=True, default='')
     other_benefit = models.CharField(max_length=20, blank=True, null=True, default='')
 
-    address_provice = models.CharField(max_length=10, blank=True, null=True)
+    address_province = models.CharField(max_length=10, blank=True, null=True)
     address_city = models.CharField(max_length=10, blank=True, null=True)
     address_distinct = models.CharField(max_length=10, blank=True, null=True)
     address_stress = models.CharField(max_length=20, blank=True, null=True)
