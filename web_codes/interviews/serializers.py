@@ -197,7 +197,7 @@ class InterviewSub_Probation_FailSerializer(serializers.ModelSerializer):
 
         # update interview table
         interview = Interview.objects.get(pk=probation_sub_.interview.id)
-        interview.status = 5
+        interview.is_active = False
         interview.save()
 
         return probation_sub_fail
@@ -260,3 +260,14 @@ class InterviewSub_TerminateSerializer(serializers.ModelSerializer):
             'expected_insurance',
             'expected_insurance_schedule'
         )
+
+    def create(self, validated_data):
+        # This is an example for override the default create behavior
+        terminate_sub = InterviewSub_Terminate.objects.create(**validated_data)
+
+        # update interview table
+        interview = Interview.objects.get(pk=terminate_sub.interview.id)
+        interview.is_active = False
+        interview.save()
+
+        return terminate_sub

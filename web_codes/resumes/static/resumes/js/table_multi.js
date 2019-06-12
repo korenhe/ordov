@@ -379,14 +379,6 @@ $(document).ready(function() {
     xhr_common_send("POST", url, data);
   }
 
-  function stop_interview_by_id(interview_id, url, table) {
-    data = {"is_active":false,
-            "result":"Stopped",
-           };
-
-    xhr_common_send("PATCH", url + interview_id + '/', data);
-  }
-
   function submit_interview_by_compound(resume_id, post_id, url, status_value, table) {
     data = {"resume": resume_id,
             "post": post_id,
@@ -409,6 +401,10 @@ $(document).ready(function() {
 
   /* Save Interview Sub Table */
   function submit_interviewsub_by_id(url, table, data) {
+    xhr_common_send("POST", url, data);
+  }
+
+  function terminate_interviewsub_by_id(url, table, data) {
     xhr_common_send("POST", url, data);
   }
 
@@ -845,7 +841,21 @@ $(document).ready(function() {
       var interview_id = interview_selected_value;
 
       $('#stopModal').modal('hide');
-      stop_interview_by_id(interview_id, "/api/interviews/", table);
+      data = {
+        "interview": interview_id,
+        "expected_industry": "t i",
+        "expected_post": "t p",
+        "expected_shift": "t s",
+        "expected_salary": "t sa",
+        "expected_notes": "t n",
+        "expected_province": "t p",
+        "expected_city": "t c",
+        "expected_district": "t d",
+        "expected_insurance": "t in",
+        "expected_insurance_schedule": "t ins"
+      };
+
+      terminate_interviewsub_by_id("/interviews/api/terminate_sub/", table, data);
     });
   });
 
@@ -872,27 +882,15 @@ $(document).ready(function() {
       $('#interviewResultModal').modal('hide');
       //var status = 4;
 
-      /*
-        {
-        "interview_sub": {
-        "interview": 53,
-        "result_type": 3
-        },
-        "reason": "shuang",
-        "description": "something.",
-        "comments": "shuang",
-        "notes": "a"
-        }
-      */
       data = {
         "interview_sub": {
           "interview": interview_id,
           "result_type": 3
         },
-        "reason": "shuang",
-        "description": "something.",
-        "comments": "shuang",
-        "notes": "a"
+        "reason": "interview pass reason",
+        "description": "interview pass description",
+        "comments": "interview pass comments",
+        "notes": "interview pass notes"
       };
 
       /* submit sub_interview_process_table, then the interview table is updated
@@ -911,30 +909,19 @@ $(document).ready(function() {
       $('#offerModal').modal('hide');
       //var status = 5;
 
-      /*
-        "offer_sub": null,
-        "date": null,
-        "contact": "",
-        "contact_phone": "",
-        "address": "",
-        "postname": "",
-        "certification": "",
-        "salary": "",
-        "notes": ""
-      */
       data = {
         "offer_sub": {
           "interview": interview_id,
           "result_type": 3
         },
         "date": null,
-        "contact": "abc",
-        "contact_phone": "123",
-        "address": "xx",
-        "postname": "yy",
-        "certification": "zz",
-        "salary": "4444",
-        "notes": ""
+        "contact": "offer agree c",
+        "contact_phone": "offer agree cp",
+        "address": "offer agree add",
+        "postname": "offer agree p",
+        "certification": "offer agree cert",
+        "salary": "offer agree salary",
+        "notes": "offer agree notes"
       };
 
       //submit_interview_by_id(interview_id, "/api/interviews/", status, table);
@@ -991,8 +978,19 @@ $(document).ready(function() {
       var interview_id = interview_selected_value;
 
       $('#probationFailModal').modal('hide');
+      // active = false
+      data = {
+        "payback_sub": {
+        "interview": interview_id,
+        "result_type": 3
+        },
 
-      stop_interview_by_id(interview_id, "/api/interviews/", table);
+        "reason": "pb failed reason",
+        "comments": "pb failed comments"
+      };
+
+      /* This is different with other terminate modal, because it contains the probation fail reason */
+      submit_interviewsub_by_id("/interviews/api/probation_sub_fail/", table, data);
     });
   });
 
@@ -1033,21 +1031,13 @@ $(document).ready(function() {
 
       $('#pbFinishModal').modal('hide');
 
-      /*
-        {
-        "payback_sub": {
-        "interview": null,
-        "result_type": null
-        },
-        "notes": ""
-        }
-      */
+      // status = 8
       data = {
         "payback_sub": {
         "interview": interview_id,
         "result_type": 3
         },
-        "notes": "xxxxdfdfd"
+        "notes": "payback notes"
       };
 
       submit_interviewsub_by_id("/interviews/api/payback_sub_finish/", table, data);
@@ -1078,35 +1068,19 @@ $(document).ready(function() {
       $('#appointmentModal').modal('hide');
       //var status = 3 // interview
 
-      /*
-        {
-        "appointment_sub": {
-        "interview": null,
-        "result_type": null
-        },
-        "date": null,
-        "contact": "",
-        "address": "",
-        "postname": "",
-        "certification": "",
-        "attention": "",
-        "first_impression": "",
-        "notes": ""
-        }
-      */
       data = {
         "appointment_sub": {
           "interview": interview_id,
           "result_type": 3
         },
         "date": null,
-        "contact": "abc",
-        "address": "def",
-        "postname": "hij",
-        "certification": "klm",
-        "attention": "nop",
-        "first_impression": "qrs",
-        "notes": "tuv"
+        "contact": "app agree c",
+        "address": "app agree a",
+        "postname": "app agree p",
+        "certification": "app agree cert",
+        "attention": "app agree att",
+        "first_impression": "app agree fi",
+        "notes": "app agree notes"
       };
 
       submit_interviewsub_by_id("/interviews/api/appointment_sub_agree/", table, data);
