@@ -408,6 +408,12 @@ $(document).ready(function() {
     xhr_common_send("POST", url, data);
   }
 
+  function helper_get_selectbox_text(select_id) {
+    select_box = document.getElementById(select_id);
+    text_box = select_box.options[select_box.selectedIndex].innerHTML;
+
+    return text_box;
+  }
   function show_post_modal(post_id) {
     $.ajax({
       url:'/api/posts/' + post_id + '/',
@@ -841,11 +847,12 @@ $(document).ready(function() {
       var interview_id = interview_selected_value;
 
       $('#stopModal').modal('hide');
+
       data = {
         "interview": interview_id,
-        "expected_industry": "t i",
-        "expected_post": "t p",
-        "expected_shift": "t s",
+        "expected_industry": helper_get_selectbox_text("text_terminate_expected_industry"),
+        "expected_post": helper_get_selectbox_text("text_terminate_expected_post"),
+        "expected_shift": helper_get_selectbox_text("text_terminate_expected_shift"),
         "expected_salary": "t sa",
         "expected_notes": "t n",
         "expected_province": "t p",
