@@ -244,10 +244,25 @@ class InterviewSub_Payback_Invoice(models.Model):
     contact = models.CharField(max_length=50, blank=True, null=True)
     contact_phone = models.CharField(max_length=15, null=True, blank=True)
 
-# Interview Terminate SubModal
+# Interview Terminate SubModal (Currently "active == false" means "terminate == true")
+# So, if interview main table show active == false, we can refer this table to find the details.
 # ---------------------------------------- Pretty Split Line ----------------------------------------
+class InterviewSub_Terminate(models.Model):
+    interview = models.ForeignKey(Interview, on_delete=models.CASCADE, default=0)
 
+    expected_industry = models.CharField(max_length=50, null=True, blank=True)
+    expected_post = models.CharField(max_length=50, null=True, blank=True)
+    expected_shift = models.CharField(max_length=50, null=True, blank=True)
+    expected_salary = models.CharField(max_length=50, null=True, blank=True)
 
+    expected_notes = models.CharField(max_length=50, null=True, blank=True)
+
+    expected_province = models.CharField(max_length=50, null=True, blank=True)
+    expected_city = models.CharField(max_length=50, null=True, blank=True)
+    expected_district = models.CharField(max_length=50, null=True, blank=True)
+
+    expected_insurance = models.CharField(max_length=50, null=True, blank=True)
+    expected_insurance_schedule = models.CharField(max_length=50, null=True, blank=True)
 
 # ---------------------------------------- Pretty Bottom Line ----------------------------------------
 class OnDuty(models.Model):

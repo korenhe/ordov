@@ -404,7 +404,7 @@ $(document).ready(function() {
             "result":"Pending",
            };
 
-    xhr_common_send("PATCH", url + interview_id + '/');
+    xhr_common_send("PATCH", url + interview_id + '/', data);
   }
 
   /* Save Interview Sub Table */

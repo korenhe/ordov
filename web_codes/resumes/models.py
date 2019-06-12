@@ -51,7 +51,7 @@ class Resume(models.Model):
     birth_place = models.CharField(max_length=50, blank=True, null=True)
 
     # Expection info
-    expected_area = models.CharField(max_length=50, null=True, blank=True)
+    expected_industry = models.CharField(max_length=50, null=True, blank=True)
     expected_salary = models.CharField(max_length=50, null=True, blank=True)
     expected_post = models.CharField(max_length=50, null=True, blank=True)
     expected_positon = models.CharField(max_length=50, null=True, blank=True)

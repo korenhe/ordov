@@ -994,15 +994,15 @@
         <div class="modal-body">
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active" id="area-tab" href="#area" data-toggle="tab" role="tab" aria-controls="area" aria-selected="true">行业</a></li>
+              <a class="nav-link active" id="industry-tab" href="#industry" data-toggle="tab" role="tab" aria-controls="industry" aria-selected="true">行业</a></li>
             <li class="nav-item">
-              <a class="nav-link" id="zuoxi-tab" href="#zuoxi" data-toggle="tab" role="tab" aria-controls="zuoxi" aria-selected="false">作息</a></li>
+              <a class="nav-link" id="shift-tab" href="#shift" data-toggle="tab" role="tab" aria-controls="shift" aria-selected="false">作息</a></li>
             <li class="nav-item">
               <a class="nav-link" id="salary-tab" href="#salary" data-toggle="tab" role="tab" aria-controls="salary" aria-selected="false">薪资</a></li>
             <li class="nav-item">
-              <a class="nav-link" id="shebao-tab" href="#shebao" data-toggle="tab" role="tab" aria-controls="shebao" aria-selected="false">社保</a></li>
+              <a class="nav-link" id="insurance-tab" href="#insurance" data-toggle="tab" role="tab" aria-controls="insurance" aria-selected="false">社保</a></li>
             <li class="nav-item">
-              <a class="nav-link" id="gangwei-tab" href="#gangwei" data-toggle="tab" role="tab" aria-controls="gangwei" aria-selected="false">岗位</a></li>
+              <a class="nav-link" id="post-tab" href="#post" data-toggle="tab" role="tab" aria-controls="post" aria-selected="false">岗位</a></li>
             <li class="nav-item">
               <a class="nav-link" id="position-tab" href="#position" data-toggle="tab" role="tab" aria-controls="position" aria-selected="false">工作地</a></li>
             <li class="nav-item">
@@ -1010,12 +1010,12 @@
           </ul>
 
           <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="area" role="tabpanel" aria-labelledby="area-tab">
+            <div class="tab-pane fade show active" id="industry" role="tabpanel" aria-labelledby="industry-tab">
               <form>
                 <div class="form-group">
-                  <label for="text_expect_area" class="col-form-label">选择期望行业</label>
+                  <label for="text_expected_industry" class="col-form-label">选择期望行业</label>
 
-                  <select class="form-control" id="text_expect_area_id">
+                  <select class="form-control" id="text_terminate_expected_industry">
                     <option></option>
                     <option>计算机软件</option>
                     <option>通信</option>
@@ -1028,11 +1028,11 @@
               </form>
             </div>
 
-            <div class="tab-pane fade" id="gangwei", role="tabpanel" aria-labelledby="gangwei-tab">
+            <div class="tab-pane fade" id="post", role="tabpanel" aria-labelledby="post-tab">
               <form>
                 <div class="form-group">
-                  <label for="text_expect_post" class="col-form-label">选择期望岗位</label>
-                  <select class="form-control" id="text_expect_post_id">
+                  <label for="text_expected_post" class="col-form-label">选择期望岗位</label>
+                  <select class="form-control" id="text_terminate_expected_post">
                     <option></option>
                     <option>普通员工</option>
                     <option>项目经理</option>
@@ -1043,11 +1043,11 @@
               </form>
             </div>
 
-            <div class="tab-pane fade" id="zuoxi", role="tabpanel" aria-labelledby="zuoxi-tab">
+            <div class="tab-pane fade" id="tab_shift", role="tabpanel" aria-labelledby="shift-tab">
               <form>
                 <div class="form-group">
-                  <label for="text_expect_zuoxi" class="col-form-label">期望作息时间</label>
-                  <select class="form-control" id="text_expect_zuoxi_id">
+                  <label for="text_expected_shift" class="col-form-label">期望作息时间</label>
+                  <select class="form-control" id="text_terminate_expected_shift">
                     <option></option>
                     <option>做五休二</option>
                     <option>单双休</option>
@@ -1061,8 +1061,8 @@
             <div class="tab-pane fade" id="salary", role="tabpanel" aria-labelledby="salary-tab">
               <form>
                 <div class="form-group">
-                  <label for="text_expect_salary" class="col-form-label">期望薪水(元/月)</label>
-                  <textarea class="form-control" id="text_expect_salary_id"></textarea>
+                  <label for="text_expected_salary" class="col-form-label">期望薪水(元/月)</label>
+                  <textarea class="form-control" id="text_terminate_expected_salary"></textarea>
                 </div>
               </form>
             </div>
@@ -1070,8 +1070,8 @@
             <div class="tab-pane fade" id="other", role="tabpanel" aria-labelledby="other-tab">
               <form>
                 <div class="form-group">
-                  <label for="text_expect_other" class="col-form-label">其他说明</label>
-                  <textarea class="form-control" id="text_expect_other"></textarea>
+                  <label for="text_expected_other" class="col-form-label">其他说明</label>
+                  <textarea class="form-control" id="text_terminate_expected_notes"></textarea>
                 </div>
               </form>
             </div>
@@ -1079,25 +1079,25 @@
             <div class="tab-pane fade" id="position", role="tabpanel" aria-labelledby="position-tab">
               <form>
                 <div class="form-group">
-                  <label for="text_expect_place_province" class="col-form-label">期望工作地.省</label>
-                  <input type="text" class="form-control" name="text_expect_place_province" id="text_expect_place_province" value="">
+                  <label for="text_expected_place_province" class="col-form-label">期望工作地.省</label>
+                  <input type="text" class="form-control" name="text_expected_place_province" id="text_terminate_expected_province" value="">
                 </div>
                 <div class="form-group">
-                  <label for="text_expect_place_city" class="col-form-label">期望工作地.市</label>
-                  <input type="text" class="form-control" name="text_expect_place_city" id="text_expect_place_city" value="">
+                  <label for="text_expected_place_city" class="col-form-label">期望工作地.市</label>
+                  <input type="text" class="form-control" name="text_expected_place_city" id="text_terminate_expected_city" value="">
                 </div>
                 <div class="form-group">
-                  <label for="text_expect_place_district" class="col-form-label">期望工作地.区/县</label>
-                  <input type="text" class="form-control" name="text_expect_place_district" id="text_expect_place_district" value="">
+                  <label for="text_expected_place_district" class="col-form-label">期望工作地.区/县</label>
+                  <input type="text" class="form-control" name="text_expected_place_district" id="text_terminate_expected_district" value="">
                 </div>
               </form>
             </div>
 
-            <div class="tab-pane fade" id="shebao", role="tabpanel" aria-labelledby="shebao-tab">
+            <div class="tab-pane fade" id="insurance", role="tabpanel" aria-labelledby="insurance-tab">
               <form>
                 <div class="form-group">
-                  <label for="text_expect_shebao" class="col-form-label">期望社保购买地</label>
-                  <select class="form-control" id="text_expect_shebao_place_id">
+                  <label for="text_expected_insurance" class="col-form-label">期望社保购买地</label>
+                  <select class="form-control" id="text_terminate_expected_insurance">
                     <option></option>
                     <option>本地最低</option>
                     <option>本地实缴</option>
@@ -1105,8 +1105,8 @@
                     <option>外地实缴</option>
                     <option>不购买</option>
                   </select>
-                  <label for="text_expect_shebao" class="col-form-label">期望社保购买时间</label>
-                  <select class="form-control" id="text_expect_shebao_time_id">
+                  <label for="text_expected_insurance" class="col-form-label">期望社保购买时间</label>
+                  <select class="form-control" id="text_terminate_expected_insurance_schedule">
                     <option></option>
                     <option>转正购买</option>
                     <option>入职购买</option>
