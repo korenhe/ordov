@@ -10,7 +10,7 @@ from model_utils import Choices
 
 STATUS_CHOICES = (
     (0, '筛选'),
-    (1, 'AI面试中'),
+    (1, 'AI面试'),
     (2, '邀约'),
     (3, '面试'),
     (4, 'OFFER'),

@@ -374,7 +374,7 @@ $(document).ready(function() {
             "post": post_id,
             "is_active":false,
             "status": status_value,
-            "status_comment": "终止",
+            "sub_status": "初选-终止",
             "result":"Stopped",
            };
     xhr_common_send("POST", url, data);
@@ -820,7 +820,7 @@ $(document).ready(function() {
       alert("Resume:" + resume_id + " :Post:" + post_id);
       $('#inviteModal').modal('hide');
       //$('#formResults').text($('#myForm').serialize());
-      submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, 'AI面试中', table);
+      submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, 'AI面试', table);
       /*
         $.post('http://path/to/post',
         $('#myForm').serialize(),
@@ -839,7 +839,7 @@ $(document).ready(function() {
       var status = 1;
 
       $('#dialModal').modal('hide');
-      submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, 'AI面试中', table);
+      submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, 'AI面试', table);
     });
   });
 

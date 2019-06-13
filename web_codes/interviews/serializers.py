@@ -9,6 +9,7 @@ from .models import InterviewSub_Offer, InterviewSub_Offer_Agree
 from .models import InterviewSub_Probation, InterviewSub_Probation_Fail
 from .models import InterviewSub_Payback, InterviewSub_Payback_Finish
 from .models import InterviewSub_Terminate
+from .models import STATUS_CHOICES
 
 class InterviewSerializer(serializers.ModelSerializer):
     id = serializers.SerializerMethodField()
@@ -273,6 +274,7 @@ class InterviewSub_TerminateSerializer(serializers.ModelSerializer):
         # update interview table
         interview = Interview.objects.get(pk=terminate_sub.interview.id)
         interview.is_active = False
+        interview.sub_status = STATUS_CHOICES[interview.status][1]+"-终止"
         interview.save()
 
         return terminate_sub
