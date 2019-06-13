@@ -374,26 +374,29 @@ $(document).ready(function() {
             "post": post_id,
             "is_active":false,
             "status": status_value,
+            "status_comment": "终止",
             "result":"Stopped",
            };
     xhr_common_send("POST", url, data);
   }
 
-  function submit_interview_by_compound(resume_id, post_id, url, status_value, table) {
+  function submit_interview_by_compound(resume_id, post_id, url, status_value, sub_status, table) {
     data = {"resume": resume_id,
             "post": post_id,
             "is_active":true,
             "status": status_value,
+            "sub_status": sub_status,
             "result":"Pending",
            };
 
     xhr_common_send("POST", url, data);
   }
 
-  function submit_interview_by_id(interview_id, url, status_value, table) {
+  function submit_interview_by_id(interview_id, url, status_value, sub_status, table) {
     data = {"is_active":true,
             "status": status_value,
             "result":"Pending",
+            "sub_status":sub_status,
            };
 
     xhr_common_send("PATCH", url + interview_id + '/', data);
@@ -547,7 +550,7 @@ $(document).ready(function() {
   $(document).on('click', '.stage_zero_pass', function() {
     resume_selected_value = Number(this.id);
     var statusI = 2
-    submit_interview_by_compound(resume_selected_value, post_selected_value, "/api/interviews/", statusI, table)
+    submit_interview_by_compound(resume_selected_value, post_selected_value, "/api/interviews/", statusI, '邀约', table)
 
   });
 
@@ -817,7 +820,7 @@ $(document).ready(function() {
       alert("Resume:" + resume_id + " :Post:" + post_id);
       $('#inviteModal').modal('hide');
       //$('#formResults').text($('#myForm').serialize());
-      submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, table);
+      submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, 'AI面试中', table);
       /*
         $.post('http://path/to/post',
         $('#myForm').serialize(),
@@ -836,7 +839,7 @@ $(document).ready(function() {
       var status = 1;
 
       $('#dialModal').modal('hide');
-      submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, table);
+      submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, 'AI面试中', table);
     });
   });
 
@@ -876,7 +879,7 @@ $(document).ready(function() {
 
       $('#nextModal').modal('hide');
       //submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, table);
-      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+      submit_interview_by_id(interview_id, "/api/interviews/", status, '邀约', table);
     });
   });
 
@@ -945,7 +948,7 @@ $(document).ready(function() {
       $('#entryedModal').modal('hide');
       var status = 6;
 
-      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+      submit_interview_by_id(interview_id, "/api/interviews/", status, '考察', table);
     });
   });
 
@@ -959,7 +962,7 @@ $(document).ready(function() {
       $('#entryUpdateModal').modal('hide');
       var status = 5;
 
-      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+      submit_interview_by_id(interview_id, "/api/interviews/", status, '入职', table);
     });
   });
 
@@ -973,7 +976,7 @@ $(document).ready(function() {
       $('#probationSuccModal').modal('hide');
       var status = 7;
 
-      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+      submit_interview_by_id(interview_id, "/api/interviews/", status, '回款', table);
     });
   });
 
@@ -1011,7 +1014,7 @@ $(document).ready(function() {
       $('#pbInvoiceModal').modal('hide');
       var status = 7;
 
-      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+      submit_interview_by_id(interview_id, "/api/interviews/", status, '回款', table);
     });
   });
 
@@ -1025,7 +1028,7 @@ $(document).ready(function() {
       $('#pbBaddebtModal').modal('hide');
       var status = 7;
 
-      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+      submit_interview_by_id(interview_id, "/api/interviews/", status, '坏账', table);
     });
   });
 
@@ -1061,7 +1064,7 @@ $(document).ready(function() {
       $('#pbRegisterModal').modal('hide');
       var status = 7;
 
-      submit_interview_by_id(interview_id, "/api/interviews/", status, table);
+      submit_interview_by_id(interview_id, "/api/interviews/", status, '已经注册', table);
     });
   });
   //------------------------------------------Current
@@ -1094,11 +1097,36 @@ $(document).ready(function() {
     });
   });
 
-
   $(function() {
     $('#agree_interview').click(function(e){
         $('#dailToCandidateModal').modal('hide');
         $('#appointmentModal').modal('show');
+    });
+  });
+
+  $(function() {
+    $('#dail_deeper_communicate').click(function(e){
+      e.preventDefault();
+      var resume_id = resume_selected_value;
+      var post_id = post_selected_value;
+      var interview_id = interview_selected_value;
+      var status = 2;
+      $('#dailToCandidateModal').modal('hide');
+      //submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, table);
+      submit_interview_by_id(interview_id, "/api/interviews/", status, '深度沟通', table);
+    });
+  });
+
+  $(function() {
+    $('#dail_not_linked').click(function(e){
+      e.preventDefault();
+      var resume_id = resume_selected_value;
+      var post_id = post_selected_value;
+      var interview_id = interview_selected_value;
+      var status = 2;
+      $('#dailToCandidateModal').modal('hide');
+      //submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, table);
+      submit_interview_by_id(interview_id, "/api/interviews/", status, '未接通', table);
     });
   });
 

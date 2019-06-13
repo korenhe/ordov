@@ -58,7 +58,7 @@ class ResumeSerializer(serializers.ModelSerializer):
         objs = Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)
         if (objs):
             assert len(objs) == 1
-            return STATUS_CHOICES[objs[0].status][1]
+            return objs[0].sub_status
         else:
             # default 0
             return "--"

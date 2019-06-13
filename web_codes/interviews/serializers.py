@@ -24,6 +24,7 @@ class InterviewSerializer(serializers.ModelSerializer):
             'is_active',
             'status',
             'result',
+            'sub_status',
         )
 
 class InterviewLogCommonSerializer(serializers.ModelSerializer):
@@ -74,6 +75,7 @@ class InterviewSub_Appointment_AgreeSerializer(serializers.ModelSerializer):
 
         interview = Interview.objects.get(pk=appointment_sub_.interview.id)
         interview.status = 3
+        interview.sub_status = '面试'
         interview.save()
 
         return appointment_sub_agree
@@ -114,6 +116,7 @@ class InterviewSub_Interview_PassSerializer(serializers.ModelSerializer):
         # update interview table
         interview = Interview.objects.get(pk=interview_sub_.interview.id)
         interview.status = 4
+        interview.sub_status = 'OFFER'
         interview.save()
 
         return interview_sub_pass
@@ -159,6 +162,7 @@ class InterviewSub_Offer_AgreeSerializer(serializers.ModelSerializer):
         # update interview table
         interview = Interview.objects.get(pk=offer_sub_.interview.id)
         interview.status = 5
+        interview.sub_status = '入职'
         interview.save()
 
         return offer_sub_agree
@@ -235,6 +239,7 @@ class InterviewSub_Payback_FinishSerializer(serializers.ModelSerializer):
         # update interview table
         interview = Interview.objects.get(pk=payback_sub_.interview.id)
         interview.status = 8
+        interview.sub_status = '完成'
         interview.save()
 
         return payback_sub_finish

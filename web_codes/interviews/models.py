@@ -46,6 +46,7 @@ class Interview(models.Model):
     last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     result = models.CharField(max_length=50)
+    sub_status = models.CharField(max_length=50)
 
     # manually check
     is_match = models.BooleanField(default=1)
