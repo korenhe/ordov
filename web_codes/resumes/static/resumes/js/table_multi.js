@@ -184,6 +184,7 @@ $(document).ready(function() {
 `;
          }
          /* -------------------------------------------------------------------------------- */
+         // TBD: Do we need to restore resume_id into DOM data-resume_id in every element?
          else if (row.interview_status == 2) {
            return `
 				<div class="btn-group">
@@ -453,7 +454,6 @@ $(document).ready(function() {
     });
   }
 
-
   function show_callCandidate_modal(post_id, resume_id) {
     $.ajax({
       url:'/api/posts/' + post_id + '/',
@@ -490,6 +490,8 @@ $(document).ready(function() {
         console.log("get resume info failed");
       },
     });
+
+    // TBD: no error handler
     $('#dailToCandidateModal').modal('toggle');
   }
 
@@ -532,6 +534,9 @@ $(document).ready(function() {
     });
   }
 
+  function show_entry_update_modal(resume_id) {
+    $('#entryUpdateModal').modal('toggle');
+  }
   /*
     $('#dataTable tbody').on('click', 'tr', function() {
     var id = this.id;
@@ -759,7 +764,10 @@ $(document).ready(function() {
     } else if (value == "放弃入职") {
       $('#stopModal').modal('toggle')
     } else if (value == "更期入职") {
+      // TBD: fill modal with agreed interview info
       $('#entryUpdateModal').modal('toggle');
+      resume_id = this.dataset.resume_id;
+      show_entry_update_modal(resume_id);
     }
   });
 
