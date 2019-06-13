@@ -203,6 +203,7 @@ class InterviewSub_Probation_FailSerializer(serializers.ModelSerializer):
         # update interview table
         interview = Interview.objects.get(pk=probation_sub_.interview.id)
         interview.is_active = False
+        interview.sub_status = STATUS_CHOICES[interview.status][1]+"-终止"
         interview.save()
 
         return probation_sub_fail
