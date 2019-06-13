@@ -122,7 +122,14 @@ $(document).ready(function() {
        render: function(data, type, row, meta) {
 
          /* -------------------------------------------------------------------------------- */
-         if (row.interview_status == 0) {
+         if (filter_status_value == -1) {
+           return `
+				<div class="btn-group">
+                --
+				</div>
+`;
+         }
+         else if (row.interview_status == 0) {
            return `
                 <button class="invite_button btn btn-success border-0" id="` + row.id + `" style="display:none;">
                 <span class="text">合适</span>
