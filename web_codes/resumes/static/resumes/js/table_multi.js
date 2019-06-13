@@ -417,6 +417,12 @@ $(document).ready(function() {
 
     return text_box;
   }
+
+  function helper_get_textbox_text(text_id) {
+    text_box = document.getElementById(text_id);
+    return text_box.value;
+  }
+
   function show_post_modal(post_id) {
     $.ajax({
       url:'/api/posts/' + post_id + '/',
@@ -856,13 +862,15 @@ $(document).ready(function() {
         "expected_industry": helper_get_selectbox_text("text_terminate_expected_industry"),
         "expected_post": helper_get_selectbox_text("text_terminate_expected_post"),
         "expected_shift": helper_get_selectbox_text("text_terminate_expected_shift"),
-        "expected_salary": "t sa",
-        "expected_notes": "t n",
-        "expected_province": "t p",
-        "expected_city": "t c",
-        "expected_district": "t d",
-        "expected_insurance": "t in",
-        "expected_insurance_schedule": "t ins"
+
+        "expected_salary": helper_get_textbox_text("text_terminate_expected_salary"),
+        "expected_notes": helper_get_textbox_text("text_terminate_expected_notes"),
+        "expected_province": helper_get_textbox_text("text_terminate_expected_province"),
+        "expected_city": helper_get_textbox_text("text_terminate_expected_city"),
+        "expected_district": helper_get_textbox_text("text_terminate_expected_district"),
+
+        "expected_insurance": helper_get_selectbox_text("text_terminate_expected_insurance"),
+        "expected_insurance_schedule": helper_get_selectbox_text("text_terminate_expected_insurance_schedule")
       };
 
       terminate_interviewsub_by_id("/interviews/api/terminate_sub/", table, data);
@@ -990,11 +998,10 @@ $(document).ready(function() {
       $('#probationFailModal').modal('hide');
       // active = false
       data = {
-        "payback_sub": {
-        "interview": interview_id,
-        "result_type": 3
+        "probation_sub": {
+          "interview": interview_id,
+          "result_type": 3
         },
-
         "reason": "pb failed reason",
         "comments": "pb failed comments"
       };
