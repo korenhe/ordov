@@ -99,10 +99,7 @@ class InterviewSub_Interview_PassSerializer(serializers.ModelSerializer):
         model = InterviewSub_Interview_Pass
         fields = (
             'interview_sub',
-            'reason',
-            'description',
             'comments',
-            'notes',
         )
 
     def create(self, validated_data):

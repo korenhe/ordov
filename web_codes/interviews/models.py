@@ -161,10 +161,7 @@ class InterviewSub_Interview(models.Model):
 class InterviewSub_Interview_Pass(models.Model):
     interview_sub = models.ForeignKey(InterviewSub_Interview, on_delete=models.CASCADE)
 
-    reason = models.CharField(max_length=50, blank=True, null=True)
-    description = models.CharField(max_length=50, blank=True, null=True)
     comments = models.CharField(max_length=50, blank=True, null=True)
-    notes = models.CharField(max_length=50, blank=True, null=True)
 
 # Interview Offer SubModal
 # ---------------------------------------- Pretty Split Line ----------------------------------------

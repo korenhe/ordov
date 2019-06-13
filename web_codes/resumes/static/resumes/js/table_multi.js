@@ -912,10 +912,7 @@ $(document).ready(function() {
           "interview": interview_id,
           "result_type": 3
         },
-        "reason": "interview pass reason",
-        "description": "interview pass description",
-        "comments": "interview pass comments",
-        "notes": "interview pass notes"
+        "comments": helper_get_textbox_text("text_interviewresult_comments"),
       };
 
       /* submit sub_interview_process_table, then the interview table is updated
@@ -939,14 +936,15 @@ $(document).ready(function() {
           "interview": interview_id,
           "result_type": 3
         },
-        "date": null,
-        "contact": "offer agree c",
-        "contact_phone": "offer agree cp",
-        "address": "offer agree add",
-        "postname": "offer agree p",
-        "certification": "offer agree cert",
-        "salary": "offer agree salary",
-        "notes": "offer agree notes"
+        "date": helper_get_textbox_text("text_offerinfo_date"),
+        "contact": helper_get_textbox_text("text_offerinfo_contact"),
+        "contact_phone": helper_get_textbox_text("text_offerinfo_contact_phone"),
+        "address": helper_get_textbox_text("text_offerinfo_address"),
+        "postname": helper_get_textbox_text("text_offerinfo_postname"),
+        "certification": helper_get_textbox_text("text_offerinfo_certification"),
+        "salary": helper_get_textbox_text("text_offerinfo_salary"),
+        "notes": helper_get_textbox_text("text_offerinfo_notes")
+
       };
 
       //submit_interview_by_id(interview_id, "/api/interviews/", status, table);
@@ -1009,8 +1007,8 @@ $(document).ready(function() {
           "interview": interview_id,
           "result_type": 3
         },
-        "reason": "pb failed reason",
-        "comments": "pb failed comments"
+        "reason": helper_get_textbox_text("text_probation_reason"),
+        "comments": helper_get_textbox_text("text_probation_comments")
       };
 
       /* This is different with other terminate modal, because it contains the probation fail reason */
@@ -1061,7 +1059,7 @@ $(document).ready(function() {
         "interview": interview_id,
         "result_type": 3
         },
-        "notes": "payback notes"
+        "notes": helper_get_textbox_text("text_pbfinish_notes")
       };
 
       submit_interviewsub_by_id("/interviews/api/payback_sub_finish/", table, data);
@@ -1097,14 +1095,15 @@ $(document).ready(function() {
           "interview": interview_id,
           "result_type": 3
         },
-        "date": null,
-        "contact": "app agree c",
-        "address": "app agree a",
-        "postname": "app agree p",
-        "certification": "app agree cert",
-        "attention": "app agree att",
-        "first_impression": "app agree fi",
-        "notes": "app agree notes"
+        //"date": "2018-05-23 09:00",
+        "date": helper_get_textbox_text("text_appointment_date"),
+        "contact": helper_get_textbox_text("text_appointment_contact"),
+        "address": helper_get_textbox_text("text_appointment_address"),
+        "postname": helper_get_textbox_text("text_appointment_postname"),
+        "certification": helper_get_textbox_text("text_appointment_certification"),
+        "attention": helper_get_textbox_text("text_appointment_attention"),
+        "first_impression": helper_get_textbox_text("text_appointment_first_impression"),
+        "notes": helper_get_textbox_text("text_appointment_notes"),
       };
 
       submit_interviewsub_by_id("/interviews/api/appointment_sub_agree/", table, data);
