@@ -114,6 +114,9 @@ def Task(request):
         # split the ai_task_id
         postInfo = Post.objects.get(baiying_task_name=ai_task)
         taskid = postInfo.baiying_task_id
+
+        # Do not set phone during daily test, remove this line oneline
+        candidate_phone = '00000000000'
         print("to Import", taskid, candidate_name, candidate_phone)
         importTaskCustomer(15960, taskid, candidate_name, candidate_phone) 
         return HttpResponse("success")
