@@ -113,6 +113,10 @@ class Post(models.Model):
     reserved1 = models.CharField(max_length=50, blank=True, null=True, default='')
     reserved2 = models.CharField(max_length=50, blank=True, null=True, default='')
 
+    # baiying ai
+    baiying_task_name = models.CharField(max_length=50, blank=True, null=True, default='')
+    baiying_task_id = models.IntegerField(blank=True, null=True)
+
     # table related info
     last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)

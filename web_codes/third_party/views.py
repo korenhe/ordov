@@ -24,7 +24,7 @@ def getBaiyingTaskList():
     task_list = task_json.get('data').get('list')
     taskList = []
     for task in task_list:
-        item = task.get('jobName') +" "+ str(task.get('callJobId'))
+        item = [task.get('jobName') +"-"+ str(task.get('callJobId')), task.get('jobName')]
         taskList.append(item)
     return taskList
     

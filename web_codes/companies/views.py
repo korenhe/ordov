@@ -114,9 +114,15 @@ def UpdatePost(request):
         company_name = request.POST['company_name']
         department_name = request.POST['department_name']
         post_name = request.POST['post_name']
+        baiying_task = request.POST['baiying_task_id']
 
         if project_name == "" or company_name == "" or department_name == "" or post_name == "":
             return
+        baiying_fields = baiying_task.split('-')
+        if len(baiying_fields) < 2:
+            return
+        baiying_task_name = baiying_fields[0]
+        baiying_task_id = baiying_fields[1]
 
         min_degree = request.POST['degree_id_min']
         max_degree = request.POST['degree_id_max']
@@ -211,6 +217,8 @@ def UpdatePost(request):
             "linkman": linkman_name,
             "linkman_phone": linkman_phone,
             "project_name": project_name,
+            "baiying_task_name": baiying_task_name,
+            "baiying_task_id": int(baiying_task_id),
             "level": ""
         }
 

@@ -266,7 +266,7 @@
 
             <div class="col-md-3 input-group">
               <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon2">百应任务</span>
+                <span class="input-group-text" id="basic-addon2">百应任务 *</span>
               </div>
               <select class="form-control" id="baiying_task_id" name="baiying_task_id" aria-labelledby="basic-addon2">
               </select>
@@ -370,7 +370,7 @@
         $('#baiying_task_id').prepend('<option value="">请选择任务</option>');
         if (data !='') {
           $.each(data.ai_taskId,function(index, ele) {
-            $('#baiying_task_id').append('<option value="baiying_task_id' + index + '">' + ele + '</option>');
+            $('#baiying_task_id').append('<option value=' + ele[0] + '>' + ele[1] + '</option>');
           });
         }
       }
