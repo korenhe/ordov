@@ -10,6 +10,7 @@ services:
     build: .
     volumes:
       - ../web_codes:/code
+      - /etc/localtime:/etc/localtime
     ports:
       - "8000:8000"
     depends_on:
