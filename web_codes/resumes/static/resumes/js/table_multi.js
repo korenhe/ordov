@@ -293,6 +293,14 @@ $(document).ready(function() {
 
   /* ======================================== Process Begin Here */
 
+  $(function(){
+    /* flush table every 10s */
+    setInterval(flush,10000);
+    function flush(){
+        page_refresh(table, true);
+    }
+  })
+
   $('#age_id_min, #age_id_max').keyup(function() {
     page_refresh(table, true);
   });
