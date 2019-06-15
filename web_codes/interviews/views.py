@@ -202,13 +202,16 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def aiTest(request):
     if request.method == "POST":
-        returnData = request.body
+        returnDataStr = request.body
 
-        returnDataStr = getPesudoResponse()
+        print(returnDataStr)
+        #returnDataStr = getPesudoResponse()
         returnData = json.loads(returnDataStr)
 
         sceneInfo = returnData.get('data').get('data').get('sceneInstance')
-        print('sceneInfo', sceneInfo)
+        if sceneInfo is None:
+            return
+        print('\n\n\nsceneInfo', sceneInfo)
         companyId = sceneInfo.get('companyId')
         callJobId = sceneInfo.get('callJobId')
         candidate = sceneInfo.get('customerName')
@@ -216,8 +219,13 @@ def aiTest(request):
         status = sceneInfo.get('status')
         finishstatus = sceneInfo.get('finishStatus')
 
-        postInfo = Post.objects.get(baiying_task_id=callJobId)
-        resumeInfo = Resume.objects.get(phone_number=candidate_phone)
+        postInfo = None
+        resumeInfo = None
+        try:
+            postInfo = Post.objects.get(baiying_task_id=callJobId)
+            resumeInfo = Resume.objects.get(phone_number=candidate_phone)
+        except:
+            return
 
         if postInfo is None or resumeInfo is None:
             print("Not imported into db now")
@@ -231,15 +239,17 @@ def aiTest(request):
         print("companyId:", companyId, " callJobId:", callJobId, " candiate: ", candidate, "phone: ", candidate_phone)
         if status == 2 and finishstatus == 2:
             #未接通case
-            interviewInfo.sub_status = '未接通'
+            interviewInfo.sub_status = '未接通AI'
             interviewInfo.save()
             return
         elif status == 2 and finishstatus == 0:
             #已经接通
             taskResultInfo = returnData.get('data').get('data').get('taskResult')
+            if taskResultInfo is None:
+                return
             for result in taskResultInfo:
                 resultName = result.get('resultName')
-                resultValue = resule.get('resuleValue')
+                resultValue = result.get('resultValue')
                 if resultName.find('客户意向等级') >= 0:
                     interviewInfo.sub_status = resultValue
                     interviewInfo.save()
