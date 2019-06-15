@@ -297,7 +297,9 @@ $(document).ready(function() {
     /* flush table every 10s */
     setInterval(flush,10000);
     function flush(){
-        page_refresh(table, true);
+        if (post_selected_value > 0) {
+            page_refresh(table, true);
+        }
     }
   })
 

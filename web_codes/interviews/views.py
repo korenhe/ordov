@@ -111,14 +111,13 @@ def Task(request):
             return
         # This is test
         # replace phone with my phone number
-        candidate_phone = "18515013796"
-
         # split the ai_task_id
         postInfo = Post.objects.get(baiying_task_name=ai_task)
         taskid = postInfo.baiying_task_id
         print("to Import", taskid, candidate_name, candidate_phone)
         importTaskCustomer(15960, taskid, candidate_name, candidate_phone) 
-
+        return HttpResponse("success")
+    return HttpResponse("fail")
 
 # Interview Appointment SubModal
 # ---------------------------------------- Pretty Split Line ----------------------------------------
@@ -210,7 +209,7 @@ def aiTest(request):
 
         sceneInfo = returnData.get('data').get('data').get('sceneInstance')
         if sceneInfo is None:
-            return
+            return HttpResponse("fail")
         print('\n\n\nsceneInfo', sceneInfo)
         companyId = sceneInfo.get('companyId')
         callJobId = sceneInfo.get('callJobId')
@@ -225,28 +224,28 @@ def aiTest(request):
             postInfo = Post.objects.get(baiying_task_id=callJobId)
             resumeInfo = Resume.objects.get(phone_number=candidate_phone)
         except:
-            return
+            return HttpResponse("fail")
 
         if postInfo is None or resumeInfo is None:
             print("Not imported into db now")
-            return
+            return HttpResponse("fail")
 
         interviewInfo = Interview.objects.get(resume=resumeInfo, post=postInfo)
         if interviewInfo is None:
             print("No such item in interview")
-            return
+            return HttpResponse("fail")
 
         print("companyId:", companyId, " callJobId:", callJobId, " candiate: ", candidate, "phone: ", candidate_phone)
         if status == 2 and finishstatus == 2:
             #未接通case
             interviewInfo.sub_status = '未接通AI'
             interviewInfo.save()
-            return
+            return HttpResponse("fail")
         elif status == 2 and finishstatus == 0:
             #已经接通
             taskResultInfo = returnData.get('data').get('data').get('taskResult')
             if taskResultInfo is None:
-                return
+                return HttpResponse("fail")
             for result in taskResultInfo:
                 resultName = result.get('resultName')
                 resultValue = result.get('resultValue')

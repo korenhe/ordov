@@ -15,6 +15,8 @@ from .serializers import CompanySerializer, DepartmentSerializer, PostSerializer
 
 from ordov.choices import (DEGREE_CHOICES, DEGREE_CHOICES_MAP)
 
+from django.http import HttpResponse, HttpResponseRedirect
+
 class CompanyView(APIView):
     def get(self, request):
         companies = Company.objects.all()
@@ -117,10 +119,10 @@ def UpdatePost(request):
         baiying_task = request.POST['baiying_task_id']
 
         if project_name == "" or company_name == "" or department_name == "" or post_name == "":
-            return
+            return HttpResponse("fail")
         baiying_fields = baiying_task.split('-')
         if len(baiying_fields) < 2:
-            return
+            return HttpResponse("fail")
         baiying_task_name = baiying_fields[0]
         baiying_task_id = baiying_fields[1]
 
@@ -225,6 +227,7 @@ def UpdatePost(request):
         companyTarget, created = Company.objects.update_or_create(**company_info)
         departmentTarget, created = Department.objects.update_or_create(company=companyTarget, **department_info)
         postTarget, created = Post.objects.update_or_create(company=companyTarget, department=departmentTarget, **post_info)
+        return HttpResponse("success")
 
         """
         serializer = PostSerializer(data=post_info)
@@ -233,3 +236,4 @@ def UpdatePost(request):
         else:
             print("Fail to serialize the post")
         """
+    return HttpResponse("fail")
