@@ -1,4 +1,3 @@
-# -*- coding:utf-8 -*-
 import hmac
 import base64
 import urllib
@@ -12,43 +11,19 @@ import os
 appKey = 'prVWMqVAjtDxtEb6'
 appSecrete = '5OVSohXpJI4T0zxqVG7yQqJBxnqOgg'
 
-# GMT时间获取
-GMT_FORMAT = '%a, %d %b %Y %H:%M:%S GMT'
-time_format_gmt = (datetime.datetime.now() - datetime.timedelta(hours=8)).strftime(GMT_FORMAT)
-# date in docker: Sun Jun 9 09:56:49 UTC 2019
-date_str = os.popen("date").read()
-fields = date_str.split()
-time_format_gmt = fields[0] +", "+fields[2].zfill(2)+ " " + fields[1] +" "+ fields[5] + " " + fields[3] + " GMT"
-
-# 签名计算
-signMessage = appKey + '\n' + time_format_gmt
-quote = base64.b64encode(
-    hmac.new(bytes(appSecrete.encode("utf-8")), bytes(signMessage.encode("utf-8")), digestmod='sha1')
-        .digest()).decode("utf-8")
-
 # 百应线上环境api访问地址
 BASE_URL = "http://api.byrobot.cn"
 
-def init_env():
-    appKey = 'prVWMqVAjtDxtEb6'
-    appSecrete = '5OVSohXpJI4T0zxqVG7yQqJBxnqOgg'
+def get_companys():
+    # GMT时间获取
+    GMT_FORMAT = '%a, %d %b %Y %H:%M:%S GMT'
+    time_format_gmt = (datetime.datetime.now() - datetime.timedelta(hours=8)).strftime(GMT_FORMAT)
 
-    date_str = os.popen("date").read()
-    fields = date_str.split()
-    time_format_gmt = fields[0] +", "+fields[2].zfill(2)+ " " + fields[1] +" "+ fields[5] + " " + fields[3] + " GMT"
-
-    print("cuo:%s"%(time_format_gmt))
-    print("dui:Sun, 09 Jun 2019 10:09:11 GMT")
-
+    # 签名计算
     signMessage = appKey + '\n' + time_format_gmt
     quote = base64.b64encode(
-        hmac.new(bytes(appSecrete.encode("utf-8")), bytes(signMessage.encode("utf-8")), digestmod='sha1')
-            .digest()).decode("utf-8")
+        hmac.new(bytes(appSecrete.encode("utf-8")), bytes(signMessage.encode("utf-8")), digestmod='sha1').digest()).decode("utf-8")
 
-    BASE_URL = "http://api.byrobot.cn"
-
-def get_companys():
-    init_env()
     request_obj = urllib.request.Request(url=BASE_URL + "/openapi/v1/company/getCompanys")
     request_obj.add_header("sign", quote)
     request_obj.add_header("datetime", time_format_gmt)
@@ -57,10 +32,17 @@ def get_companys():
     html_code = response_obj.read().decode('utf-8')
     jsonjson = json.loads(html_code)
     print(html_code)
+    #print("jsonjson%s"%(jsonjson.get('resultMsg').encode('utf-8').decode('gbk')))
     return html_code
 
 
 def get_phones(companyId):
+    GMT_FORMAT = '%a, %d %b %Y %H:%M:%S GMT'
+    time_format_gmt = (datetime.datetime.now() - datetime.timedelta(hours=8)).strftime(GMT_FORMAT)
+    signMessage = appKey + '\n' + time_format_gmt
+    quote = base64.b64encode(
+        hmac.new(bytes(appSecrete.encode("utf-8")), bytes(signMessage.encode("utf-8")), digestmod='sha1').digest()).decode("utf-8")
+
     request_obj = urllib.request.Request(url=BASE_URL + "/openapi/v1/company/getPhones?" + str(companyId))
     request_obj.add_header("sign", quote)
     request_obj.add_header("datetime", time_format_gmt)
@@ -71,6 +53,11 @@ def get_phones(companyId):
 
 
 def getRobots(companyId):
+    GMT_FORMAT = '%a, %d %b %Y %H:%M:%S GMT'
+    time_format_gmt = (datetime.datetime.now() - datetime.timedelta(hours=8)).strftime(GMT_FORMAT)
+    signMessage = appKey + '\n' + time_format_gmt
+    quote = base64.b64encode(
+        hmac.new(bytes(appSecrete.encode("utf-8")), bytes(signMessage.encode("utf-8")), digestmod='sha1').digest()).decode("utf-8")
 
     request_obj = urllib.request.Request(url=BASE_URL + "/openapi/v1/company/getRobots?companyId=" + str(companyId))
 
@@ -84,8 +71,13 @@ def getRobots(companyId):
 
 # 获取一个公司的所有任务的列表
 def getCompanyTaskList(companyId):
+    GMT_FORMAT = '%a, %d %b %Y %H:%M:%S GMT'
+    time_format_gmt = (datetime.datetime.now() - datetime.timedelta(hours=8)).strftime(GMT_FORMAT)
+    signMessage = appKey + '\n' + time_format_gmt
+    quote = base64.b64encode(
+        hmac.new(bytes(appSecrete.encode("utf-8")), bytes(signMessage.encode("utf-8")), digestmod='sha1').digest()).decode("utf-8")
 
-    request_obj = urllib.request.Request(BASE_URL + "/openapi/v1/task/getTasks?companyId=" + str(companyId))
+    request_obj = urllib.request.Request(BASE_URL + "/openapi/v1/task/getTasks?companyId=" + str(companyId)+"&pageSize=100")
 
     request_obj.add_header("sign", quote)
     request_obj.add_header("datetime", time_format_gmt)
@@ -96,6 +88,11 @@ def getCompanyTaskList(companyId):
     return html_code
 
 def post_create_job():
+    GMT_FORMAT = '%a, %d %b %Y %H:%M:%S GMT'
+    time_format_gmt = (datetime.datetime.now() - datetime.timedelta(hours=8)).strftime(GMT_FORMAT)
+    signMessage = appKey + '\n' + time_format_gmt
+    quote = base64.b64encode(
+        hmac.new(bytes(appSecrete.encode("utf-8")), bytes(signMessage.encode("utf-8")), digestmod='sha1').digest()).decode("utf-8")
     textmod = {
           "companyId" : 15960,
           "taskName" : "测试任务",
@@ -127,6 +124,11 @@ def post_create_job():
 
 
 def getDoneTaskPhone(calljobId):
+    GMT_FORMAT = '%a, %d %b %Y %H:%M:%S GMT'
+    time_format_gmt = (datetime.datetime.now() - datetime.timedelta(hours=8)).strftime(GMT_FORMAT)
+    signMessage = appKey + '\n' + time_format_gmt
+    quote = base64.b64encode(
+        hmac.new(bytes(appSecrete.encode("utf-8")), bytes(signMessage.encode("utf-8")), digestmod='sha1').digest()).decode("utf-8")
 
     taskInfo = {
 		"callJobId" : calljobId
@@ -146,6 +148,11 @@ def getDoneTaskPhone(calljobId):
     return html_code
 
 def importTaskCustomer(companyId, taskId, username, phone_number):
+    GMT_FORMAT = '%a, %d %b %Y %H:%M:%S GMT'
+    time_format_gmt = (datetime.datetime.now() - datetime.timedelta(hours=8)).strftime(GMT_FORMAT)
+    signMessage = appKey + '\n' + time_format_gmt
+    quote = base64.b64encode(
+        hmac.new(bytes(appSecrete.encode("utf-8")), bytes(signMessage.encode("utf-8")), digestmod='sha1').digest()).decode("utf-8")
 
     taskInfo = {
         "companyId": companyId,
@@ -169,5 +176,3 @@ def importTaskCustomer(companyId, taskId, username, phone_number):
     response_obj = urllib.request.urlopen(request_obj)
     html_code = response_obj.read().decode('utf-8')
     print("importTaskCustomer: ", html_code)
-
-print("-------", get_companys())

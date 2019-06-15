@@ -7,6 +7,7 @@ from .baiying import api as baiying
 def getBaiyingTaskList():
 
     # Step1: to get the company id
+    """
     company_list_str = baiying.get_companys()
     company_json = json.loads(company_list_str)
     company_list = company_json.get('data')
@@ -15,6 +16,8 @@ def getBaiyingTaskList():
         return None
     company_id = company_list[0].get('companyId')
     print("company_id: ", company_id)
+    """
+    company_id = 15960
 
     # Step2: to get the task list
     task_list_str = baiying.getCompanyTaskList(company_id)
