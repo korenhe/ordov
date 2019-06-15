@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 from django.views import generic
+from django.http import JsonResponse
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -33,8 +35,6 @@ from .serializers import InterviewSub_TerminateSerializer
 
 from companies.models import Post
 from resumes.models import Resume
-from django.http import JsonResponse
-from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 # Create your views here.
 class InterviewViewSet(viewsets.ModelViewSet):
@@ -154,3 +154,25 @@ class InterviewSub_Payback_FinishViewSet(viewsets.ModelViewSet):
 class InterviewSub_TerminateViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Terminate.objects.all()
     serializer_class = InterviewSub_TerminateSerializer
+
+def interviewsub_get_offer_detail(request, interview_id):
+    interview_obj = Interview.objects.get(pk=interview_id)
+    offers = interview_obj.interviewsub_offer_set.all().order_by('-id')
+    #get first, descend, can be multi since updated
+
+    data = {}
+    if offers:
+        offer_obj = offers[0]
+        offer_agrees = offer_obj.interviewsub_offer_agree_set.all()
+        assert(len(offer_agrees) == 1)
+        #get first and assert one
+        if offer_agrees:
+            offer_agree_obj = offer_agrees[0]
+
+            #serialize and pass back as json
+            offer_agree_serializer = InterviewSub_Offer_AgreeSerializer(offer_agree_obj)
+            data = offer_agree_serializer.data
+            data.pop('offer_sub')
+            return JsonResponse(data)
+
+    return JsonResponse(data)

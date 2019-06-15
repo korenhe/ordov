@@ -341,7 +341,7 @@ $(document).ready(function() {
 
   function page_refresh(table, reset_flag = false) {
     // update statistic info
-    var xx = t_resume_statistic_url;
+    //var xx = t_resume_statistic_url;
     $.ajax({
       url: "/manager/resumes/statistic/" + post_selected_value + "/",
       type: 'GET',
@@ -431,7 +431,7 @@ $(document).ready(function() {
     return text_box.value;
   }
 
-  function show_post_modal(post_id) {
+  function show_post_modal(post_id, callback) {
     $.ajax({
       url:'/api/posts/' + post_id + '/',
       type: 'GET',
@@ -446,55 +446,14 @@ $(document).ready(function() {
         document.getElementById("text_postinfo_post").value = response.name;
         document.getElementById("text_postinfo_description").value = response.description;
 
-        $('#postModal').modal('toggle');
+        if (callback)
+          $('#postModal').modal('toggle');
       },
       error: function() {
         console.log("get post info failed");
       },
     });
   }
-
-  function show_callCandidate_modal(post_id, resume_id) {
-    $.ajax({
-      url:'/api/posts/' + post_id + '/',
-      type: 'GET',
-      data: null,
-      success: function(response) {
-
-        /* here the abbreviation is not work, don't know why. Since the getElementbyid method is the most effience one, use it. */
-        //$('#text_postinfo_company').value = response.department.company.name;
-        //document.querySelector('#text_postinfo_company').value = response.department.company.name;
-        document.getElementById("text_postinfo_company").value = response.department.company.name;
-        document.getElementById("text_postinfo_department").value = response.department.name;
-        document.getElementById("text_postinfo_post").value = response.name;
-        document.getElementById("text_postinfo_description").value = response.description;
-      },
-      error: function() {
-        console.log("get post info failed");
-      },
-    });
-
-    $.ajax({
-      url:'/api/resumes/' + resume_id + '/',
-      type: 'GET',
-      data: null,
-      success: function(response) {
-
-        document.getElementById("candidate_text_resumeinfo_username").value = response.username;
-        document.getElementById("candidate_text_resumeinfo_degree").value = response.degree;
-        document.getElementById("candidate_text_resumeinfo_school").value = response.school;
-        document.getElementById("candidate_text_resumeinfo_phone_number").value = response.phone_number;
-
-      },
-      error: function() {
-        console.log("get resume info failed");
-      },
-    });
-
-    // TBD: no error handler
-    $('#dailToCandidateModal').modal('toggle');
-  }
-
 
   function show_ai_config_modal(resume_id) {
     $.ajax({
@@ -514,7 +473,7 @@ $(document).ready(function() {
     });
   }
 
-  function show_resume_modal(resume_id) {
+  function show_resume_modal(resume_id, callback) {
     $.ajax({
       url:'/api/resumes/' + resume_id + '/',
       type: 'GET',
@@ -526,7 +485,8 @@ $(document).ready(function() {
         document.getElementById("text_resumeinfo_school").value = response.school;
         document.getElementById("text_resumeinfo_phone_number").value = response.phone_number;
 
-        $('#resumeModal').modal('toggle');
+        if (callback)
+          $('#resumeModal').modal('toggle');
       },
       error: function() {
         console.log("get resume info failed");
@@ -534,8 +494,35 @@ $(document).ready(function() {
     });
   }
 
-  function show_entry_update_modal(resume_id) {
-    $('#entryUpdateModal').modal('toggle');
+  function show_callCandidate_modal(post_id, resume_id) {
+    show_post_modal(post_id, false);
+    show_resume_modal(resume_id, false);
+    // TBD: no error handler
+    $('#dailToCandidateModal').modal('toggle');
+  }
+
+  function show_entry_update_modal(interview_id) {
+    $.ajax({
+      url:'/interviews/sub/offer/' + interview_id + '/',
+      type: 'GET',
+      data: null,
+      success: function(response) {
+
+        document.getElementById("text_entryupdate_date").value = response.date;
+        document.getElementById("text_entryupdate_contact").value = response.contact;
+        document.getElementById("text_entryupdate_contact_phone").value = response.contact_phone;
+        document.getElementById("text_entryupdate_address").value = response.address;
+        document.getElementById("text_entryupdate_postname").value = response.postname;
+        document.getElementById("text_entryupdate_certification").value = response.certification;
+        document.getElementById("text_entryupdate_salary").value = response.salary;
+        document.getElementById("text_entryupdate_notes").value = response.notes;
+
+        $('#entryUpdateModal').modal('toggle');
+      },
+      error: function() {
+        console.log("get sub offer info failed");
+      },
+    });
   }
   /*
     $('#dataTable tbody').on('click', 'tr', function() {
@@ -629,7 +616,7 @@ $(document).ready(function() {
 
   $(document).on('click', '.stage_five_update', function() {
     interview_selected_value = Number(this.id);
-    $('#entryUpdateModal').modal('toggle');
+    show_entry_update_modal(interview_selected_value);
   });
   $(document).on('click', '.stage_five_pass', function() {
     interview_selected_value = Number(this.id);
@@ -672,135 +659,7 @@ $(document).ready(function() {
     //$('#stopModal').modal('toggle')
   });
 
-  // use 'click' here, otherwise, if user select 'next' and then closed, he should change to other stats then back to 'next' to trigger the event.
-  $(document).on('click', '.stage_zero_select', function() {
-	resume_selected_value = Number(this.id);
-
-    /* Attention: how to select one item by variable */
-    /*value = $(".stage_zero_select:eq("+(resume_selected_value-1)+")").val() */
-    /* the intersection selector for jQuery */
-
-    value = $("#"+(resume_selected_value)+".stage_zero_select").val()
-    if (value == "AI沟通") {
-       show_ai_config_modal(resume_selected_value)
-    } else if (value == "短信沟通") {
-    } else if (value == "简历匹配") {
-       $('#nextModal').modal('toggle')
-    } else if (value == "不符合要求") {
-    }
-  });
-
-  $(document).on('click', '.stage_one_select', function() {
-    interview_selected_value = Number(this.id);
-
-    value = $("#"+(interview_selected_value)+".stage_one_select").val()
-    if (value == "等待AI结果") {
-    } else if (value == "继续下轮过程") {
-        $('#nextModal').modal('toggle');
-    } else if (value == "终止面试") {
-        $('#stopModal').modal('toggle');
-    }
-
-  });
-
-  $(document).on('change', '.stage_two_select', function() {
-    interview_selected_value = Number(this.id);
-    value = $("#"+(interview_selected_value)+".stage_two_select").val()
-    if (value == "自动拨号") {
-    } else if (value == "拨号面试") {
-      resume_id = this.dataset.resume_id;
-      show_callCandidate_modal(post_selected_value, resume_id)
-    } else if (value == "应聘者信息") {
-      $('#resumeModal').modal('toggle');
-      resume_id = this.dataset.resume_id;
-      show_resume_modal(resume_id);
-    } else if (value == "同意面试") {
-      $('#appointmentModal').modal('toggle');
-    } else if (value == "放弃面试") {
-      $('#stopModal').modal('toggle');
-    }
-  });
-
-  $(document).on('click', '.stage_three_select', function() {
-    interview_selected_value = Number(this.id);
-
-    value = $("#"+(interview_selected_value)+".stage_three_select").val()
-    if (value == "面试过程中") {
-    } else if (value == "查看职位信息") {
-      // show post
-      show_post_modal(post_selected_value);
-    } else if (value == "查看应聘者信息") {
-      $('#resumeModal').modal('toggle');
-      resume_id = this.dataset.resume_id;
-      show_resume_modal(resume_id);
-    } else if (value == "面试通过") {
-      $('#interviewResultModal').modal('toggle');
-    } else if (value == "面试未通过") {
-      $('#stopModal').modal('toggle');
-    } else if (value == "面试未到场") {
-      $('#stopModal').modal('toggle');
-    }
-  });
-
-  $(document).on('click', '.stage_four_select', function() {
-    interview_selected_value = Number(this.id);
-
-    value = $("#"+(interview_selected_value)+".stage_four_select").val()
-    if (value == "发放offer") {
-    } else if (value == "更新offer") {
-      $('#offerModal').modal('toggle')
-    } else if (value == "放弃offer") {
-      $('#stopModal').modal('toggle');
-    }
-  });
-
-  $(document).on('click', '.stage_five_select', function() {
-    interview_selected_value = Number(this.id);
-
-    value = $("#"+(interview_selected_value)+".stage_five_select").val()
-    if (value == "入职过程") {
-    } else if (value == "入职到场") {
-      $('#entryedModal').modal('toggle')
-    } else if (value == "放弃入职") {
-      $('#stopModal').modal('toggle')
-    } else if (value == "更期入职") {
-      // TBD: fill modal with agreed interview info
-      $('#entryUpdateModal').modal('toggle');
-      resume_id = this.dataset.resume_id;
-      show_entry_update_modal(resume_id);
-    }
-  });
-
-  $(document).on('click', '.stage_six_select', function() {
-    interview_selected_value = Number(this.id);
-
-    value = $("#"+(interview_selected_value)+".stage_six_select").val()
-    if (value == "考察期") {
-    } else if (value == "通过考察") {
-      $('#probationSuccModal').modal('toggle')
-    } else if (value == "未通过考察") {
-      $('#probationFailModal').modal('toggle')
-    } else if (value == "放弃考察") {
-      $('#stopModal').modal('toggle');
-    }
-  });
-
-  $(document).on('click', '.stage_seven_select', function() {
-    interview_selected_value = Number(this.id);
-
-    value = $("#"+(interview_selected_value)+".stage_seven_select").val()
-    if (value == "回款阶段") {
-    } else if (value == "打款登记") {
-      $('#pbRegisterModal').modal('toggle')
-    } else if (value == "完成打款") {
-      $('#pbFinishModal').modal('toggle')
-    } else if (value == "坏账") {
-      $('#pbBaddebtModal').modal('toggle');
-    } else if (value == "发票申请") {
-      $('#pbInvoiceModal').modal('toggle');
-    }
-  });
-
+  /* TBD: is this useful? */
   $(document).on('change', '#ai_task_id', function() {
       var condition = $("#ai_task_id").find("option:selected").text()
       // should update the huashu ID corresponsely
@@ -981,9 +840,25 @@ $(document).ready(function() {
       var interview_id = interview_selected_value;
 
       $('#entryUpdateModal').modal('hide');
-      var status = 5;
+      //var status = 5;
 
-      submit_interview_by_id(interview_id, "/api/interviews/", status, '入职', table);
+      data = {
+        "offer_sub": {
+          "interview": interview_id,
+          "result_type": 4
+        },
+        "date": helper_get_textbox_text("text_entryupdate_date"),
+        "contact": helper_get_textbox_text("text_entryupdate_contact"),
+        "contact_phone": helper_get_textbox_text("text_entryupdate_contact_phone"),
+        "address": helper_get_textbox_text("text_entryupdate_address"),
+        "postname": helper_get_textbox_text("text_entryupdate_postname"),
+        "certification": helper_get_textbox_text("text_entryupdate_certification"),
+        "salary": helper_get_textbox_text("text_entryupdate_salary"),
+        "notes": helper_get_textbox_text("text_entryupdate_notes")
+
+      };
+
+      submit_interviewsub_by_id("/interviews/api/offer_sub_agree/", table, data);
     });
   });
 
@@ -1159,22 +1034,20 @@ $(document).ready(function() {
   });
 
   //-------- select
-    $.ajax({
-      type: "GET",
-      url:'/interview/ai/task',
-      async:false,
-      dataType: "json",
-      success: function(data){
-        $('#ai_task_id').html("")
-        $('#ai_task_id').prepend('<option value="">请选择任务</option>');
-        if (data !='') {
-          $.each(data.ai_taskId,function(index, ele) {
-            $('#ai_task_id').append('<option value="ai_task_id' + index + '">' + ele + '</option>');
-          });
-        }
+  $.ajax({
+    type: "GET",
+    url:'/interview/ai/task',
+    async:false,
+    dataType: "json",
+    success: function(data){
+      $('#ai_task_id').html("")
+      $('#ai_task_id').prepend('<option value="">请选择任务</option>');
+      if (data !='') {
+        $.each(data.ai_taskId,function(index, ele) {
+          $('#ai_task_id').append('<option value="ai_task_id' + index + '">' + ele + '</option>');
+        });
       }
-    });
-   //-----------
-   //------------modal
-   //-----------
+    }
+  });
+  //-----------
 });

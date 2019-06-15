@@ -2,7 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.http import JsonResponse
 from django.core.files.storage import FileSystemStorage
+from django.db import models
 
 import os
 import time
@@ -11,7 +13,6 @@ from candidates.models import Candidate
 from companies.models import Company, Post
 from interviews.models import Interview
 from resumes.models import Resume
-from django.db import models
 from .load_excel import load_excel
 
 # Create your views here.
@@ -100,7 +101,6 @@ def invitation_result(request, resume_id):
 
     return HttpResponseRedirect(reverse('app_manager:t_interviews'), context)
 
-from django.http import JsonResponse
 def resume_statistic(request, post_id):
     resumes_total = Resume.objects.exclude(interview__status=0, interview__post__id=post_id).count()
 

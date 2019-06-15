@@ -7,6 +7,7 @@ from .views import InterviewSub_OfferViewSet, InterviewSub_Offer_AgreeViewSet
 from .views import InterviewSub_ProbationViewSet, InterviewSub_Probation_FailViewSet
 from .views import InterviewSub_PaybackViewSet, InterviewSub_Payback_FinishViewSet
 from .views import InterviewSub_TerminateViewSet
+from interviews import views
 
 router = routers.DefaultRouter()
 
@@ -32,4 +33,5 @@ app_name = "interviews"
 # app_name will help us do a reverse look-up latter.
 urlpatterns = [
     path('api/', include(router.urls)),
+    path('sub/offer/<int:interview_id>/', views.interviewsub_get_offer_detail, name='t_interviewsub_offer'),
 ]
