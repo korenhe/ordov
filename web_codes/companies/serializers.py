@@ -61,6 +61,7 @@ class PostSerializer(serializers.ModelSerializer):
             'name',
             'project_name',
             'description',
+            'baiying_task_name',
         )
 
     def create(self, validated_data):

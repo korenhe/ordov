@@ -483,6 +483,17 @@ $(document).ready(function() {
 
   function show_ai_config_modal(resume_id) {
     $.ajax({
+      url:'/api/posts/' + post_selected_value + '/',
+      type: 'GET',
+      data: null,
+      success: function(response) {
+        document.getElementById("config_ai_task_name").value = response.baiying_task_name;
+      },
+      error: function() {
+        console.log("get resume info failed");
+      },
+    });
+    $.ajax({
       url:'/api/resumes/' + resume_id + '/',
       type: 'GET',
       data: null,
@@ -776,11 +787,7 @@ $(document).ready(function() {
     $.ajax({
       type: "POST",
       url:'/interview/ai/task/',
-      data: function(d) {
-        d.ai_task_id = $('#ai_task_id').val();
-        d.candidate_name = $('#text_name').val();
-        d.candidate_phone = $('#text_phone_number').val();
-      },
+      data: $('#ai_config_form').serialize(),
     });
 
     $('#dialModal').modal('hide');

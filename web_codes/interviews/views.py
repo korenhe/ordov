@@ -104,9 +104,9 @@ def Task(request):
         return JsonResponse(data)
     elif request.method == 'POST':
         print("post------------", request.POST)
-        ai_task = request.POST['ai_task_id']
-        candidate_name = request.POST['candidate_name']
-        candidate_phone = request.POST['candidate_phone']
+        ai_task = request.POST['config_ai_task_name']
+        candidate_name = request.POST['ai_candidate_name']
+        candidate_phone = request.POST['ai_candidate_phone']
         if ai_task == "" or candidate_name == "" or candidate_phone == "":
             return
         # This is test
@@ -114,10 +114,8 @@ def Task(request):
         candidate_phone = "18515013796"
 
         # split the ai_task_id
-        fields = ai_task.split()
-        if len(fields) < 2:
-            return
-        taskid = fields[len(fields)-1]
+        postInfo = Post.objects.get(baiying_task_name=ai_task)
+        taskid = postInfo.baiying_task_id
         print("to Import", taskid, candidate_name, candidate_phone)
         importTaskCustomer(15960, taskid, candidate_name, candidate_phone) 
 
