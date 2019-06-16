@@ -21,10 +21,17 @@ $(document).ready(function() {
   var resumes_selected = [];
   var resume_selected_value = 0;
 
+  var interviews_selected = [];
   var interview_selected_value = 0;
 
   var filter_status_value = 0;
   var enable_multi = false;
+
+  function empty_multi_selection() {
+    //empty resumes
+    resumes_selected = [];
+    interviews_selected = [];
+  }
 
   function button_update(table, container, toggle_value) {
     if (!toggle_value) {
@@ -35,8 +42,7 @@ $(document).ready(function() {
       container.classList.remove("btn-info");
       container.innerText = "多选-关闭";
 
-      //empty resumes
-      resumes_selected = [];
+      empty_multi_selection();
       table.draw();
     } else {
       container.classList.add("btn-info");
@@ -369,12 +375,28 @@ $(document).ready(function() {
     } else if (enable_multi){
       // Multiple Selection
       var id = this.id;
+      var interview_id = -1;
+      try {
+        // TBD: more gerneric and accurate way to get interview_id
+        interview_id = this.lastChild.firstElementChild.firstElementChild.id;
+        if (interview_id === "")
+          interview_id = -1;
+      } catch {
+        interview_id = -1;
+      }
+
       var index = $.inArray(id, resumes_selected);
 
       if ( index === -1 ) {
         resumes_selected.push(id);
+
+        if (interview_id >= 0)
+          interviews_selected.push(interview_id);
       } else {
         resumes_selected.splice(index, 1);
+
+        if (interview_id >= 0)
+          interviews_selected.splice(index, 1);
       }
 
       $(this).toggleClass('selected');
@@ -399,8 +421,7 @@ $(document).ready(function() {
       },
     });
 
-    // TBD: We need a unified function for all initialization when switch different post.
-    resumes_selected = [];
+    empty_multi_selection();
     enable_multi = false;
 
     // WTF? So many 0s... the first buttons's first child, there're two API:
