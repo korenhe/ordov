@@ -822,22 +822,37 @@ $(document).ready(function() {
     $('#interviewResultFormSubmit').click(function(e){
       e.preventDefault();
 
-      var interview_id = interview_selected_value;
+      if (!enable_multi) {
+        var interview_id = interview_selected_value;
 
-      $('#interviewResultModal').modal('hide');
-      //var status = 4;
+        $('#interviewResultModal').modal('hide');
+        //var status = 4;
+        data = {
+          "interview_sub": {
+            "interview": interview_id,
+            "result_type": 3
+          },
+          "comments": helper_get_textbox_text("text_interviewresult_comments"),
+        };
 
-      data = {
-        "interview_sub": {
-          "interview": interview_id,
-          "result_type": 3
-        },
-        "comments": helper_get_textbox_text("text_interviewresult_comments"),
-      };
+        submit_interviewsub_by_id("/interviews/api/interview_sub_pass/", table, data);
+      } else {
+        for (var i = 0; i < interviews_selected.length; i++) {
+          var interview_id = interviews_selected[i];
 
-      /* submit sub_interview_process_table, then the interview table is updated
-         at the same time in the serverside */
-      submit_interviewsub_by_id("/interviews/api/interview_sub_pass/", table, data);
+          $('#interviewResultModal').modal('hide');
+          //var status = 4;
+          data = {
+            "interview_sub": {
+              "interview": interview_id,
+              "result_type": 3
+            },
+            "comments": helper_get_textbox_text("text_interviewresult_comments"),
+          };
+
+          submit_interviewsub_by_id("/interviews/api/interview_sub_pass/", table, data);
+        }
+      }
     });
   });
 
