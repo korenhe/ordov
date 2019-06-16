@@ -424,6 +424,16 @@ $(document).ready(function() {
       page_refresh(table);
     };
 
+    xhr.onreadystatechange=function() {
+      if (xhr.readyState === 4){   //if complete
+        // 2xx is ok, ref: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+        if(xhr.status >= 200 && xhr.status < 300) {
+          //success
+        } else {
+          alert("Something error happend\n");
+        }
+      }
+    }
     xhr.send(JSON.stringify(data));
   }
 
