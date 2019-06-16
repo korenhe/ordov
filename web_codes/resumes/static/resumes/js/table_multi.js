@@ -15,9 +15,6 @@ function getCookie(name) {
 }
 
 $(document).ready(function() {
-
-  //$('.collapse').collapse();
-
   var resumes_selected = [];
   var post_selected = false;
   var post_selected_value = 0;
@@ -25,8 +22,38 @@ $(document).ready(function() {
   var resume_selected_value = 0;
   var interview_selected_value = 0;
   var filter_status_value = 0;
+  var enable_multi = false;
+
+  function button_update(table, container, toggle_value) {
+    if (!toggle_value) {
+      list = container.classList;
+      // Can't use toggleClass Here
+      //node[0].toggleClass("btn-info");
+
+      container.classList.remove("btn-info");
+      container.innerText = "多选-关闭";
+
+      //empty resumes
+      resumes_selected = [];
+      table.draw();
+    } else {
+      container.classList.add("btn-info");
+      container.innerText = "多选-打开";
+    }
+  }
 
   var table = $('#dataTable_resume').DataTable({
+    dom:
+    "<'row'<'col-sm-12 col-md-1'l><'resume_multi col-sm-12 col-md-7'B><'col-sm-12 col-md-4'f>>" +
+      "<'row'<'col-sm-12'tr>>" +
+      "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+    buttons: [
+      {text: '多选-关闭',
+       action: function (e, dt, node, config) {
+         enable_multi = !enable_multi;
+         button_update(dt, node[0], enable_multi);
+       }}
+    ],
     "processing": true,
     "serverSide": true,
 
@@ -124,9 +151,9 @@ $(document).ready(function() {
          /* -------------------------------------------------------------------------------- */
          if (filter_status_value == -1) {
            return `
-				<div class="btn-group">
+                <div class="btn-group">
                 --
-				</div>
+                </div>
 `;
          }
          else if (row.interview_status == 0) {
@@ -138,17 +165,17 @@ $(document).ready(function() {
                 <span class="text">操作</span>
                 </button>
 
-				<div class="btn-group">
+                <div class="btn-group">
                 <select class="stage_zero_select form-control" id="` + row.id + `" style="display:none;">
                     <option>操作</option>
                     <option>AI沟通</option>
                     <option>短信沟通</option>
                 </select>
-				<button type="button" class="stage_zero_ai btn btn-sm " id="` + row.id + `">AI</button>
-				<button type="button" class="stage_zero_sms btn btn-sm " id="` + row.id + `">短信</button>
-				<button type="button" class="stage_zero_pass btn btn-sm " id="` + row.id + `">通过</button>
-				<button type="button" class="stage_zero_fail btn btn-sm " id="` + row.id + `">结束</button>
-				</div>
+                <button type="button" class="stage_zero_ai btn btn-sm " id="` + row.id + `">AI</button>
+                <button type="button" class="stage_zero_sms btn btn-sm " id="` + row.id + `">短信</button>
+                <button type="button" class="stage_zero_pass btn btn-sm " id="` + row.id + `">通过</button>
+                <button type="button" class="stage_zero_fail btn btn-sm " id="` + row.id + `">结束</button>
+                </div>
 
                 <select class="stage_zero_select form-control" id="` + row.id + `" style="display:none;">
                     <option>待选状态</option>
@@ -173,13 +200,13 @@ $(document).ready(function() {
                     <option>终止面试</option>
                 </select>
 
-				<div class="btn-group">
+                <div class="btn-group">
                 <select class="stage_one_select form-control" id="` + row.interview_id + `" style='display:none;'>
                     <option>操作</option>
                 </select>
-				<button type="button" class="stage_one_pass btn btn-sm " id="` + row.interview_id + `">通过</button>
-				<button type="button" class="stage_one_fail btn btn-sm " id="` + row.interview_id + `">结束</button>
-				</div>
+                <button type="button" class="stage_one_pass btn btn-sm " id="` + row.interview_id + `">通过</button>
+                <button type="button" class="stage_one_fail btn btn-sm " id="` + row.interview_id + `">结束</button>
+                </div>
 
 `;
          }
@@ -187,85 +214,85 @@ $(document).ready(function() {
          // TBD: Do we need to restore resume_id into DOM data-resume_id in every element?
          else if (row.interview_status == 2) {
            return `
-				<div class="btn-group">
+                <div class="btn-group">
                 <select class="stage_two_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `" style="display:none;">
                     <option>拨号面试</option>
                     <option>深度沟通</option>
                     <option>电话未接通</option>
                 </select>
-				<button type="button" class="stage_two_dail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">拨号面试</button>
-				<button type="button" class="stage_two_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">通过</button>
-				<button type="button" class="stage_two_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">结束</button>
-				</div>
+                <button type="button" class="stage_two_dail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">拨号面试</button>
+                <button type="button" class="stage_two_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">通过</button>
+                <button type="button" class="stage_two_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">结束</button>
+                </div>
 
 `;
          }
          /* -------------------------------------------------------------------------------- */
          else if (row.interview_status == 3) {
            return `
-				<div class="btn-group">
+                <div class="btn-group">
                 <select class="stage_three_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `" style="display:none;">
                     <option>操作</option>
                     <option>面试未到场</option>
                 </select>
-				<button type="button" class="stage_three_miss btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">未到场</button>
-				<button type="button" class="stage_three_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">通过</button>
-				<button type="button" class="stage_three_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">未通过</button>
-				</div>
+                <button type="button" class="stage_three_miss btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">未到场</button>
+                <button type="button" class="stage_three_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">通过</button>
+                <button type="button" class="stage_three_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">未通过</button>
+                </div>
 `;
          }
          /* -------------------------------------------------------------------------------- */
          else if (row.interview_status == 4) {
            return `
-				<div class="btn-group">
+                <div class="btn-group">
                 <select class="stage_four_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `" style="display:none;">
                     <option>操作</option>
                     <option>更新offer</option>
                 </select>
-				<button type="button" class="stage_four_update btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">更新</button>
-				<button type="button" class="stage_four_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">接受</button>
-				<button type="button" class="stage_four_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">放弃</button>
-				</div>
+                <button type="button" class="stage_four_update btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">更新</button>
+                <button type="button" class="stage_four_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">接受</button>
+                <button type="button" class="stage_four_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">放弃</button>
+                </div>
 `;
          }
          /* -------------------------------------------------------------------------------- */
          else if (row.interview_status == 5) {
            return `
-				<div class="btn-group">
+                <div class="btn-group">
                 <select class="stage_five_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `" style="display:none;">
                     <option>操作</option>
                     <option>更期入职</option>
                 </select>
-				<button type="button" class="stage_five_update btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">更期入职</button>
-				<button type="button" class="stage_five_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">已入职</button>
-				<button type="button" class="stage_five_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">放弃</button>
-				</div>
+                <button type="button" class="stage_five_update btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">更期入职</button>
+                <button type="button" class="stage_five_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">已入职</button>
+                <button type="button" class="stage_five_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">放弃</button>
+                </div>
 `;
          }
          /* -------------------------------------------------------------------------------- */
          else if (row.interview_status == 6) {
            return `
-				<div class="btn-group">
+                <div class="btn-group">
                 <select class="stage_six_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `" style="display:none;">
                     <option>操作</option>
                     <option>放弃考察</option>
                 </select>
-				<button type="button" class="stage_six_giveup btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">放弃考察</button>
-				<button type="button" class="stage_six_pass btn btn-sm " id="` + row.interview_id + `" + data-resume_id="` + row.id + `">通过</button>
-				<button type="button" class="stage_six_fail btn btn-sm " id="` + row.interview_id + `" + data-resume_id="` + row.id + `">未通过</button>
-				</div>
+                <button type="button" class="stage_six_giveup btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">放弃考察</button>
+                <button type="button" class="stage_six_pass btn btn-sm " id="` + row.interview_id + `" + data-resume_id="` + row.id + `">通过</button>
+                <button type="button" class="stage_six_fail btn btn-sm " id="` + row.interview_id + `" + data-resume_id="` + row.id + `">未通过</button>
+                </div>
 
 `;
          }
          /* -------------------------------------------------------------------------------- */
          else if (row.interview_status == 7) {
            return `
-				<div class="btn-group">
-				<button type="button" class="stage_seven_register btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">登记</button>
-				<button type="button" class="stage_seven_bill btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">发票</button>
-				<button type="button" class="stage_seven_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">完成</button>
-				<button type="button" class="stage_seven_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">坏账</button>
-				</div>
+                <div class="btn-group">
+                <button type="button" class="stage_seven_register btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">登记</button>
+                <button type="button" class="stage_seven_bill btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">发票</button>
+                <button type="button" class="stage_seven_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">完成</button>
+                <button type="button" class="stage_seven_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">坏账</button>
+                </div>
 `;
          }
          /* -------------------------------------------------------------------------------- */
@@ -275,6 +302,8 @@ $(document).ready(function() {
        }},
     ],
   });
+
+  /* ================================================================================ */
 
   var table_post = $('#dataTable_post').DataTable({
     "dom": '<"top"i>rt<"bottom"l<"post_search" f>p><"clear">',
@@ -335,7 +364,18 @@ $(document).ready(function() {
       //alert("Please select Post first.");
       alert("请先选择职位.");
       e.stopPropagation();
-    } else {
+    } else if (enable_multi){
+      // Multiple Selection
+      var id = this.id;
+      var index = $.inArray(id, resumes_selected);
+
+      if ( index === -1 ) {
+        resumes_selected.push(id);
+      } else {
+        resumes_selected.splice(index, 1);
+      }
+
+      $(this).toggleClass('selected');
     }
   });
 
@@ -356,6 +396,16 @@ $(document).ready(function() {
         console.log("get statistic info failed");
       },
     });
+
+    // TBD: We need a unified function for all initialization when switch different post.
+    resumes_selected = [];
+    enable_multi = false;
+
+    // WTF? So many 0s... the first buttons's first child, there're two API:
+    // containers() and container(), I can't distinguish them since both of them need to get [0]
+
+    button_container = table.buttons().container()[0].children[0];
+    button_update(table, button_container, enable_multi);
 
     table.draw(reset_flag);
   }
@@ -524,20 +574,6 @@ $(document).ready(function() {
       },
     });
   }
-  /*
-    $('#dataTable tbody').on('click', 'tr', function() {
-    var id = this.id;
-    var index = $.inArray(id, resumes_selected);
-
-    if ( index === -1 ) {
-    resumes_selected.push(id);
-    } else {
-    resumes_selected.splice(index, 1);
-    }
-
-    $(this).toggleClass('selected');
-    });
-  */
 
   $(document).on('click', '.invite_button', function() {
     resume_selected_value = Number(this.id);
@@ -545,7 +581,7 @@ $(document).ready(function() {
   });
 
   $(document).on('click', '.stage_zero_ai', function() {
-	resume_selected_value = Number(this.id);
+    resume_selected_value = Number(this.id);
     show_ai_config_modal(resume_selected_value)
   });
 
@@ -661,8 +697,8 @@ $(document).ready(function() {
 
   /* TBD: is this useful? */
   $(document).on('change', '#ai_task_id', function() {
-      var condition = $("#ai_task_id").find("option:selected").text()
-      // should update the huashu ID corresponsely
+    var condition = $("#ai_task_id").find("option:selected").text()
+    // should update the huashu ID corresponsely
   });
 
   // post table
@@ -939,8 +975,8 @@ $(document).ready(function() {
       // status = 8
       data = {
         "payback_sub": {
-        "interview": interview_id,
-        "result_type": 3
+          "interview": interview_id,
+          "result_type": 3
         },
         "notes": helper_get_textbox_text("text_pbfinish_notes")
       };
@@ -995,8 +1031,8 @@ $(document).ready(function() {
 
   $(function() {
     $('#agree_interview').click(function(e){
-        $('#dailToCandidateModal').modal('hide');
-        $('#appointmentModal').modal('show');
+      $('#dailToCandidateModal').modal('hide');
+      $('#appointmentModal').modal('show');
     });
   });
 
@@ -1028,8 +1064,8 @@ $(document).ready(function() {
 
   $(function() {
     $('#giveup_interview').click(function(e){
-        $('#dailToCandidateModal').modal('hide');
-        $('#stopModal').modal('show');
+      $('#dailToCandidateModal').modal('hide');
+      $('#stopModal').modal('show');
     });
   });
 
