@@ -594,14 +594,21 @@ $(document).ready(function() {
     });
   }
 
+  // ================================= CLICKS ===============================================
+  function tmp_not_support_multi() {
+    if (enable_multi)
+      alert("This button not support multi-sel event yet!");
+  }
+
   $(document).on('click', '.invite_button', function() {
     resume_selected_value = Number(this.id);
-    alert(resume_selected_value)
+    alert(resume_selected_value);
+    tmp_not_support_multi();
   });
 
   $(document).on('click', '.stage_zero_ai', function() {
     resume_selected_value = Number(this.id);
-    show_ai_config_modal(resume_selected_value)
+    show_ai_config_modal(resume_selected_value);
   });
 
   $(document).on('click', '.stage_zero_sms', function() {
@@ -616,6 +623,8 @@ $(document).ready(function() {
   $(document).on('click', '.stage_zero_fail', function() {
     resume_selected_value = Number(this.id);
     var statusI = 0;
+    tmp_not_support_multi();
+
     submit_interview_by_compound(resume_selected_value, post_selected_value, "/api/interviews/", statusI, "初选-终止", false)
   });
 
@@ -744,6 +753,16 @@ $(document).ready(function() {
     }
   });
 
+  function multisel_submit_wrapper(callback) {
+    if (!enable_multi) {
+      callback(interview_selected_value);
+    } else {
+      for (var i = 0; i < interviews_selected.length; i++) {
+        callback(interviews_selected[i]);
+      }
+    }
+  }
+
   $(function(){
     $('#inviteFormSubmit').click(function(e){
       e.preventDefault();
@@ -773,35 +792,9 @@ $(document).ready(function() {
       var status = 1;
 
       $('#dialModal').modal('hide');
+      tmp_not_support_multi();
+
       submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, 'AI面试');
-    });
-  });
-
-  $(function() {
-    $('#stopFormSubmit').click(function(e){
-      e.preventDefault();
-
-      var interview_id = interview_selected_value;
-
-      $('#stopModal').modal('hide');
-
-      data = {
-        "interview": interview_id,
-        "expected_industry": helper_get_selectbox_text("text_terminate_expected_industry"),
-        "expected_post": helper_get_selectbox_text("text_terminate_expected_post"),
-        "expected_shift": helper_get_selectbox_text("text_terminate_expected_shift"),
-
-        "expected_salary": helper_get_textbox_text("text_terminate_expected_salary"),
-        "expected_notes": helper_get_textbox_text("text_terminate_expected_notes"),
-        "expected_province": helper_get_textbox_text("text_terminate_expected_province"),
-        "expected_city": helper_get_textbox_text("text_terminate_expected_city"),
-        "expected_district": helper_get_textbox_text("text_terminate_expected_district"),
-
-        "expected_insurance": helper_get_selectbox_text("text_terminate_expected_insurance"),
-        "expected_insurance_schedule": helper_get_selectbox_text("text_terminate_expected_insurance_schedule")
-      };
-
-      submit_interviewsub_by_id("/interviews/api/terminate_sub/", table, data);
     });
   });
 
@@ -812,255 +805,268 @@ $(document).ready(function() {
       var post_id = post_selected_value;
       var interview_id = interview_selected_value;
       var status = 2;
+      tmp_not_support_multi();
 
       $('#nextModal').modal('hide');
       submit_interview_by_id(interview_id, "/api/interviews/", status, '邀约');
     });
   });
 
+  function do_stop_submit(interview_id) {
+    $('#stopModal').modal('hide');
+
+    data = {
+      "interview": interview_id,
+      "expected_industry": helper_get_selectbox_text("text_terminate_expected_industry"),
+      "expected_post": helper_get_selectbox_text("text_terminate_expected_post"),
+      "expected_shift": helper_get_selectbox_text("text_terminate_expected_shift"),
+
+      "expected_salary": helper_get_textbox_text("text_terminate_expected_salary"),
+      "expected_notes": helper_get_textbox_text("text_terminate_expected_notes"),
+      "expected_province": helper_get_textbox_text("text_terminate_expected_province"),
+      "expected_city": helper_get_textbox_text("text_terminate_expected_city"),
+      "expected_district": helper_get_textbox_text("text_terminate_expected_district"),
+
+      "expected_insurance": helper_get_selectbox_text("text_terminate_expected_insurance"),
+      "expected_insurance_schedule": helper_get_selectbox_text("text_terminate_expected_insurance_schedule")
+    };
+
+    submit_interviewsub_by_id("/interviews/api/terminate_sub/", table, data);
+  }
+
+  $(function() {
+    $('#stopFormSubmit').click(function(e){
+      e.preventDefault();
+      multisel_submit_wrapper(do_stop_submit);
+    });
+  });
+
+  function do_interviewResult_submit(interview_id) {
+    $('#interviewResultModal').modal('hide');
+    //var status = 4;
+    data = {
+      "interview_sub": {
+        "interview": interview_id,
+        "result_type": 3
+      },
+      "comments": helper_get_textbox_text("text_interviewresult_comments"),
+    };
+
+    submit_interviewsub_by_id("/interviews/api/interview_sub_pass/", table, data);
+  }
+
   $(function() {
     $('#interviewResultFormSubmit').click(function(e){
       e.preventDefault();
-
-      if (!enable_multi) {
-        var interview_id = interview_selected_value;
-
-        $('#interviewResultModal').modal('hide');
-        //var status = 4;
-        data = {
-          "interview_sub": {
-            "interview": interview_id,
-            "result_type": 3
-          },
-          "comments": helper_get_textbox_text("text_interviewresult_comments"),
-        };
-
-        submit_interviewsub_by_id("/interviews/api/interview_sub_pass/", table, data);
-      } else {
-        for (var i = 0; i < interviews_selected.length; i++) {
-          var interview_id = interviews_selected[i];
-
-          $('#interviewResultModal').modal('hide');
-          //var status = 4;
-          data = {
-            "interview_sub": {
-              "interview": interview_id,
-              "result_type": 3
-            },
-            "comments": helper_get_textbox_text("text_interviewresult_comments"),
-          };
-
-          submit_interviewsub_by_id("/interviews/api/interview_sub_pass/", table, data);
-        }
-      }
+      multisel_submit_wrapper(do_interviewResult_submit);
     });
   });
+
+  function do_offerInfo_submit(interview_id) {
+    $('#offerModal').modal('hide');
+    //var status = 5;
+
+    data = {
+      "offer_sub": {
+        "interview": interview_id,
+        "result_type": 3
+      },
+      "date": helper_get_textbox_text("text_offerinfo_date"),
+      "contact": helper_get_textbox_text("text_offerinfo_contact"),
+      "contact_phone": helper_get_textbox_text("text_offerinfo_contact_phone"),
+      "address": helper_get_textbox_text("text_offerinfo_address"),
+      "postname": helper_get_textbox_text("text_offerinfo_postname"),
+      "certification": helper_get_textbox_text("text_offerinfo_certification"),
+      "salary": helper_get_textbox_text("text_offerinfo_salary"),
+      "notes": helper_get_textbox_text("text_offerinfo_notes")
+
+    };
+
+    submit_interviewsub_by_id("/interviews/api/offer_sub_agree/", table, data);
+  }
 
   $(function(){
     $('#offerSubmit').click(function(e){
       e.preventDefault();
-
-      var interview_id = interview_selected_value;
-
-      $('#offerModal').modal('hide');
-      //var status = 5;
-
-      data = {
-        "offer_sub": {
-          "interview": interview_id,
-          "result_type": 3
-        },
-        "date": helper_get_textbox_text("text_offerinfo_date"),
-        "contact": helper_get_textbox_text("text_offerinfo_contact"),
-        "contact_phone": helper_get_textbox_text("text_offerinfo_contact_phone"),
-        "address": helper_get_textbox_text("text_offerinfo_address"),
-        "postname": helper_get_textbox_text("text_offerinfo_postname"),
-        "certification": helper_get_textbox_text("text_offerinfo_certification"),
-        "salary": helper_get_textbox_text("text_offerinfo_salary"),
-        "notes": helper_get_textbox_text("text_offerinfo_notes")
-
-      };
-
-      submit_interviewsub_by_id("/interviews/api/offer_sub_agree/", table, data);
+      multisel_submit_wrapper(do_offerInfo_submit);
     });
   });
+
+  function do_common_plain_submit(interview_id, modal_name, status, sub_status) {
+    $(modal_name).modal('hide');
+    submit_interview_by_id(interview_id, "/api/interviews/", status, sub_status);
+  }
+
+  function do_entryed_submit(interview_id) {
+    do_common_plain_submit(interview_id, '#entryedModal', 6, '考察');
+  }
 
   $(function(){
     $('#entryedSubmit').click(function(e){
       e.preventDefault();
-
-      var interview_id = interview_selected_value;
-
-      $('#entryedModal').modal('hide');
-      var status = 6;
-
-      submit_interview_by_id(interview_id, "/api/interviews/", status, '考察');
+      multisel_submit_wrapper(do_entryed_submit);
     });
   });
+
+  function do_entryUpdate_submit(interview_id) {
+    $('#entryUpdateModal').modal('hide');
+    //var status = 5;
+
+    data = {
+      "offer_sub": {
+        "interview": interview_id,
+        "result_type": 4
+      },
+      "date": helper_get_textbox_text("text_entryupdate_date"),
+      "contact": helper_get_textbox_text("text_entryupdate_contact"),
+      "contact_phone": helper_get_textbox_text("text_entryupdate_contact_phone"),
+      "address": helper_get_textbox_text("text_entryupdate_address"),
+      "postname": helper_get_textbox_text("text_entryupdate_postname"),
+      "certification": helper_get_textbox_text("text_entryupdate_certification"),
+      "salary": helper_get_textbox_text("text_entryupdate_salary"),
+      "notes": helper_get_textbox_text("text_entryupdate_notes")
+
+    };
+
+    submit_interviewsub_by_id("/interviews/api/offer_sub_agree/", table, data);
+  }
 
   $(function(){
     // only update the entry info
     $('#entryUpdateSubmit').click(function(e){
       e.preventDefault();
-
-      var interview_id = interview_selected_value;
-
-      $('#entryUpdateModal').modal('hide');
-      //var status = 5;
-
-      data = {
-        "offer_sub": {
-          "interview": interview_id,
-          "result_type": 4
-        },
-        "date": helper_get_textbox_text("text_entryupdate_date"),
-        "contact": helper_get_textbox_text("text_entryupdate_contact"),
-        "contact_phone": helper_get_textbox_text("text_entryupdate_contact_phone"),
-        "address": helper_get_textbox_text("text_entryupdate_address"),
-        "postname": helper_get_textbox_text("text_entryupdate_postname"),
-        "certification": helper_get_textbox_text("text_entryupdate_certification"),
-        "salary": helper_get_textbox_text("text_entryupdate_salary"),
-        "notes": helper_get_textbox_text("text_entryupdate_notes")
-
-      };
-
-      submit_interviewsub_by_id("/interviews/api/offer_sub_agree/", table, data);
+      multisel_submit_wrapper(do_entryUpdate_submit);
     });
   });
+
+  function do_probationSucc_submit(interview_id) {
+    do_common_plain_submit(interview_id, '#probationSuccModal', 7, '回款');
+  }
 
   $(function(){
     // only update the entry info
     $('#probationSuccSubmit').click(function(e){
       e.preventDefault();
-
-      var interview_id = interview_selected_value;
-
-      $('#probationSuccModal').modal('hide');
-      var status = 7;
-
-      submit_interview_by_id(interview_id, "/api/interviews/", status, '回款');
+      multisel_submit_wrapper(do_probationSucc_submit);
     });
   });
+
+  function do_probationFail_submit(interview_id) {
+    $('#probationFailModal').modal('hide');
+    // active = false
+    data = {
+      "probation_sub": {
+        "interview": interview_id,
+        "result_type": 3
+      },
+      "reason": helper_get_textbox_text("text_probation_reason"),
+      "comments": helper_get_textbox_text("text_probation_comments")
+    };
+
+    /* This is different with other terminate modal, because it contains the probation fail reason */
+    submit_interviewsub_by_id("/interviews/api/probation_sub_fail/", table, data);
+  }
 
   $(function(){
     // only update the entry info
     $('#probationFailSubmit').click(function(e){
       e.preventDefault();
-
-      var interview_id = interview_selected_value;
-
-      $('#probationFailModal').modal('hide');
-      // active = false
-      data = {
-        "probation_sub": {
-          "interview": interview_id,
-          "result_type": 3
-        },
-        "reason": helper_get_textbox_text("text_probation_reason"),
-        "comments": helper_get_textbox_text("text_probation_comments")
-      };
-
-      /* This is different with other terminate modal, because it contains the probation fail reason */
-      submit_interviewsub_by_id("/interviews/api/probation_sub_fail/", table, data);
+      multisel_submit_wrapper(do_probationFail_submit);
     });
   });
+
+  function do_pbInvoice_submit(interview_id) {
+    do_common_plain_submit(interview_id, '#pbInvoiceModal', 7, '回款');
+  }
 
   $(function(){
     // only update the entry info
     $('#pbInvoiceSubmit').click(function(e){
       e.preventDefault();
-
-      var interview_id = interview_selected_value;
-
-      $('#pbInvoiceModal').modal('hide');
-      var status = 7;
-
-      submit_interview_by_id(interview_id, "/api/interviews/", status, '回款');
+      multisel_submit_wrapper(do_pbInvoice_submit);
     });
   });
+
+  function do_pbBaddebt_submit(interview_id) {
+    do_common_plain_submit(interview_id, '#pbBaddebtModal', 7, '坏账');
+  }
 
   $(function(){
     // only update the entry info
     $('#pbBaddebtSubmit').click(function(e){
       e.preventDefault();
-
-      var interview_id = interview_selected_value;
-
-      $('#pbBaddebtModal').modal('hide');
-      var status = 7;
-
-      submit_interview_by_id(interview_id, "/api/interviews/", status, '坏账');
+      multisel_submit_wrapper(do_pbBaddebt_submit);
     });
   });
+
+  function do_pbFinish_submit(interview_id) {
+    $('#pbFinishModal').modal('hide');
+
+    // status = 8
+    data = {
+      "payback_sub": {
+        "interview": interview_id,
+        "result_type": 3
+      },
+      "notes": helper_get_textbox_text("text_pbfinish_notes")
+    };
+
+    submit_interviewsub_by_id("/interviews/api/payback_sub_finish/", table, data);
+  }
 
   $(function(){
     // only update the entry info
     $('#pbFinishSubmit').click(function(e){
       e.preventDefault();
-
-      var interview_id = interview_selected_value;
-
-      $('#pbFinishModal').modal('hide');
-
-      // status = 8
-      data = {
-        "payback_sub": {
-          "interview": interview_id,
-          "result_type": 3
-        },
-        "notes": helper_get_textbox_text("text_pbfinish_notes")
-      };
-
-      submit_interviewsub_by_id("/interviews/api/payback_sub_finish/", table, data);
+      multisel_submit_wrapper(do_pbFinish_submit);
     });
   });
+
+  function do_pbRegister_submit(interview_id) {
+    do_common_plain_submit(interview_id, '#pbRegisterModal', 7, '已经注册');
+  }
 
   $(function(){
     // only update the entry info
     $('#pbRegisterSubmit').click(function(e){
       e.preventDefault();
-
-      var interview_id = interview_selected_value;
-
-      $('#pbRegisterModal').modal('hide');
-      var status = 7;
-
-      submit_interview_by_id(interview_id, "/api/interviews/", status, '已经注册');
+      multisel_submit_wrapper(do_pbRegister_submit);
     });
   });
-  //------------------------------------------Current
 
+  function do_appointment_submit(interview_id) {
+    $('#appointmentModal').modal('hide');
+    //var status = 3 // interview
+
+    data = {
+      "appointment_sub": {
+        "interview": interview_id,
+        "result_type": 3
+      },
+      //"date": "2018-05-23 09:00",
+      "date": helper_get_textbox_text("text_appointment_date"),
+      "contact": helper_get_textbox_text("text_appointment_contact"),
+      "address": helper_get_textbox_text("text_appointment_address"),
+      "postname": helper_get_textbox_text("text_appointment_postname"),
+      "certification": helper_get_textbox_text("text_appointment_certification"),
+      "attention": helper_get_textbox_text("text_appointment_attention"),
+      "first_impression": helper_get_textbox_text("text_appointment_first_impression"),
+      "notes": helper_get_textbox_text("text_appointment_notes"),
+    };
+
+    submit_interviewsub_by_id("/interviews/api/appointment_sub_agree/", table, data);
+  }
   $(function() {
     $('#appointmentSubmit').click(function(e){
       e.preventDefault();
-
-      var interview_id = interview_selected_value;
-
-      $('#appointmentModal').modal('hide');
-      //var status = 3 // interview
-
-      data = {
-        "appointment_sub": {
-          "interview": interview_id,
-          "result_type": 3
-        },
-        //"date": "2018-05-23 09:00",
-        "date": helper_get_textbox_text("text_appointment_date"),
-        "contact": helper_get_textbox_text("text_appointment_contact"),
-        "address": helper_get_textbox_text("text_appointment_address"),
-        "postname": helper_get_textbox_text("text_appointment_postname"),
-        "certification": helper_get_textbox_text("text_appointment_certification"),
-        "attention": helper_get_textbox_text("text_appointment_attention"),
-        "first_impression": helper_get_textbox_text("text_appointment_first_impression"),
-        "notes": helper_get_textbox_text("text_appointment_notes"),
-      };
-
-      submit_interviewsub_by_id("/interviews/api/appointment_sub_agree/", table, data);
+      multisel_submit_wrapper(do_appointment_submit);
     });
   });
 
+  // ================================================================================
   $(function() {
     $('#agree_interview').click(function(e){
+      tmp_not_support_multi();
       $('#dailToCandidateModal').modal('hide');
       $('#appointmentModal').modal('show');
     });
@@ -1074,6 +1080,8 @@ $(document).ready(function() {
       var interview_id = interview_selected_value;
       var status = 2;
       $('#dailToCandidateModal').modal('hide');
+      tmp_not_support_multi();
+
       submit_interview_by_id(interview_id, "/api/interviews/", status, '深度沟通');
     });
   });
@@ -1085,6 +1093,7 @@ $(document).ready(function() {
       var post_id = post_selected_value;
       var interview_id = interview_selected_value;
       var status = 2;
+      tmp_not_support_multi();
       $('#dailToCandidateModal').modal('hide');
       submit_interview_by_id(interview_id, "/api/interviews/", status, '未接通');
     });
@@ -1092,11 +1101,13 @@ $(document).ready(function() {
 
   $(function() {
     $('#giveup_interview').click(function(e){
+      tmp_not_support_multi();
       $('#dailToCandidateModal').modal('hide');
       $('#stopModal').modal('show');
     });
   });
 
+  // ================================ CLICKS END ================================================
   //-------- select
   $.ajax({
     type: "GET",
