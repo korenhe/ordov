@@ -33,6 +33,7 @@ $(document).ready(function() {
     interviews_selected = [];
   }
 
+  /* return redrawed */
   function button_update(table, container, toggle_value) {
     if (!toggle_value) {
       list = container.classList;
@@ -44,9 +45,11 @@ $(document).ready(function() {
 
       empty_multi_selection();
       table.draw();
+      return true;
     } else {
       container.classList.add("btn-info");
       container.innerText = "多选-打开";
+      return false;
     }
   }
 
@@ -358,6 +361,7 @@ $(document).ready(function() {
   function page_refresh(table, reset_flag = false) {
     // update statistic info
     //var xx = t_resume_statistic_url;
+
     $.ajax({
       url: "/manager/resumes/statistic/" + post_selected_value + "/",
       type: 'GET',
@@ -380,9 +384,10 @@ $(document).ready(function() {
     // containers() and container(), I can't distinguish them since both of them need to get [0]
 
     button_container = table.buttons().container()[0].children[0];
-    button_update(table, button_container, enable_multi);
+    redrawed = button_update(table, button_container, enable_multi);
 
-    table.draw(reset_flag);
+    if (!redrawed)
+      table.draw(reset_flag);
   }
 
   function xhr_common_send(method, url, data) {
