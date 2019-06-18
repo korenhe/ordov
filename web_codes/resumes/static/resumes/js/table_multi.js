@@ -166,52 +166,18 @@ $(document).ready(function() {
          }
          else if (row.interview_status == 0) {
            return `
-                <button class="invite_button btn btn-success border-0" id="` + row.id + `" style="display:none;">
-                <span class="text">合适</span>
-                </button>
-                <button class="invite_button btn btn-success border-0" id="` + row.id + `" style="display:none;">
-                <span class="text">操作</span>
-                </button>
-
                 <div class="btn-group">
-                <select class="stage_zero_select form-control" id="` + row.id + `" style="display:none;">
-                    <option>操作</option>
-                    <option>AI沟通</option>
-                    <option>短信沟通</option>
-                </select>
                 <button type="button" class="stage_zero_ai btn btn-sm " id="` + row.id + `">AI</button>
                 <button type="button" class="stage_zero_sms btn btn-sm " id="` + row.id + `">短信</button>
                 <button type="button" class="stage_zero_pass btn btn-sm " id="` + row.id + `">通过</button>
                 <button type="button" class="stage_zero_fail btn btn-sm " id="` + row.id + `">结束</button>
                 </div>
-
-                <select class="stage_zero_select form-control" id="` + row.id + `" style="display:none;">
-                    <option>待选状态</option>
-                    <option>AI沟通</option>
-                    <option>短信沟通</option>
-                    <option>简历匹配</option>
-                    <option>不合适</option>
-                </select>
           `;
          }
          /* -------------------------------------------------------------------------------- */
          else if (row.interview_status == 1) {
            return `
-               <!--
-                <button class="dial_button btn btn-success border-0" data-toggle="modal" data-target="#dialModal" id="` + row.interview_id + `">
-  <span class="text">打电话</span>
-</button>
-               -->
-                <select class="stage_one_select form-control" id="` + row.interview_id + `" style="display:none;">
-                    <option>等待AI结果</option>
-                    <option>继续下轮过程</option>
-                    <option>终止面试</option>
-                </select>
-
                 <div class="btn-group">
-                <select class="stage_one_select form-control" id="` + row.interview_id + `" style='display:none;'>
-                    <option>操作</option>
-                </select>
                 <button type="button" class="stage_one_pass btn btn-sm " id="` + row.interview_id + `">通过</button>
                 <button type="button" class="stage_one_fail btn btn-sm " id="` + row.interview_id + `">结束</button>
                 </div>
@@ -223,11 +189,6 @@ $(document).ready(function() {
          else if (row.interview_status == 2) {
            return `
                 <div class="btn-group">
-                <select class="stage_two_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `" style="display:none;">
-                    <option>拨号面试</option>
-                    <option>深度沟通</option>
-                    <option>电话未接通</option>
-                </select>
                 <button type="button" class="stage_two_dail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">拨号面试</button>
                 <button type="button" class="stage_two_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">通过</button>
                 <button type="button" class="stage_two_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">结束</button>
@@ -239,10 +200,6 @@ $(document).ready(function() {
          else if (row.interview_status == 3) {
            return `
                 <div class="btn-group">
-                <select class="stage_three_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `" style="display:none;">
-                    <option>操作</option>
-                    <option>面试未到场</option>
-                </select>
                 <button type="button" class="stage_three_miss btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">未到场</button>
                 <button type="button" class="stage_three_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">通过</button>
                 <button type="button" class="stage_three_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">未通过</button>
@@ -253,10 +210,6 @@ $(document).ready(function() {
          else if (row.interview_status == 4) {
            return `
                 <div class="btn-group">
-                <select class="stage_four_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `" style="display:none;">
-                    <option>操作</option>
-                    <option>更新offer</option>
-                </select>
                 <button type="button" class="stage_four_update btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">更新</button>
                 <button type="button" class="stage_four_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">接受</button>
                 <button type="button" class="stage_four_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">放弃</button>
@@ -267,10 +220,6 @@ $(document).ready(function() {
          else if (row.interview_status == 5) {
            return `
                 <div class="btn-group">
-                <select class="stage_five_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `" style="display:none;">
-                    <option>操作</option>
-                    <option>更期入职</option>
-                </select>
                 <button type="button" class="stage_five_update btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">更期入职</button>
                 <button type="button" class="stage_five_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">已入职</button>
                 <button type="button" class="stage_five_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">放弃</button>
@@ -281,10 +230,6 @@ $(document).ready(function() {
          else if (row.interview_status == 6) {
            return `
                 <div class="btn-group">
-                <select class="stage_six_select form-control" id="` + row.interview_id + `" data-resume_id="` + row.id + `" style="display:none;">
-                    <option>操作</option>
-                    <option>放弃考察</option>
-                </select>
                 <button type="button" class="stage_six_giveup btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">放弃考察</button>
                 <button type="button" class="stage_six_pass btn btn-sm " id="` + row.interview_id + `" + data-resume_id="` + row.id + `">通过</button>
                 <button type="button" class="stage_six_fail btn btn-sm " id="` + row.interview_id + `" + data-resume_id="` + row.id + `">未通过</button>
@@ -353,16 +298,16 @@ $(document).ready(function() {
     page_refresh(table, true);
   });
 
-  $('.list-group-item').on('click', function(e) {
-    filter_status_value = this.value;
-    page_refresh(table, true);
-  });
-
   $('#degree_id_min, #gender_id, #degree_id_max').change(function() {
     page_refresh(table, true);
   });
 
   $('#graduate_time_start, #graduate_time_end').change(function() {
+    page_refresh(table, true);
+  });
+
+  $('.list-group-item').on('click', function(e) {
+    filter_status_value = this.value;
     page_refresh(table, true);
   });
 
@@ -372,34 +317,41 @@ $(document).ready(function() {
       //alert("Please select Post first.");
       alert("请先选择职位.");
       e.stopPropagation();
-    } else if (enable_multi){
-      // Multiple Selection
-      var id = this.id;
-      var interview_id = -1;
-      try {
-        // TBD: more gerneric and accurate way to get interview_id
-        interview_id = this.lastChild.firstElementChild.firstElementChild.id;
-        if (interview_id === "")
+    } else {
+      // All interactive elements should be excluded here.
+      if ($(e.target).hasClass('btn')) {
+        return;
+      }
+
+      if (enable_multi) {
+        // Multiple Selection
+        var id = this.id;
+        var interview_id = -1;
+        try {
+          // TBD: more gerneric and accurate way to get interview_id
+          interview_id = this.lastChild.firstElementChild.firstElementChild.id;
+          if (interview_id === "")
+            interview_id = -1;
+        } catch {
           interview_id = -1;
-      } catch {
-        interview_id = -1;
+        }
+
+        var index = $.inArray(id, resumes_selected);
+
+        if ( index === -1 ) {
+          resumes_selected.push(id);
+
+          if (interview_id >= 0)
+            interviews_selected.push(interview_id);
+        } else {
+          resumes_selected.splice(index, 1);
+
+          if (interview_id >= 0)
+            interviews_selected.splice(index, 1);
+        }
+
+        $(this).toggleClass('selected');
       }
-
-      var index = $.inArray(id, resumes_selected);
-
-      if ( index === -1 ) {
-        resumes_selected.push(id);
-
-        if (interview_id >= 0)
-          interviews_selected.push(interview_id);
-      } else {
-        resumes_selected.splice(index, 1);
-
-        if (interview_id >= 0)
-          interviews_selected.splice(index, 1);
-      }
-
-      $(this).toggleClass('selected');
     }
   });
 
@@ -600,6 +552,31 @@ $(document).ready(function() {
       alert("This button not support multi-sel event yet!");
   }
 
+  function multisel_submit_wrapper(callback) {
+    if (!enable_multi) {
+      callback(interview_selected_value);
+    } else {
+      for (var i = 0; i < interviews_selected.length; i++) {
+        callback(interviews_selected[i]);
+      }
+    }
+  }
+
+  function multisel_submit_wrapper_resumeid(callback) {
+    if (!enable_multi) {
+      callback(resume_selected_value);
+    } else {
+      for (var i = 0; i < resumes_selected.length; i++) {
+        callback(resumes_selected[i]);
+      }
+    }
+  }
+
+  function do_common_plain_submit(interview_id, modal_name, status, sub_status) {
+    $(modal_name).modal('hide');
+    submit_interview_by_id(interview_id, "/api/interviews/", status, sub_status);
+  }
+
   $(document).on('click', '.invite_button', function() {
     resume_selected_value = Number(this.id);
     alert(resume_selected_value);
@@ -611,27 +588,38 @@ $(document).ready(function() {
     show_ai_config_modal(resume_selected_value);
   });
 
+  // TBD: ?
   $(document).on('click', '.stage_zero_sms', function() {
   });
 
+  /*
+    About multiple selection
+    If the element is for POPUP MODAL, then leave it unchanged.
+    If the element is for SUBMIT, then use the multisel* wrapper.
+   */
+  function do_stage_zero_pass(resume_id) {
+    submit_interview_by_compound(resume_id, post_selected_value, "/api/interviews/", 2, '邀约');
+  }
+
   $(document).on('click', '.stage_zero_pass', function() {
     resume_selected_value = Number(this.id);
-    var statusI = 2;
-    submit_interview_by_compound(resume_selected_value, post_selected_value, "/api/interviews/", statusI, '邀约')
+    multisel_submit_wrapper_resumeid(do_stage_zero_pass);
   });
+
+  function do_stage_zero_fail(resume_id) {
+    submit_interview_by_compound(resume_id, post_selected_value, "/api/interviews/", 0, "初选-终止", false);
+  }
 
   $(document).on('click', '.stage_zero_fail', function() {
     resume_selected_value = Number(this.id);
-    var statusI = 0;
-    tmp_not_support_multi();
-
-    submit_interview_by_compound(resume_selected_value, post_selected_value, "/api/interviews/", statusI, "初选-终止", false)
+    multisel_submit_wrapper_resumeid(do_stage_zero_fail);
   });
 
   $(document).on('click', '.stage_one_pass', function() {
     interview_selected_value = Number(this.id);
     $('#nextModal').modal('toggle')
   });
+
   $(document).on('click', '.stage_one_fail', function() {
     interview_selected_value = Number(this.id);
     $('#stopModal').modal('toggle')
@@ -640,8 +628,10 @@ $(document).ready(function() {
   $(document).on('click', '.stage_two_dail', function() {
     interview_selected_value = Number(this.id);
     resume_id = this.dataset.resume_id;
-    show_callCandidate_modal(post_selected_value, resume_id)
+    // This is a popup
+    show_callCandidate_modal(post_selected_value, resume_id);
   });
+
   $(document).on('click', '.stage_two_pass', function() {
     interview_selected_value = Number(this.id);
     $('#appointmentModal').modal('toggle')
@@ -679,12 +669,15 @@ $(document).ready(function() {
 
   $(document).on('click', '.stage_five_update', function() {
     interview_selected_value = Number(this.id);
+    // This is a popup
     show_entry_update_modal(interview_selected_value);
   });
+
   $(document).on('click', '.stage_five_pass', function() {
     interview_selected_value = Number(this.id);
     $('#entryedModal').modal('toggle')
   });
+
   $(document).on('click', '.stage_five_fail', function() {
     interview_selected_value = Number(this.id);
     $('#stopModal').modal('toggle')
@@ -694,32 +687,35 @@ $(document).ready(function() {
     interview_selected_value = Number(this.id);
     $('#stopModal').modal('toggle');
   });
+
   $(document).on('click', '.stage_six_pass', function() {
     interview_selected_value = Number(this.id);
     $('#probationSuccModal').modal('toggle')
   });
+
   $(document).on('click', '.stage_six_fail', function() {
     interview_selected_value = Number(this.id);
     $('#probationFailModal').modal('toggle')
   });
 
-
   $(document).on('click', '.stage_seven_register', function() {
     interview_selected_value = Number(this.id);
     $('#pbRegisterModal').modal('toggle')
   });
+
   $(document).on('click', '.stage_seven_bill', function() {
     interview_selected_value = Number(this.id);
     $('#pbInvoiceModal').modal('toggle')
   });
+
   $(document).on('click', '.stage_seven_pass', function() {
     interview_selected_value = Number(this.id);
     $('#pbFinishModal').modal('toggle')
   });
+
   $(document).on('click', '.stage_seven_fail', function() {
     interview_selected_value = Number(this.id);
     $('#pbBaddebtModal').modal('toggle');
-    //$('#stopModal').modal('toggle')
   });
 
   /* TBD: is this useful? */
@@ -753,16 +749,6 @@ $(document).ready(function() {
     }
   });
 
-  function multisel_submit_wrapper(callback) {
-    if (!enable_multi) {
-      callback(interview_selected_value);
-    } else {
-      for (var i = 0; i < interviews_selected.length; i++) {
-        callback(interviews_selected[i]);
-      }
-    }
-  }
-
   $(function(){
     $('#inviteFormSubmit').click(function(e){
       e.preventDefault();
@@ -784,31 +770,31 @@ $(document).ready(function() {
     });
   });
 
+  function do_dial_submit(resume_id) {
+    var post_id = post_selected_value;
+    var status = 1;
+    $('#dialModal').modal('hide');
+
+    submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, 'AI面试');
+  }
+
   $(function(){
     $('#dialFormSubmit').click(function(e){
       e.preventDefault();
-      var resume_id = resume_selected_value;
-      var post_id = post_selected_value;
-      var status = 1;
-
-      $('#dialModal').modal('hide');
-      tmp_not_support_multi();
-
-      submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, 'AI面试');
+      multisel_submit_wrapper_resumeid(do_dial_submit);
     });
   });
+
+  function do_next_submit(interview_id) {
+    var status = 2;
+    $('#nextModal').modal('hide');
+    submit_interview_by_id(interview_id, "/api/interviews/", status, '邀约');
+  }
 
   $(function() {
     $('#nextSubmit').click(function(e){
       e.preventDefault();
-      var resume_id = resume_selected_value;
-      var post_id = post_selected_value;
-      var interview_id = interview_selected_value;
-      var status = 2;
-      tmp_not_support_multi();
-
-      $('#nextModal').modal('hide');
-      submit_interview_by_id(interview_id, "/api/interviews/", status, '邀约');
+      multisel_submit_wrapper(do_next_submit);
     });
   });
 
@@ -891,11 +877,6 @@ $(document).ready(function() {
       multisel_submit_wrapper(do_offerInfo_submit);
     });
   });
-
-  function do_common_plain_submit(interview_id, modal_name, status, sub_status) {
-    $(modal_name).modal('hide');
-    submit_interview_by_id(interview_id, "/api/interviews/", status, sub_status);
-  }
 
   function do_entryed_submit(interview_id) {
     do_common_plain_submit(interview_id, '#entryedModal', 6, '考察');
@@ -1066,42 +1047,39 @@ $(document).ready(function() {
   // ================================================================================
   $(function() {
     $('#agree_interview').click(function(e){
-      tmp_not_support_multi();
       $('#dailToCandidateModal').modal('hide');
       $('#appointmentModal').modal('show');
     });
   });
 
+  function do_dial_deeper_submit(interview_id) {
+    var status = 2;
+    $('#dailToCandidateModal').modal('hide');
+    submit_interview_by_id(interview_id, "/api/interviews/", status, '深度沟通');
+  }
+
   $(function() {
     $('#dail_deeper_communicate').click(function(e){
       e.preventDefault();
-      var resume_id = resume_selected_value;
-      var post_id = post_selected_value;
-      var interview_id = interview_selected_value;
-      var status = 2;
-      $('#dailToCandidateModal').modal('hide');
-      tmp_not_support_multi();
-
-      submit_interview_by_id(interview_id, "/api/interviews/", status, '深度沟通');
+      multisel_submit_wrapper(do_dial_deeper_submit);
     });
   });
+
+  function do_dial_not_linked_submit(interview_id) {
+    var status = 2;
+    $('#dailToCandidateModal').modal('hide');
+    submit_interview_by_id(interview_id, "/api/interviews/", status, '未接通');
+  }
 
   $(function() {
     $('#dail_not_linked').click(function(e){
       e.preventDefault();
-      var resume_id = resume_selected_value;
-      var post_id = post_selected_value;
-      var interview_id = interview_selected_value;
-      var status = 2;
-      tmp_not_support_multi();
-      $('#dailToCandidateModal').modal('hide');
-      submit_interview_by_id(interview_id, "/api/interviews/", status, '未接通');
+      multisel_submit_wrapper(do_dial_not_linked_submit);
     });
   });
 
   $(function() {
     $('#giveup_interview').click(function(e){
-      tmp_not_support_multi();
       $('#dailToCandidateModal').modal('hide');
       $('#stopModal').modal('show');
     });

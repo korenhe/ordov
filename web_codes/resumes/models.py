@@ -136,7 +136,6 @@ def query_resumes_by_args(**kwargs):
         queryset = Resume.objects.exclude(interview__post__id=post_id)
     elif status_id > 0:
         queryset = Resume.objects.filter(interview__status=status_id, interview__post__id=post_id, interview__is_active=True)
-        queryset = queryset.exclude(interview__status=0, interview__post__id=post_id)
     elif status_id < 0:
         queryset = Resume.objects.filter(interview__status__gte=0, interview__post__id=post_id, interview__is_active=False)
     else:
@@ -147,7 +146,7 @@ def query_resumes_by_args(**kwargs):
     try:
         post_request = Post.objects.get(id=post_id)
     except (ObjectDoesNotExist, MultipleObjectsReturned):
-        pass
+        print("EXCEPT: ObjectDoesNotExist, MultipleObjectsReturned")
 
     if post_request:
         post_age_min = post_request.age_min or 0
@@ -237,7 +236,6 @@ def query_resumes_by_args(**kwargs):
                                    models.Q(experience__post_name__icontains=field) |
                                    models.Q(experience__company_name__icontains=field))
 
-    # ------
     count = queryset.count()
 
     queryset = queryset.order_by(order_column)[start:start + length]
