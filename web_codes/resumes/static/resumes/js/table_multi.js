@@ -294,8 +294,8 @@ $(document).ready(function() {
   /* ======================================== Process Begin Here */
 
   $(function(){
-    /* flush table every 10s */
-    setInterval(flush,10000);
+    /* flush table every 100s */
+    setInterval(flush,100000);
     function flush(){
         if (post_selected_value > 0) {
             page_refresh(table, true);

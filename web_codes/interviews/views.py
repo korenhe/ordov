@@ -237,11 +237,54 @@ def aiTest(request):
         if interviewInfo is None:
             print("No such item in interview")
             return HttpResponse("fail")
+        if interviewInfo.status != 1:
+            print("Steal Info interview")
+            return HttpResponse("fail")
 
         print("companyId:", companyId, " callJobId:", callJobId, " candiate: ", candidate, "phone: ", candidate_phone)
         if status == 2 and finishstatus == 2:
             #未接通case
             interviewInfo.sub_status = '未接通AI'
+            interviewInfo.save()
+            return HttpResponse("fail")
+        if status == 2 and finishstatus == 1:
+            interviewInfo.sub_status = '拒绝'
+            interviewInfo.save()
+            return HttpResponse("fail")
+        if status == 2 and finishstatus == 3:
+            interviewInfo.sub_status = '主叫号码不可用'
+            interviewInfo.save()
+            return HttpResponse("fail")
+        if status == 2 and finishstatus == 4:
+            interviewInfo.sub_status = '空号'
+            interviewInfo.save()
+            return HttpResponse("fail")
+        if status == 2 and finishstatus == 5:
+            interviewInfo.sub_status = '关机'
+            interviewInfo.save()
+            return HttpResponse("fail")
+        if status == 2 and finishstatus == 6:
+            interviewInfo.sub_status = '占线'
+            interviewInfo.save()
+            return HttpResponse("fail")
+        if status == 2 and finishstatus == 7:
+            interviewInfo.sub_status = '停机'
+            interviewInfo.save()
+            return HttpResponse("fail")
+        if status == 2 and finishstatus == 8:
+            interviewInfo.sub_status = '未接'
+            interviewInfo.save()
+            return HttpResponse("fail")
+        if status == 2 and finishstatus == 9:
+            interviewInfo.sub_status = '主叫欠费'
+            interviewInfo.save()
+            return HttpResponse("fail")
+        if status == 2 and finishstatus == 10:
+            interviewInfo.sub_status = '呼损'
+            interviewInfo.save()
+            return HttpResponse("fail")
+        if status == 2 and finishstatus == 11:
+            interviewInfo.sub_status = '黑名单'
             interviewInfo.save()
             return HttpResponse("fail")
         elif status == 2 and finishstatus == 0:
@@ -256,6 +299,10 @@ def aiTest(request):
                     interviewInfo.sub_status = resultValue
                     interviewInfo.save()
                     break
+        else:
+            interviewInfo.sub_status = '未知状态'
+            interviewInfo.save()
+            return HttpResponse("fail")
 
     if request.method == "GET":
         print("Get")
