@@ -36,6 +36,7 @@ urlpatterns = [
     path('accounts/signup/', accountsViews.signup, name='signup'),
     path('accounts/login/', accountsViews.MyLoginView.as_view(), name='login'),
     path('accounts/', include('allauth.urls')),
+    path('api/v1/getResult', interviewsViews.aiTest),
     path('candidates/resume/update/', candidatesViews.updateResume, name='candidate_update_resume'),
     path('candidates/resume/success/', candidatesViews.apply_success, name='candidate_apply_success'),
 

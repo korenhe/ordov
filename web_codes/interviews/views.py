@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 from django.views import generic
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 from rest_framework.response import Response
@@ -35,6 +35,8 @@ from .serializers import InterviewSub_TerminateSerializer
 
 from companies.models import Post
 from resumes.models import Resume
+
+from rest_framework import status
 
 # Create your views here.
 class InterviewViewSet(viewsets.ModelViewSet):
@@ -176,3 +178,13 @@ def interviewsub_get_offer_detail(request, interview_id):
             return JsonResponse(data)
 
     return JsonResponse(data)
+
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
+def aiTest(request):
+	print("----------------------- come here", request.method)
+	if request.method == "POST":
+		print("POST: ", request.POST)
+	if request.method == "GET":
+		print("Get")
+	return HttpResponse("success")
