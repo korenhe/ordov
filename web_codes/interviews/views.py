@@ -39,6 +39,8 @@ from resumes.models import Resume
 from rest_framework import status
 from third_party.views import getBaiyingTaskList, importTaskCustomer
 
+import json
+
 # Create your views here.
 class InterviewViewSet(viewsets.ModelViewSet):
     queryset = Interview.objects.all().order_by('id')
@@ -201,9 +203,50 @@ def interviewsub_get_offer_detail(request, interview_id):
 from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def aiTest(request):
-	print("----------------------- come here", request.method)
-	if request.method == "POST":
-		print("POST: ", request.POST)
-	if request.method == "GET":
-		print("Get")
-	return HttpResponse("success")
+    if request.method == "POST":
+        returnData = request.body
+
+        returnDataStr = getPesudoResponse()
+        returnData = json.loads(returnDataStr)
+
+        sceneInfo = returnData.get('data').get('data').get('sceneInstance')
+        print('sceneInfo', sceneInfo)
+        companyId = sceneInfo.get('companyId')
+        callJobId = sceneInfo.get('callJobId')
+        candidate = sceneInfo.get('customerName')
+        candidate_phone = sceneInfo.get('customerTelephone')
+        status = sceneInfo.get('status')
+        finishstatus = sceneInfo.get('finishStatus')
+
+        postInfo = Post.objects.get(baiying_task_id=callJobId)
+        resumeInfo = Resume.objects.get(phone_number=candidate_phone)
+
+        if postInfo is None or resumeInfo is None:
+            print("Not imported into db now")
+            return
+
+        interviewInfo = Interview.objects.get(resume=resumeInfo, post=postInfo)
+        if interviewInfo is None:
+            print("No such item in interview")
+            return
+
+        print("companyId:", companyId, " callJobId:", callJobId, " candiate: ", candidate, "phone: ", candidate_phone)
+        if status == 2 and finishstatus == 2:
+            #未接通case
+            interviewInfo.sub_status = '未接通'
+            interviewInfo.save()
+            return
+        elif status == 2 and finishstatus == 0:
+            #已经接通
+            taskResultInfo = returnData.get('data').get('data').get('taskResult')
+            for result in taskResultInfo:
+                resultName = result.get('resultName')
+                resultValue = resule.get('resuleValue')
+                if resultName.find('客户意向等级') >= 0:
+                    interviewInfo.sub_status = resultValue
+                    interviewInfo.save()
+                    break
+
+    if request.method == "GET":
+        print("Get")
+    return HttpResponse("success")
