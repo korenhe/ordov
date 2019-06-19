@@ -235,6 +235,7 @@ def query_resumes_by_args(**kwargs):
                                    models.Q(major__icontains=field) |
                                    models.Q(experience__post_name__icontains=field) |
                                    models.Q(experience__company_name__icontains=field))
+        queryset = queryset.distinct()
 
     count = queryset.count()
 
