@@ -41,25 +41,25 @@ $(document).ready(function() {
       //node[0].toggleClass("btn-info");
 
       container.classList.remove("btn-info");
-      container.innerText = "多选-关闭";
+      container.innerText = "多选[N]";
 
       empty_multi_selection();
       table.draw();
       return true;
     } else {
       container.classList.add("btn-info");
-      container.innerText = "多选-打开";
+      container.innerText = "多选[Y]";
       return false;
     }
   }
 
   var table = $('#dataTable_resume').DataTable({
     dom:
-    "<'row'<'col-sm-12 col-md-1'l><'resume_multi col-sm-12 col-md-7'B><'col-sm-12 col-md-4'f>>" +
+    "<'row'      <'col-sm-12 col-md-8'<'row' <'resume_multi ml-3'B><'ml-3'l>>>       <'col-sm-12 col-md-4'f>   >" +
       "<'row'<'col-sm-12'tr>>" +
       "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
     buttons: [
-      {text: '多选-关闭',
+      {text: '多选[N]',
        action: function (e, dt, node, config) {
          enable_multi = !enable_multi;
          button_update(dt, node[0], enable_multi);
