@@ -578,7 +578,12 @@
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
               <form>
-
+				<div class="form-group">
+				  <input type="text" class="form-control" id="text_offer_resumeinfo_username" placeholder="姓名">
+				</div>
+				<div class="form-group">
+				  <input type="text" class="form-control" id="text_offer_resumeinfo_phone_number" placeholder="电话">
+				</div>
                 <div class="form-group">
                   <span class="label label-default">入职日期</span>
                   <div class="input-group date form_datetime" data-date="2019-05-20T10:00:00Z" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_input1">
@@ -637,7 +642,12 @@
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
               <form>
-
+				<div class="form-group">
+				  <input type="text" class="form-control" id="text_entry_update_resumeinfo_username" placeholder="姓名">
+				</div>
+				<div class="form-group">
+				  <input type="text" class="form-control" id="text_entry_update_resumeinfo_phone_number" placeholder="电话">
+				</div>
                 <div class="form-group">
                   <span class="label label-default">入职时间</span>
                   <div class="input-group date form_datetime" data-date="2019-05-20T10:00:00Z" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_input1">
@@ -690,6 +700,14 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+		<form>
+		  <div class="form-group">
+			<input type="text" class="form-control" id="text_entry_resumeinfo_username" placeholder="姓名">
+		  </div>
+		  <div class="form-group">
+			<input type="text" class="form-control" id="text_entry_resumeinfo_phone_number" placeholder="电话">
+		  </div>
+		</form>
         <div class="modal-footer">
           <button type="button" id="entryedSubmit" class="btn btn-primary">已经入职，进入考察期</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -709,6 +727,14 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+		<form>
+		  <div class="form-group">
+			<input type="text" class="form-control" id="text_probation_resumeinfo_username" placeholder="姓名">
+		  </div>
+		  <div class="form-group">
+			<input type="text" class="form-control" id="text_probation_resumeinfo_phone_number" placeholder="电话">
+		  </div>
+		</form>
         <div class="modal-footer">
           <button type="button" id="probationSuccSubmit" class="btn btn-primary">进入下一阶段: 回款</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -746,7 +772,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">面试结论</h5>
+          <h5 class="modal-title" id="exampleModalLongTitle">面试结论:请填写面试评价</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -757,6 +783,12 @@
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
               <form>
+				<div class="form-group">
+				  <input type="text" class="form-control" id="text_interview_resumeinfo_username" placeholder="姓名">
+				</div>
+				<div class="form-group">
+				  <input type="text" class="form-control" id="text_interview_resumeinfo_phone_number" placeholder="电话">
+				</div>
                 <div class="form-group">
                   <input type="text" class="form-control" id="text_interviewresult_comments" placeholder="面试评价">
                 </div>

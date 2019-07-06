@@ -673,7 +673,20 @@ $(document).ready(function() {
   });
   $(document).on('click', '.stage_three_pass', function() {
     interview_selected_value = Number(this.id);
-    $('#interviewResultModal').modal('toggle')
+	resume_id = this.dataset.resume_id;
+	  $.ajax({
+        url:'/api/resumes/' + resume_id + '/',
+        type: 'GET',
+		data: null,
+		success: function(response) {
+		  document.getElementById("text_interview_resumeinfo_username").value = response.username;
+		  document.getElementById("text_interview_resumeinfo_phone_number").value = response.phone_number;
+        },
+		error: function() {
+		  console.log("get resume info failed");
+		},
+	  });
+	$('#interviewResultModal').modal('toggle')
   });
   $(document).on('click', '.stage_three_fail', function() {
     interview_selected_value = Number(this.id);
@@ -682,10 +695,36 @@ $(document).ready(function() {
 
   $(document).on('click', '.stage_four_update', function() {
     interview_selected_value = Number(this.id);
+	resume_id = this.dataset.resume_id;
+	$.ajax({
+	  url:'/api/resumes/' + resume_id + '/',
+	  type: 'GET',
+	  data: null,
+      success: function(response) {
+	    document.getElementById("text_offer_resumeinfo_username").value = response.username;
+		document.getElementById("text_offer_resumeinfo_phone_number").value = response.phone_number;
+      },
+	  error: function() {
+		console.log("get resume info failed");
+	  },
+	});
     $('#offerModal').modal('toggle')
   });
   $(document).on('click', '.stage_four_pass', function() {
     interview_selected_value = Number(this.id);
+	resume_id = this.dataset.resume_id;
+	$.ajax({
+	  url:'/api/resumes/' + resume_id + '/',
+	  type: 'GET',
+	  data: null,
+	  success: function(response) {
+		document.getElementById("text_offer_resumeinfo_username").value = response.username;
+		document.getElementById("text_offer_resumeinfo_phone_number").value = response.phone_number;
+	  },
+	  error: function() {
+		console.log("get resume info failed");
+	  },
+	});
     $('#offerModal').modal('toggle')
   });
   $(document).on('click', '.stage_four_fail', function() {
@@ -695,12 +734,38 @@ $(document).ready(function() {
 
   $(document).on('click', '.stage_five_update', function() {
     interview_selected_value = Number(this.id);
+	resume_id = this.dataset.resume_id;
+	$.ajax({
+	  url:'/api/resumes/' + resume_id + '/',
+	  type: 'GET',
+	  data: null,
+	  success: function(response) {
+		document.getElementById("text_entry_update_resumeinfo_username").value = response.username;
+		document.getElementById("text_entry_update_resumeinfo_phone_number").value = response.phone_number;
+	  },
+	  error: function() {
+		console.log("get resume info failed");
+	  },
+	});
     // This is a popup
     show_entry_update_modal(interview_selected_value);
   });
 
   $(document).on('click', '.stage_five_pass', function() {
     interview_selected_value = Number(this.id);
+	resume_id = this.dataset.resume_id;
+	$.ajax({
+	  url:'/api/resumes/' + resume_id + '/',
+	  type: 'GET',
+	  data: null,
+	  success: function(response) {
+		document.getElementById("text_entry_resumeinfo_username").value = response.username;
+		document.getElementById("text_entry_resumeinfo_phone_number").value = response.phone_number;
+	  },
+	  error: function() {
+		console.log("get resume info failed");
+	  },
+	});
     $('#entryedModal').modal('toggle')
   });
 
@@ -716,6 +781,19 @@ $(document).ready(function() {
 
   $(document).on('click', '.stage_six_pass', function() {
     interview_selected_value = Number(this.id);
+	resume_id = this.dataset.resume_id;
+	$.ajax({
+	  url:'/api/resumes/' + resume_id + '/',
+	  type: 'GET',
+	  data: null,
+	  success: function(response) {
+		document.getElementById("text_probation_resumeinfo_username").value = response.username;
+		document.getElementById("text_probation_resumeinfo_phone_number").value = response.phone_number;
+	  },
+	  error: function() {
+		console.log("get resume info failed");
+	  },
+	});
     $('#probationSuccModal').modal('toggle')
   });
 
