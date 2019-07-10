@@ -75,7 +75,7 @@ def create_or_update_basic_info(resume, phone):
     degreeNO = validate_degree(degree)
 
     age = 0
-    if not age == '':
+    if not ageStr == '':
         age = int(float(ageStr))
     if not birth_month == '':
         birth_month = int(birth_month)

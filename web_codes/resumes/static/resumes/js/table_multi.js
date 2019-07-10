@@ -527,10 +527,10 @@ $(document).ready(function() {
       data: null,
       success: function(response) {
 
-        document.getElementById("text_resumeinfo_username").value = response.username;
-        document.getElementById("text_resumeinfo_degree").value = response.degree;
-        document.getElementById("text_resumeinfo_school").value = response.school;
-        document.getElementById("text_resumeinfo_phone_number").value = response.phone_number;
+        document.getElementById("candidate_text_resumeinfo_username").value = response.username;
+        document.getElementById("candidate_text_resumeinfo_degree").value = response.degree;
+        document.getElementById("candidate_text_resumeinfo_school").value = response.school;
+        document.getElementById("candidate_text_resumeinfo_phone_number").value = response.phone_number;
 
         if (callback)
           $('#resumeModal').modal('toggle');
