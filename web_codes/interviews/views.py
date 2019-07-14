@@ -95,6 +95,23 @@ class InterviewTable(generic.ListView):
 
 from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
+def UpdateAIStatus(request):
+    if request.method == 'POST':
+        print("post------------", request.POST)
+        post_id_S = request.POST['post_id']
+        subStatus = request.POST['ai_status']
+        subStatusAction = request.POST['ai_status_action']
+        if post_id_S == '' or subStatus == '' or subStatusAction == '':
+            return
+        post_id = int(post_id_S)
+        if subStatusAction == '通过':
+            Interview.objects.filter(post_id=post_id, status=1, sub_status=subStatus).update(status=2, sub_status='邀约')
+        elif subStatusAction == '不通过':
+            Interview.objects.filter(post_id=post_id, status=1, sub_status=subStatus).update(status=1, is_active=False)
+        return HttpResponse("success")
+
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
 def Task(request):
     if request.method == 'GET':
         task_array = getBaiyingTaskList()

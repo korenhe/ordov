@@ -256,7 +256,7 @@
                   <th>Degree</th>
                   <th>*Major</th>
                   <th>WorkExp</th>
-                  <th>Status</th>
+                  <th id="table_Status">Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -338,6 +338,70 @@
     </div>
   </div>
 
+
+  <!-- DIAL -->
+  <div class="modal fade" id="aiSelectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">AI结果处理</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+
+        <div class="modal-body" style="padding: 0.5rem">
+          <div class='row'>
+            <div class="col-md-6 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon_ai_status" style="width:70px">AI状态</span>
+              </div>
+			  <select class="form-control" id="ai_status" name="ai_status" aria-labelledby="basic-addon_ai_status">
+                <option>---</option>
+                <option>B级(一般)</option>
+                <option>C级(很少)</option>
+                <option>未接通AI</option>
+                <option>拒绝</option>
+                <option>主叫号码不可用</option>
+                <option>空号</option>
+                <option>关机</option>
+                <option>占线</option>
+                <option>停机</option>
+                <option>未接</option>
+                <option>主叫欠费</option>
+                <option>呼损</option>
+                <option>黑名单</option>
+              </select>
+            </div> <?--col-md-6-->
+            <div class="col-md-6 input-group">
+			  <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon_ai_status_action" style="width:70px">操作</span>
+              </div>
+			  <select class="form-control" id="ai_status_action" name="ai_status_action" aria-labelledby="basic-addon_ai_status_action">
+                <option>---</option>
+                <option>通过</option>
+                <option>未通过</option>
+              </select>
+            </div>
+		  </div> <?--- row -->
+		  <div class='row' style="margin-top:10px">
+            <div class="col-md-12 input-group">
+              <input name="ai_status_and_action" id="ai_status_and_action" class="form-control">
+			</div>
+          </div>
+        </div> <?-- ....... -->
+
+
+        <div class="modal-footer">
+          <button type="button" id="aiStatusActionSubmit" class="btn btn-primary">OK</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
 
   <!-- Dial to Candidate -->
   <div class="modal fade" id="dailToCandidateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

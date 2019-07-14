@@ -50,6 +50,7 @@ urlpatterns = [
 
     path('api/', include(router.urls)),
     path('post/post/update/', companiesViews.UpdatePost),
+    path('interview/ai/update/', interviewsViews.UpdateAIStatus),
     path('interview/ai/task/', interviewsViews.Task),
 
     path('interviews/', include('interviews.urls'))

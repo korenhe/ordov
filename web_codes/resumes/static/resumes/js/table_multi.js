@@ -324,6 +324,43 @@ $(document).ready(function() {
     page_refresh(table, true);
   });
 
+  $('#table_Status').on('click', function(e) {
+    if (post_selected == false) {
+      alert("请先选择职位.");
+      e.stopPropagation();
+    } else {
+      $('#ai_status').val('-')
+      $('#ai_status_action').val('-')
+      $('#ai_status_and_action').val('-')
+      $('#aiSelectModal').modal('toggle')
+    }
+  });
+
+  $('#ai_status_action').on('change', function(e) {
+    var newStr = "对于AI状态: "+$('#ai_status').val() +" 的记录,"+ "作"+$('#ai_status_action').val()+"处理"
+    console.log(newStr)
+    $('#ai_status_and_action').val(newStr)
+  });
+
+  $('#aiStatusActionSubmit').on('click', function(e) {
+    var post_id = post_selected_value
+    $.ajax({
+      method: "POST",
+      url: "/interview/ai/update/",
+      data: {
+        post_id: post_id,
+        ai_status: $('#ai_status').val(),
+        ai_status_action: $('#ai_status_action').val(),
+      },
+      success: function(response) {
+        page_refresh(table, true);
+        $('#ai_status').val('-')
+        $('#ai_status_action').val('-')
+        $('#ai_status_and_action').val('done!')
+      },
+    });
+  });
+
   // resume table
   $('#dataTable_resume tbody').on('click', 'tr', function(e) {
     if (post_selected == false) {
