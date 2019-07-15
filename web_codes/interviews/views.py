@@ -107,7 +107,8 @@ def UpdateAIStatus(request):
         if subStatusAction == '通过':
             Interview.objects.filter(post_id=post_id, status=1, sub_status=subStatus).update(status=2, sub_status='邀约')
         elif subStatusAction == '不通过':
-            Interview.objects.filter(post_id=post_id, status=1, sub_status=subStatus).update(status=1, is_active=False)
+            status_string = subStatus + '-终止'
+            Interview.objects.filter(post_id=post_id, status=1, sub_status=subStatus).update(status=1, is_active=False, sub_status=status_string)
         return HttpResponse("success")
 
 from django.views.decorators.csrf import csrf_exempt
