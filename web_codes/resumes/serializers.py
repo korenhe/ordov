@@ -55,10 +55,29 @@ class ResumeSerializer(serializers.ModelSerializer):
     def get_interview_status_name(self, resume):
         post_id = self.context.get('post_id')
 
+        # status_name such a complicated issue
+        statusId = -1
+        objsStatusId = Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)
+        if (objsStatusId):
+            statusId = int(objsStatusId[0].status)
+
         objs = Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)
         if (objs):
             assert len(objs) == 1
-            return objs[0].sub_status
+            # check the status
+            if statusId == 3:
+                appointmentObjs = objs[0].interviewsub_appointment_set.all()
+                assert len(appointmentObjs) == 1
+                agreeObjs = appointmentObjs[0].interviewsub_appointment_agree_set.all()
+                assert len(agreeObjs) == 1
+                return agreeObjs[0].date.strftime("%Y/%m/%d %H:%M:%S")
+                # the interview status, we should show the interview time
+            elif statusId == 4:
+                pass
+            elif statusId == 5:
+                pass
+            else:
+                return objs[0].sub_status
         else:
             # default 0
             return "--"
