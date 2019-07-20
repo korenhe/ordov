@@ -77,7 +77,7 @@ $(document).ready(function() {
         d.age_id_min = $('#age_id_min').val();
         d.age_id_max = $('#age_id_max').val();
         d.graduate_time_min = $('#graduate_time_start').val();
-        d.graduate_time_max = $('#graduate_time_end').val();
+       d.graduate_time_max = $('#graduate_time_end').val();
         d.gender_id = $('#gender_id').val();
         d.province = $('#working_place_province').val();
         d.city = $('#working_place_city').val();
@@ -492,6 +492,12 @@ $(document).ready(function() {
     xhr_common_send("POST", url, data);
   }
 
+  /* Save Interview Sub Table */
+  function submit_interviewsub_by_id_test(url, table, data) {
+    xhr_common_send("GET", url, data);
+  }
+
+
   function helper_get_selectbox_text(select_id) {
     select_box = document.getElementById(select_id);
     text_box = select_box.options[select_box.selectedIndex].innerHTML;
@@ -738,14 +744,14 @@ $(document).ready(function() {
 	  type: 'GET',
 	  data: null,
       success: function(response) {
-	    document.getElementById("text_offer_resumeinfo_username").value = response.username;
-		document.getElementById("text_offer_resumeinfo_phone_number").value = response.phone_number;
+	    document.getElementById("text_update_offer_resumeinfo_username").value = response.username;
+		document.getElementById("text_update_offer_resumeinfo_phone_number").value = response.phone_number;
       },
 	  error: function() {
 		console.log("get resume info failed");
 	  },
 	});
-    $('#offerModal').modal('toggle')
+    $('#offerUpdateModal').modal('toggle')
   });
   $(document).on('click', '.stage_four_pass', function() {
     interview_selected_value = Number(this.id);
@@ -999,6 +1005,7 @@ $(document).ready(function() {
         "interview": interview_id,
         "result_type": 3
       },
+      "op": "UpdatePass",
       "date": helper_get_textbox_text("text_offerinfo_date"),
       "contact": helper_get_textbox_text("text_offerinfo_contact"),
       "contact_phone": helper_get_textbox_text("text_offerinfo_contact_phone"),
@@ -1008,8 +1015,30 @@ $(document).ready(function() {
       "salary": helper_get_textbox_text("text_offerinfo_salary"),
       "notes": helper_get_textbox_text("text_offerinfo_notes")
 
+
     };
 
+    submit_interviewsub_by_id("/interviews/api/offer_sub_agree/", table, data);
+  }
+
+  function do_offerInfoUpdate_submit(interview_id) {
+    $('#offerUpdateModal').modal('hide');
+    data = {
+      "offer_sub": {
+        "interview": interview_id,
+        "result_type": 3
+      },
+      "op": "Update",
+      "date": helper_get_textbox_text("text_update_offerinfo_date"),
+      "contact": helper_get_textbox_text("text_update_offerinfo_contact"),
+      "contact_phone": helper_get_textbox_text("text_update_offerinfo_contact_phone"),
+      "address": helper_get_textbox_text("text_update_offerinfo_address"),
+      "postname": helper_get_textbox_text("text_update_offerinfo_postname"),
+      "certification": helper_get_textbox_text("text_update_offerinfo_certification"),
+      "salary": helper_get_textbox_text("text_update_offerinfo_salary"),
+      "notes": helper_get_textbox_text("text_update_offerinfo_notes")
+
+    };
     submit_interviewsub_by_id("/interviews/api/offer_sub_agree/", table, data);
   }
 
@@ -1017,6 +1046,13 @@ $(document).ready(function() {
     $('#offerSubmit').click(function(e){
       e.preventDefault();
       multisel_submit_wrapper(do_offerInfo_submit);
+    });
+  });
+
+  $(function() {
+    $('#offerUpdateSubmit').click(function(e) {
+      e.preventDefault();
+      multisel_submit_wrapper(do_offerInfoUpdate_submit);
     });
   });
 

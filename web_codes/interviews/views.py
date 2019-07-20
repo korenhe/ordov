@@ -170,6 +170,36 @@ class InterviewSub_Offer_AgreeViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Offer_Agree.objects.all()
     serializer_class = InterviewSub_Offer_AgreeSerializer
 
+    def create(self, request):
+        params = request.data
+        op = params.pop('op', None)
+        print("params", params)
+        if op == 'Update':
+            serializer = InterviewSub_Offer_AgreeSerializer(data=params)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+            else:
+                print("Fail to Serialize the Offer_Agree")
+            return HttpResponse("success")
+        elif op == 'UpdatePass':
+            serializer = InterviewSub_Offer_AgreeSerializer(data=params)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+            else:
+                print("Fail to Serialize the Offer_Agree")
+
+            interviewId = int(params.get('offer_sub').get('interview', -1))
+            interview = Interview.objects.get(id=interviewId)
+            interview.status = 5
+            interview.sub_status = '入职'
+            interview.save()
+            return HttpResponse("success")
+
+        else:
+            print("Bad Info")
+            return HttpResponse("Fail")
+
+
 # Interview Probation SubModal
 # ---------------------------------------- Pretty Split Line ----------------------------------------
 class InterviewSub_ProbationViewSet(viewsets.ModelViewSet):

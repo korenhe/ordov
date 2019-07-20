@@ -158,11 +158,12 @@ class InterviewSub_Offer_AgreeSerializer(serializers.ModelSerializer):
             **validated_data)
 
         # update interview table
+        """
         interview = Interview.objects.get(pk=offer_sub_.interview.id)
         interview.status = 5
         interview.sub_status = '入职'
         interview.save()
-
+        """
         return offer_sub_agree
 
 # Interview Probation SubModal
