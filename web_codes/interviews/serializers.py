@@ -11,6 +11,8 @@ from .models import InterviewSub_Payback, InterviewSub_Payback_Finish
 from .models import InterviewSub_Terminate
 from .models import STATUS_CHOICES
 
+from django.core.exceptions import MultipleObjectsReturned
+
 class InterviewSerializer(serializers.ModelSerializer):
     id = serializers.SerializerMethodField()
     def get_id(self, interview):
@@ -150,23 +152,37 @@ class InterviewSub_Offer_AgreeSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         offer_sub_data = validated_data.pop('offer_sub')
 
-        offer_sub_ = InterviewSub_OfferSerializer.create(InterviewSub_OfferSerializer(),
-                                                        validated_data=offer_sub_data)
+        # Attention: The Interview - Offer - Offer_Agree is one-one-one relationship
+        offer_sub_ = InterviewSub_Offer.objects.all().filter(interview_id=offer_sub_data.get('interview'))
+        if offer_sub_ is None or len(offer_sub_) is 0:
+            offer_sub_ = InterviewSub_OfferSerializer.create(InterviewSub_OfferSerializer(), validated_data=offer_sub_data)
+        else:
+            offer_sub_ = offer_sub_[0]
 
-        offer_sub_agree, created = InterviewSub_Offer_Agree.objects.update_or_create(
-            offer_sub=offer_sub_,
-            **validated_data)
+        offer_sub_agree = None
+        try:
+            offer_sub_agree, created = InterviewSub_Offer_Agree.objects.update_or_create(
+                offer_sub_id=offer_sub_.id, defaults=validated_data)
+        except (MultipleObjectsReturned):
+            # To walkaround the perious bug
+            # Attention! The Interview - Offer - Offer_Agree is one-one-one relationship
+            offer_agree_subs = InterviewSub_Offer_Agree.objects.all().filter(offer_sub_id=offer_sub_.id)
+            """
+            FixUp all the offer_subs
+            """
+            offerAgreeSeri = InterviewSub_Offer_AgreeSerializer()
+            for oas in offer_agree_subs:
+                item = offerAgreeSeri.update(
+                        instance=oas,
+                        validated_data=validated_data
+                )
+                item.save()
+                offer_sub_agree = item
 
-        # update interview table
-        """
-        interview = Interview.objects.get(pk=offer_sub_.interview.id)
-        interview.status = 5
-        interview.sub_status = '入职'
-        interview.save()
-        """
         return offer_sub_agree
 
 # Interview Probation SubModal
+
 # ---------------------------------------- Pretty Split Line ----------------------------------------
 class InterviewSub_ProbationSerializer(serializers.ModelSerializer):
     class Meta:
