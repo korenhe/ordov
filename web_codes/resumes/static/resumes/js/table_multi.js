@@ -1076,6 +1076,7 @@ $(document).ready(function() {
         "interview": interview_id,
         "result_type": 4
       },
+      "op":"Update",
       "date": helper_get_textbox_text("text_entryupdate_date"),
       "contact": helper_get_textbox_text("text_entryupdate_contact"),
       "contact_phone": helper_get_textbox_text("text_entryupdate_contact_phone"),
