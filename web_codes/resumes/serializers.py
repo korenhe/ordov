@@ -73,7 +73,13 @@ class ResumeSerializer(serializers.ModelSerializer):
                 return agreeObjs[0].date.strftime("%Y/%m/%d %H:%M:%S")
                 # the interview status, we should show the interview time
             elif statusId == 4:
-                pass
+                offerObjs = objs[0].interviewsub_offer_set.all()
+                if len(offerObjs) < 1:
+                    return "请填写offer信息"
+                offerAgreeObjs = offerObjs[0].interviewsub_offer_agree_set.all()
+                if len(offerAgreeObjs) < 1:
+                    return "请填写offer信息"
+                return "预期入职: " + offerAgreeObjs[0].date.strftime("%Y/%m/%d %H:%M:%S")
             elif statusId == 5:
                 pass
             else:
