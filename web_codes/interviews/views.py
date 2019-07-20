@@ -235,7 +235,8 @@ def interviewsub_get_offer_detail(request, interview_id):
     if offers:
         offer_obj = offers[0]
         offer_agrees = offer_obj.interviewsub_offer_agree_set.all()
-        assert(len(offer_agrees) == 1)
+        #assert(len(offer_agrees) == 1)
+        print("len(offer_agrees) == 1 Fault")
         #get first and assert one
         if offer_agrees:
             offer_agree_obj = offer_agrees[0]

@@ -73,7 +73,7 @@ class ResumeSerializer(serializers.ModelSerializer):
                 if agreeObjs[0].date is None:
                     return "无该同学面试时间信息"
                 else:
-                    return agreeObjs[0].date.strftime("%Y/%m/%d %H:%M:%S")
+                    return "约定面试: "+agreeObjs[0].date.strftime("%Y/%m/%d %H:%M:%S")
                 # the interview status, we should show the interview time
             elif statusId == 4:
                 offerObjs = objs[0].interviewsub_offer_set.all()
