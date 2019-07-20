@@ -70,7 +70,10 @@ class ResumeSerializer(serializers.ModelSerializer):
                 assert len(appointmentObjs) == 1
                 agreeObjs = appointmentObjs[0].interviewsub_appointment_agree_set.all()
                 assert len(agreeObjs) == 1
-                return agreeObjs[0].date.strftime("%Y/%m/%d %H:%M:%S")
+                if agreeObjs[0].date is None:
+                    return "无该同学面试时间信息"
+                else:
+                    return agreeObjs[0].date.strftime("%Y/%m/%d %H:%M:%S")
                 # the interview status, we should show the interview time
             elif statusId == 4:
                 offerObjs = objs[0].interviewsub_offer_set.all()
@@ -79,9 +82,21 @@ class ResumeSerializer(serializers.ModelSerializer):
                 offerAgreeObjs = offerObjs[0].interviewsub_offer_agree_set.all()
                 if len(offerAgreeObjs) < 1:
                     return "请填写offer信息"
-                return "预期入职: " + offerAgreeObjs[0].date.strftime("%Y/%m/%d %H:%M:%S")
+                if offerAgreeObjs[0].date is None:
+                    return "请填写offer入职时间信息"
+                else:
+                    return "预期入职: " + offerAgreeObjs[0].date.strftime("%Y/%m/%d %H:%M:%S")
             elif statusId == 5:
-                pass
+                offerObjs = objs[0].interviewsub_offer_set.all()
+                if len(offerObjs) < 1:
+                    return "无该同学offer信息"
+                offerAgreeObjs = offerObjs[0].interviewsub_offer_agree_set.all()
+                if len(offerAgreeObjs) < 1:
+                    return "无该同学offer信息"
+                if offerAgreeObjs[0].date is None:
+                    return "无该同学入职时间信息"
+                else:
+                    return "预期入职: " + offerAgreeObjs[0].date.strftime("%Y/%m/%d %H:%M:%S")
             else:
                 return objs[0].sub_status
         else:
