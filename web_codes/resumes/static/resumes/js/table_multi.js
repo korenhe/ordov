@@ -122,7 +122,7 @@ $(document).ready(function() {
 `;
        }
       },
-      {"data": "birthorigin",
+      {"data": "expected",
        "width": "5%"
       },
       {"data": "ageg",

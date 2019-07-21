@@ -14,6 +14,7 @@ class ResumeSerializer(serializers.ModelSerializer):
     ageg = serializers.SerializerMethodField()
     newname = serializers.SerializerMethodField()
     birthorigin = serializers.SerializerMethodField()
+    expected = serializers.SerializerMethodField()
 
     def get_candidate_id(self, resume):
         if resume.candidate:
@@ -33,6 +34,12 @@ class ResumeSerializer(serializers.ModelSerializer):
             return resume.username+"(女)"
         else:
             return resume.username
+    def get_expected(self, resume):
+        #TODO: expected city and more
+        if resume.expected_city is not None:
+            return "期望地点:"+resume.expected_city
+        else:
+            return "--"
     def get_birthorigin(self, resume):
         birth =""
         hasBirthInfo = False
@@ -145,6 +152,7 @@ class ResumeSerializer(serializers.ModelSerializer):
             'ageg',
             'newname',
             'birthorigin',
+            'expected',
 
             # CascadeField
             'candidate',
@@ -170,6 +178,10 @@ class ResumeSerializer(serializers.ModelSerializer):
             'degree',
             'major',
             'school',
+
+            'birth_province',
+            'birth_city',
+            'birth_district',
 
             'expected_province',
             'expected_city',
