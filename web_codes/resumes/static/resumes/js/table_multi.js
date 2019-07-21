@@ -107,10 +107,11 @@ $(document).ready(function() {
       {"data": "candidate_id", "visible": false},
       {"data": "id",
        "width": "1%"}, // resume id
-      {"data": "username",
+      {"data": "newname",
        "width": "1%",
        render: function(data, type, row, meta) {
          //var url = t_resume_detail_url;
+         console.log(data)
          if (post_selected)
            return `
 <a class="nav-link" href="/manager/resumes/` + row.id + `">` + data + `</a>
