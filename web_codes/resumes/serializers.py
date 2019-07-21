@@ -13,6 +13,7 @@ class ResumeSerializer(serializers.ModelSerializer):
     workexp = serializers.SerializerMethodField()
     ageg = serializers.SerializerMethodField()
     newname = serializers.SerializerMethodField()
+    birthorigin = serializers.SerializerMethodField()
 
     def get_candidate_id(self, resume):
         if resume.candidate:
@@ -32,6 +33,21 @@ class ResumeSerializer(serializers.ModelSerializer):
             return resume.username+"(女)"
         else:
             return resume.username
+    def get_birthorigin(self, resume):
+        birth =""
+        hasBirthInfo = False
+        if resume.birth_province is not None:
+            birth = birth + resume.birth_province
+            hasBirthInfo = True
+        if resume.birth_city is not None:
+            birth = birth + "." + resume.birth_city
+            hasBirthInfo = True
+        if resume.birth_district is not None:
+            birth = birth + "." + resume.birth_district
+            hasBirthInfo = True
+        if hasBirthInfo is False:
+            return "无籍贯信息"
+        return birth
 
     # by post id, can be is_in_interview for post1 but not for post2
     def get_workexp(self, resume):
@@ -128,6 +144,7 @@ class ResumeSerializer(serializers.ModelSerializer):
             'workexp',
             'ageg',
             'newname',
+            'birthorigin',
 
             # CascadeField
             'candidate',

@@ -122,18 +122,8 @@ $(document).ready(function() {
 `;
        }
       },
-      {"data": "gender",
-       "width": "1%",
-       render: function(data, type, row, meta) {
-         if (data == "Male") {
-           return "男"
-         } else if (data == "Female"){
-           return "女"
-         } else {
-           // For default
-           return "--"
-         }
-       },
+      {"data": "birthorigin",
+       "width": "5%"
       },
       {"data": "ageg",
        "width": "5%"
