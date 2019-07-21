@@ -77,7 +77,7 @@ $(document).ready(function() {
         d.age_id_min = $('#age_id_min').val();
         d.age_id_max = $('#age_id_max').val();
         d.graduate_time_min = $('#graduate_time_start').val();
-       d.graduate_time_max = $('#graduate_time_end').val();
+        d.graduate_time_max = $('#graduate_time_end').val();
         d.gender_id = $('#gender_id').val();
         d.province = $('#working_place_province').val();
         d.city = $('#working_place_city').val();
@@ -134,8 +134,9 @@ $(document).ready(function() {
          }
        },
       },
-      {"data": "age",
-       "width": "1%"},
+      {"data": "ageg",
+       "width": "5%"
+      },
       {"data": "phone_number", "visible":false},
       {"data": "email", "visible": false},
       {"data": "school",

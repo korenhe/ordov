@@ -11,6 +11,7 @@ class ResumeSerializer(serializers.ModelSerializer):
     interview_status = serializers.SerializerMethodField()
     interview_status_name = serializers.SerializerMethodField()
     workexp = serializers.SerializerMethodField()
+    ageg = serializers.SerializerMethodField()
 
     def get_candidate_id(self, resume):
         if resume.candidate:
@@ -20,6 +21,9 @@ class ResumeSerializer(serializers.ModelSerializer):
 
     def get_id(self, resume):
         return resume.id
+
+    def get_ageg(self, resume):
+        return "年龄:" + str(resume.age)+" " "毕业: "+str(resume.graduate_time)
 
     # by post id, can be is_in_interview for post1 but not for post2
     def get_workexp(self, resume):
@@ -114,6 +118,7 @@ class ResumeSerializer(serializers.ModelSerializer):
             'interview_status',
             'interview_status_name',
             'workexp',
+            'ageg',
 
             # CascadeField
             'candidate',
