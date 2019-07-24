@@ -111,7 +111,6 @@ $(document).ready(function() {
        "width": "1%",
        render: function(data, type, row, meta) {
          //var url = t_resume_detail_url;
-         console.log(data)
          if (post_selected)
            return `
 <a class="nav-link" href="/manager/resumes/` + row.id + `">` + data + `</a>
@@ -583,6 +582,24 @@ $(document).ready(function() {
     $('#dailToCandidateModal').modal('toggle');
   }
 
+  function show_stop_modal(interview_id, resume_id) {
+    $.ajax({
+      url:'/api/resumes/' + resume_id + '/',
+      type: 'GET',
+      data: null,
+      success: function(response) {
+        console.log(response)
+        document.getElementById("text_terminate_expected_province").value = response.expected_province;
+        document.getElementById("text_terminate_expected_city").value = response.expected_city;
+        document.getElementById("text_terminate_expected_district").value = response.expected_district;
+      },
+      error: function() {
+        console.log("get resume info failed");
+      },
+    });
+    $('#stopModal').modal('toggle')
+  }
+
   function show_entry_update_modal(interview_id) {
     $.ajax({
       url:'/interviews/sub/offer/' + interview_id + '/',
@@ -683,7 +700,8 @@ $(document).ready(function() {
 
   $(document).on('click', '.stage_one_fail', function() {
     interview_selected_value = Number(this.id);
-    $('#stopModal').modal('toggle')
+    resume_id = this.dataset.resume_id;
+    show_stop_modal(interview_selected_value, resume_id)
   });
 
   $(document).on('click', '.stage_two_dail', function() {
@@ -699,12 +717,14 @@ $(document).ready(function() {
   });
   $(document).on('click', '.stage_two_fail', function() {
     interview_selected_value = Number(this.id);
-    $('#stopModal').modal('toggle')
+    resume_id = this.dataset.resume_id;
+    show_stop_modal(interview_selected_value, resume_id)
   });
 
   $(document).on('click', '.stage_three_miss', function() {
     interview_selected_value = Number(this.id);
-    $('#stopModal').modal('toggle');
+    resume_id = this.dataset.resume_id;
+    show_stop_modal(interview_selected_value, resume_id)
   });
   $(document).on('click', '.stage_three_pass', function() {
     interview_selected_value = Number(this.id);
@@ -725,7 +745,8 @@ $(document).ready(function() {
   });
   $(document).on('click', '.stage_three_fail', function() {
     interview_selected_value = Number(this.id);
-    $('#stopModal').modal('toggle')
+    resume_id = this.dataset.resume_id;
+    show_stop_modal(interview_selected_value, resume_id)
   });
 
   $(document).on('click', '.stage_four_update', function() {
@@ -764,7 +785,8 @@ $(document).ready(function() {
   });
   $(document).on('click', '.stage_four_fail', function() {
     interview_selected_value = Number(this.id);
-    $('#stopModal').modal('toggle')
+    resume_id = this.dataset.resume_id;
+    show_stop_modal(interview_selected_value, resume_id)
   });
 
   $(document).on('click', '.stage_five_update', function() {
@@ -806,12 +828,14 @@ $(document).ready(function() {
 
   $(document).on('click', '.stage_five_fail', function() {
     interview_selected_value = Number(this.id);
-    $('#stopModal').modal('toggle')
+    resume_id = this.dataset.resume_id;
+    show_stop_modal(interview_selected_value, resume_id)
   });
 
   $(document).on('click', '.stage_six_giveup', function() {
     interview_selected_value = Number(this.id);
-    $('#stopModal').modal('toggle');
+    resume_id = this.dataset.resume_id;
+    show_stop_modal(interview_selected_value, resume_id)
   });
 
   $(document).on('click', '.stage_six_pass', function() {
@@ -1252,7 +1276,8 @@ $(document).ready(function() {
   $(function() {
     $('#giveup_interview').click(function(e){
       $('#dailToCandidateModal').modal('hide');
-      $('#stopModal').modal('show');
+      resume_id = this.dataset.resume_id;
+      show_stop_modal(interview_selected_value, resume_id)
     });
   });
 

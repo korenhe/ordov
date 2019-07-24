@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from .models import Interview
 from .models import InterviewLogCommon
+from resumes.models import Resume
 
 from .models import InterviewSub_Appointment, InterviewSub_Appointment_Agree
 from .models import InterviewSub_Interview, InterviewSub_Interview_Pass
@@ -288,6 +289,19 @@ class InterviewSub_TerminateSerializer(serializers.ModelSerializer):
 
         # update interview table
         interview = Interview.objects.get(pk=terminate_sub.interview.id)
+
+        # we should update the status info to resumes
+        resume = None
+        try:
+            resume = Resume.objects.get(pk=interview.resume_id)
+        except:
+            pass
+        if resume is not None:
+            resume.expected_province = validated_data.get("expected_province", "")
+            resume.expected_city = validated_data.get("expected_city", "")
+            resume.expected_district = validated_data.get("expected_district", "")
+            resume.save()
+
         interview.is_active = False
         interview.sub_status = STATUS_CHOICES[interview.status][1]+"-终止"
         interview.save()
