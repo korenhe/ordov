@@ -11,9 +11,15 @@ from rest_framework import viewsets, status
 # Create your views here.
 from .models import Resume, query_resumes_by_args
 from companies.models import Post
+from .models import Education
+from experiences.models import Experience, Project, Language, Certification
 from .serializers import ResumeSerializer, EducationSerializer
 from datatableview.views import DatatableView
 from datatableview.utils import *
+from django.http import JsonResponse, HttpResponse
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+
+import json
 
 class ResumeView(APIView):
     def get(self, request):
@@ -180,10 +186,35 @@ class CompositeTable(DatatableView):
 
         return context
 
+# In detail View part, there are three part the
 class ResumeDetail(generic.DetailView):
     model = Resume
     context_object_name = 't_resume_detail'
     template_name = 'recruit_manager/detail_resume.html'
+
+def ResumeDetailInfo(request, *args, **kwargs):
+    idd = kwargs.get('pk', -1)
+    if idd > 0:
+        resume = None
+        experience = None
+        education = None
+        project = None
+        language = None
+        certification = None
+        try:
+            resume = Resume.objects.get(pk=idd)
+            experience = Experience.objects.all().filter(resume_id=idd)
+            education = Education.objects.all().filter(resume_id=idd)
+            project = Project.objects.all().filter(resume_id=idd)
+            language = Language.objects.all().filter(resume_id=idd)
+            certification = Certification.objects.all().filter(resume_id=idd)
+        except ObjectDoesNotExist:
+            print("Error", resume, experience, education)
+
+        return render(request, "recruit_manager/detail_resume.html", locals())
+
+    else:
+        return HttpResponse("bad request")
 
 class EducationView(APIView):
     def get(self, request):

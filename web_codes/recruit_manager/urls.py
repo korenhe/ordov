@@ -27,6 +27,6 @@ urlpatterns = [
     path('resumes/', resumesViews.ResumeTable.as_view(), name='t_resumes'),
     path('multi/', resumesViews.MultiTable.as_view(), name='t_multi'),
     path('composite/', resumesViews.CompositeTable.as_view(), name='t_composite'),
-    path('resumes/<int:pk>/', resumesViews.ResumeDetail.as_view(), name='t_resume'),
+    path('resumes/<int:pk>/', resumesViews.ResumeDetailInfo, name='t_resume'),
     path('posts/', companiesViews.PostTable.as_view(), name='t_posts'),
 ]
