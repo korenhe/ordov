@@ -117,8 +117,9 @@ def UpdatePost(request):
         department_name = request.POST['department_name']
         post_name = request.POST['post_name']
         baiying_task = request.POST['baiying_task_id']
+        company_type = request.POST['company_type']
 
-        if project_name == "" or company_name == "" or department_name == "" or post_name == "":
+        if project_name == "" or company_name == "" or department_name == "" or post_name == "" or company_type == "":
             return HttpResponse("fail")
         baiying_fields = baiying_task.split('-')
         if len(baiying_fields) < 2:
@@ -219,6 +220,7 @@ def UpdatePost(request):
             "linkman": linkman_name,
             "linkman_phone": linkman_phone,
             "project_name": project_name,
+            "p_type": company_type,
             "baiying_task_name": baiying_task_name,
             "baiying_task_id": int(baiying_task_id),
             "level": ""
