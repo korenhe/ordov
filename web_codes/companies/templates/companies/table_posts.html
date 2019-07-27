@@ -298,10 +298,14 @@
     <thead>
       <tr>
         <th>ID</th>
+        <th>Project</th>
         <th>*Company</th>
         <th>*Department</th>
         <th>*Name</th>
+        <th>Place</th>
         <th>*JD</th>
+        <th>Link</th>
+        <th>Request</th>
       </tr>
     </thead>
   </table>
@@ -330,10 +334,14 @@
 
      "columns": [
        {"data": "id"},
+       {"data": "project_name"},
        {"data": "department.company.name"},
        {"data": "department.name"},
        {"data": "name"},
+       {"data": "place"},
        {"data": "description"},
+       {"data": "link"},
+       {"data": "request"},
      ],
    });
 
