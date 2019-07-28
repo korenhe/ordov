@@ -5,26 +5,6 @@
 <form name='filter_form' id="post_filter_form">
     {% csrf_token %}
 
-
-	<div clasv class="card">
-        <div class="card-header" id="headingTwo">
-             <strong>填写项目信息</strong>
-        </div>
-        <div class="card-body" style="padding: 0.5rem;">
-          <div class="row">
-            <?-- Inner Filter -->
-            <div class="col-md-3 input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">项目名称 *</span>
-              </div>
-			  <input type="text" class="form-control" name="project_name" id="project_id" value="">
-            </div>
-		  </div>
-        </div>
-      </div>
-
-
-
 	<?--Project Info-->
 	<div clasv class="card">
         <div class="card-header" id="headingTwo">
@@ -55,9 +35,9 @@
 
             <div class="col-md-3 input-group">
               <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">公司类型 *</span>
+                <span class="input-group-text" id="basic-addon1">岗位类型 *</span>
               </div>
-			  <input type="text" class="form-control" name="company_type" id="company_type_id" value="">
+			  <input type="text" class="form-control" name="post_type" id="post_type_id" value="">
             </div>
             <?-- Innter Filter-->
           </div>
@@ -190,7 +170,7 @@
 
             <div class="col-md-3 input-group">
               <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon3">工作地点.市</span>
+                <span class="input-group-text" id="basic-addon3" style="width:84px">*工作地点.市</span>
               </div>
               <input type="text" class="form-control" name="working_place_city" id="city_id" placeholder="市" value=""></input>
             </div>

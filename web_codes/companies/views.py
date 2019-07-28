@@ -112,15 +112,22 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def UpdatePost(request):
     if request.method == 'POST':
-        project_name = request.POST['project_name']
         company_name = request.POST['company_name']
         department_name = request.POST['department_name']
         post_name = request.POST['post_name']
         baiying_task = request.POST['baiying_task_id']
-        company_type = request.POST['company_type']
+        p_type = request.POST['post_type']
 
-        if project_name == "" or company_name == "" or department_name == "" or post_name == "" or company_type == "":
+        province = request.POST['working_place_province']
+        city = request.POST['working_place_city']
+        district = request.POST['working_place_district']
+
+        if company_name == "" or department_name == "" or post_name == "" or p_type == "":
             return HttpResponse("fail")
+
+        if province == "" and city == "" and district == "":
+            return HttpResponse("fail")
+
         baiying_fields = baiying_task.split('-')
         if len(baiying_fields) < 2:
             return HttpResponse("fail")
@@ -134,15 +141,12 @@ def UpdatePost(request):
         graduate_start = request.POST['graduate_time_start']
         graduate_end = request.POST['graduate_time_end']
 
-        province = request.POST['working_place_province']
-        city = request.POST['working_place_city']
-        district = request.POST['working_place_district']
-
         gender = request.POST['gender_id']
         salary = request.POST['min_salary_id']
         linkman_name = request.POST['linkman_name']
         linkman_phone = request.POST['linkman_phone']
 
+        project_name = company_name + "-" + province + city + district + "-" + p_type
         ageMin = 0
         if not request.POST['age_id_min'] == "":
             ageMin = int(request.POST['age_id_min'])
@@ -220,7 +224,7 @@ def UpdatePost(request):
             "linkman": linkman_name,
             "linkman_phone": linkman_phone,
             "project_name": project_name,
-            "p_type": company_type,
+            "p_type": p_type,
             "baiying_task_name": baiying_task_name,
             "baiying_task_id": int(baiying_task_id),
             "level": ""
