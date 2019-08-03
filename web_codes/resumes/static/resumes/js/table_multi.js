@@ -352,6 +352,109 @@ $(document).ready(function() {
     });
   });
 
+  function format(d) {
+    var data = format_inner(d)
+    var sData = JSON.parse(data)
+    return '<div class=".container">'+
+        '<div class="row">'+
+          '<div class="col-md-2">'+
+          '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+sData.birthorigin+'</span>'+
+          '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+sData.phone_number+'</span>'+
+          '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+sData.graduate_time+'</span>'+
+          '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+sData.expected_province+'</span>'+
+          '</div>'+
+        '</div>'+
+        '<div class="row">'+
+          '<div class="col-md-2">'+
+          '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+ "籍贯:" +'</span>'+
+          '</div>' +
+          '<div class="col-md-8">'+
+            '<span>' + sData.birthorigin + '</span>'+
+          '</div>'+
+        '</div>'+
+        '<div class="row">'+
+          '<div class="col-md-2">'+
+          '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+ "现工作地:" +'</span>'+
+          '</div>' +
+          '<div class="col-md-8">'+
+            '<span>' + "--" + '</span>'+
+          '</div>'+
+        '</div>'+
+        '<div class="row">'+
+          '<div class="col-md-2">'+
+          '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+ "期望工作地点:" +'</span>'+
+          '</div>' +
+          '<div class="col-md-8">'+
+            '<span>' + sData.expected + '</span>'+
+          '</div>'+
+        '</div>'+
+        '<div class="row">'+
+          '<div class="col-md-2">'+
+          '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+ "期望岗位类型:" +'</span>'+
+          '</div>' +
+          '<div class="col-md-8">'+
+            '<span>' + "--" + '</span>'+
+          '</div>'+
+        '</div>'+
+        '<div class="row">'+
+          '<div class="col-md-2">'+
+          '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+ "期望薪资:" +'</span>'+
+          '</div>' +
+          '<div class="col-md-8">'+
+            '<span>' + "--" + '</span>'+
+          '</div>'+
+        '</div>'+
+        '<div class="row">'+
+          '<div class="col-md-2">'+
+          '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+ "最近一份工作经历:" +'</span>'+
+          '</div>' +
+          '<div class="col-md-8">'+
+            '<span>' + sData.workexp + '</span>'+
+          '</div>'+
+        '</div>'+
+        '<div class="row">'+
+          '<div class="col-md-2">'+
+       '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+ "最高学历:" +'</span>'+
+          '</div>' +
+          '<div class="col-md-8">'+
+            '<span>' + sData.school+ ' ' + sData.major + ' ' + sData.degree +'</span>'+
+          '</div>'+
+        '</div>'+
+        '</div>';
+  };
+
+  function format_inner(d) {
+	var resume_id = d.id
+	return $.ajax({
+	  url: '/api/resumes/' + resume_id + '/',
+	  type: 'GET',
+	  data: null,
+	  async: false
+	}).responseText;
+  };
+
   // resume table
   $('#dataTable_resume tbody').on('click', 'tr', function(e) {
     if (post_selected == false) {
@@ -392,6 +495,19 @@ $(document).ready(function() {
         }
 
         $(this).toggleClass('selected');
+      } else { // not enable_multi
+		var tr = $(this).closest('tr')
+		var row = table.row(tr)
+		if (row.child.isShown()) {
+		  row.child.hide();
+		  tr.removeClass('shown')
+		}
+		else {
+		  // Open this row
+		  row.child(format(row.data())).show();
+		  row.child(format(row.data())).show()
+		  tr.addClass('shown')
+        }
       }
     }
   });
