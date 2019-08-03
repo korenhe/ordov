@@ -882,6 +882,7 @@ $(document).ready(function() {
   });
 
   // post table
+
   $('#dataTable_post tbody').on('click', 'tr', function() {
     var id = this.id;
 
@@ -903,6 +904,7 @@ $(document).ready(function() {
       page_refresh(table);
 
       document.getElementById("text_company_name").innerHTML = tr.innerText;
+      document.getElementById("projectName").innerHTML = tr.innerText;
     }
   });
 
@@ -946,6 +948,14 @@ $(document).ready(function() {
     $('#dialFormSubmit').click(function(e){
       e.preventDefault();
       multisel_submit_wrapper_resumeid(do_dial_submit);
+    });
+  });
+
+  $(function() {
+    $('#projSelectorBtn').click(function(e) {
+      e.preventDefault();
+      $('#projSelector').modal('show')
+
     });
   });
 

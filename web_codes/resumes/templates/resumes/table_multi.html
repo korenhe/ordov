@@ -1,12 +1,64 @@
-{% extends "recruit_manager/table_basic.html" %}
+{% extends "recruit_manager/table_basic2.html" %}
 {% load static %}
 {% block content %}
 
+
+  <div class="modal fade" id="projSelector" tabindex="-1" role="dialog" aria-labelledby="projSeletor" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+
+
+    <?-- The project selector as a modal -->
+	<div class="container">
+    <div class="col-12" style="display">
+      <?-- Post -->
+      <h5 class="mb-0">
+        <button id="text_company_name2" class="btn btn-link" data-toggle="collapse" data-target="#collapsePost" aria-expanded="true" aria-controls="collapsePost">
+          选择项目
+        </button>
+      </h5>
+
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover" id="dataTable_post2" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Project Name</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <?-- Post -->
+    </div>
+	</div>
+
+        </div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		</div>
+      </div>
+    </div>
+  </div>
+
+
 <div class="container-fluid">
+  <div class="row" style="display:none">
+    <div class="col-md-12">
+    <p style="display:inline;">项目名:</p>
+    <p id="projectName" style="display:inline;">未指定</p>
+    </div>
+  </div>
+  <div class="row" style="display:none">
+    <div class="col-md-12">
+    <p style="display:inline;">项目基本信息:</p>
+	<p id="projectInfo" style="display:inline;">请选择项目</p>
+    </div>
+  </div>
 
   <div class="row">
 
-    <div class="col-2">
+    <?-- The project selector as a modal -->
+    <div class="col-2" style="display">
       <?-- Post -->
       <h5 class="mb-0">
         <button id="text_company_name" class="btn btn-link" data-toggle="collapse" data-target="#collapsePost" aria-expanded="true" aria-controls="collapsePost">
