@@ -360,26 +360,24 @@ $(document).ready(function() {
           '<div class="col-md-2">'+
           '</div>' +
           '<div class="col-md-2">'+
-            '<span>'+sData.birthorigin+'</span>'+
+            '<p style="display:inline;">'+"籍贯:"+'</p>'+
+            '<p style="display:inline;">'+sData.birthorigin+'</p>'+
           '</div>' +
           '<div class="col-md-2">'+
-            '<span>'+sData.phone_number+'</span>'+
+            '<p style="display:inline;">'+"电话:"+'</p>'+
+            '<p style="display:inline;">'+sData.phone_number+'</p>'+
           '</div>' +
-          '<div class="col-md-2">'+
-            '<span>'+sData.graduate_time+'</span>'+
+          '<div class="col-md-4">'+
+            '<p style="display:inline;">'+"毕业时间:"+'</p>'+
+            '<p style="display:inline;">'+sData.graduate_time+'</p>'+
           '</div>' +
-          '<div class="col-md-2">'+
-            '<span>'+sData.expected_province+'</span>'+
-          '</div>'+
         '</div>'+
         '<div class="row">'+
           '<div class="col-md-2">'+
           '</div>' +
           '<div class="col-md-2">'+
-            '<span>'+ "籍贯:" +'</span>'+
           '</div>' +
           '<div class="col-md-8">'+
-            '<span>' + sData.birthorigin + '</span>'+
           '</div>'+
         '</div>'+
         '<div class="row">'+
