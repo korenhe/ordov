@@ -61,47 +61,39 @@
     <?-- The project selector as a modal -->
     <div class="col-2" id="projectPanel" style="display">
       <?-- Post -->
-
       <div class="container card-header">
-      <div class="row">
-        <div class="col-md-10">
+        <div class="row">
+          <div class="col-md-10">
+          </div>
+          <div class="col-md-2 pull-right">
+            <i class="fas fa-times" id="closeProject" style="text-align:right;"></i>
+          </div>
         </div>
-        <div class="col-md-2 pull-right">
-        <i class="fas fa-times" id="closeProject" style="text-align:right;"></i>
-        </div>
-      </div>
-      <div class="row">
-      <div class="col-md-11">
-      <?------------------------>
-      <h5>
-        <button id="text_company_name" class="btn btn-link" data-toggle="collapse" data-target="#collapsePost" aria-expanded="true" aria-controls="collapsePost">
-          选择项目
-        </button>
-      </h5>
-
-      <div class="table-responsive">
-        <table class="table table-hover" id="dataTable_post" width="100%" cellspacing="0">
-          <thead>
-            <tr>
-              <th>Project Name</th>
-            </tr>
-          </thead>
-        </table>
-      </div>
-      <?-------------------------->
-      </div>
-      </div>
-      </div> <?--- container-->
-
-
-
-      <?-- Post -->
-    </div>
+        <div class="row">
+          <div class="col-md-11">
+            <?------------------------>
+            <h5>
+              <button id="text_company_name" class="btn btn-link" data-toggle="collapse" data-target="#collapsePost" aria-expanded="true" aria-controls="collapsePost">
+              选择项目
+              </button>
+            </h5>
+            <div class="table-responsive">
+              <table class="table table-hover" id="dataTable_post" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                  <th>Project Name</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+            <?-------------------------->
+          </div>
+        </div> <?--- row for col-md-11 --->
+      </div> <?--- card header-->
+    </div> <?-- col-2 -->
 
     <div class="col-10" id="mainOpPanel">
-      <!-- Global Filter -->
       <div class="list-group list-group-horizontal">
-
         <li class="list-group-item list-group-item-action active" data-toggle="list" value="0">
           待筛选
           <span id="badge_statistic_stage_0" class="badge badge-primary badge-pill"></span>
