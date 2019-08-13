@@ -310,6 +310,12 @@ $(document).ready(function() {
     page_refresh(table, true);
   });
 
+  $('#closeProject').click(function() {
+    $('#projectPanel').css('display', 'none')
+    $('#mainOpPanel').removeClass('col-md-10')
+    $('#mainOpPanel').addClass('col-md-12')
+  });
+
   $('.list-group-item').on('click', function(e) {
     filter_status_value = this.value;
     page_refresh(table, true);
