@@ -12025,3 +12025,24 @@ div.dataTables_wrapper div.post_search div.dataTables_filter input {
 div.dataTables_wrapper div.post_search div.dataTables_filter label {
     display: inline-table;
 }
+
+.float-button-left {
+  position: fixed;
+  top: 40%;
+  left: 0%;
+  height: 90px;
+  width: 15px;
+  bottom: 90px;
+  right: 50px;
+  background: #ebeadf;
+}
+
+.float-button-left-triangle{
+	position: fixed;
+	top: 40%;
+	left: 0%;
+    width: 0;
+    height: 0;
+    border: 100px solid transparent;
+    border-left: 10px solid #c7cef0;
+}

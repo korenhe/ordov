@@ -314,6 +314,16 @@ $(document).ready(function() {
     $('#projectPanel').css('display', 'none')
     $('#mainOpPanel').removeClass('col-md-10')
     $('#mainOpPanel').addClass('col-md-12')
+    // show the right arrow in the left side
+    $('#projectSelectShow').css('display', 'inline')
+  });
+
+  $('#projectSelectShow').click(function() {
+    $('#projectPanel').css('display', 'inline')
+    $('#mainOpPanel').removeClass('col-md-12')
+    $('#mainOpPanel').addClass('col-md-10')
+    // show the right arrow in the left side
+    $('#projectSelectShow').css('display','none')
   });
 
   $('.list-group-item').on('click', function(e) {
