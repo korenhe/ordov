@@ -29,38 +29,22 @@
   </div> <?-- **** -->
 
 
-      <!-- Main Content -->
-      <div id="content">
-
-        <!-- Begin Page Content -->
-
-          <!-- Page Heading -->
-          <!-- <h1 class="h3 mb-2 text-gray-800">{{ template_table_name }}</h1> -->
-          <!--
-               <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
-          -->
-          <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3" style="display:none;">
-              <h6 class="m-0 font-weight-bold text-primary">Details</h6>
-            </div>
-            <div class="card-body">
-              {% block content %} {% endblock %}
-            </div>
-          </div>
-
-        <!-- /.container-fluid -->
-
+  <!-- Main Content -->
+  <div id="content">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3" style="display:none;">
+        <h6 class="m-0 font-weight-bold text-primary">Details</h6>
       </div>
-      <!-- End of Main Content -->
-
-      {% include 'recruit_manager/basic_footer.html' %}
-
+      <div class="card-body">
+        {% block content %} {% endblock %}
+      </div>
     </div>
-    <!-- End of Content Wrapper -->
+  </div>  <!-- content -->
+  {% include 'recruit_manager/basic_footer.html' %}
 
-  </div>
-  <!-- End of Page Wrapper -->
+  </div><!-- End of Content Wrapper -->
+
+  </div><!-- End of Page Wrapper -->
 
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
