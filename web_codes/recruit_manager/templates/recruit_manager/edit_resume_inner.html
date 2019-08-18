@@ -1,4 +1,5 @@
-    <article class="resume-wrapper text-left ">
+
+	<article class="resume-wrapper text-right">
 	    <div class="mx-auto text-left bg-white shadow-lg">
 		    <header class="resume-header pt-1 pt-md-0">
 			    <div class="media flex-column flex-md-row">
@@ -9,6 +10,7 @@
 						    <ul class="list-unstyled">
 							    <li class="mb-2"><i class="far fa-envelope fa-fw mr-2" data-fa-transform="grow-3"></i>{{ resume.email }}</li>
 							    <li><i class="fas fa-mobile-alt fa-fw mr-2" data-fa-transform="grow-6"></i>{{ resume.phone_number }}</li>
+                                <span class="resume_id" id="resume_id" style="display:none;">123</span>
 						    </ul>
 					    </div><!--//primary-info-->
 					    <div class="secondary-info ml-md-auto mt-2" style="display:none;">
@@ -23,61 +25,220 @@
 				    </div><!--//media-body-->
 			    </div><!--//media-->
 		    </header>
-		    <div class="resume-body p-5">
-			    <section class="resume-section summary-section mb-5">
-				    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">基本信息</h2>
-				    <div class="resume-section-content">
-                        <div class="row">
-                          <div class="col-lg-3">
-                            {% if resume.gender == "m" %}
-                               性别:男
-                            {% elif resume.gender == "f" %}
-                               性别:女
-                            {% else %}
-                               性别:未知
-                            {% endif %}
-                          </div>
-                          <div class="col-lg-3">
-                            出生日期: {{ resume.birth_year }}
-                          </div>
-                          <div class="col-lg-3">
-                            籍贯: {{ resume.birth_place }}
-                          </div>
-                          <div class="col-log-3">
-                          </div>
+
+            <style type="text/css">
+              .resume_basic_header1 {
+                font-size: 75%
+              }
+              .resume_basic_addon {
+                background: #e0dcd7
+              }
+            </style>
+			<div class="resume-body p-5">
+			  <section class="resume-section summary-section mb-5">
+			    <div class="card">
+                  <?-- card header -->
+			      <div class="card-header" id="headering">
+				    <strong>基本信息</strong>
+                      <i class="fas fa-edit" id="resume_basic_edit_button" style=""></i>
+                      <i class="fas fa-angle-up" id="resume_basic_edit_button_up" style="float:right;display:none;"></i>
+                      <i class="fas fa-angle-down" id="resume_basic_edit_button_down" style="float:right;"></i>
+			      </div>
+                  <?-- end card header -->
+                  <?-- card body -->
+			      <div class="card-body" style="padding:0.5rem" id="resume_basic_show">
+			        <div class="row">
+				      <div class="col-md-3 input-group">
+					    <div class="input-group-prepend resume_basic_addon">
+					      <span class="input-group-text resume_basic_header1" id="basic-addon1">姓名</span>
+					    </div>
+				        <input type="text" class="form-control" name="resume_basic_name" id="resume_basic_name" value="">
+				      </div>
+				      <div class="col-md-3 input-group">
+					    <div class="input-group-prepend">
+					        <span class="input-group-text resume_basic_header1" id="basic-addon1" style="font-size:75%">性别*</span>
+					    </div>
+				        <input type="text" class="form-control" name="resume_basic_gendor" id="resume_basic_gendor" value="">
+				      </div>
+				      <div class="col-md-3 input-group">
+					    <div class="input-group-prepend">
+					        <span class="input-group-text resume_basic_header1" id="basic-addon1">出生年月</span>
                         </div>
-                        <div class="row">
-                          <div class="col-lg-3">
-                            毕业学校: {{ resume.school }}
-                          </div>
-                          <div class="col-lg-3">
-                            专业: {{ resume.major}} 
-                          </div>
-                          <div class="col-lg-3">
-                            {% if resume.degree == 2 %}
-                                最高学位:初中 
-                            {% elif resume.degree == 3 %}
-                                最高学位:高中 
-                            {% elif resume.degree == 4 %}
-                                最高学位:中专
-                            {% elif resume.degree == 5 %}
-                                最高学位:大专 
-                            {% elif resume.degree == 6 %}
-                                最高学位:本科
-                            {% elif resume.degree == 7 %}
-                                最高学位:硕士 
-                            {% elif resume.degree == 8 %}
-                                最高学位:博士
-                            {% elif resume.degree == 9 %}
-                                最高学位:博士后
-                            {% endif %}
-                          </div>
-                          <div class="col-log-3">
-                            毕业时间: {{ resume.graduate_time }}
-                          </div>
+                        <input type="text" class="form-control" name="resume_basic_birth_time" id="resume_basic_birth_time" value="">
+                      </div>
+                      <div class="col-md-3 input-group">
+                        <div class="input-group-prepend">
+					        <span class="input-group-text resume_basic_header1" id="basic-addon1">参加工作时间</span>
                         </div>
-				    </div>
-			    </section> <!--//summary-section--> 
+                        <input type="text" class="form-control" name="resume_basic_work_time" id="resume_basic_work_time" value="">
+                      </div>
+                    </div> <?--- row -->
+				    <div class="row">
+				      <div class="col-md-3 input-group">
+					    <div class="input-group-prepend">
+					        <span class="input-group-text resume_basic_header1" id="basic-addon1">户口所在地</span>
+                        </div>
+                        <input type="text" class="form-control" name="resume_basic_birth_place" id="resume_basic_birth_place" value="">
+                      </div>
+                    </div>
+                    <div class="row">
+				      <div class="col-md-3 input-group">
+					    <div class="input-group-prepend">
+					        <span class="input-group-text resume_basic_header1" id="basic-addon1">现居住城市</span>
+                        </div>
+                        <input type="text" class="form-control" name="resume_basic_current_place" id="resume_basic_current_place" value="">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3 input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text resume_basic_header1" id="basic-addon1">联系方式</span>
+                        </div>
+                        <input type="text" class="form-control" name="resume_basic_phone" id="resume_basic_phone" value="">
+                      </div>
+                      <div class="col-md-3 input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text resume_basic_header1" id="basic-addon1">电子邮箱</span>
+                        </div>
+                        <input type="text" class="form-control" name="resume_basic_email" id="resume_basic_email" value="">
+                      </div>
+                      <div class="col-md-3 input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text resume_basic_header1" id="basic-addon1">政治面貌</span>
+                        </div>
+                        <input type="text" class="form-control" name="resume_basic_role" id="resume_basic_role" value="">
+                      </div>
+				    </div> <?--- row -->
+				    <div class="row">
+                      <div class="col-md-3">
+                        <button class="button-default" id="resume_basic_edit_confirm" style="display:none;">
+                          保存修改
+                        </button>
+                      </div>
+                      <div class="col-md-3">
+                        <button class="button-default" id="resume_basic_edit_cancel" style="display:none;">
+                          取消
+                        </button>
+                    </div>
+				</div>
+			  </div> <?-- the card body info -->
+			  <div class="card-body" style="padding:0.5rem">
+				<div class="row">
+				</div>
+			  </div>
+			</div>  <?-- card -->
+
+            <?-- Add the Experinece Edit card ---->
+            <?-- End Add the Expericen Edit card ---->
+          </section>
+		</div>
+
+
+		    <div class="resume-body p-5" style="display:none;">
+
+			  <section class="resume-section summary-section mb-5">
+                <div class="resume-edit-section-title">
+				  <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3" style="display:inline">基本信息</h2>
+                  <i class="fas fa-edit" id="resume_basic_edit_button1" style="float:right;"></i>
+                </div>
+                <div class="resume-section-content" id="resume-basic-edit" style="display:none;">
+
+			<div class="card">
+			  <div class="card-header" id="headering">
+				<strong>基本信息</strong>
+                <i class="fas fa-edit" id="resume_basic_edit_button1" style=""></i>
+			  </div>
+			  <div class="card-body" style="padding:0.5rem">
+			    <div class="row">
+				  <div class="col-md-3 input-group">
+					<div class="input-group-prepend">
+					  <span class="input-group-text" id="basic-addon1">公司名称 *</span>
+					</div>
+				    <input type="text" class="form-control" name="company_name" id="company_id" value="">
+				  </div>
+				</div>
+			  </div>
+			</div>
+
+                  <div class="row">
+                    <button id="resume_basic_edit_confirm1">确定</button>
+                  </div>
+                  <div class="row">
+                    <button id="resume_basic_edit_cancel1">取消</button>
+                  </div>
+                </div> <?-- resume-section-content--->
+				<div class="resume-section-content" id="resume-basic-show">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      {% if resume.gender == "m" %}
+                        性别:男
+                      {% elif resume.gender == "f" %}
+                        性别:女
+                      {% else %}
+                        性别:未知
+                      {% endif %}
+                    </div>
+                    <div class="col-lg-3">
+                      出生日期: {{ resume.birth_year }}
+                    </div>
+                    <div class="col-lg-3">
+                      籍贯: {{ resume.birth_place }}
+                    </div>
+                    <div class="col-log-3">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">
+                        毕业学校: {{ resume.school }}
+                      </div>
+                      <div class="col-lg-3">
+                        专业: {{ resume.major}}
+                      </div>
+                      <div class="col-lg-3">
+                        {% if resume.degree == 2 %}
+                          最高学位:初中
+                        {% elif resume.degree == 3 %}
+                          最高学位:高中
+                        {% elif resume.degree == 4 %}
+                          最高学位:中专
+                        {% elif resume.degree == 5 %}
+                          最高学位:大专
+                        {% elif resume.degree == 6 %}
+                          最高学位:本科
+                        {% elif resume.degree == 7 %}
+                          最高学位:硕士
+                        {% elif resume.degree == 8 %}
+                          最高学位:博士
+                        {% elif resume.degree == 9 %}
+                          最高学位:博士后
+                        {% endif %}
+                      </div>
+                      <div class="col-log-3">
+                        毕业时间: {{ resume.graduate_time }}
+                      </div>
+                    </div> <?---- row --->
+				  </div> <?-- resume section end -->
+			    </section> <!--//summary-section-->
+                <section class="resume-section summary-section mb-5">
+                    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3" style="display:inline">求职意向</h2>
+                    <button id="resume_edit"> 编辑 </button>
+                    <div class"resume-section-content">
+                      <div class="row">
+                        <div class="resume-company-name col-lg-3">
+                            期望工作地点
+                        </div>
+                        <div class="resume-company-name col-lg-3">
+                            期望从事行业
+                        </div>
+                        <div class="resume-company-name col-lg-3">
+                            期望月薪
+                        </div>
+                        <div class="resume-company-name col-lg-3">
+                            求职状态
+                        </div>
+                      </div>
+                    </div>
+                </section>
                 <section class="resume-section summary-section mb-5">
 				    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">教育经历</h2>
 				    <div class="resume-section-content">
@@ -131,7 +292,7 @@
                 </section>
                 <section>
 			    <div class="row">
-				    <div class="col-lg-9">
+				    <div class="col-lg-12">
 					    <section class="resume-section experience-section mb-5">
 						    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">工作 & 项目经历</h2>
 						    <div class="resume-section-content">
@@ -185,7 +346,9 @@
 						    </div>
 					    </section><!--//experience-section-->
 				    </div>
-				    <div class="col-lg-3" >
+                  </div>
+                  <div class="row">
+				    <div class="col-lg-12" >
 					    <section class="resume-section reference-section mb-5">
 						    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">获奖 & 证书</h2>
 						    <div class="resume-section-content">

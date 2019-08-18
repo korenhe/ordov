@@ -8595,18 +8595,38 @@ a.theme-btn-on-bg:hover, a.theme-btn-on-bg:focus, a.theme-btn-on-bg:active, .the
   color: #434E5E;
 }
 
-.resume-section-title:after {
+.resume-edit-button {
+  height: 24px;
+}
+
+.resume-edit-section-title {
+  font-size: 1.25rem;
+  position: relative;
+  color: #434E5E;
+}
+
+.resume-edit-section-title:after {
   content: "";
   position: absolute;
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 1.5px;
+  height: 3px;
   background: #8d9aad;
 }
 
 .resume-section-content {
+  font-size: 1rem;
+  position: relative;
   color: #58677c;
+}
+
+.resume-section-basic-item {
+  font-size: 1rem;
+  position: absolute;
+  left: 500px;
+  top: 20px;
+  width: 500px;
 }
 
 .resume-timeline {
@@ -8630,8 +8650,8 @@ a.theme-btn-on-bg:hover, a.theme-btn-on-bg:focus, a.theme-btn-on-bg:active, .the
   position: absolute;
   left: -32px;
   top: 3px;
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
   border: 4px solid #58677c;
   background: white;
   border-radius: 50%;
