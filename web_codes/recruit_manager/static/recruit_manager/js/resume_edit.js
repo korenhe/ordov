@@ -60,13 +60,13 @@ function gen_resume_experience_edit(exp_id) {
         '<div class="row">' +
           '<div class="col-md-6 input-group">' +
             '<div class="input-group-prepend resume_basic_addon">' +
-              '<span class="input-group-text resume_basic_header1" id="basic-addon1">开始时间</span>' +
+              '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">开始时间</span>' +
             '</div>' +
             '<input type="text" class="form-control" name="resume_basic_name" id="experience_start" value="">' +
           '</div>' +
           '<div class="col-md-6 input-group">' +
             '<div class="input-group-prepend resume_basic_addon">' +
-              '<span class="input-group-text resume_basic_header1" id="basic-addon1">结束时间</span>' +
+              '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">结束时间</span>' +
             '</div>' +
             '<input type="text" class="form-control" name="resume_basic_name" id="experience_end" value="">' +
           '</div>' +
@@ -74,13 +74,13 @@ function gen_resume_experience_edit(exp_id) {
         '<div class="row">' +
           '<div class="col-md-6 input-group">' +
             '<div class="input-group-prepend resume_basic_addon">' +
-              '<span class="input-group-text resume_basic_header1" id="basic-addon1">公司名</span>' +
+              '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">公司名</span>' +
             '</div>' +
             '<input type="text" class="form-control" name="resume_basic_name" id="experience_company_name" value="">' +
           '</div>' +
           '<div class="col-md-6 input-group">' +
             '<div class="input-group-prepend resume_basic_addon">' +
-              '<span class="input-group-text resume_basic_header1" id="basic-addon1">职位名</span>' +
+              '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">职位名</span> ' +
             '</div>' +
             '<input type="text" class="form-control" name="resume_basic_name" id="experience_post_name" value="">' +
           '</div>' +
@@ -88,13 +88,13 @@ function gen_resume_experience_edit(exp_id) {
         '<div class="row">' +
           '<div class="col-md-6 input-group">' +
             '<div class="input-group-prepend resume_basic_addon">' +
-              '<span class="input-group-text resume_basic_header1" id="basic-addon1">职责</span>' +
+              '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">职责</span>' +
             '</div>' +
             '<input type="text" class="form-control" name="resume_basic_name" id="experience_duty" value="">' +
           '</div>' +
           '<div class="col-md-6 input-group">' +
             '<div class="input-group-prepend resume_basic_addon">' +
-              '<span class="input-group-text resume_basic_header1" id="basic-addon1">薪水</span>' +
+              '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">薪水</span>' +
             '</div>' +
             '<input type="text" class="form-control" name="resume_basic_name" id="experience_salary" value="">' +
           '</div>' +
@@ -102,7 +102,7 @@ function gen_resume_experience_edit(exp_id) {
         '<div class="row">' +
           '<div class="col-md-12 input-group">' +
             '<div class="input-group-prepend resume_basic_addon">' +
-              '<span class="input-group-text resume_basic_header1" id="basic-addon1">描述</span>' +
+              '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">描述</span>' +
             '</div>' +
             '<input type="text" class="form-control" name="resume_basic_name" id="experience_description" value="">' +
           '</div>' +
