@@ -32,6 +32,16 @@ class ExperienceViewSet(viewsets.ModelViewSet):
     queryset = Experience.objects.all()
     serializer_class = ExperienceSerializer
 
+    def get_queryset(self):
+        # Refer to: https://www.django-rest-framework.org/api-guide/filtering/#filtering-against-the-url
+        queryset = Experience.objects.all()
+        resume_id = self.request.query_params.get('resume_id', None)
+        if resume_id is not None:
+            queryset = queryset.filter(resume_id=resume_id)
+        else:
+            return None
+        return queryset
+
 class ProjectView(APIView):
     def get(self, request):
         project = Project.objects.all()
