@@ -10,6 +10,7 @@ class ExperienceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experience
         fields = (
+            'id',
             'resume', # foreign key
             'start',
             'end',
