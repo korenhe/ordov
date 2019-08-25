@@ -38,8 +38,6 @@ class ExperienceViewSet(viewsets.ModelViewSet):
         resume_id = self.request.query_params.get('resume_id', None)
         if resume_id is not None:
             queryset = queryset.filter(resume_id=resume_id)
-        else:
-            return None
         return queryset
 
 class ProjectView(APIView):
