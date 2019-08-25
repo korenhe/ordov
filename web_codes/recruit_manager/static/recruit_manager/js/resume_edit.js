@@ -141,12 +141,12 @@ function get_resume_experience() {
                     '</div>' +
                     '</div>'
                 )
-                $('.resume_experience_item_edit,#' + ele.id + ' #experience_start').val(ele.start)
-                $('.resume_experience_item_edit,#' + ele.id + ' #experience_end').val(ele.end)
-                $('.resume_experience_item_edit,#' + ele.id + ' #experience_company_name').val(ele.company_name)
-                $('.resume_experience_item_edit,#' + ele.id + ' #experience_post_name').val(ele.post_name)
-                $('.resume_experience_item_edit,#' + ele.id + ' #experience_description').val(ele.experience_description)
-                $('.resume_experience_item_edit,#' + ele.id + ' #experience_salary').val(ele.salary)
+                $('div[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_start').val(ele.start)
+                $('div[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_end').val(ele.end)
+                $('div[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_company_name').val(ele.company_name)
+                $('div[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_post_name').val(ele.post_name)
+                $('div[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_description').val(ele.experience_description)
+                $('div[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_salary').val(ele.salary)
             })
         },
         error: function() {
@@ -204,20 +204,18 @@ function resume_basic_op(readonly) {
 
 $(document).on('click', '.resume_experience_edit_button', function() {
    var id = Number(this.id)
-   console.log('.resume_experience_item_edit,#' + id)
+   console.log('[class="resume_experience_item_edit"][id=' + id + ']')
    // get the specified resume_id/experience_id info
-   $('.resume_experience_item_edit,#' + id).show()
+   // Attention: the and logic for jquery
+   $('div[class="resume_experience_item_edit"][id=' + id + ']').show()
 });
 
 $(document).on('click', '.resume_experience_item_edit .experience_save', function() {
     var id= Number(this.id)
     // update the resume info
-    console.log(id)
+    alert(id)
 });
 $(document).on('click', '.resume_experience_item_edit .experience_cancel', function() {
     var id= Number(this.id)
-    console.log(id)
-    //$('.resume_experience_item_edit,#' + id).css('display','none')
-    $('.resume_experience_item_edit,#' + id).css('background', '#00ff00')
-    // update the resume info
+    $('div[class="resume_experience_item_edit"][id=' + id + ']').css('display','none')
 });
