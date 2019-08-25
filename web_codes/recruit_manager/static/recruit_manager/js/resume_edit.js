@@ -1,5 +1,6 @@
 var resume_id = -1
 var experience_id = -1
+var on_experience_add = false
 $(document).ready(function() {
     resume_basic_op(readonly=true)
     // get the resume id from the original url
@@ -45,8 +46,17 @@ function get_resume_basic() {
     })
 }
 
+function clean_resume_experience_edit(exp_id) {
+    $('div[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_start').val("")
+    $('div[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_end').val("")
+    $('div[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_company_name').val("")
+    $('div[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_post_name').val("")
+    $('div[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_description').val("")
+    $('div[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_salary').val("")
+}
+
 function gen_resume_experience_edit(exp_id) {
-    return '<div class="resume_experience_item_edit" id=' + exp_id + ' style="display:none;">' +
+    return '<div class="resume_experience_item_edit" id=' + exp_id + '>' +
         '<div class="row">' +
           '<div class="col-md-6 input-group">' +
             '<div class="input-group-prepend resume_basic_addon">' +
@@ -145,12 +155,14 @@ function get_resume_experience() {
                 $('#resume_experience_show').append(
                     gen_resume_experience_edit(ele.id)
                 )
+                clean_resume_experience_edit(ele.id)
                 $('div[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_start').val(ele.start)
                 $('div[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_end').val(ele.end)
                 $('div[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_company_name').val(ele.company_name)
                 $('div[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_post_name').val(ele.post_name)
                 $('div[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_description').val(ele.experience_description)
                 $('div[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_salary').val(ele.salary)
+                $('div[class="resume_experience_item_edit"][id=' + ele.id + ']').css('display', 'none')
             })
         },
         error: function() {
@@ -224,6 +236,17 @@ $(document).on('click', '.resume_experience_item_edit .experience_cancel', funct
     $('div[class="resume_experience_item_edit"][id=' + id + ']').css('display','none')
 });
 
-$(document).on('click', '.resume_experience_add_button', function() {
-
+$(document).on('click', '#resume_experience_add_button', function() {
+    if (!on_experience_add) {
+        $('#resume_experience_show').append(
+            gen_resume_experience_edit(-1)
+        )
+        clean_resume_experience_edit(-1)
+    }
+    on_experience_add = true
 });
+
+$(document).on('click', 'div[class="resume_experience_item_edit"][id=-1]', function() {
+    on_experience_add = false
+});
+
