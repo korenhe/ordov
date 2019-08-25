@@ -1,4 +1,5 @@
 var resume_id = -1
+var experience_id = -1
 $(document).ready(function() {
     resume_basic_op(readonly=true)
     // get the resume id from the original url
@@ -7,6 +8,7 @@ $(document).ready(function() {
     resume_id = component[5]
     console.log("id", resume_id)
     get_resume_basic()
+    get_resume_experience()
 });
 
 $(document).on('click', '#resume_basic_edit_button', function() {
@@ -39,10 +41,118 @@ function get_resume_basic() {
         },
         error: function() {
             console.log("Fail to get resume info of ", resume_id)
-            print("Fail to get resume info of ", resume_id)
         }
     })
+}
 
+function get_resume_experience() {
+    console.log('/api/experiences?resume_id=' + resume_id)
+    $.ajax({
+        // Keep the standard restful API here
+        url: '/api/experiences?resume_id=' + resume_id,
+        type: 'GET',
+        data: null,
+        success: function(response) {
+            console.log(response)
+            $.each(response.results, function(index, ele) {
+                console.log("exp.end:", ele.end, " company:", ele.company_name, " ele.id:", ele.id)
+                $('#resume_experience_show').append(
+                    '<div class="resume_experience_item" id=' + ele.id + '>' +
+                    '<div class="row">' +
+                      '<div class="col-md-3">' +
+                        ele.start + ' -- ' + ele.end +
+                      '</div>' +
+                      '<div class="col-md-4">' +
+                        ele.company_name +
+                      '</div>' +
+                      '<div class="col-md-4">' +
+                        ele.post_name +
+                      '</div>' +
+                      '<div class="col-md-1">' +
+                        '<i class="fas fa-edit resume_experience_edit_button" id=' + ele.id + ' style=""></i>' +
+                      '</div>' +
+                    '</div>' +
+                    '</div>'
+
+                )
+                $('#resume_experience_show').append(
+                    '<div class="resume_experience_item_edit" id=' + ele.id + ' style="display:none;">' +
+                    '<div class="row">' +
+                      '<div class="col-md-6 input-group">' +
+                        '<div class="input-group-prepend resume_basic_addon">' +
+                          '<span class="input-group-text resume_basic_header1" id="basic-addon1">开始时间</span>' +
+                        '</div>' +
+                        '<input type="text" class="form-control" name="resume_basic_name" id="experience_start" value="">' +
+                      '</div>' +
+                      '<div class="col-md-6 input-group">' +
+                        '<div class="input-group-prepend resume_basic_addon">' +
+                          '<span class="input-group-text resume_basic_header1" id="basic-addon1">结束时间</span>' +
+                        '</div>' +
+                        '<input type="text" class="form-control" name="resume_basic_name" id="experience_end" value="">' +
+                      '</div>' +
+                    '</div>' +
+                    '<div class="row">' +
+                      '<div class="col-md-6 input-group">' +
+                        '<div class="input-group-prepend resume_basic_addon">' +
+                          '<span class="input-group-text resume_basic_header1" id="basic-addon1">公司名</span>' +
+                        '</div>' +
+                        '<input type="text" class="form-control" name="resume_basic_name" id="experience_company_name" value="">' +
+                      '</div>' +
+                      '<div class="col-md-6 input-group">' +
+                        '<div class="input-group-prepend resume_basic_addon">' +
+                          '<span class="input-group-text resume_basic_header1" id="basic-addon1">职位名</span>' +
+                        '</div>' +
+                        '<input type="text" class="form-control" name="resume_basic_name" id="experience_post_name" value="">' +
+                      '</div>' +
+                    '</div>' +
+                    '<div class="row">' +
+                      '<div class="col-md-6 input-group">' +
+                        '<div class="input-group-prepend resume_basic_addon">' +
+                          '<span class="input-group-text resume_basic_header1" id="basic-addon1">职责</span>' +
+                        '</div>' +
+                        '<input type="text" class="form-control" name="resume_basic_name" id="experience_duty" value="">' +
+                      '</div>' +
+                      '<div class="col-md-6 input-group">' +
+                        '<div class="input-group-prepend resume_basic_addon">' +
+                          '<span class="input-group-text resume_basic_header1" id="basic-addon1">薪水</span>' +
+                        '</div>' +
+                        '<input type="text" class="form-control" name="resume_basic_name" id="experience_salary" value="">' +
+                      '</div>' +
+                    '</div>' +
+                    '<div class="row">' +
+                      '<div class="col-md-12 input-group">' +
+                        '<div class="input-group-prepend resume_basic_addon">' +
+                          '<span class="input-group-text resume_basic_header1" id="basic-addon1">描述</span>' +
+                        '</div>' +
+                        '<input type="text" class="form-control" name="resume_basic_name" id="experience_description" value="">' +
+                      '</div>' +
+                    '</div>' +
+                    '<div class="row">' +
+                      '<div class="col-md-6">' +
+                        '<button type="button" class="experience_save" id=' + ele.id + '>' +
+                          '确定' +
+                        '</button>' +
+                      '</div>' +
+                      '<div class="col-md-6">' +
+                        '<button type="button" class="experience_cancel" id=' + ele.id + '>' +
+                          '取消' +
+                        '</button>' +
+                      '</div>' +
+                    '</div>' +
+                    '</div>'
+                )
+                $('.resume_experience_item_edit,#' + ele.id + ' #experience_start').val(ele.start)
+                $('.resume_experience_item_edit,#' + ele.id + ' #experience_end').val(ele.end)
+                $('.resume_experience_item_edit,#' + ele.id + ' #experience_company_name').val(ele.company_name)
+                $('.resume_experience_item_edit,#' + ele.id + ' #experience_post_name').val(ele.post_name)
+                $('.resume_experience_item_edit,#' + ele.id + ' #experience_description').val(ele.experience_description)
+                $('.resume_experience_item_edit,#' + ele.id + ' #experience_salary').val(ele.salary)
+            })
+        },
+        error: function() {
+           console.log("Fail to get the experience of ", resume_id)
+        }
+    })
 }
 
 $(document).on('click', '#resume_basic_edit_cancel', function() {
@@ -91,3 +201,23 @@ function resume_basic_op(readonly) {
         $('#resume_basic_edit_cancel').css('display', 'inline')
     }
 }
+
+$(document).on('click', '.resume_experience_edit_button', function() {
+   var id = Number(this.id)
+   console.log('.resume_experience_item_edit,#' + id)
+   // get the specified resume_id/experience_id info
+   $('.resume_experience_item_edit,#' + id).show()
+});
+
+$(document).on('click', '.resume_experience_item_edit .experience_save', function() {
+    var id= Number(this.id)
+    // update the resume info
+    console.log(id)
+});
+$(document).on('click', '.resume_experience_item_edit .experience_cancel', function() {
+    var id= Number(this.id)
+    console.log(id)
+    //$('.resume_experience_item_edit,#' + id).css('display','none')
+    $('.resume_experience_item_edit,#' + id).css('background', '#00ff00')
+    // update the resume info
+});
