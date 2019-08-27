@@ -47,28 +47,28 @@ function get_resume_basic() {
 }
 
 function clean_resume_experience_edit(exp_id) {
-    $('div[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_start').val("")
-    $('div[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_end').val("")
-    $('div[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_company_name').val("")
-    $('div[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_post_name').val("")
-    $('div[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_description').val("")
-    $('div[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_salary').val("")
+    $('form[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_start').val("")
+    $('form[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_end').val("")
+    $('form[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_company_name').val("")
+    $('form[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_post_name').val("")
+    $('form[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_description').val("")
+    $('form[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_salary').val("")
 }
 
 function gen_resume_experience_edit(exp_id) {
-    return '<div class="resume_experience_item_edit" id=' + exp_id + '>' +
+    return '<form class="resume_experience_item_edit" id=' + exp_id + '>' +
         '<div class="row">' +
           '<div class="col-md-6 input-group">' +
             '<div class="input-group-prepend resume_basic_addon">' +
               '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">开始时间</span>' +
             '</div>' +
-            '<input type="text" class="form-control" name="resume_basic_name" id="experience_start" value="">' +
+            '<input type="text" class="form-control" name="start_time" id="experience_start" value="">' +
           '</div>' +
           '<div class="col-md-6 input-group">' +
             '<div class="input-group-prepend resume_basic_addon">' +
               '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">结束时间</span>' +
             '</div>' +
-            '<input type="text" class="form-control" name="resume_basic_name" id="experience_end" value="">' +
+            '<input type="text" class="form-control" name="end_time" id="experience_end" value="">' +
           '</div>' +
         '</div>' +
         '<div class="row">' +
@@ -76,13 +76,13 @@ function gen_resume_experience_edit(exp_id) {
             '<div class="input-group-prepend resume_basic_addon">' +
               '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">公司名</span>' +
             '</div>' +
-            '<input type="text" class="form-control" name="resume_basic_name" id="experience_company_name" value="">' +
+            '<input type="text" class="form-control" name="company_name" id="experience_company_name" value="">' +
           '</div>' +
           '<div class="col-md-6 input-group">' +
             '<div class="input-group-prepend resume_basic_addon">' +
               '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">职位名</span> ' +
             '</div>' +
-            '<input type="text" class="form-control" name="resume_basic_name" id="experience_post_name" value="">' +
+            '<input type="text" class="form-control" name="post_name" id="experience_post_name" value="">' +
           '</div>' +
         '</div>' +
         '<div class="row">' +
@@ -90,13 +90,13 @@ function gen_resume_experience_edit(exp_id) {
             '<div class="input-group-prepend resume_basic_addon">' +
               '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">职责</span>' +
             '</div>' +
-            '<input type="text" class="form-control" name="resume_basic_name" id="experience_duty" value="">' +
+            '<input type="text" class="form-control" name="duty" id="experience_duty" value="">' +
           '</div>' +
           '<div class="col-md-6 input-group">' +
             '<div class="input-group-prepend resume_basic_addon">' +
               '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">薪水</span>' +
             '</div>' +
-            '<input type="text" class="form-control" name="resume_basic_name" id="experience_salary" value="">' +
+            '<input type="text" class="form-control" name="salary" id="experience_salary" value="">' +
           '</div>' +
         '</div>' +
         '<div class="row">' +
@@ -104,7 +104,7 @@ function gen_resume_experience_edit(exp_id) {
             '<div class="input-group-prepend resume_basic_addon">' +
               '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">描述</span>' +
             '</div>' +
-            '<input type="text" class="form-control" name="resume_basic_name" id="experience_description" value="">' +
+            '<input type="text" class="form-control" name="description" id="experience_description" value="">' +
           '</div>' +
         '</div>' +
         '<div class="row">' +
@@ -119,7 +119,7 @@ function gen_resume_experience_edit(exp_id) {
             '</button>' +
           '</div>' +
         '</div>' +
-        '</div>'
+        '</form>'
 }
 
 function get_resume_experience() {
@@ -156,13 +156,13 @@ function get_resume_experience() {
                     gen_resume_experience_edit(ele.id)
                 )
                 clean_resume_experience_edit(ele.id)
-                $('div[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_start').val(ele.start)
-                $('div[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_end').val(ele.end)
-                $('div[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_company_name').val(ele.company_name)
-                $('div[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_post_name').val(ele.post_name)
-                $('div[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_description').val(ele.experience_description)
-                $('div[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_salary').val(ele.salary)
-                $('div[class="resume_experience_item_edit"][id=' + ele.id + ']').css('display', 'none')
+                $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_start').val(ele.start)
+                $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_end').val(ele.end)
+                $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_company_name').val(ele.company_name)
+                $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_post_name').val(ele.post_name)
+                $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_description').val(ele.experience_description)
+                $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_salary').val(ele.salary)
+                $('form[class="resume_experience_item_edit"][id=' + ele.id + ']').css('display', 'none')
             })
         },
         error: function() {
@@ -223,17 +223,24 @@ $(document).on('click', '.resume_experience_edit_button', function() {
    console.log('[class="resume_experience_item_edit"][id=' + id + ']')
    // get the specified resume_id/experience_id info
    // Attention: the and logic for jquery
-   $('div[class="resume_experience_item_edit"][id=' + id + ']').show()
+   $('form[class="resume_experience_item_edit"][id=' + id + ']').show()
 });
 
 $(document).on('click', '.resume_experience_item_edit .experience_save', function() {
     var id= Number(this.id)
+    console.log("logged to id:", id)
     // update the resume info
+    console.log("serialize: ", $('form[class="resume_experience_item_edit"][id=' + id + ']').serialize())
+    $.ajax({
+        url: '/api/experiences/' + id + '/',
+        type: 'POST',
+        data: $('form[class="resume_experience_item_edit"][id=' + id + ']').serialize(),
+    });
     alert(id)
 });
 $(document).on('click', '.resume_experience_item_edit .experience_cancel', function() {
     var id= Number(this.id)
-    $('div[class="resume_experience_item_edit"][id=' + id + ']').css('display','none')
+    $('form[class="resume_experience_item_edit"][id=' + id + ']').css('display','none')
 });
 
 $(document).on('click', '#resume_experience_add_button', function() {
@@ -246,7 +253,7 @@ $(document).on('click', '#resume_experience_add_button', function() {
     on_experience_add = true
 });
 
-$(document).on('click', 'div[class="resume_experience_item_edit"][id=-1]', function() {
+$(document).on('click', 'form[class="resume_experience_item_edit"][id=-1]', function() {
     on_experience_add = false
 });
 
