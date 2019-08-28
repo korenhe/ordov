@@ -231,11 +231,22 @@ $(document).on('click', '.resume_experience_item_edit .experience_save', functio
     console.log("logged to id:", id)
     // update the resume info
     console.log("serialize: ", $('form[class="resume_experience_item_edit"][id=' + id + ']').serialize())
-    $.ajax({
-        url: '/api/experiences/' + id + '/',
-        type: 'POST',
-        data: $('form[class="resume_experience_item_edit"][id=' + id + ']').serialize(),
-    });
+    if (id > 0) {
+        $.ajax({
+            url: '/api/experiences/' + id + '/',
+            type: 'PUT',
+            data: $('form[class="resume_experience_item_edit"][id=' + id + ']').serialize(),
+        });
+    } else if (id < 0) {
+        // the a new item for resume
+        var fields = $('form[class="resume_experience_item_edit"][id=' + id + ']').serialize() + "&resume=" + resume_id
+        console.log("add new items:", fields)
+        $.ajax({
+            url: '/api/experiences/',
+            type: 'POST',
+            data: fields,
+        });
+    }
     alert(id)
 });
 $(document).on('click', '.resume_experience_item_edit .experience_cancel', function() {

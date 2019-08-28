@@ -28,6 +28,8 @@ class ExperienceSerializer(serializers.ModelSerializer):
             'salary',
             'leave_reason',
             'shift',
+            'duty',
+            'description',
 
             'witness',
             'witness_phone'
