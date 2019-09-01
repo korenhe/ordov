@@ -135,6 +135,24 @@ function gen_resume_experience_edit(exp_id) {
         '</form>'
 }
 
+function get_resume_experience_one(exp_id) {
+    $.ajax({
+        url: '/api/experiences/' + exp_id + '/',
+        type: 'GET',
+        data: null,
+        success: function(response) {
+            console.log("get experience successfully ", response)
+            // Should update the experience item here
+            $('div[class="resume_experience_item"][id=' + exp_id + ']' + ' .interval').text(response.start + '--' + response.end)
+            $('div[class="resume_experience_item"][id=' + exp_id + ']' + ' .company_name').text(response.company_name)
+            $('div[class="resume_experience_item"][id=' + exp_id + ']' + ' .post_name').text(response.post_name)
+        },
+        error: function() {
+            console.log("Fail to get resume info of ", resume_id)
+        }
+    })
+}
+
 function get_resume_experience() {
     console.log('/api/experiences?resume_id=' + resume_id)
     $.ajax({
@@ -149,13 +167,13 @@ function get_resume_experience() {
                 $('#resume_experience_show').append(
                     '<div class="resume_experience_item" id=' + ele.id + '>' +
                     '<div class="row">' +
-                      '<div class="col-md-3">' +
+                      '<div class="col-md-3 interval" >' +
                         ele.start + ' -- ' + ele.end +
                       '</div>' +
-                      '<div class="col-md-4">' +
+                      '<div class="col-md-4 company_name">' +
                         ele.company_name +
                       '</div>' +
-                      '<div class="col-md-4">' +
+                      '<div class="col-md-4 post_name">' +
                         ele.post_name +
                       '</div>' +
                       '<div class="col-md-1">' +
@@ -251,6 +269,7 @@ $(document).on('click', '.resume_experience_item_edit .experience_save', functio
     if (id > 0) {
         $.ajax({
             url: '/api/experiences/' + id + '/',
+            async: false,
             type: 'PUT',
             data: $('form[class="resume_experience_item_edit"][id=' + id + ']').serialize(),
         });
@@ -264,7 +283,8 @@ $(document).on('click', '.resume_experience_item_edit .experience_save', functio
             data: fields,
         });
     }
-    alert(id)
+    show_one_experience(-2) // collapse all the items
+    get_resume_experience_one(id)
 });
 $(document).on('click', '.resume_experience_item_edit .experience_cancel', function() {
     var id= Number(this.id)
