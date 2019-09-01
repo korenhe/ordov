@@ -75,13 +75,13 @@ function gen_resume_experience_edit(exp_id) {
             '<div class="input-group-prepend resume_basic_addon">' +
               '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">开始时间</span>' +
             '</div>' +
-            '<input type="text" class="form-control" name="start_time" id=experience_start' + exp_id + ' value="">' +
+            '<input type="text" class="form-control" name="start" id=experience_start' + exp_id + ' value="">' +
           '</div>' +
           '<div class="col-md-6 input-group">' +
             '<div class="input-group-prepend resume_basic_addon">' +
               '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">结束时间</span>' +
             '</div>' +
-            '<input type="text" class="form-control" name="end_time" id=experience_end' + exp_id + ' value="">' +
+            '<input type="text" class="form-control" name="end" id=experience_end' + exp_id + ' value="">' +
           '</div>' +
         '</div>' +
         '<div class="row">' +
@@ -143,7 +143,7 @@ function get_resume_experience_one(exp_id) {
         success: function(response) {
             console.log("get experience successfully ", response)
             // Should update the experience item here
-            $('div[class="resume_experience_item"][id=' + exp_id + ']' + ' .interval').text(response.start + '--' + response.end)
+            $('div[class="resume_experience_item"][id=' + exp_id + ']' + ' .interval').text(response.start + ' -- ' + response.end)
             $('div[class="resume_experience_item"][id=' + exp_id + ']' + ' .company_name').text(response.company_name)
             $('div[class="resume_experience_item"][id=' + exp_id + ']' + ' .post_name').text(response.post_name)
         },
@@ -191,7 +191,8 @@ function get_resume_experience() {
                 $('#resume_experience_show').append(
                     gen_resume_experience_edit(ele.id)
                 )
-                //clean_resume_experience_edit(ele.id)
+                clean_resume_experience_edit(ele.id)
+                // step1: set the basic value
                 $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_start' + ele.id).val(ele.start)
                 $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_end' + ele.id).val(ele.end)
                 $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_company_name' + ele.id).val(ele.company_name)
@@ -202,6 +203,14 @@ function get_resume_experience() {
 
                 exp_map[ele.id]='form[class="resume_experience_item_edit"][id=' + ele.id + ']'
                 $(exp_map[ele.id]).css('display', 'none')
+
+                // step2: set the timepicker
+                $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_start' + ele.id).datepicker({
+                    dateFormat: 'yy-mm-dd',
+                })
+                $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_end' + ele.id).datepicker({
+                    dateFormat: 'yy-mm-dd',
+                })
             })
         },
         error: function() {
@@ -305,6 +314,12 @@ $(document).on('click', '#resume_experience_add_button', function() {
         exp_map[-1]='form[class="resume_experience_item_edit"][id=-1]'
         show_one_experience(-1)
         clean_resume_experience_edit(-1)
+        $('form[class="resume_experience_item_edit"][id=-1] #experience_start-1').datepicker({
+            dateFormat: 'yy-mm-dd',
+        })
+        $('form[class="resume_experience_item_edit"][id=-1] #experience_end-1').datepicker({
+            dateFormat: 'yy-mm-dd',
+        })
     }
     on_experience_add = true
 });
