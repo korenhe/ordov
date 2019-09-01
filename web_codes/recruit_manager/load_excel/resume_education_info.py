@@ -49,7 +49,7 @@ def update_education_info(resume, phone):
 
     #"resume" : resumeTarget,
     education = {
-        "resume" : {"phone_number":phone},
+        "resume" : resumeTarget.id,
         "start" : edu_start,
         "end" : edu_end,
 

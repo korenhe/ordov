@@ -223,11 +223,12 @@ class ResumeSerializer(serializers.ModelSerializer):
 
 class EducationSerializer(serializers.ModelSerializer):
 
-    resume = ResumeSerializer(required=True)
-
+    # DO NOT WRAP EMBEDDED FOREIGN KEY OBJECT HERE
+    # REFER TO: ExperienceSerializer
     class Meta:
         model = Education
         fields = (
+            'id',
             'resume', # foreginkey
             'start',
             'end',
@@ -244,11 +245,3 @@ class EducationSerializer(serializers.ModelSerializer):
             'instructor',
             'instructor_phone',
         )
-    def create(self, validated_data):
-        resume_data = validated_data.pop('resume')
-        resume = ResumeSerializer.create(ResumeSerializer(), validated_data=resume_data)
-
-        education, created = Education.objects.update_or_create(
-            resume=resume,**validated_data
-        )
-        return education
