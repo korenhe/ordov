@@ -47,12 +47,12 @@ function get_resume_basic() {
 }
 
 function clean_resume_experience_edit(exp_id) {
-    $('form[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_start').val("")
-    $('form[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_end').val("")
-    $('form[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_company_name').val("")
-    $('form[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_post_name').val("")
-    $('form[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_description').val("")
-    $('form[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_salary').val("")
+    $('form[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_start' + exp_id).val("")
+    $('form[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_end' + exp_id).val("")
+    $('form[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_company_name' + exp_id).val("")
+    $('form[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_post_name' + exp_id).val("")
+    $('form[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_description' + exp_id).val("")
+    $('form[class="resume_experience_item_edit"][id=' + exp_id + '] #experience_salary' + exp_id).val("")
 }
 
 function gen_resume_experience_edit(exp_id) {
@@ -62,13 +62,13 @@ function gen_resume_experience_edit(exp_id) {
             '<div class="input-group-prepend resume_basic_addon">' +
               '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">开始时间</span>' +
             '</div>' +
-            '<input type="text" class="form-control" name="start_time" id="experience_start" value="">' +
+            '<input type="text" class="form-control" name="start_time" id=experience_start' + exp_id + ' value="">' +
           '</div>' +
           '<div class="col-md-6 input-group">' +
             '<div class="input-group-prepend resume_basic_addon">' +
               '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">结束时间</span>' +
             '</div>' +
-            '<input type="text" class="form-control" name="end_time" id="experience_end" value="">' +
+            '<input type="text" class="form-control" name="end_time" id=experience_end' + exp_id + ' value="">' +
           '</div>' +
         '</div>' +
         '<div class="row">' +
@@ -76,13 +76,13 @@ function gen_resume_experience_edit(exp_id) {
             '<div class="input-group-prepend resume_basic_addon">' +
               '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">公司名</span>' +
             '</div>' +
-            '<input type="text" class="form-control" name="company_name" id="experience_company_name" value="">' +
+            '<input type="text" class="form-control" name="company_name" id=experience_company_name' + exp_id + ' value="">' +
           '</div>' +
           '<div class="col-md-6 input-group">' +
             '<div class="input-group-prepend resume_basic_addon">' +
               '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">职位名</span> ' +
             '</div>' +
-            '<input type="text" class="form-control" name="post_name" id="experience_post_name" value="">' +
+            '<input type="text" class="form-control" name="post_name" id=experience_post_name' + exp_id + ' value="">' +
           '</div>' +
         '</div>' +
         '<div class="row">' +
@@ -90,13 +90,13 @@ function gen_resume_experience_edit(exp_id) {
             '<div class="input-group-prepend resume_basic_addon">' +
               '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">职责</span>' +
             '</div>' +
-            '<input type="text" class="form-control" name="duty" id="experience_duty" value="">' +
+            '<input type="text" class="form-control" name="duty" id=experience_duty' + exp_id + ' value="">' +
           '</div>' +
           '<div class="col-md-6 input-group">' +
             '<div class="input-group-prepend resume_basic_addon">' +
               '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">薪水</span>' +
             '</div>' +
-            '<input type="text" class="form-control" name="salary" id="experience_salary" value="">' +
+            '<input type="text" class="form-control" name="salary" id=experience_salary' + exp_id + ' value="">' +
           '</div>' +
         '</div>' +
         '<div class="row">' +
@@ -104,7 +104,7 @@ function gen_resume_experience_edit(exp_id) {
             '<div class="input-group-prepend resume_basic_addon">' +
               '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">描述</span>' +
             '</div>' +
-            '<input type="text" class="form-control" name="description" id="experience_description" value="">' +
+            '<input type="text" class="form-control" name="description" id=experience_description' + exp_id + ' value="">' +
           '</div>' +
         '</div>' +
         '<div class="row">' +
@@ -155,13 +155,13 @@ function get_resume_experience() {
                 $('#resume_experience_show').append(
                     gen_resume_experience_edit(ele.id)
                 )
-                clean_resume_experience_edit(ele.id)
-                $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_start').val(ele.start)
-                $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_end').val(ele.end)
-                $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_company_name').val(ele.company_name)
-                $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_post_name').val(ele.post_name)
-                $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_description').val(ele.experience_description)
-                $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_salary').val(ele.salary)
+                //clean_resume_experience_edit(ele.id)
+                $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_start' + ele.id).val(ele.start)
+                $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_end' + ele.id).val(ele.end)
+                $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_company_name' + ele.id).val(ele.company_name)
+                $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_post_name' + ele.id).val(ele.post_name)
+                $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_description' + ele.id).val(ele.experience_description)
+                $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_salary' + ele.id).val(ele.salary)
                 $('form[class="resume_experience_item_edit"][id=' + ele.id + ']').css('display', 'none')
             })
         },
