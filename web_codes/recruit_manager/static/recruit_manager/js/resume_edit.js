@@ -1,6 +1,7 @@
 var resume_id = -1
 var experience_id = -1
 var on_experience_add = false
+var exp_map = {}
 $(document).ready(function() {
     resume_basic_op(readonly=true)
     // get the resume id from the original url
@@ -10,6 +11,7 @@ $(document).ready(function() {
     console.log("id", resume_id)
     get_resume_basic()
     get_resume_experience()
+    show_one_experience(-1)
 });
 
 $(document).on('click', '#resume_basic_edit_button', function() {
@@ -17,6 +19,17 @@ $(document).on('click', '#resume_basic_edit_button', function() {
     get_resume_basic()
     // ajax to get the resume info
 });
+
+function show_one_experience(exp_id) {
+    $.each(exp_map, function(key, value){
+        if (key == exp_id) {
+          $(value).css('display', 'inline')
+        } else {
+          $(value).css('display', 'none')
+        }
+    })
+
+}
 
 function get_resume_basic() {
     $.ajax({
@@ -162,7 +175,10 @@ function get_resume_experience() {
                 $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_post_name' + ele.id).val(ele.post_name)
                 $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_description' + ele.id).val(ele.experience_description)
                 $('form[class="resume_experience_item_edit"][id=' + ele.id + '] #experience_salary' + ele.id).val(ele.salary)
-                $('form[class="resume_experience_item_edit"][id=' + ele.id + ']').css('display', 'none')
+                //$('form[class="resume_experience_item_edit"][id=' + ele.id + ']').css('display', 'none')
+
+                exp_map[ele.id]='form[class="resume_experience_item_edit"][id=' + ele.id + ']'
+                $(exp_map[ele.id]).css('display', 'none')
             })
         },
         error: function() {
@@ -223,6 +239,7 @@ $(document).on('click', '.resume_experience_edit_button', function() {
    console.log('[class="resume_experience_item_edit"][id=' + id + ']')
    // get the specified resume_id/experience_id info
    // Attention: the and logic for jquery
+   show_one_experience(id)
    $('form[class="resume_experience_item_edit"][id=' + id + ']').show()
 });
 
@@ -259,6 +276,8 @@ $(document).on('click', '#resume_experience_add_button', function() {
         $('#resume_experience_show').append(
             gen_resume_experience_edit(-1)
         )
+        exp_map[-1]='form[class="resume_experience_item_edit"][id=-1]'
+        show_one_experience(-1)
         clean_resume_experience_edit(-1)
     }
     on_experience_add = true
