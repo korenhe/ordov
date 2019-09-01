@@ -164,6 +164,11 @@ function get_resume_experience() {
             console.log(response)
             $.each(response.results, function(index, ele) {
                 console.log("exp.end:", ele.end, " company:", ele.company_name, " ele.id:", ele.id)
+                // check if the item has been added
+                if (exp_map[ele.id]) {
+                    console.log(ele.id, " item has beed added, skip it")
+                    return
+                }
                 $('#resume_experience_show').append(
                     '<div class="resume_experience_item" id=' + ele.id + '>' +
                     '<div class="row">' +
@@ -285,6 +290,7 @@ $(document).on('click', '.resume_experience_item_edit .experience_save', functio
     }
     show_one_experience(-2) // collapse all the items
     get_resume_experience_one(id)
+    get_resume_experience()
 });
 $(document).on('click', '.resume_experience_item_edit .experience_cancel', function() {
     var id= Number(this.id)
