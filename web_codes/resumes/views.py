@@ -229,3 +229,14 @@ class EducationView(APIView):
         return Response(
             {"success": "Education '{}' created successfully".format(education_saved.school)}
         )
+
+class EducationViewSet(viewsets.ModelViewSet):
+    queryset = Education.objects.all()
+    serializer_class = EducationSerializer
+
+    def get_queryset(self):
+        queryset = Education.objects.all()
+        resume_id = self.request.query_params.get('resume_id', None)
+        if resume_id is not None:
+            queryset = queryset.filter(resume_id=resume_id)
+        return queryset

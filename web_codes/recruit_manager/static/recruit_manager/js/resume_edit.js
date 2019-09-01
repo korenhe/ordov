@@ -286,6 +286,21 @@ $(document).on('click', '.resume_experience_item_edit .experience_save', functio
             async: false,
             type: 'PUT',
             data: $('form[class="resume_experience_item_edit"][id=' + id + ']').serialize(),
+            success: function(data, textStatus, jqXHR) {
+                console.log("success ", data)
+                console.log("success ", jqXHR.responseText)
+                console.log("success ", jqXHR.status)
+                console.log("success ", jqXHR.readState)
+                console.log("success ", jqXHR.statusText)
+			},
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR.responseText);
+                console.log(jqXHR.status);
+                console.log(jqXHR.readyState);
+                console.log(jqXHR.statusText);
+                console.log(textStatus);
+                console.log(errorThrown);
+            }
         });
     } else if (id < 0) {
         // the a new item for resume
