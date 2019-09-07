@@ -36,14 +36,17 @@ class ExperienceSerializer(serializers.ModelSerializer):
         )
 
 class ProjectSerializer(serializers.ModelSerializer):
-    resume = ResumeSerializer(required=True)
+    # DON'T WRAP EMBEDDED FOREIGN KEY OBJECT HERE.
+    # TBD: PostSerializer
     class Meta:
         model = Project
         fields = (
+            'id',
             'resume',
             'start',
             'end',
 
+            'name',
             "brief",
             "scale",
             "role",
@@ -52,12 +55,6 @@ class ProjectSerializer(serializers.ModelSerializer):
             "duty",
             "summary"
             )
-    def create(self, validated_data):
-        resume_data = validated_data.pop('resume')
-        resume = ResumeSerializer.create(ResumeSerializer(), validated_data = resume_data)
-        project, created = Project.objects.update_or_create(
-            resume=resume, **validated_data)
-        return project
 
 class LanguageSerializer(serializers.ModelSerializer):
     resume = ResumeSerializer(required=True)

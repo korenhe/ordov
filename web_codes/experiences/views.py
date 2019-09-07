@@ -58,6 +58,17 @@ class ProjectView(APIView):
             {"success": "Project '{}' created successfully".format(project_saved.brief)}
         )
 
+class ProjectViewSet(viewsets.ModelViewSet):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+
+    def get_queryset(self):
+        queryset = Project.objects.all()
+        resume_id = self.request.query_params.get('resume_id', None)
+        if resume_id is not None:
+            queryset = queryset.filter(resume_id=resume_id)
+        return queryset
+
 class LanguageView(APIView):
     def get(self, request):
         language = Language.objects.all()

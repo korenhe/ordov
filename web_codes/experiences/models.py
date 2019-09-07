@@ -71,7 +71,7 @@ class Project(models.Model):
     role = models.CharField(max_length=20, blank=True, null=True)
 
     company_name = models.CharField(max_length=50, blank=True, null=True, default='')
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, default='')
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True)
 
     duty = models.CharField(max_length=50, blank=True, null=True)
     summary = models.TextField(max_length=500, blank=True, null=True, default='')

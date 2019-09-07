@@ -25,7 +25,7 @@ def update_project_info(resume, phone):
         return
 
     project = {
-        "resume": resumeTarget,
+        "resume": resumeTarget.id,
         "start": proj_start,
         "end": proj_end,
         "name": proj_name,
