@@ -68,20 +68,13 @@ class LanguageSerializer(serializers.ModelSerializer):
         )
 
 class CertificationSerializer(serializers.ModelSerializer):
-    resume = ResumeSerializer(required=True)
     class Meta:
         model = Certification
         fields = (
+            'id',
             'resume',
             'time',
             'name',
             "institution",
             "description",
         )
-
-    def create(self, validated_data):
-        resume_data = validated_data.pop('resume')
-        resume = ResumeSerializer.create(ResumeSerializer(), validated_data = resume_data)
-        certification, created = Certification.objects.update_or_create(
-            resume=resume, **validated_data)
-        return certification

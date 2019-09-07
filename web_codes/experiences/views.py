@@ -116,3 +116,14 @@ class CertificationView(APIView):
         return Response(
             {"success": "Certification '{}' created successfully".format(certification_saved.name)}
         )
+
+class CertificationViewSet(viewsets.ModelViewSet):
+    queryset = Certification.objects.all()
+    serializer_class = CertificationSerializer
+
+    def get_queryset(self):
+        queryset = Certification.objects.all()
+        resume_id = self.request.query_params.get('resume_id', None)
+        if resume_id is not None:
+            queryset = queryset.filter(resume_id=resume_id)
+        return queryset

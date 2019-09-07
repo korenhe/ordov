@@ -44,7 +44,7 @@ def update_certification_info(resume, phone):
         return
 
     cert = {
-        "resume" : {"phone_number": phone},
+        "resume" : resumeTarget.id,
         "time" : cert_time,
         "name" : cert_name,
         "institution" : cert_institution,
