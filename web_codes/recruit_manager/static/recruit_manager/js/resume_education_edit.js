@@ -20,6 +20,9 @@ function show_one_education(edu_id) {
           $(value).css('display', 'none')
         }
     })
+    if (edu_id != -1) {
+        on_education_add = false
+    }
 
 }
 
@@ -256,10 +259,12 @@ $(document).on('click', '.resume_education_item_edit .education_cancel', functio
 
 $(document).on('click', '#resume_education_add_button', function() {
     if (!on_education_add) {
-        $('#resume_education_show').append(
-            gen_resume_education_edit(-1)
-        )
-        edu_map[-1]='form[class="resume_education_item_edit"][id=-1]'
+        if (!edu_map[-1]) {
+            $('#resume_education_show').append(
+                gen_resume_education_edit(-1)
+            )
+            edu_map[-1]='form[class="resume_education_item_edit"][id=-1]'
+        }
         show_one_education(-1)
         clean_resume_education_edit(-1)
         $('form[class="resume_education_item_edit"][id=-1] #education_start-1').datepicker({

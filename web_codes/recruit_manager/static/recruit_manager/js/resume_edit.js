@@ -28,6 +28,9 @@ function show_one_experience(exp_id) {
           $(value).css('display', 'none')
         }
     })
+    if (exp_id != -1) {
+        on_experience_add = false
+    }
 
 }
 
@@ -322,11 +325,14 @@ $(document).on('click', '.resume_experience_item_edit .experience_cancel', funct
 });
 
 $(document).on('click', '#resume_experience_add_button', function() {
+    console.log("on_experience_add: ", on_experience_add)
     if (!on_experience_add) {
-        $('#resume_experience_show').append(
-            gen_resume_experience_edit(-1)
-        )
-        exp_map[-1]='form[class="resume_experience_item_edit"][id=-1]'
+        if (!exp_map[-1])  {
+            $('#resume_experience_show').append(
+                gen_resume_experience_edit(-1)
+            )
+            exp_map[-1]='form[class="resume_experience_item_edit"][id=-1]'
+        }
         show_one_experience(-1)
         clean_resume_experience_edit(-1)
         $('form[class="resume_experience_item_edit"][id=-1] #experience_start-1').datepicker({

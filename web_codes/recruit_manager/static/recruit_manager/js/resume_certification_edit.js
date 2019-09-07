@@ -20,7 +20,9 @@ function show_one_certification(cert_id) {
           $(value).css('display', 'none')
         }
     })
-
+    if (cert_id != -1) {
+        on_certification_add = false
+    }
 }
 
 function clean_resume_certification_edit(cert_id) {
@@ -228,10 +230,12 @@ $(document).on('click', '.resume_certification_item_edit .certification_cancel',
 
 $(document).on('click', '#resume_certification_add_button', function() {
     if (!on_certification_add) {
-        $('#resume_certification_show').append(
-            gen_resume_certification_edit(-1)
-        )
-        cert_map[-1]='form[class="resume_certification_item_edit"][id=-1]'
+        if (!cert_map[-1]) {
+            $('#resume_certification_show').append(
+                gen_resume_certification_edit(-1)
+            )
+            cert_map[-1]='form[class="resume_certification_item_edit"][id=-1]'
+        }
         show_one_certification(-1)
         clean_resume_certification_edit(-1)
 

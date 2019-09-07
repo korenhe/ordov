@@ -20,6 +20,9 @@ function show_one_language(lang_id) {
           $(value).css('display', 'none')
         }
     })
+    if (lang_id != -1) {
+        on_language_add = false
+    }
 
 }
 
@@ -222,10 +225,12 @@ $(document).on('click', '.resume_language_item_edit .language_cancel', function(
 
 $(document).on('click', '#resume_language_add_button', function() {
     if (!on_language_add) {
-        $('#resume_language_show').append(
-            gen_resume_language_edit(-1)
-        )
-        lang_map[-1]='form[class="resume_language_item_edit"][id=-1]'
+        if (!lang_map[-1]) {
+            $('#resume_language_show').append(
+                gen_resume_language_edit(-1)
+            )
+            lang_map[-1]='form[class="resume_language_item_edit"][id=-1]'
+        }
         show_one_language(-1)
         clean_resume_language_edit(-1)
     }
