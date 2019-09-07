@@ -18,7 +18,7 @@ def update_language_info(resume, phone):
         return
 
     lang = {
-        "resume" : {"phone_number":phone},
+        "resume" : resumeTarget.id,
         "name" : lang_name,
         "cert" : lang_certification,
         "description" : lang_description,

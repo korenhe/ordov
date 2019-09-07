@@ -87,6 +87,17 @@ class LanguageView(APIView):
             {"success": "Language '{}' created successfully".format(language_saved.name)}
         )
 
+class LanguageViewSet(viewsets.ModelViewSet):
+    queryset = Language.objects.all()
+    serializer_class = LanguageSerializer
+
+    def get_queryset(self):
+        queryset = Language.objects.all()
+        resume_id = self.request.query_params.get('resume_id', None)
+        if resume_id is not None:
+            queryset = queryset.filter(resume_id=resume_id)
+        return queryset
+
 
 class CertificationView(APIView):
     def get(self, request):

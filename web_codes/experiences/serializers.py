@@ -57,22 +57,15 @@ class ProjectSerializer(serializers.ModelSerializer):
             )
 
 class LanguageSerializer(serializers.ModelSerializer):
-    resume = ResumeSerializer(required=True)
     class Meta:
         model = Language
         fields = (
+            'id',
             'resume',
             'name',
             'cert',
             "description",
         )
-
-    def create(self, validated_data):
-        resume_data = validated_data.pop('resume')
-        resume = ResumeSerializer.create(ResumeSerializer(), validated_data = resume_data)
-        language, created = Language.objects.update_or_create(
-            resume=resume, **validated_data)
-        return language
 
 class CertificationSerializer(serializers.ModelSerializer):
     resume = ResumeSerializer(required=True)
