@@ -8568,11 +8568,13 @@ a.theme-btn-on-bg:hover, a.theme-btn-on-bg:focus, a.theme-btn-on-bg:active, .the
 }
 
 .resume-header a {
-  color: rgba(255, 255, 255, 0.6);
+  /*color: rgba(255, 255, 255, 0.6);*/
+  height: 10px;
+  width: 10px;
 }
 
 .resume-header a:hover {
-  color: white;
+  /*color: white;*/
 }
 
 .resume-social {
@@ -8593,6 +8595,16 @@ a.theme-btn-on-bg:hover, a.theme-btn-on-bg:focus, a.theme-btn-on-bg:active, .the
   font-size: 1.25rem;
   position: relative;
   color: #434E5E;
+}
+
+.resume-section-title:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background: #8d9aad;
 }
 
 .resume-edit-button {

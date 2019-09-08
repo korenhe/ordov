@@ -20,6 +20,7 @@ from django.http import JsonResponse, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 import json
+import re
 
 class ResumeView(APIView):
     def get(self, request):
@@ -190,7 +191,8 @@ class CompositeTable(DatatableView):
 class ResumeDetail(generic.DetailView):
     model = Resume
     context_object_name = 't_resume_detail'
-    template_name = 'recruit_manager/detail_resume.html'
+    template_name = 'recruit_manager/edit_resume.html'
+
 
 def ResumeDetailInfo(request, *args, **kwargs):
     idd = kwargs.get('pk', -1)
@@ -211,6 +213,11 @@ def ResumeDetailInfo(request, *args, **kwargs):
         except ObjectDoesNotExist:
             print("Error", resume, experience, education)
 
+        path = request.path
+        isEdit = False
+        if re.match(r'.*resumes/[0-9]*/edit', path):
+            isEdit = True
+            return render(request, "recruit_manager/edit_resume.html", locals())
         return render(request, "recruit_manager/detail_resume.html", locals())
 
     else:

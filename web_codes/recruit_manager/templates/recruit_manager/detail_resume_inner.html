@@ -1,11 +1,14 @@
-    <article class="resume-wrapper text-left ">
+<article class="resume-wrapper text-left ">
 	    <div class="mx-auto text-left bg-white shadow-lg">
 		    <header class="resume-header pt-1 pt-md-0">
 			    <div class="media flex-column flex-md-row">
 				    <img class="mr-3 img-fluid picture mx-auto" src="assets/images/profile.jpg" alt="">
 				    <div class="media-body p-4 d-flex flex-column flex-md-row mx-auto mx-lg-0">
 					    <div class="primary-info">
-						    <h1 class="name mt-0 mb-1 text-left">{{ resume.username }}</h1>
+						    <h1 class="name mt-0 mb-1 text-left">
+                                 {{ resume.username }}
+                                 <a href=/manager/resumes/{{resume.id}}/edit/><i class="fas fa-edit fa-fw"></i></a>
+                            </h1>
 						    <ul class="list-unstyled">
 							    <li class="mb-2"><i class="far fa-envelope fa-fw mr-2" data-fa-transform="grow-3"></i>{{ resume.email }}</li>
 							    <li><i class="fas fa-mobile-alt fa-fw mr-2" data-fa-transform="grow-6"></i>{{ resume.phone_number }}</li>
