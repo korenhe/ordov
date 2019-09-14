@@ -157,10 +157,10 @@ function get_resume_experience_one(exp_id) {
 }
 
 function get_resume_experience() {
-    console.log('/api/experiences?resume_id=' + resume_id)
+    console.log('/api/experiences/?resume_id=' + resume_id)
     $.ajax({
         // Keep the standard restful API here
-        url: '/api/experiences?resume_id=' + resume_id,
+        url: '/api/experiences/?resume_id=' + resume_id,
         type: 'GET',
         data: null,
         success: function(response) {
@@ -312,6 +312,7 @@ $(document).on('click', '.resume_experience_item_edit .experience_save', functio
         $.ajax({
             url: '/api/experiences/',
             type: 'POST',
+            async: false,
             data: fields,
         });
     }

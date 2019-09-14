@@ -114,17 +114,23 @@ function get_resume_education_one(edu_id) {
             $('div[class="resume_education_item"][id=' + edu_id + ']' + ' .school').text(response.school)
             $('div[class="resume_education_item"][id=' + edu_id + ']' + ' .degree').text(response.degree)
         },
-        error: function() {
+        error: function(jqXHR, textStatus, errorThrown) {
             console.log("Fail to get resume info of ", resume_id)
+            console.log(jqXHR.responseText);
+            console.log(jqXHR.status);
+            console.log(jqXHR.readyState);
+            console.log(jqXHR.statusText);
+            console.log(textStatus);
+            console.log(errorThrown);
         }
     })
 }
 
 function get_resume_education() {
-    console.log('/api/educations?resume_id=' + resume_id)
+    console.log('/api/educations/?resume_id=' + resume_id)
     $.ajax({
         // Keep the standard restful API here
-        url: '/api/educations?resume_id=' + resume_id,
+        url: '/api/educations/?resume_id=' + resume_id,
         type: 'GET',
         data: null,
         success: function(response) {
@@ -244,6 +250,7 @@ $(document).on('click', '.resume_education_item_edit .education_save', function(
         console.log("add new items:", fields)
         $.ajax({
             url: '/api/educations/',
+            async: false,
             type: 'POST',
             data: fields,
         });

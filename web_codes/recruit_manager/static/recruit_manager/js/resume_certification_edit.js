@@ -89,10 +89,10 @@ function get_resume_certification_one(cert_id) {
 }
 
 function get_resume_certification() {
-    console.log('/api/certifications?resume_id=' + resume_id)
+    console.log('/api/certifications/?resume_id=' + resume_id)
     $.ajax({
         // Keep the standard restful API here
-        url: '/api/certifications?resume_id=' + resume_id,
+        url: '/api/certifications/?resume_id=' + resume_id,
         type: 'GET',
         data: null,
         success: function(response) {

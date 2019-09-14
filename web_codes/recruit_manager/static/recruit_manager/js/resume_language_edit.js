@@ -90,10 +90,10 @@ function get_resume_language_one(lang_id) {
 }
 
 function get_resume_language() {
-    console.log('/api/languages?resume_id=' + resume_id)
+    console.log('/api/languages/?resume_id=' + resume_id)
     $.ajax({
         // Keep the standard restful API here
-        url: '/api/languages?resume_id=' + resume_id,
+        url: '/api/languages/?resume_id=' + resume_id,
         type: 'GET',
         data: null,
         success: function(response) {
@@ -203,6 +203,7 @@ $(document).on('click', '.resume_language_item_edit .language_save', function() 
         $.ajax({
             url: '/api/languages/',
             type: 'POST',
+            async: false,
             data: fields,
             error: function(jqXHR, textStatus, errorThrown) {
 				console.log(jqXHR.responseText);
