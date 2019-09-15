@@ -242,6 +242,7 @@ $(document).on('click', '.resume_project_item_edit .project_save', function() {
         $.ajax({
             url: '/api/projects/',
             type: 'POST',
+            async: false,
             data: fields,
             error: function(jqXHR, textStatus, errorThrown) {
 				console.log(jqXHR.responseText);
