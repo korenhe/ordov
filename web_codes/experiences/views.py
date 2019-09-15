@@ -36,7 +36,7 @@ class ExperienceViewSet(viewsets.ModelViewSet):
         # Refer to: https://www.django-rest-framework.org/api-guide/filtering/#filtering-against-the-url
         qset = Experience.objects.all()
         resume_id = self.request.query_params.get('resume_id', None)
-        if resume_id is not None and isinstance(resume_id, int):
+        if resume_id is not None and resume_id.isdigit():
             qset = qset.filter(resume_id=resume_id)
         return qset
 
@@ -65,7 +65,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         qset = Project.objects.all()
         resume_id = self.request.query_params.get('resume_id', None)
-        if resume_id is not None and isinstance(resume_id, int):
+        if resume_id is not None and resume_id.isdigit():
             qset = qset.filter(resume_id=resume_id)
         return qset
 
@@ -94,7 +94,7 @@ class LanguageViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         qset = Language.objects.all()
         resume_id = self.request.query_params.get('resume_id', None)
-        if resume_id is not None and isinstance(resume_id, int):
+        if resume_id is not None and resume_id.isdigit():
             qset = qset.filter(resume_id=resume_id)
         return qset
 
@@ -124,6 +124,6 @@ class CertificationViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         qset = Certification.objects.all()
         resume_id = self.request.query_params.get('resume_id', None)
-        if resume_id is not None and isinstance(resume_id, int):
+        if resume_id is not None and resume_id.isdigit():
             qset = qset.filter(resume_id=resume_id)
         return qset

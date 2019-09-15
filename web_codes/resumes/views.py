@@ -244,6 +244,6 @@ class EducationViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         qset = Education.objects.all()
         resume_id = self.request.query_params.get('resume_id', None)
-        if resume_id is not None and isinstance(resume_id, int):
+        if resume_id is not None and resume_id.isdigit():
             qset = qset.filter(resume_id=resume_id)
         return qset
