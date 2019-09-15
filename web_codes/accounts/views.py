@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
 from .forms import SignUpForm
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from accounts.models import UserProfile
 from allauth.account.views import LoginView
@@ -58,6 +58,23 @@ def process(request):
     return HttpResponseRedirect("/manager")
 
 def signup(request):
+    username_raw = "xiaoming"
+    password_raw = "123456"
+    user = authenticate(username=username_raw, password=password_raw)
+    if user is None:
+        # The only way to create user info is the User.objects.create_user(**)
+        user = User.objects.create_user(username=username_raw,password=password_raw)
+        userprofile = UserProfile(
+            user = user,
+            user_type = "Candidate",
+        )
+        userprofile.save()
+    user = authenticate(username=username_raw, password=password_raw)
+    print("login:", user)
+    login(request, user)
+    return HttpResponseRedirect("/manager")
+    # --------------------------------
+
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():

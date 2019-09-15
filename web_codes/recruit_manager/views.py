@@ -17,6 +17,7 @@ from .load_excel import load_excel
 
 # Create your views here.
 def index(request):
+    print("------ recruit_manager", request.user)
     tcc = Company.objects.all().count()
     tac = Resume.objects.all().count()
     tic = Interview.objects.all().count()
