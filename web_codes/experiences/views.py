@@ -34,11 +34,11 @@ class ExperienceViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         # Refer to: https://www.django-rest-framework.org/api-guide/filtering/#filtering-against-the-url
-        queryset = Experience.objects.all()
+        qset = Experience.objects.all()
         resume_id = self.request.query_params.get('resume_id', None)
-        if resume_id is not None:
-            queryset = queryset.filter(resume_id=resume_id)
-        return queryset
+        if resume_id is not None and isinstance(resume_id, int):
+            qset = qset.filter(resume_id=resume_id)
+        return qset
 
 class ProjectView(APIView):
     def get(self, request):
@@ -63,11 +63,11 @@ class ProjectViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectSerializer
 
     def get_queryset(self):
-        queryset = Project.objects.all()
+        qset = Project.objects.all()
         resume_id = self.request.query_params.get('resume_id', None)
-        if resume_id is not None:
-            queryset = queryset.filter(resume_id=resume_id)
-        return queryset
+        if resume_id is not None and isinstance(resume_id, int):
+            qset = qset.filter(resume_id=resume_id)
+        return qset
 
 class LanguageView(APIView):
     def get(self, request):
@@ -92,11 +92,11 @@ class LanguageViewSet(viewsets.ModelViewSet):
     serializer_class = LanguageSerializer
 
     def get_queryset(self):
-        queryset = Language.objects.all()
+        qset = Language.objects.all()
         resume_id = self.request.query_params.get('resume_id', None)
-        if resume_id is not None:
-            queryset = queryset.filter(resume_id=resume_id)
-        return queryset
+        if resume_id is not None and isinstance(resume_id, int):
+            qset = qset.filter(resume_id=resume_id)
+        return qset
 
 
 class CertificationView(APIView):
@@ -122,8 +122,8 @@ class CertificationViewSet(viewsets.ModelViewSet):
     serializer_class = CertificationSerializer
 
     def get_queryset(self):
-        queryset = Certification.objects.all()
+        qset = Certification.objects.all()
         resume_id = self.request.query_params.get('resume_id', None)
-        if resume_id is not None:
-            queryset = queryset.filter(resume_id=resume_id)
-        return queryset
+        if resume_id is not None and isinstance(resume_id, int):
+            qset = qset.filter(resume_id=resume_id)
+        return qset
