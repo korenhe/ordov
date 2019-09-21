@@ -36,6 +36,7 @@ USER_TYPE_CHOICES = (
     ('Candidate', 'Candidate'),
     ('Recruiter','Recruiter'),
     ('Employer','Employer'),
+    ('Manager','Manager'),
 )
 
 DEGREE_CHOICES = (

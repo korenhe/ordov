@@ -2,13 +2,14 @@
 {% load i18n %}
 {% block content %}
 
+<a href="https://api.weibo.com/oauth2/authorize?client_id=2616154578&response_type=code&redirect_uri=http://127.0.0.1:8000/process/"><i class="fab fa-weibo"></i></a>
 <p>
   {% blocktrans %}
-  <a href="/accounts/login/"> 已经有账号了？直接登录</a>.
+  <a href="/accounts/signup">还没有账户? 请注册</a>.
   {% endblocktrans %}
 </p>
 
-<form id="signup_form" method="post" action="{% url 'accounts_signup' %}">
+<form id="signin_form" method="post" action="{% url 'accounts_signin' %}">
   {% csrf_token %}
   <div class="row">
   <div class="col-md-12 input-group">
@@ -24,16 +25,7 @@
     <div class="input-group-prepend">
       <span class="input-group-text" id="basic-addon1">密码</span>
     </div>
-	<input type="text" class="form-control" name="password1" id="password1_id" value="">
-  </div>
-  </div>
-
-  <div class="row">
-  <div class="col-md-12 input-group">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="basic-addon1">确认密码</span>
-    </div>
-	<input type="text" class="form-control" name="password2" id="password2_id" value="">
+	<input type="text" class="form-control" name="password" id="password_id" value="">
   </div>
   </div>
 
@@ -44,13 +36,12 @@
        <option>Candidate</option>
        <option>Recruiter</option>
        <option>Employer</option>
-	   <option>Manager</option>
+       <option>Manager</option>
     </select>
   </div>
   </div>
 
-
-  <button type="submit">注册</button>
+  <button type="submit">登录</button>
 </form>
 
 {% endblock %}

@@ -37,7 +37,8 @@ router.register(r'certifications', experiencesViews.CertificationViewSet)
 
 # Look at here: all path pattern should be ENDUP with '/'
 urlpatterns = [
-    path('accounts/signup/', accountsViews.signup, name='signup'),
+    path('accounts/signup/', accountsViews.signup, name='accounts_signup'),
+    path('accounts/signin/', accountsViews.signin, name='accounts_signin'),
     path('process/', accountsViews.process, name='process'),
     path('accounts/login/', accountsViews.MyLoginView.as_view(), name='login'),
     path('accounts/', include('allauth.urls')),

@@ -12,9 +12,12 @@ from accounts.models import UserProfile
 from allauth.account.views import LoginView
 from rest_framework import status as rest_status
 from rest_framework.response import Response
+from django.contrib.auth.models import Permission
 
 import requests
 
+from django.views.decorators.csrf import csrf_exempt
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 # Create your views here.
 
@@ -57,7 +60,35 @@ def process(request):
 
     return HttpResponseRedirect("/manager")
 
+@csrf_exempt
+def signin(request):
+    print("signin------------->")
+    if request.method == 'POST':
+        #step2: register the userprofile
+        data = request.POST
+        print("data", data)
+        username = data.get('username')
+        password = data.get('password')
+        user_type = data.get('user_type')
+        print("username:", username, " password:", password, " user_type:", user_type)
+        user = authenticate(username=username, password=password)
+        if not user:
+           return render(request, 'accounts/signin.html')
+
+        userProfile = None
+        try:
+            userProfile = UserProfile.objects.get(user=user, user_type=user_type)
+        except (ObjectDoesNotExist, MultipleObjectsReturned):
+            print("Not Exist")
+            return render(request, 'accounts/signin.html')
+        #step3: login and redirect
+        login(request, user)
+        return HttpResponseRedirect("/manager")
+    return render(request, 'accounts/signin.html')
+
+@csrf_exempt
 def signup(request):
+    """
     username_raw = "xiaoming"
     password_raw = "123456"
     user = authenticate(username=username_raw, password=password_raw)
@@ -70,16 +101,22 @@ def signup(request):
         )
         userprofile.save()
     user = authenticate(username=username_raw, password=password_raw)
+    permission = Permission.objects.get(codename="add_experience")
+    user.user_permissions.add(permission)
+    if user.has_perm("experiences.add_experience"):
+        print("has permission")
+
     print("login:", user)
-    login(request, user)
+    #login(request, user)
     return HttpResponseRedirect("/manager")
+    """
     # --------------------------------
 
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
             #step1: store to table user_auth
-            form.save()
+            #form.save()
 
             #step2: register the userprofile
             data = form.data
@@ -87,18 +124,23 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user_type = form.cleaned_data.get('user_type')
             user = authenticate(username=username, password=raw_password)
-            userprofile = UserProfile(
-                user = user,
-                user_type = user_type,
-            )
-            userprofile.save()
+            if not user:# means the user not exist
+                print("Create User ", username, raw_password, user_type)
+                user = User.objects.create_user(username=username, password=raw_password)
+                userprofile = UserProfile(
+                    user = user,
+                    user_type = user_type,
+                )
+                userprofile.save()
+                user = authenticate(username=username, password=raw_password)
 
             #step3: login and redirect
             login(request, user)
             return HttpResponseRedirect("/manager")
-    elif request.method == 'GET':
-        form = SignUpForm()
-    return render(request, 'accounts/signup.html', {'form':form})
+        else:
+            # https://docs.djangoproject.com/en/2.2/ref/forms/api/
+            print("form is invalid ..", form.errors)
+    return render(request, 'accounts/signup.html')
 
 def get_token(code):
     """
@@ -120,4 +162,4 @@ def get_token(code):
     return result
 
 class MyLoginView(LoginView):
-    template_name = 'accounts/login.html'
+    template_name = 'accounts/signin.html'

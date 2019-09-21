@@ -12,7 +12,7 @@ from django.core.signing import SignatureExpired, BadSignature
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     user_type = models.CharField(
-            choices = (('Candidate', 'Candidate'), ('Recruiter', 'Recruiter'), ('Employer', 'Employer'),),
+            choices = (('Candidate', 'Candidate'), ('Recruiter', 'Recruiter'), ('Employer', 'Employer'), ('Manager', 'Manager')),
             max_length=50,
     )
     last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
