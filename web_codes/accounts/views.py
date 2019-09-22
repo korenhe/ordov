@@ -19,6 +19,9 @@ import requests
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
+from rest_framework import viewsets, status
+from .serializers import UserProfileSerializer
+
 # Create your views here.
 
 def get_user_info(result):
@@ -163,3 +166,16 @@ def get_token(code):
 
 class MyLoginView(LoginView):
     template_name = 'accounts/signin.html'
+
+class UserProfileViewSet(viewsets.ModelViewSet):
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
+
+    def get_queryset(self):
+        # Refer to: https://www.django-rest-framework.org/api-guide/filtering/#filtering-against-the-url
+        qset = UserProfile.objects.all()
+        user_type = self.request.query_params.get('user_type', None)
+        if user_type is not None and user_type is not "":
+            qset = qset.filter(user_type=user_type)
+        return qset
+
