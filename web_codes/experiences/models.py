@@ -60,6 +60,12 @@ class Experience(models.Model):
     def __str__(self):
         return '{}: {} {}'.format(self.start, self.company_name, self.post_name)
 
+    class Meta:
+        permissions = (
+            ("edit_experience", "Can edit the experience"),
+            ("delete2_experience", "Can delete the experience"),
+        )
+
 class Project(models.Model):
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, default='')
     start = models.DateField(blank=True, null=True)

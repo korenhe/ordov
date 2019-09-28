@@ -233,6 +233,9 @@ def UpdatePost(request):
         companyTarget, created = Company.objects.update_or_create(**company_info)
         departmentTarget, created = Department.objects.update_or_create(company=companyTarget, **department_info)
         postTarget, created = Post.objects.update_or_create(company=companyTarget, department=departmentTarget, **post_info)
+
+        # After the post info created, we should add the
+        # the right to the owner, and by the
         return HttpResponse("success")
 
         """

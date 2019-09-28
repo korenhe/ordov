@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.weibo',
-    'django_extensions',
 
     'rest_framework',
     'rest_framework_datatables',
@@ -54,6 +53,7 @@ INSTALLED_APPS = [
     'experiences',
     'interviews',
     'smart_analyse',
+    'permissions',
 
     'third_party',
 
@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'recruit_applicant.apps.RecruitApplicantConfig',
     'recruit_company.apps.RecruitCompanyConfig',
     'landing_page.apps.LandingPageConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -156,6 +157,10 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+CSRF_COOKIE_SECURE=True
+SESSION_COOKIE_SECURE = True
+#CSRF_COOKIE_DOMAIN = '127.0.0.1'
 
 
 # Static files (CSS, JavaScript, Images)

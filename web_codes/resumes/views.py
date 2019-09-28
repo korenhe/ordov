@@ -19,6 +19,8 @@ from datatableview.utils import *
 from django.http import JsonResponse, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
+from django.views.decorators.csrf import ensure_csrf_cookie
+
 import json
 import re
 
@@ -193,7 +195,7 @@ class ResumeDetail(generic.DetailView):
     context_object_name = 't_resume_detail'
     template_name = 'recruit_manager/edit_resume.html'
 
-
+@ensure_csrf_cookie
 def ResumeDetailInfo(request, *args, **kwargs):
     idd = kwargs.get('pk', -1)
     if idd > 0:

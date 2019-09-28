@@ -13,5 +13,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
          'username',
          'user_type',
          'user',
+         'id',
        )
 

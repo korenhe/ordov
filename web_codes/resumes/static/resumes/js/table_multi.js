@@ -578,6 +578,10 @@ $(document).ready(function() {
         if(xhr.status >= 200 && xhr.status < 300) {
           //success
         } else {
+          console.log("csrftoken: ", csrftoken)
+		  console.log(xhr.responseText)
+		  console.log(xhr.status)
+		  console.log(xhr.statusText)
           alert("Something error happend\n");
         }
       }
@@ -718,7 +722,6 @@ $(document).ready(function() {
       type: 'GET',
       data: null,
       success: function(response) {
-        console.log(response)
         document.getElementById("text_terminate_expected_province").value = response.expected_province;
         document.getElementById("text_terminate_expected_city").value = response.expected_city;
         document.getElementById("text_terminate_expected_district").value = response.expected_district;
@@ -1085,6 +1088,139 @@ $(document).ready(function() {
     $('#projSelectorBtn').click(function(e) {
       e.preventDefault();
       $('#projSelector').modal('show')
+    });
+  });
+
+  function getCurPermSync(post_id) {
+      $('#projPermInfo').empty()
+      $('#projPermInfo').append("<span>"+"当前的权限分配信息如下:"+"</span>")
+
+      $.ajax({
+        url:'/api/permissions/?post_id=' + post_id,
+        type: 'GET',
+        data: null,
+        async: false,
+        success: function(response) {
+            //console.log("response ", response)
+            $.each(response.results, function(index, ele) {
+                $('#projPermInfo').append('<span style="display:block">'+ele.stage_name + ':' + ele.user_name + '</span>')
+            });
+        },
+        error: function() {
+            console.log("get resume info failed");
+            alert('Sth Wrong')
+        },
+      });
+  }
+
+  $('#permOp').change(function(e) {
+      var stage = $('#interview_stage_id').val()
+      var who = $('#cRecruiter').val()
+      var op = $('#permOp').val()
+      var fields = 'post=' + post_selected_value + '&user=' + who + '&stage=' + stage
+      $('#permOp').val("")
+	  $('#interview_stage_id').val("")
+      $('#cRecruiter').val("")
+	  data = {
+		"post": post_selected_value,
+		"user": who,
+		"stage": stage,
+	  }
+      if (op=="增加") {
+	    xhr_common_send('POST', '/api/permissions/', data)
+      } else if (op == "删除") {
+        // step1: get the item
+        $.ajax({
+            url:'/api/permissions/?post=' + post_selected_value + '&user=' + who + '&stage=' + stage,
+            type: 'GET',
+            data: null,
+            success: function(response) {
+                console.log('/api/permissions/?post=' + post_selected_value + '&user=' + who + '&stage=' + stage)
+                $.each(response.results, function(index, ele) {
+                    console.log("index: ", index, " ", ele.id)
+	                xhr_common_send('DELETE', '/api/permissions/'+ele.id+'/', null)
+                });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log('api/permissions/?post=' + post_selected_value + '&user=' + who + '&stage=' + stage)
+				console.log(jqXHR.responseText);
+                console.log(jqXHR.status);
+				console.log(jqXHR.readyState);
+                console.log(jqXHR.statusText);
+                console.log(textStatus);
+                console.log(errorThrown);
+                alert('Sth Wrong')
+            },
+        });
+      }
+      getCurPermSync(post_selected_value)
+		/*
+      $.ajax({
+        url:'/api/permissions/' ,
+        type: 'POST',
+        data: fields,
+        success: function(response) {
+            getCurPermSync(post_selected_value)
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+				console.log(jqXHR.responseText);
+                console.log(jqXHR.status);
+				console.log(jqXHR.readyState);
+                console.log(jqXHR.statusText);
+                console.log(textStatus);
+                console.log(errorThrown);
+
+            alert('Sth Wrong')
+        },
+      });
+		*/
+  });
+
+  function getRecruiterSync() {
+      $('#cRecruiter').html("")
+      $('#cRecruiter').prepend('<option value=""></option>')
+      $.ajax({
+        url:'/api/accounts/?user_type=Recruiter' ,
+        type: 'GET',
+        async: false,
+        data: null,
+        success: function(response) {
+          $.each(response.results, function(index, ele){
+              $('#cRecruiter').append('<option value=' + ele.id + '>' + ele.username + '</option>')
+          })
+        },
+        error: function(response) {
+            console.log("get resume info failed");
+            alert('Sth Wrong')
+        },
+      });
+  }
+
+  $(function() {
+    $('#projPermissionBtn').click(function(e) {
+      e.preventDefault();
+      // step0: Get the all recruiter
+      // step1: First should update the header
+      $.ajax({
+        url:'/api/posts/' + post_selected_value + '/',
+        type: 'GET',
+        data: null,
+        success: function(response) {
+            // get the project info successfully
+            // then to get the project info
+            $('#projPermName').text(response.name)
+            $('#permOp').val("")
+            $('#interview_stage_id').val("")
+            getRecruiterSync()
+            getCurPermSync(post_selected_value)
+            $('#projPermission').modal('show')
+        },
+        error: function() {
+            console.log("get resume info failed");
+            alert('Sth Wrong')
+        },
+      });
+      // step2: Then the all recruiter
 
     });
   });
