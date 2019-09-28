@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import ProjectPermission
+from interviews.models import STATUS_CHOICES
 
 # Attention: the resume serializer should be 
 # TODO: The Permission DB only
@@ -19,9 +20,9 @@ class ProjectPermissionSerializer(serializers.ModelSerializer):
     def get_stage_id(self, projPerm):
         return projPerm.stage
     def get_stage_name(self, projPerm):
-        return projPerm.user.user.name
+        return STATUS_CHOICES[projPerm.stage][1]
     def get_user_name(self, projPerm):
-        return projPerm.user.user.name
+        return projPerm.user.user.username
     def get_user_id(self, projPerm):
         return projPerm.user.id
 
@@ -34,5 +35,10 @@ class ProjectPermissionSerializer(serializers.ModelSerializer):
          'stage_name',
          'user_name',
          'user_id',
+
+         'post',
+         'user',
+         'stage',
+         'id',
        )
 
