@@ -25,3 +25,4 @@ django-model-utils==1.1.0
 pillow
 
 django-extensions
+django-guardian

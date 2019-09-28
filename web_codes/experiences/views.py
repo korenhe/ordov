@@ -5,6 +5,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import viewsets, status
+from rest_framework import permissions
 
 # Create your views here.
 
@@ -28,9 +29,27 @@ class ExperienceView(APIView):
             {"success": "Experience '{}' created successfully".format(experience_saved.company_name)}
         )
 
+class IsCreationOrIsAuthenticated(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        print("-------------------------------------------->", request.user, view.action, request.user.is_authenticated)
+        print("view: ", view.get_permissions())
+        if not request.user.is_authenticated:
+            if view.action == 'list':
+                return True
+            else:
+                return False
+        else:
+            return True
+    def get_permission(self):
+        print("get permission .*--------->")
+        print("get permission .*--------->")
+        print("get permission .*--------->")
+
 class ExperienceViewSet(viewsets.ModelViewSet):
     queryset = Experience.objects.all()
     serializer_class = ExperienceSerializer
+    permission_classes = (IsCreationOrIsAuthenticated, )
 
     def get_queryset(self):
         # Refer to: https://www.django-rest-framework.org/api-guide/filtering/#filtering-against-the-url
