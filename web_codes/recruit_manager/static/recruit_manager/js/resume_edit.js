@@ -31,7 +31,6 @@ function show_one_experience(exp_id) {
     if (exp_id != -1) {
         on_experience_add = false
     }
-
 }
 
 function get_resume_basic() {
@@ -314,6 +313,23 @@ $(document).on('click', '.resume_experience_item_edit .experience_save', functio
             type: 'POST',
             async: false,
             data: fields,
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR.responseText);
+                console.log(jqXHR.status);
+                console.log(jqXHR.readyState);
+                console.log(jqXHR.statusText);
+                console.log(textStatus);
+                console.log(errorThrown);
+            }
+        });
+    } else if (id < 0) {
+        // the a new item for resume
+        var fields = $('form[class="resume_experience_item_edit"][id=' + id + ']').serialize() + "&resume=" + resume_id
+        console.log("add new items:", fields)
+        $.ajax({
+            url: '/api/experiences/',
+            type: 'POST',
+            async: false,
         });
     }
     show_one_experience(-2) // collapse all the items
