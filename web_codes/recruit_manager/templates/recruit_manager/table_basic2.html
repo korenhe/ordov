@@ -20,6 +20,7 @@
        <a href="{% url 'app_manager:t_index' %}" class="btn btn-default">管理员首页</a>
        <a href={% url 'app_manager:t_multi' %} class="btn btn-default">项目管理</a>
        <span class="btn btn-default" id="projSelectorBtn">选择项目</span>
+       <span class="btn btn-default" id="projPermissionBtn">项目权限管理</span>
      </div>
      </div>
      </div>
@@ -55,15 +56,13 @@
   {% include 'recruit_manager/basic_js.html' %}
 
   <!-- Page level plugins -->
-  <script src="https://cdn.datatables.net/v/bs4/dt-1.10.18/b-1.5.6/sl-1.3.0/datatables.min.js"></script>
-
+  <script src="{% static 'recruit_manager/js/datatables.min.js' %}"></script>
   <script src="{% static 'recruit_manager/js/scrolling.js' %}"></script>
   <script src="{% static 'recruit_manager/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
   <script src="{% static 'recruit_manager/vendor/datatables/dataTables.checkboxes.min.js' %}"></script>
   <script src="{% static 'recruit_manager/js/bootstrap-datetimepicker.js' %}"></script>
   <script src="{% static 'recruit_manager/js/bootstrap-datetimepicker.fr.js' %}"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+  <script src="{% static 'recruit_manager/js/bootstrap-select.min.js' %}"></script>
 
   <!-- Page level custom scripts -->
   {% block extra_js %} {% endblock %}
