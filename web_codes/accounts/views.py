@@ -63,7 +63,6 @@ def process(request):
 
     return HttpResponseRedirect("/manager")
 
-@csrf_exempt
 def signin(request):
     print("signin------------->")
     if request.method == 'POST':
@@ -76,7 +75,10 @@ def signin(request):
         print("username:", username, " password:", password, " user_type:", user_type)
         user = authenticate(username=username, password=password)
         if not user:
-           return render(request, 'accounts/signin.html')
+            print("No such user...")
+            return render(request, 'accounts/signin.html')
+        else:
+            print("Login success")
 
         userProfile = None
         try:
@@ -86,10 +88,18 @@ def signin(request):
             return render(request, 'accounts/signin.html')
         #step3: login and redirect
         login(request, user)
-        return HttpResponseRedirect("/manager")
+        print("-------------------------signin successful")
+        n = request.GET.get('next', None)
+        print("-------------------------request.GET: ", request.GET, request.POST)
+        print("-------------------------request: ", request)
+        print("-------------------------signin n: ", n)
+        if n is not None:
+            return HttpResponseRedirect(n, request)
+        else:
+            return HttpResponseRedirect("/", request)
+
     return render(request, 'accounts/signin.html')
 
-@csrf_exempt
 def signup(request):
     """
     username_raw = "xiaoming"
@@ -115,6 +125,7 @@ def signup(request):
     """
     # --------------------------------
 
+    print("--------------------------------------------")
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():

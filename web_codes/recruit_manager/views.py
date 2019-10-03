@@ -6,6 +6,8 @@ from django.http import JsonResponse
 from django.core.files.storage import FileSystemStorage
 from django.db import models
 
+from django.contrib.auth.decorators import login_required
+
 import os
 import time
 
@@ -16,6 +18,7 @@ from resumes.models import Resume
 from .load_excel import load_excel
 
 # Create your views here.
+@login_required
 def index(request):
     print("------ recruit_manager", request.user)
     tcc = Company.objects.all().count()
