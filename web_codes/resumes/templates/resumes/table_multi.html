@@ -1,4 +1,5 @@
 {% extends "recruit_manager/table_basic2.html" %}
+
 {% load static %}
 {% block content %}
 
@@ -42,80 +43,19 @@
 <div class="float-button-left-triangle" id="projectSelectShow" style="display:none;">
 </div>
 
-
-<?-- This is the modal of the project permission -->
-<div class="modal fade" id="projPermission" tabindex="-1" role="dialog" aria-labelledby="projPermission" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-
-        <?-- The project selector as a modal -->
-	    <div class="container" style="border:3px solid white; margin:-1;padding:-1;">
-          <div class="col-12" style="display:block; margin:-1;padding:-1;">
-            <?-- Post -->
-            <h5 class="mb-0" style="margin:-1;">
-            <button id="text_company_name2" class="btn btn-link" data-toggle="collapse" data-target="#collapsePost" aria-expanded="true" aria-controls="collapsePost">
-                权限管理:
-            <span id="projPermName"></span>
-            </button>
-            </h5>
-
-            <div class="container" style="border:3px solid white">
-              <div class="row">
-                <span><h6> 设置面试阶段负责人</h6></span>
-              </div>
-              <div class="row">
-                <div class="col-md-4 input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1" style="width:40px">阶段</span>
-                  </div>
-                  <select class="form-control" id="interview_stage_id" name="stage_stage" aria-labelledby="basic-addon1">
-                    <option value=-1></option>
-                    <option value=2>邀约</option>
-                    <option value=3>面试</option>
-                    <option value=4>Offer</option>
-                    <option value=5>入职</option>
-                    <option value=6>考察</option>
-                    <option value=7>回款</option>
-                  </select>
-                </div>
-                <div class="col-md-4 input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1" style="width:40px">责任人</span>
-                  </div>
-                  <select class="form-control" id="cRecruiter" name="response" aria-labelledby="basic-addon1">
-                  </select>
-                </div>
-                <div class="col-md-4 input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1" style="width:40px">操作</span>
-                  </div>
-                  <select class="form-control" id="permOp" name="permOp" aria-labelledby="basic-addon1">
-                    <option></option>
-                    <option>增加</option>
-                    <option>删除</option>
-                  </select>
-                </div>
-              </div> <?-- Row -->
-              <div id="projPermInfo">
-              </div>
-            </div>
-            <?-- Post -->
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-<?--   End of the project permission panel -->
-
 <div class="float-button-left-triangle" id="projPermission">
 </div>
 
+<a href="#" class="btn btn-primary" data-action="toggle" data-side="right"><span>Toggle Right</span></a>
+
+<div class="sidebars">
+  <div class="sidebar right" style="padding:0px;">Right
+    {% include "recruit_manager/perm.html" %}
+  </div>
+</div>
+
 <div>
+
   <div class="row" style="display:none">
     <div class="col-md-12">
       <p style="display:inline;">项目名:</p>
@@ -132,8 +72,8 @@
 
   <div class="row">
     <?-- The project selector as a modal -->
-    <div class="col-2" id="projectPanel" style="display">
-      <div class="container card-header">
+    <div class="col-2" id="projectPanel" style="padding:0px;">
+      <div class="container card-header" style="padding:8px;">
 
         <div class="row">
           <div class="col-md-10">
@@ -163,12 +103,12 @@
             </div>
 
           </div>
-        </div> <?------>
+        </div> <?--- row --->
 
       </div> <?--- End: card-header-->
     </div> <?-- End: projectPanel -->
 
-    <div class="col-10" id="mainOpPanel">
+    <div class="col-10" id="mainOpPanel" style="bac:black;">
       <div class="list-group list-group-horizontal">
         <li class="list-group-item list-group-item-action active" data-toggle="list" value="0">
           待筛选

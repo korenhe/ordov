@@ -1,0 +1,65 @@
+<?-- The project selector as a modal -->
+<div class="container" style="border:3px solid white; margin:-1;padding:3px;margin:0px; height=1000px">
+  <div class="col-12" style="display:block; margin:-1;padding:-1;">
+    <?-- Post -->
+    <h5 class="mb-0" style="margin:-1;">
+    <button id="text_company_name2" class="btn btn-link" data-toggle="collapse" data-target="#collapsePost" aria-expanded="true" aria-controls="collapsePost" style="display:none;">
+        权限管理:
+    <span id="projPermName"></span>
+    </button>
+    </h5>
+
+    <div class="container" style="border:3px solid white">
+      <div class="row">
+        <span><h6 style="color:#b08c21;"> 设置面试阶段负责人</h6></span>
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-12 input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="width:55px">阶段</span>
+          </div>
+          <select class="form-control" id="interview_stage_id" name="stage_stage" aria-labelledby="basic-addon1">
+            <option value=-1></option>
+            <option value=2>邀约</option>
+            <option value=3>面试</option>
+            <option value=4>Offer</option>
+            <option value=5>入职</option>
+            <option value=6>考察</option>
+            <option value=7>回款</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-12 input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="width:55px">责任人</span>
+          </div>
+          <select class="form-control" id="cRecruiter" name="response" aria-labelledby="basic-addon1">
+          </select>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-12 input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="width:55px">操作</span>
+          </div>
+          <select class="form-control" id="permOp" name="permOp" aria-labelledby="basic-addon1">
+            <option></option>
+            <option>增加</option>
+            <option>删除</option>
+          </select>
+        </div>
+
+      </div> <?-- row -->
+    </div> <?-- container -->
+
+  </div>
+</div>
