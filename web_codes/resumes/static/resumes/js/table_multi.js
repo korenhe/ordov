@@ -135,6 +135,8 @@ $(document).ready(function() {
       {"data": "workexp",
        "orderable": false,
        "width": "20%"},
+      {"data": "lastmod",
+       "width": "5%"},
       {"data": "interview_status_name",
        "orderable": false,
        "width": "5%"

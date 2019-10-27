@@ -16,6 +16,7 @@ class ResumeSerializer(serializers.ModelSerializer):
     newname = serializers.SerializerMethodField()
     birthorigin = serializers.SerializerMethodField()
     expected = serializers.SerializerMethodField()
+    lastmod = serializers.SerializerMethodField()
 
     def get_candidate_id(self, resume):
         if resume.candidate:
@@ -37,6 +38,8 @@ class ResumeSerializer(serializers.ModelSerializer):
             return resume.username+"(女)"
         else:
             return resume.username
+    def get_lastmod(self, resume):
+        return (str(resume.last_modified.strftime("%Y/%m/%d %H:%M"))) 
     def get_expected(self, resume):
         #TODO: expected city and more
         if resume.expected_city is not None:
@@ -157,6 +160,7 @@ class ResumeSerializer(serializers.ModelSerializer):
             'birthorigin',
             'expected',
             'majorfull',
+            'lastmod',
 
             # CascadeField
             'candidate',
@@ -193,6 +197,8 @@ class ResumeSerializer(serializers.ModelSerializer):
 
             'graduate_time',
             'graduate_year',
+
+            'last_modified',
 
         )
 
