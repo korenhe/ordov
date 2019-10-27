@@ -12,6 +12,7 @@ class ResumeSerializer(serializers.ModelSerializer):
     interview_status_name = serializers.SerializerMethodField()
     workexp = serializers.SerializerMethodField()
     ageg = serializers.SerializerMethodField()
+    majorfull = serializers.SerializerMethodField()
     newname = serializers.SerializerMethodField()
     birthorigin = serializers.SerializerMethodField()
     expected = serializers.SerializerMethodField()
@@ -27,6 +28,8 @@ class ResumeSerializer(serializers.ModelSerializer):
 
     def get_ageg(self, resume):
         return "年龄:" + str(resume.age)+" " "毕业: "+str(resume.graduate_time)
+    def get_majorfull(self, resume):
+        return resume.school + ">" + resume.degree + ">" + resume.major
     def get_newname(self, resume):
         if resume.gender == "Male":
             return resume.username
@@ -153,6 +156,7 @@ class ResumeSerializer(serializers.ModelSerializer):
             'newname',
             'birthorigin',
             'expected',
+            'majorfull',
 
             # CascadeField
             'candidate',
