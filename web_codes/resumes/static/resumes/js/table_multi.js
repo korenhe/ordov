@@ -170,8 +170,8 @@ $(document).ready(function() {
          else if (row.interview_status == 1) {
            return `
                 <div class="btn-group">
-                <button type="button" class="stage_one_pass btn btn-sm " id="` + row.interview_id + `">通过</button>
-                <button type="button" class="stage_one_fail btn btn-sm " id="` + row.interview_id + `">结束</button>
+                <button type="button" class="stage_one_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">通过</button>
+                <button type="button" class="stage_one_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">结束</button>
                 </div>
 
 `;
@@ -833,6 +833,7 @@ $(document).ready(function() {
   $(document).on('click', '.stage_one_fail', function() {
     interview_selected_value = Number(this.id);
     resume_id = this.dataset.resume_id;
+	resume_selected_value = Number(this.dataset.resume_id)
     show_stop_modal(interview_selected_value, resume_id)
   });
 
@@ -857,6 +858,7 @@ $(document).ready(function() {
   $(document).on('click', '.stage_three_miss', function() {
     interview_selected_value = Number(this.id);
     resume_id = this.dataset.resume_id;
+	resume_selected_value = Number(this.dataset.resume_id)
     show_stop_modal(interview_selected_value, resume_id)
   });
   $(document).on('click', '.stage_three_pass', function() {
