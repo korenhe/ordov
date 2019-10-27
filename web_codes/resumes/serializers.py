@@ -185,6 +185,7 @@ class ResumeSerializer(serializers.ModelSerializer):
             'date_of_birth',
             'identity',
             'age',
+            'hunting_status',
 
             'phone_number',
             'qq',
@@ -203,6 +204,10 @@ class ResumeSerializer(serializers.ModelSerializer):
             'expected_province',
             'expected_city',
             'expected_district',
+
+            'expected_industry',
+            'expected_salary',
+            'expected_post',
 
             'graduate_time',
             'graduate_year',

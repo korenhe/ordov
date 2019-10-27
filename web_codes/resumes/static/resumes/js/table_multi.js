@@ -816,6 +816,7 @@ $(document).ready(function() {
   });
 
   function do_stage_zero_fail(resume_id) {
+	resume_selected_value = Number(this.id)
     submit_interview_by_compound(resume_id, post_selected_value, "/api/interviews/", 0, "初选-终止", false);
   }
 
@@ -848,6 +849,7 @@ $(document).ready(function() {
   });
   $(document).on('click', '.stage_two_fail', function() {
     interview_selected_value = Number(this.id);
+	resume_selected_value = Number(this.dataset.resume_id)
     resume_id = this.dataset.resume_id;
     show_stop_modal(interview_selected_value, resume_id)
   });
@@ -876,6 +878,7 @@ $(document).ready(function() {
   });
   $(document).on('click', '.stage_three_fail', function() {
     interview_selected_value = Number(this.id);
+	resume_selected_value = this.dataset.resume_id
     resume_id = this.dataset.resume_id;
     show_stop_modal(interview_selected_value, resume_id)
   });
@@ -917,6 +920,7 @@ $(document).ready(function() {
   $(document).on('click', '.stage_four_fail', function() {
     interview_selected_value = Number(this.id);
     resume_id = this.dataset.resume_id;
+	resume_selected_value = this.dataset.resume_id;
     show_stop_modal(interview_selected_value, resume_id)
   });
 
@@ -960,6 +964,7 @@ $(document).ready(function() {
   $(document).on('click', '.stage_five_fail', function() {
     interview_selected_value = Number(this.id);
     resume_id = this.dataset.resume_id;
+	resume_selected_value = this.dataset.resume_id;
     show_stop_modal(interview_selected_value, resume_id)
   });
 
@@ -989,6 +994,7 @@ $(document).ready(function() {
 
   $(document).on('click', '.stage_six_fail', function() {
     interview_selected_value = Number(this.id);
+	resume_selected_value = Number(this.dataset.resume_id)
     $('#probationFailModal').modal('toggle')
   });
 
@@ -1009,6 +1015,7 @@ $(document).ready(function() {
 
   $(document).on('click', '.stage_seven_fail', function() {
     interview_selected_value = Number(this.id);
+	resume_selected_value = Number(this.dataset.resume_id)
     $('#pbBaddebtModal').modal('toggle');
   });
 
@@ -1258,10 +1265,54 @@ $(document).ready(function() {
     submit_interviewsub_by_id("/interviews/api/terminate_sub/", table, data);
   }
 
+  function do_update_resume(resume_id) {
+     data = {
+      "id": resume_id,
+      "hunting_status": $('#text_terminate_hunting_status').val(),
+      "expected_industry": helper_get_selectbox_text("text_terminate_expected_industry"),
+      "expected_post": helper_get_selectbox_text("text_terminate_expected_post"),
+      "expected_shift": helper_get_selectbox_text("text_terminate_expected_shift"),
+
+      "expected_salary": helper_get_textbox_text("text_terminate_expected_salary"),
+      "expected_notes": helper_get_textbox_text("text_terminate_expected_notes"),
+      "expected_province": helper_get_textbox_text("text_terminate_expected_province"),
+      "expected_city": helper_get_textbox_text("text_terminate_expected_city"),
+      "expected_district": helper_get_textbox_text("text_terminate_expected_district"),
+
+      "expected_insurance": helper_get_selectbox_text("text_terminate_expected_insurance"),
+      "expected_insurance_schedule": helper_get_selectbox_text("text_terminate_expected_insurance_schedule")
+     }
+    console.log("data: ", JSON.stringify(data))
+    console.log('/api/resumes/' + resume_id + '/')
+    xhr_common_send('PUT', '/api/resumes/' + resume_id + '/', data)
+        /*
+	$.ajax({
+		url: '/api/resumes/' + resume_id + '/',
+        type: 'POST',
+        data: JSON.stringify(data),
+        success: function(response) {
+            console.log(response)
+        },
+		error: function(jqXHR, textStatus, errorThrown) {
+            console.log("Fail to post resume info of ", resume_id)
+            console.log(jqXHR.responseText);
+            console.log(jqXHR.status);
+            console.log(jqXHR.readyState);
+            console.log(jqXHR.statusText);
+            console.log(textStatus);
+            console.log(errorThrown);
+		}
+    })
+    */
+
+  }
+
   $(function() {
     $('#stopFormSubmit').click(function(e){
       e.preventDefault();
-      multisel_submit_wrapper(do_stop_submit);
+	  do_update_resume(resume_selected_value);
+      //multisel_submit_wrapper(do_stop_submit);
+      do_stop_submit(interview_selected_value);
     });
   });
 

@@ -1186,7 +1186,9 @@
         <div class="modal-body">
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active" id="industry-tab" href="#industry" data-toggle="tab" role="tab" aria-controls="industry" aria-selected="true">行业</a></li>
+              <a class="nav-link active" id="basic-tab" href="#basic" data-toggle="tab" role="tab" aria-controls="basic" aria-selected="true">基本</a></li>
+            <li class="nav-item">
+              <a class="nav-link" id="industry-tab" href="#industry" data-toggle="tab" role="tab" aria-controls="industry" aria-selected="false">行业</a></li>
             <li class="nav-item">
               <a class="nav-link" id="shift-tab" href="#tab_shift" data-toggle="tab" role="tab" aria-controls="tab_shift" aria-selected="false">作息</a></li>
             <li class="nav-item">
@@ -1202,7 +1204,24 @@
           </ul>
 
           <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="industry" role="tabpanel" aria-labelledby="industry-tab">
+
+            <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_expected_industry" class="col-form-label">当前找工作状态</label>
+
+                  <select class="form-control" id="text_terminate_hunting_status">
+                    <option value=-1></option>
+                    <option value=0>在职,不找工作</option>
+                    <option value=1>在职,考虑新机会</option>
+                    <option value=2>离职,正在找工作</option>
+                  </select>
+
+                </div>
+              </form>
+            </div>
+
+            <div class="tab-pane fade show " id="industry" role="tabpanel" aria-labelledby="industry-tab">
               <form>
                 <div class="form-group">
                   <label for="text_expected_industry" class="col-form-label">选择期望行业</label>
