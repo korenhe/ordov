@@ -4,6 +4,8 @@ from candidates.serializers import CandidateSerializer
 from .models import Resume, Education
 from interviews.models import Interview, STATUS_CHOICES
 
+from ordov.choices import (DEGREE_CHOICES, DEGREE_CHOICES_MAP)
+
 class ResumeSerializer(serializers.ModelSerializer):
     candidate = CandidateSerializer(required=False)
     candidate_id = serializers.SerializerMethodField()
@@ -30,7 +32,14 @@ class ResumeSerializer(serializers.ModelSerializer):
     def get_ageg(self, resume):
         return "年龄:" + str(resume.age)+" " "毕业: "+str(resume.graduate_time)
     def get_majorfull(self, resume):
-        return resume.school + ">" + resume.degree + ">" + resume.major
+        print("----------------> resume.degree: ", resume.degree)
+        degree_str = ""
+        if type(resume.degree) == type(1):
+            degree_str = DEGREE_CHOICES[resume.degree][1]
+        elif type(resume.degree) == type("str"):
+            degree_str = resume.degree
+        major_str = resume.major
+        return resume.school + ">" + degree_str + ">" + major_str
     def get_newname(self, resume):
         if resume.gender == "Male":
             return resume.username
