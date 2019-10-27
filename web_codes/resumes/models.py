@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.db import models
 from .choices import (BIRTH_YEAR_CHOICES, MAJOR_CHOICES, MARRIAGE_CHOICES, EDUCATION_TYPE_CHOICES)
-from ordov.choices import (DEGREE_CHOICES, DEGREE_CHOICES_MAP)
+from ordov.choices import (DEGREE_CHOICES, DEGREE_CHOICES_MAP, HUNTING_STATUS_CHOICES, HUNTING_STATUS_CHOICES_MAP)
 from candidates.models import Candidate
 from model_utils import Choices
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
@@ -74,6 +74,9 @@ class Resume(models.Model):
     # reserved Field
     reserved1 = models.CharField(max_length=50, blank=True, null=True, default='')
     reserved2 = models.CharField(max_length=50, blank=True, null=True, default='')
+
+    # status
+    hunting_status = models.IntegerField(blank=True, null=True, choices=HUNTING_STATUS_CHOICES)
 
     # table related info
     last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
