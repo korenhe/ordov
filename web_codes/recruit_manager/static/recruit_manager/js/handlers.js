@@ -3,10 +3,10 @@ $(document).ready(function () {
     var sides = ["left", "top", "right", "bottom"];
     $("h1 span.version").text($.fn.sidebar.version);
 
-    // Initialize sidebars
+    // Initialize sidebar2s
     for (var i = 0; i < sides.length; ++i) {
         var cSide = sides[i];
-        $(".sidebar." + cSide).sidebar({side: cSide});
+        $(".sidebar2." + cSide).sidebar({side: cSide});
     }
 
     // Click handlers
@@ -14,7 +14,10 @@ $(document).ready(function () {
         var $this = $(this);
         var action = $this.attr("data-action");
         var side = $this.attr("data-side");
-        $(".sidebar." + side).trigger("sidebar:" + action);
+        console.log("button data-action: ")
+        console.log(".sidebar2."+side)
+        console.log("sidebar2:"+action)
+        $(".sidebar2." + side).trigger("sidebar:" + action);
         return false;
     });
 });

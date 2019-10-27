@@ -1,44 +1,4 @@
-header {
-    padding: 8em 0;
-}
-
-header, footer {
-    color: white;
-    background: #448AFF;
-    background-image: url("background.png");
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.51);
-}
-
-h1.title {
-    font-size: 4em;
-    font-weight: bold;
-}
-
-pre {
-    background: #212121;
-    color: white;
-}
-
-header p {
-    font-size: 1.4em;
-}
-
-footer {
-    padding: 50px 0;
-    text-align: center;
-    font-size: 1.1em;
-    margin-top: 3em;
-}
-
-footer a {
-    color: white;
-}
-
-footer a:hover {
-    color: white;
-}
-
-.sidebar.left {
+.sidebar2.left {
     position: fixed;
     top: 0;
     left: 0;
@@ -47,15 +7,17 @@ footer a:hover {
     background: #448AFF;
 }
 
-.sidebar.right {
+.sidebar2.right {
+    position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
-    width: 270px;
-    background: #448AFF;
+    width: 400px;
+    background: #edebce;
+    z-index: 100;
 }
 
-.sidebar.bottom {
+.sidebar2.bottom {
     left: 0;
     right: 0;
     bottom: 0;
@@ -63,7 +25,7 @@ footer a:hover {
     background: #03A9F4;
 }
 
-.sidebar.top {
+.sidebar2.top {
     left: 0;
     right: 0;
     top: 0;
@@ -71,11 +33,10 @@ footer a:hover {
     background: #03A9F4;
 }
 
-.sidebars > .sidebar {
+.sidebar2s > .sidebar2 {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.64);
     position: fixed;
-    color: white;
-    padding: 30px;
+    padding: 1px;
     font-size: 2em;
     text-align: center;
 }

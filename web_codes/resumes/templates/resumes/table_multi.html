@@ -46,13 +46,7 @@
 <div class="float-button-left-triangle" id="projPermission">
 </div>
 
-<a href="#" class="btn btn-primary" data-action="toggle" data-side="right"><span>Toggle Right</span></a>
-
-<div class="sidebars">
-  <div class="sidebar right" style="padding:0px;">Right
-    {% include "recruit_manager/perm.html" %}
-  </div>
-</div>
+<a href="#" class="btn" data-action="open" data-side="right" id="toggle_right_honpey"><span>Toggle Right</span></a>
 
 <div>
 
@@ -1360,5 +1354,13 @@
         showMeridian: 1
     });
 </script>
+<script type="text/javascript">
+    $(function () {
+        $('select[multiple].active').multiselect();
+
+    });
+</script>
+
+
 
 {% endblock%}
