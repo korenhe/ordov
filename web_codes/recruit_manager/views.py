@@ -124,6 +124,7 @@ def resume_statistic(request, post_id):
         post_province = post_request.address_province
         post_city = post_request.address_city
         post_district = post_request.address_district
+        post_resume_latest_modified = post_request.resume_latest_modified
 
         queryset_waitting = queryset_waitting.filter(models.Q(degree__gte=post_degree_min) &
                                    models.Q(degree__lte=post_degree_max) &
@@ -141,6 +142,8 @@ def resume_statistic(request, post_id):
             queryset_waitting = queryset_waitting.filter(models.Q(expected_city__icontains=post_city))
         if post_district and post_district != "":
             queryset_waitting = queryset_waitting.filter(models.Q(expected_district__icontains=post_district))
+        if post_resume_latest_modified is not None:
+            queryset_waitting = queryset_waitting.filter(models.Q(last_modified__gte=post_resume_latest_modified))
 
 
     resumes_waitting = queryset_waitting.count()
