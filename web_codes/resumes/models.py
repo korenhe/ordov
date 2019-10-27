@@ -178,6 +178,8 @@ def query_resumes_by_args(**kwargs):
         if post_district and post_district != "":
             queryset = queryset.filter(models.Q(expected_district__icontains=post_district))
 
+    # step1.1: Skip ones who would not find a job
+    queryset = queryset.filter(~models.Q(hunting_status=0))
 
     # step2: Filter from user-defined
     total = queryset.count()
