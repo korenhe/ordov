@@ -168,6 +168,8 @@ def UpdatePost(request):
 
         salary_offer = request.POST['min_salary_id']
 
+        resume_latest_modified = request.POST['resume_latest_modified']
+
         post_info = {
             "department": {
                 "description": "",
@@ -227,6 +229,7 @@ def UpdatePost(request):
             "p_type": p_type,
             "baiying_task_name": baiying_task_name,
             "baiying_task_id": int(baiying_task_id),
+            "resume_latest_modified": resume_latest_modified,
             "level": ""
         }
 

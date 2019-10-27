@@ -190,10 +190,11 @@
               </select>
             </div>
 
-            <div class="col-md-3 input-group">
-            </div>
-
-            <div class="col-md-3 input-group">
+            <div class="col-md-6 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2">简历最晚更新时间</span>
+              </div>
+              <input type="text" class="form-control" name="resume_latest_modified" id="last_modified_time" value="1970-01-01"></input>
             </div>
 
             <div class="col-md-3 input-group">
@@ -354,6 +355,9 @@
 	 "data":$('#post_filter_form').serialize(),
    });
  }
+ $('#last_modified_time').datepicker({
+        dateFormat: 'yy-mm-dd',
+    });
 
   $.ajax({
       type: "GET",

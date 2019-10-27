@@ -160,6 +160,7 @@ def query_resumes_by_args(**kwargs):
         post_province = post_request.address_province
         post_city = post_request.address_city
         post_district = post_request.address_district
+        post_resume_latest_modified = post_request.resume_latest_modified
 
         queryset = queryset.filter(models.Q(degree__gte=post_degree_min) &
                                    models.Q(degree__lte=post_degree_max) &
@@ -177,6 +178,8 @@ def query_resumes_by_args(**kwargs):
             queryset = queryset.filter(models.Q(expected_city__icontains=post_city))
         if post_district and post_district != "":
             queryset = queryset.filter(models.Q(expected_district__icontains=post_district))
+        if post_resume_latest_modified is not None:
+            queryset = queryset.filter(models.Q(last_modified__gte=post_resume_latest_modified))
 
     # step1.1: Skip ones who would not find a job
     queryset = queryset.filter(~models.Q(hunting_status=0))

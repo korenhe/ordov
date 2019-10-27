@@ -117,6 +117,9 @@ class Post(models.Model):
     baiying_task_name = models.CharField(max_length=50, blank=True, null=True, default='')
     baiying_task_id = models.IntegerField(blank=True, null=True)
 
+    # time related
+    resume_latest_modified = models.DateTimeField(null=True, blank=True)
+
     # table related info
     last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
