@@ -863,6 +863,7 @@ $(document).ready(function() {
   });
   $(document).on('click', '.stage_three_pass', function() {
     interview_selected_value = Number(this.id);
+	resume_selected_value = Number(this.dataset.resume_id)
 	resume_id = this.dataset.resume_id;
 	  $.ajax({
         url:'/api/resumes/' + resume_id + '/',
@@ -887,6 +888,7 @@ $(document).ready(function() {
 
   $(document).on('click', '.stage_four_update', function() {
     interview_selected_value = Number(this.id);
+	resume_selected_value = Number(this.dataset.resume_id)
 	resume_id = this.dataset.resume_id;
 	$.ajax({
 	  url:'/api/resumes/' + resume_id + '/',
@@ -904,6 +906,7 @@ $(document).ready(function() {
   });
   $(document).on('click', '.stage_four_pass', function() {
     interview_selected_value = Number(this.id);
+	resume_selected_value = Number(this.dataset.resume_id)
 	resume_id = this.dataset.resume_id;
 	$.ajax({
 	  url:'/api/resumes/' + resume_id + '/',
@@ -928,6 +931,7 @@ $(document).ready(function() {
 
   $(document).on('click', '.stage_five_update', function() {
     interview_selected_value = Number(this.id);
+	resume_selected_value = Number(this.dataset.resume_id)
 	resume_id = this.dataset.resume_id;
 	$.ajax({
 	  url:'/api/resumes/' + resume_id + '/',
@@ -947,6 +951,7 @@ $(document).ready(function() {
 
   $(document).on('click', '.stage_five_pass', function() {
     interview_selected_value = Number(this.id);
+	resume_selected_value = Number(this.dataset.resume_id)
 	resume_id = this.dataset.resume_id;
 	$.ajax({
 	  url:'/api/resumes/' + resume_id + '/',
@@ -972,12 +977,14 @@ $(document).ready(function() {
 
   $(document).on('click', '.stage_six_giveup', function() {
     interview_selected_value = Number(this.id);
+	resume_selected_value = Number(this.dataset.resume_id)
     resume_id = this.dataset.resume_id;
     show_stop_modal(interview_selected_value, resume_id)
   });
 
   $(document).on('click', '.stage_six_pass', function() {
     interview_selected_value = Number(this.id);
+	resume_selected_value = Number(this.dataset.resume_id)
 	resume_id = this.dataset.resume_id;
 	$.ajax({
 	  url:'/api/resumes/' + resume_id + '/',
@@ -1002,16 +1009,19 @@ $(document).ready(function() {
 
   $(document).on('click', '.stage_seven_register', function() {
     interview_selected_value = Number(this.id);
+	resume_selected_value = Number(this.dataset.resume_id)
     $('#pbRegisterModal').modal('toggle')
   });
 
   $(document).on('click', '.stage_seven_bill', function() {
     interview_selected_value = Number(this.id);
+	resume_selected_value = Number(this.dataset.resume_id)
     $('#pbInvoiceModal').modal('toggle')
   });
 
   $(document).on('click', '.stage_seven_pass', function() {
     interview_selected_value = Number(this.id);
+	resume_selected_value = Number(this.dataset.resume_id)
     $('#pbFinishModal').modal('toggle')
   });
 
