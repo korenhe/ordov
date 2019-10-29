@@ -1313,8 +1313,7 @@ $(document).ready(function() {
     $('#stopFormSubmit').click(function(e){
       e.preventDefault();
 	  do_update_resume(resume_selected_value);
-      $('#stopModal').modal('hide');
-      //do_stop_submit(interview_selected_value);
+      do_stop_submit(interview_selected_value);
       //multisel_submit_wrapper(do_stop_submit);
     });
   });
