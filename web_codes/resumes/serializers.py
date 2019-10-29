@@ -52,7 +52,7 @@ class ResumeSerializer(serializers.ModelSerializer):
     def get_expected(self, resume):
         #TODO: expected city and more
         if resume.expected_city is not None:
-            return "期望地点:"+resume.expected_city
+            return "市区:"+resume.expected_city
         else:
             return "--"
     def get_birthorigin(self, resume):
