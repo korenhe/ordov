@@ -6,6 +6,9 @@ import urllib.request
 import urllib.parse
 import json
 import os
+from .open_sdk_python_master.byclient import BYClient
+import sys
+import requests
 
 # ak 需要获取
 appKey = 'prVWMqVAjtDxtEb6'
@@ -176,3 +179,44 @@ def importTaskCustomer(companyId, taskId, username, phone_number):
     response_obj = urllib.request.urlopen(request_obj)
     html_code = response_obj.read().decode('utf-8')
     print("importTaskCustomer: ", html_code)
+
+def get_token(companyId):
+    base_url="https://open.byai.com/oauth/token"
+    url2=base_url+"?client_id="+appKey+"&client_secret="+appSecrete+"&company_id="+str(companyId)
+    headers = {"Content-Type":"application/x-www-form-urlencoded"}
+    rsp = requests.post(url2, headers=headers)
+    if rsp.status_code == 200:
+        data = json.loads(str(rsp.content.decode("utf-8")))
+        config = data.get("data", None)
+        if config is not None:
+            return config.get("access_token",None)
+    return None
+
+
+def get_job_instances(callJobId):
+	token = get_token(15960)
+	if token is not None:
+		token = auth.Token(token=token)
+		client = BYClient(token)
+		params = {
+			"callJobId": callJobId,
+			"companyId": 15960,
+		}
+		info = str(client.invoke('byai.openapi.calljob.calldone.list', '1.0.0', 'GET', params=params), encoding="utf-8")
+		if info != "":
+			return json.loads(info)
+	return None
+
+def get_instance_info(callInstanceId):
+	token = get_token(15960)
+	if token is not None:
+		token = auth.Token(token=token)
+		client = BYClient(token)
+		params = {
+			"callInstanceId": callInstanceId,
+			"companyId": 15960,
+		}
+		info = str(client.invoke('byai.openapi.callinstance.detail.get', '1.0.0', 'GET', params=params3), encoding="utf-8")
+		if info != "":
+			return json.loads(info)
+	return None
