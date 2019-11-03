@@ -36,3 +36,5 @@ def getBaiyingTaskList():
 def importTaskCustomer(companyId, taskId, username, phone_number):
     baiying.importTaskCustomer(companyId, taskId, username, phone_number)
 
+def get_ai_info(callJobId, phone_number):
+    return baiying.get_ai_info(callJobId, phone_number)

@@ -7,6 +7,7 @@ import urllib.parse
 import json
 import os
 from .open_sdk_python_master.byclient import BYClient
+from .open_sdk_python_master import auth
 import sys
 import requests
 
@@ -216,7 +217,40 @@ def get_instance_info(callInstanceId):
 			"callInstanceId": callInstanceId,
 			"companyId": 15960,
 		}
-		info = str(client.invoke('byai.openapi.callinstance.detail.get', '1.0.0', 'GET', params=params3), encoding="utf-8")
+		info = str(client.invoke('byai.openapi.callinstance.detail.get', '1.0.0', 'GET', params=params), encoding="utf-8")
 		if info != "":
 			return json.loads(info)
 	return None
+
+def get_ai_info(callJobId, phone_number):
+    instanceId = get_instanceId(callJobId, phone_number)
+    instanceInfo = get_instance_info(instanceId)
+    if instanceInfo is not None:
+        data = instanceInfo.get('data', None)
+        if data is None:
+            print("No data")
+            return None
+        pLogs = data.get('phoneLogs', None)
+        result = ""
+        for item in pLogs:
+           result = result + item.get("speaker") +": "+ item.get("content")+ "\n"
+        return result
+    return ""
+
+def get_instanceId(callJobId, phone_number):
+    instances = get_job_instances(callJobId)
+    if instances is not None:
+        data = instances.get('data', None)
+        if data is None:
+            print("No data")
+            return None
+        iList = data.get('list', None)
+        if iList is None:
+            print("No List")
+            return None
+        for i in iList:
+            if i.get("customerTelephone", "00000000000") == phone_number:
+                print("Found ", i.get("callInstanceId"))
+                return i.get("callInstanceId")
+    else:
+        print("Fail to get the instance info", callJobId, phone_number)
