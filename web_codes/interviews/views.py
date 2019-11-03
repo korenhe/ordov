@@ -37,7 +37,7 @@ from companies.models import Post
 from resumes.models import Resume
 
 from rest_framework import status
-from third_party.views import getBaiyingTaskList, importTaskCustomer
+from third_party.views import getBaiyingTaskList, importTaskCustomer, get_ai_info
 
 import json
 
@@ -250,6 +250,27 @@ def interviewsub_get_offer_detail(request, interview_id):
     return JsonResponse(data)
 
 from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+def getAIInfo(request):
+    if request.method == "GET":
+        print("GET: ", request.GET)
+        resume_id = request.GET.get('resume_id', None)
+        post_id = request.GET.get('post_id', None)
+        if resume_id is None or post_id is None:
+            return HttpResponse("fail")
+        postInfo = Post.objects.get(id=post_id)
+        resumeInfo = Resume.objects.get(id=resume_id)
+        callJobId = postInfo.baiying_task_id
+        phoneNumber = resumeInfo.phone_number
+        print("callJobId: ", callJobId, " phone: ", phoneNumber)
+        phoneLogs = get_ai_info(callJobId, phoneNumber)
+        print("result: ", phoneLogs)
+        iMap = {
+          "phoneLogs": phoneLogs
+        }
+        return JsonResponse(iMap)
+
 @csrf_exempt
 def aiTest(request):
     if request.method == "POST":

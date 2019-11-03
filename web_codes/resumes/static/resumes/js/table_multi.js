@@ -171,6 +171,7 @@ $(document).ready(function() {
            return `
                 <div class="btn-group">
                 <button type="button" class="stage_one_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">通过</button>
+                <button type="button" class="stage_one_show btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">显示</button>
                 <button type="button" class="stage_one_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">结束</button>
                 </div>
 
@@ -714,6 +715,29 @@ $(document).ready(function() {
     $('#dailToCandidateModal').modal('toggle');
   }
 
+  function show_ai_info(resume_id, post_id) {
+    urlPath="/interview/ai/info?resume_id=" + resume_id + "&post_id=" + post_id
+    $.ajax({
+      url: urlPath,
+      type: 'GET',
+      data: null,
+      success: function(response) {
+		console.log("success: ", response)
+        console.log(response.phoneLogs)
+        $('#ai_result_panel').val(response.phoneLogs)
+        $('#aiResult').modal('toggle')
+      },
+	  error: function(jqXHR, textStatus, errorThrown) {
+		console.log(jqXHR.responseText);
+		console.log(jqXHR.status);
+		console.log(jqXHR.readyState);
+		console.log(jqXHR.statusText);
+		console.log(textStatus);
+		console.log(errorThrown);
+      }
+    });
+  }
+
   function show_stop_modal(interview_id, resume_id) {
     $.ajax({
       url:'/api/resumes/' + resume_id + '/',
@@ -828,6 +852,12 @@ $(document).ready(function() {
   $(document).on('click', '.stage_one_pass', function() {
     interview_selected_value = Number(this.id);
     $('#nextModal').modal('toggle')
+  });
+
+  $(document).on('click', '.stage_one_show', function() {
+    interview_selected_value = Number(this.id);
+	resume_selected_value = Number(this.dataset.resume_id)
+	show_ai_info(resume_selected_value, post_selected_value)
   });
 
   $(document).on('click', '.stage_one_fail', function() {

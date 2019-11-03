@@ -61,6 +61,7 @@ urlpatterns = [
     path('post/post/update/', companiesViews.UpdatePost),
     path('interview/ai/update/', interviewsViews.UpdateAIStatus),
     path('interview/ai/task/', interviewsViews.Task),
+    path('interview/ai/info/', interviewsViews.getAIInfo),
 
     path('interviews/', include('interviews.urls'))
 ]
