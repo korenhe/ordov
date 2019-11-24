@@ -38,3 +38,10 @@ def importTaskCustomer(companyId, taskId, username, phone_number):
 
 def get_ai_info(callJobId, phone_number):
     return baiying.get_ai_info(callJobId, phone_number)
+
+def get_job_instances2(callJobId, pageNum, pageSize):
+    return baiying.get_job_instances2(callJobId, pageNum, pageSize)
+def get_instance_info(instanceId):
+    return baiying.get_instance_info(instanceId)
+def get_num_of_instances(instanceId):
+    return baiying.get_num_of_instances(instanceId)

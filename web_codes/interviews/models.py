@@ -43,6 +43,8 @@ class Interview(models.Model):
 
     is_active = models.BooleanField(default=1)
     status = models.IntegerField(choices=STATUS_CHOICES, default=0)
+    # Introduce a callInstanceId to record the callInstance in Baiying
+    callInstanceId = models.CharField(max_length=50, blank=True, null=True)
     last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     result = models.CharField(max_length=50)

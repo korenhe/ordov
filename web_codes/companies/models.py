@@ -116,6 +116,7 @@ class Post(models.Model):
     # baiying ai
     baiying_task_name = models.CharField(max_length=50, blank=True, null=True, default='')
     baiying_task_id = models.IntegerField(blank=True, null=True)
+    baiying_talk_done = models.IntegerField(blank=True, null=True)
 
     # time related
     resume_latest_modified = models.DateTimeField(null=True, blank=True)

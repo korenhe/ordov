@@ -37,9 +37,11 @@ from companies.models import Post
 from resumes.models import Resume
 
 from rest_framework import status
-from third_party.views import getBaiyingTaskList, importTaskCustomer, get_ai_info
+from third_party.views import getBaiyingTaskList, importTaskCustomer, get_num_of_instances, get_job_instances2, get_instance_info
 
 import json
+import time
+import threading
 
 # Create your views here.
 class InterviewViewSet(viewsets.ModelViewSet):
@@ -264,7 +266,15 @@ def getAIInfo(request):
         callJobId = postInfo.baiying_task_id
         phoneNumber = resumeInfo.phone_number
         print("callJobId: ", callJobId, " phone: ", phoneNumber)
-        phoneLogs = get_ai_info(callJobId, phoneNumber)
+        interviewInfo = None
+        instanceId = -1
+        if resumeInfo is not None and postInfo is not None:
+            try:
+                interviewInfo = Interview.objects.get(resume=resumeInfo, post=postInfo)
+            except:
+                return HttpResponse("fail")
+            instanceId = interviewInfo.callInstanceId
+        phoneLogs = get_instance_info(instanceId)
         print("result: ", phoneLogs)
         iMap = {
           "phoneLogs": phoneLogs
@@ -286,6 +296,7 @@ def aiTest(request):
         print('\n\n\nsceneInfo', sceneInfo)
         companyId = sceneInfo.get('companyId')
         callJobId = sceneInfo.get('callJobId')
+        callInstanceId = sceneInfo.get('callInstanceId')
         candidate = sceneInfo.get('customerName')
         candidate_phone = sceneInfo.get('customerTelephone')
         status = sceneInfo.get('status')
@@ -311,7 +322,8 @@ def aiTest(request):
             print("Steal Info interview")
             return HttpResponse("fail")
 
-        print("companyId:", companyId, " callJobId:", callJobId, " candiate: ", candidate, "phone: ", candidate_phone)
+        print("companyId:", companyId, " callJobId:", callJobId, " candiate: ", candidate, "phone: ", candidate_phone, "callInsence", callInstanceId)
+        interviewInfo.callInstanceId = callInstanceId
         if status == 2 and finishstatus == 2:
             #未接通case
             interviewInfo.sub_status = '未接通AI'
@@ -377,3 +389,58 @@ def aiTest(request):
     if request.method == "GET":
         print("Get")
     return HttpResponse("success")
+
+def UpdateInstanceInfoForProject(projId):
+    pass
+
+def UpdateInstanceInfoBackgroud():
+    while True:
+        # 找出所有的项目
+        posts = Post.objects.all();
+        for postInfo in posts:
+            print("To Update: ", postInfo.project_name)
+            by_task_id = postInfo.baiying_task_id
+            total = get_num_of_instances(by_task_id)
+            """
+            if total == postInfo.baiying_talk_done:
+                print("No Need to Update: ", postInfo.project_name, total, postInfo.baiying_talk_done)
+                continue
+            """
+            pages = int(total/50) + 1
+            print("Number of Pages: ", pages, "total", total)
+            for i in range(1, pages+1, 1):
+                pInfo = get_job_instances2(by_task_id, i, 50)
+                iList = None
+                #print("pInfo: ", pInfo)
+                try:
+                    iList = pInfo["data"]["list"]
+                except:
+                    print("Fail to get", iList)
+                    continue
+                for item in iList:
+                    instanceId = item.get("callInstanceId", -1)
+                    phone = item.get("customerTelephone", "123456789")
+                    if instanceId != -1 and phone != "123456789": 
+                        # Update the instance Info
+                        # Update the post info and interview info
+                        resumeInfo = None
+                        interviewInfo = None
+                        try:
+                            resumeInfo = Resume.objects.get(phone_number=phone)
+                            interviewInfo = Interview.objects.get(resume=resumeInfo, post=postInfo)
+                        except Exception as e:
+                            print(e)
+                            print("Fail to get Info", instanceId, phone, resumeInfo, interviewInfo)
+                            continue
+                        interviewInfo.callInstanceId = instanceId;
+                        interviewInfo.save();
+                        print("Success to get Info", instanceId, phone, resumeInfo.name)
+
+            #instance = get_job_instances(by_task_id)
+            # Update the talk_done info
+            postInfo.baiying_talk_done = total;
+            postInfo.save();
+        time.sleep(60)
+
+thread1 = threading.Thread(target=UpdateInstanceInfoBackgroud)
+thread1.start()

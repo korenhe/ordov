@@ -208,19 +208,49 @@ def get_job_instances(callJobId):
 			return json.loads(info)
 	return None
 
+def get_job_instances2(callJobId, pageNum, pageSize):
+    token = get_token(15960)
+    if token is not None:
+        token = auth.Token(token=token)
+        client = BYClient(token)
+        params = {
+            "callJobId": callJobId,
+            "companyId": 15960,
+            "pageNum": pageNum,
+            "pageSize": pageSize
+        }
+        info = str(client.invoke('byai.openapi.calljob.calldone.list', '1.0.0', 'GET', params=params), encoding="utf-8")
+        if info != "":
+            return json.loads(info)
+    return None
+
+def get_num_of_instances(callJobId):
+    token = get_token(15960)
+    info = get_job_instances2(callJobId, 1, 1)
+    try:
+        return info["data"]["total"]
+    except:
+        return -1
+
+
 def get_instance_info(callInstanceId):
-	token = get_token(15960)
-	if token is not None:
-		token = auth.Token(token=token)
-		client = BYClient(token)
-		params = {
-			"callInstanceId": callInstanceId,
-			"companyId": 15960,
-		}
-		info = str(client.invoke('byai.openapi.callinstance.detail.get', '1.0.0', 'GET', params=params), encoding="utf-8")
-		if info != "":
-			return json.loads(info)
-	return None
+    token = get_token(15960)
+    if token is not None:
+        token = auth.Token(token=token)
+        client = BYClient(token)
+        params = {
+            "callInstanceId": callInstanceId,
+            "companyId": 15960,
+        }
+        info = str(client.invoke('byai.openapi.callinstance.detail.get', '1.0.0', 'GET', params=params), encoding="utf-8")
+        if info != "":
+            pJson = json.loads(info)
+            phoneLog = ""
+            logList = pJson["data"]["phoneLogs"]
+            for item in logList:
+                phoneLog = phoneLog +  item.get("speaker", "NONE") + ":" + item.get("content", "") + "\n"
+            return phoneLog
+    return ""
 
 def get_ai_info(callJobId, phone_number):
     instanceId = get_instanceId(callJobId, phone_number)
