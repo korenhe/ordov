@@ -443,5 +443,5 @@ def UpdateInstanceInfoBackgroud():
             postInfo.save();
         time.sleep(60)
 
-thread1 = threading.Thread(target=UpdateInstanceInfoBackgroud)
-thread1.start()
+#thread1 = threading.Thread(target=UpdateInstanceInfoBackgroud)
+#thread1.start()
