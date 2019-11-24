@@ -725,6 +725,7 @@ $(document).ready(function() {
 		console.log("success: ", response)
         console.log(response.phoneLogs)
         $('#ai_result_panel').val(response.phoneLogs)
+        $('#ai_result_duration').text(response.phoneDuration)
         $('#aiResult').modal('toggle')
       },
 	  error: function(jqXHR, textStatus, errorThrown) {

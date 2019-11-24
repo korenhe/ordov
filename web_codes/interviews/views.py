@@ -274,10 +274,11 @@ def getAIInfo(request):
             except:
                 return HttpResponse("fail")
             instanceId = interviewInfo.callInstanceId
-        phoneLogs = get_instance_info(instanceId)
+        phoneLogs, duration = get_instance_info(instanceId)
         print("result: ", phoneLogs)
         iMap = {
-          "phoneLogs": phoneLogs
+          "phoneLogs": phoneLogs,
+          "phoneDuration": duration
         }
         return JsonResponse(iMap)
 
@@ -434,7 +435,7 @@ def UpdateInstanceInfoBackgroud():
                             continue
                         interviewInfo.callInstanceId = instanceId;
                         interviewInfo.save();
-                        print("Success to get Info", instanceId, phone, resumeInfo.name)
+                        print("Success to get Info", instanceId, phone, resumeInfo.username)
 
             #instance = get_job_instances(by_task_id)
             # Update the talk_done info

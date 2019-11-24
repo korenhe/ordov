@@ -249,8 +249,9 @@ def get_instance_info(callInstanceId):
             logList = pJson["data"]["phoneLogs"]
             for item in logList:
                 phoneLog = phoneLog +  item.get("speaker", "NONE") + ":" + item.get("content", "") + "\n"
-            return phoneLog
-    return ""
+            pInstance = pJson["data"]["callInstance"]
+            return phoneLog, str(pInstance.get("duration", -1)) + "s"
+    return "", ""
 
 def get_ai_info(callJobId, phone_number):
     instanceId = get_instanceId(callJobId, phone_number)
