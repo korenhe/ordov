@@ -43,6 +43,8 @@ class ProjectPermissionViewSet(viewsets.ModelViewSet):
         print("get permission(", post_id, ") stage(", stage_id, ")")
         if stage_id is not None and stage_id.isdigit():
             qset = qset.filter(stage=stage_id)
+        elif stage_id is not None and isinstance(stage_id, list):
+            qset = qset.filter(stage__in=stage_id)
         user_id  = self.request.query_params.get('user', None)
         if user_id is not None and user_id.isdigit():
             qset = qset.filter(user_id=user_id)

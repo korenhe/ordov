@@ -1192,6 +1192,11 @@ $(document).ready(function() {
         getCurPermSync(post_selected_value)
       } else if (op == "删除") {
         // step1: get the item
+        if ((post_selected_value <= 0) || who <= 0 || stage.length <= 0) {
+           alert("请确保职位等信息")
+           console.log("Fail", post_selected_value, who, stage)
+           return
+        }
         $.ajax({
             url:'/api/permissions/?post=' + post_selected_value + '&user=' + who + '&stage=' + stage,
             type: 'GET',
@@ -1199,8 +1204,16 @@ $(document).ready(function() {
             success: function(response) {
                 console.log('/api/permissions/?post_id=' + post_selected_value + '&user=' + who + '&stage=' + stage)
                 $.each(response.results, function(index, ele) {
-                    console.log("to delete index: ", index, " ", ele.id)
-	                xhr_common_send('DELETE', '/api/permissions/'+ele.id+'/', null)
+                    console.log(ele)
+                    console.log(stage.includes(ele.stage_id))
+                    if (stage.includes(ele.stage_id.toString(10)) &&
+                           (post_selected_value == ele.post_id) &&
+                           (who == ele.user_id)) {
+                        console.log("to delete index: ", index, " ", ele.id)
+                        xhr_common_send('DELETE', '/api/permissions/'+ele.id+'/', null)
+                    } else {
+                        console.log("No need to delete", ele.user_name)
+                    }
                 });
             },
             error: function(jqXHR, textStatus, errorThrown) {
