@@ -1080,6 +1080,7 @@ $(document).ready(function() {
       }
       post_selected = true;
       post_selected_value = id;
+      getCurPermSync(id);
 
       var tr = document.getElementById(id);
       page_refresh(table);
@@ -1141,7 +1142,8 @@ $(document).ready(function() {
 
   function getCurPermSync(post_id) {
       $('#projPermInfo').empty()
-      $('#projPermInfo').append("<span>"+"当前的权限分配信息如下:"+"</span>")
+      //$('#projPermInfo').append("<span>"+"当前的权限分配信息如下:"+"</span>")
+      console.log("Enter getCurPermSync---->", post_id)
 
       $.ajax({
         url:'/api/permissions/?post_id=' + post_id,
@@ -1149,10 +1151,14 @@ $(document).ready(function() {
         data: null,
         async: false,
         success: function(response) {
-            //console.log("response ", response)
+            console.log("response ", response)
+            result=""
             $.each(response.results, function(index, ele) {
-                $('#projPermInfo').append('<span style="display:block">'+ele.stage_name + ':' + ele.user_name + '</span>')
+                result += ele.stage_name+":"+ele.user_name+"\n";
             });
+            console.log(result)
+            //$('#projPermInfo').append('<span style="display:inline">'+ele.stage_name + ':' + ele.user_name + '</span>')
+            $('#projPermInfo').val(result)
         },
         error: function() {
             console.log("get resume info failed");
@@ -1160,6 +1166,12 @@ $(document).ready(function() {
         },
       });
   }
+    getRecruiterSync()
+/*
+  $('#cRecruiter').click(function(e) {
+    console.log("click the cRecruiter selector")
+  });
+  */
 
   $('#permOp').change(function(e) {
       var stage = $('#interview_stage_id').val()
@@ -1174,8 +1186,10 @@ $(document).ready(function() {
 		"user": who,
 		"stage": stage,
 	  }
+      console.log("Permission Info: ", data)
       if (op=="增加") {
 	    xhr_common_send('POST', '/api/permissions/', data)
+        getCurPermSync(post_selected_value)
       } else if (op == "删除") {
         // step1: get the item
         $.ajax({
@@ -1183,9 +1197,9 @@ $(document).ready(function() {
             type: 'GET',
             data: null,
             success: function(response) {
-                console.log('/api/permissions/?post=' + post_selected_value + '&user=' + who + '&stage=' + stage)
+                console.log('/api/permissions/?post_id=' + post_selected_value + '&user=' + who + '&stage=' + stage)
                 $.each(response.results, function(index, ele) {
-                    console.log("index: ", index, " ", ele.id)
+                    console.log("to delete index: ", index, " ", ele.id)
 	                xhr_common_send('DELETE', '/api/permissions/'+ele.id+'/', null)
                 });
             },
@@ -1227,12 +1241,14 @@ $(document).ready(function() {
   function getRecruiterSync() {
       $('#cRecruiter').html("")
       $('#cRecruiter').prepend('<option value=""></option>')
+      console.log("Enter getRecruiterSync ---->")
       $.ajax({
-        url:'/api/accounts/?user_type=Recruiter' ,
+        url:'/api/accounts/?user_type=Recruiter',
         type: 'GET',
         async: false,
         data: null,
         success: function(response) {
+            console.log("get response success", response)
           $.each(response.results, function(index, ele){
               $('#cRecruiter').append('<option value=' + ele.id + '>' + ele.username + '</option>')
           })
@@ -1249,6 +1265,7 @@ $(document).ready(function() {
       e.preventDefault();
       // step0: Get the all recruiter
       // step1: First should update the header
+      console.log("post_seelcted_value", post_selected_value)
       $.ajax({
         url:'/api/posts/' + post_selected_value + '/',
         type: 'GET',
@@ -1259,9 +1276,14 @@ $(document).ready(function() {
             $('#projPermName').text(response.name)
             $('#permOp').val("")
             $('#interview_stage_id').val("")
+            console.log("pre getRecruiterSync")
             getRecruiterSync()
+            console.log("post getRecruiterSync")
+            console.log("pre getCurPermSync")
             getCurPermSync(post_selected_value)
+            console.log("~~~~~~");
             $('#projPermission').modal('show')
+            console.log("show le ne");
         },
         error: function() {
             console.log("get resume info failed");

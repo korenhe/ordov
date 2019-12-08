@@ -11,6 +11,8 @@ from django.shortcuts import render
 
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
+from django.http import JsonResponse, HttpResponse
+
 # Create your views here.
 
 # https://stackoverflow.com/questions/30871033/django-rest-framework-remove-csrf
@@ -32,7 +34,7 @@ class ProjectPermissionViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         # Refer to: https://www.django-rest-framework.org/api-guide/filtering/#filtering-against-the-url
         qset = ProjectPermission.objects.all()
-        post_id = self.request.query_params.get('post', None)
+        post_id = self.request.query_params.get('post_id', None)
         print("get permission(", post_id, ")")
         if post_id is None or not post_id.isdigit():
             return qset
@@ -46,3 +48,26 @@ class ProjectPermissionViewSet(viewsets.ModelViewSet):
             qset = qset.filter(user_id=user_id)
 
         return qset
+    def create(self, request):
+        print("come here", request.data)
+        stageList = request.data.get('stage', None)
+        postId = request.data.get('post', None)
+        userId = request.data.get('user', None)
+        if stageList == None or postId == None or userId == None:
+            print("None", stageList, postId, userId)
+            return HttpResponse("Fail")
+        # stage is a array, list it
+        for stage in stageList:
+            permissionInfo = {
+                "post": postId,
+                "stage": stage,
+                "user": userId,
+            }
+            serializer = ProjectPermissionSerializer(data=permissionInfo)
+            if serializer.is_valid(raise_exception=True):
+                saved = serializer.save()
+                print("saved success: ", saved)
+            else:
+                print("Fail to save the permission Info")
+
+        return HttpResponse("Success")
