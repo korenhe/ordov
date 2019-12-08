@@ -1189,7 +1189,9 @@ $(document).ready(function() {
       console.log("Permission Info: ", data)
       if (op=="增加") {
 	    xhr_common_send('POST', '/api/permissions/', data)
-        getCurPermSync(post_selected_value)
+        setTimeout(getCurPermSync, 1000, post_selected_value)
+        setTimeout(getCurPermSync, 2000, post_selected_value)
+        //setTimeout("getCurPermSync(post_selected_value)", 1000)
       } else if (op == "删除") {
         // step1: get the item
         if ((post_selected_value <= 0) || who <= 0 || stage.length <= 0) {
@@ -1214,6 +1216,8 @@ $(document).ready(function() {
                     } else {
                         console.log("No need to delete", ele.user_name)
                     }
+                    setTimeout(getCurPermSync, 1000, post_selected_value)
+                    setTimeout(getCurPermSync, 2000, post_selected_value)
                 });
             },
             error: function(jqXHR, textStatus, errorThrown) {
