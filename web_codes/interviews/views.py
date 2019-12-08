@@ -43,10 +43,43 @@ import json
 import time
 import threading
 
+from rest_framework import permissions
+from accounts.models import UserProfile
+from django.contrib.auth.models import User
+from permissions.models import ProjectPermission
+
+class IsCreationOrIsAuthenticated(permissions.BasePermission):
+    def has_permission(self, request, view):
+        print("User:", request.user.username, request.user.password)
+        if request.user.is_authenticated is not True:
+            print("user.is_authenticated", request.user.is_authenticated)
+            return False
+        userProfile = UserProfile.objects.get(user=request.user)
+        if userProfile.user_type == "Manager":
+            return True;
+        elif userProfile.user_type == "Recruiter" or userProfile.user_type == "Candidate" or userProfile.user_type == "Employer":
+            post_id = int(request.query_params.get('post_id', -999))
+            if post_id == -999:
+                return False
+            status_id = int(request.query_params.get('status_id', -999))
+            if status_id == -999:
+                return False
+            try:
+                permission = ProjectPermission.objects.get(post=post_id, stage=status_id, user=userProfile)
+                print("Found Permission", permission.id)
+                return True
+            except:
+                return False
+        else:
+            print("Fail")
+            return False
+        return False
+
 # Create your views here.
 class InterviewViewSet(viewsets.ModelViewSet):
     queryset = Interview.objects.all().order_by('id')
     serializer_class = InterviewSerializer
+    permission_classes = (IsCreationOrIsAuthenticated, )
 
     def list(self, request, **kwargs):
         interview = query_interviews_by_args(**request.query_params)
