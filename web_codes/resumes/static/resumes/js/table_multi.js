@@ -86,6 +86,16 @@ $(document).ready(function() {
         d.status_id = filter_status_value;
         d.post_id = post_selected_value;
       },
+	  "error": function(jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.responseText);
+            console.log(jqXHR.status);
+            console.log(jqXHR.readyState);
+            console.log(jqXHR.statusText);
+            console.log(textStatus);
+            console.log(errorThrown);
+            alert("Sorry, 您没有权限遍历当前项目")
+        }
+
     },
 
     "rowCallback": function(row, data) {
@@ -266,6 +276,16 @@ $(document).ready(function() {
     "ajax": {
       "url": "/api/posts/",
       "type": "GET",
+	  "error": function(jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.responseText);
+            console.log(jqXHR.status);
+            console.log(jqXHR.readyState);
+            console.log(jqXHR.statusText);
+            console.log(textStatus);
+            console.log(errorThrown);
+            alert("Sorry, 您没有权限遍历当前项目")
+        }
+
     },
 
     "rowCallback": function(row, data) {

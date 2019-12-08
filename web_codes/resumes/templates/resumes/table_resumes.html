@@ -112,6 +112,16 @@ $(document).ready(function() {
     "ajax": {
       "url": "/api/resumes/",
       "type": "GET",
+	  "error": function(jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.responseText);
+            console.log(jqXHR.status);
+            console.log(jqXHR.readyState);
+            console.log(jqXHR.statusText);
+            console.log(textStatus);
+            console.log(errorThrown);
+			alert("Sorry, 您没有权限遍历所有简历")
+        }
+
       },
 
     "columns": [

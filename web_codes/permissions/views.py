@@ -13,12 +13,26 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 
 from django.http import JsonResponse, HttpResponse
 
+from accounts.models import UserProfile
+from django.contrib.auth.models import User
+
 # Create your views here.
 
 # https://stackoverflow.com/questions/30871033/django-rest-framework-remove-csrf
 class IsCreationOrIsAuthenticated(permissions.BasePermission):
     def has_permission(self, request, view):
-        print("------------> permission..  -------------->")
+        """
+        if request.user.is_authenticated:
+            print("user.is_authenticated", request.user.is_authenticated)
+        else:
+            print("user.is_authenticated", request.user.is_authenticated)
+
+        print("--------------: user", request.user)
+        #post_id = self.request.query_params.get('post_id', None)
+        #userProfile = UserProfile.objects.get(user=user, user_type=user_type)
+        print("userProfile", userProfile)
+        """
+        print("--------------: user")
         return True
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
