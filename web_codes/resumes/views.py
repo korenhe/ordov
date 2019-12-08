@@ -40,20 +40,31 @@ class IsCreationOrIsAuthenticated(permissions.BasePermission):
         if userProfile.user_type == "Manager":
             return True;
         elif userProfile.user_type == "Recruiter" or userProfile.user_type == "Candidate" or userProfile.user_type == "Employer":
+            # To get the resumes
+            # To Watching the resumes, For a Recruiter, you have limited permissions only by
+            # the <post_id, stage info>
+            # For Recruiter, There should never get the
             post_id = int(request.query_params.get('post_id', -999))
             if post_id == -999:
                 return False
+            post = None
+            try:
+                post = Post.objects.get(id=post_id)
+            except:
+                print("Could Not Found The post_id:", post_id)
+                return False
+
             status_id = int(request.query_params.get('status_id', -999))
             if status_id == -999:
                 return False
-            try:
-                permission = ProjectPermission.objects.get(post=post_id, stage=status_id, user=userProfile)
-                print("Found Permission", permission.id)
+            permission = ProjectPermission.objects.filter(user=userProfile, post=post, stage=status_id)
+            print("permission", permission, userProfile, post, status_id)
+            if permission:
+                print("-------------------> success")
                 return True
-            except:
+            else:
                 return False
         else:
-            print("Fail")
             return False
         return False
 
@@ -83,7 +94,7 @@ class ResumeViewSet(viewsets.ModelViewSet):
 
     def list(self, request, **kwargs):
 
-        resume = query_resumes_by_args(**request.query_params)
+        resume = query_resumes_by_args(request.user, **request.query_params)
 
         print("-------------------------------> add new", request.user)
         post_id = int(request.query_params.get('post_id', 0))

@@ -93,7 +93,7 @@ $(document).ready(function() {
             console.log(jqXHR.statusText);
             console.log(textStatus);
             console.log(errorThrown);
-            alert("Sorry, 您没有权限遍历当前项目")
+            //$('#dataTable_resume tbody').remove()
         }
 
     },
@@ -573,8 +573,9 @@ $(document).ready(function() {
     button_container = table.buttons().container()[0].children[0];
     redrawed = button_update(table, button_container, enable_multi);
 
-    if (!redrawed)
+    if (!redrawed) {
       table.draw(reset_flag);
+    }
   }
 
   function xhr_common_send(method, url, data) {

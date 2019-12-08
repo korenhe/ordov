@@ -103,7 +103,7 @@ ORDER_COLUMN_CHOICES = Choices(
     ('14', 'id'), # action
 )
 
-def query_resumes_by_args(**kwargs):
+def query_resumes_by_args(user, **kwargs):
     draw = int(kwargs.get('draw', [0])[0])
     length = int(kwargs.get('length', [10])[0])
     start = int(kwargs.get('start', [0])[0])
@@ -137,6 +137,7 @@ def query_resumes_by_args(**kwargs):
 
     if status_id == 0:
         queryset = Resume.objects.exclude(interview__post__id=post_id)
+
     elif status_id > 0:
         queryset = Resume.objects.filter(interview__status=status_id, interview__post__id=post_id, interview__is_active=True)
     elif status_id < 0:
@@ -180,6 +181,7 @@ def query_resumes_by_args(**kwargs):
             queryset = queryset.filter(models.Q(expected_district__icontains=post_district))
         if post_resume_latest_modified is not None:
             queryset = queryset.filter(models.Q(last_modified__gte=post_resume_latest_modified))
+
 
     # step1.1: Skip ones who would not find a job
     queryset = queryset.filter(~models.Q(hunting_status=0))

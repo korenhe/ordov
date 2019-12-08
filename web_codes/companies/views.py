@@ -85,17 +85,20 @@ class IsCreationOrIsAuthenticated(permissions.BasePermission):
         if userProfile.user_type == "Manager":
             return True;
         elif userProfile.user_type == "Recruiter" or userProfile.user_type == "Candidate" or userProfile.user_type == "Employer":
+            """
             post_id = int(request.query_params.get('post_id', -999))
             if post_id == -999:
                 return False
             status_id = int(request.query_params.get('status_id', -999))
             if status_id == -999:
                 return False
-            try:
-                permission = ProjectPermission.objects.get(post=post_id, stage=status_id, user=userProfile)
-                print("Found Permission", permission.id)
+            """
+            #permission = ProjectPermission.objects.get(post=post_id, stage=status_id, user=userProfile)
+            permission = ProjectPermission.objects.filter(user=userProfile)
+            if (permission):
                 return True
-            except:
+            else:
+                print("No Found Permission", userProfile)
                 return False
         else:
             print("Fail")
@@ -109,7 +112,10 @@ class PostViewSet(viewsets.ModelViewSet):
 
     def list(self, request, **kwargs):
 
-        post = query_posts_by_args(**request.query_params)
+        post = query_posts_by_args(request.user, **request.query_params)
+
+        # Could only show the user
+        # This Post should be
 
         serializer = PostSerializer(post['items'], many=True)
         result = dict()

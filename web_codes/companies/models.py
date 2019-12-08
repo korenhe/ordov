@@ -6,6 +6,10 @@ from model_utils import Choices
 from .choices import SCALE_CHOICES
 from ordov.choices import DEGREE_CHOICES
 
+from django.contrib.auth.models import Permission
+from accounts.models import UserProfile
+
+
 # Create your models here.
 
 class Area(models.Model):
@@ -141,7 +145,7 @@ ORDER_COLUMN_CHOICES = Choices(
     ('4', 'description'),
 )
 
-def query_posts_by_args(**kwargs):
+def query_posts_by_args(user, **kwargs):
     draw = int(kwargs.get('draw', [0])[0])
     length = int(kwargs.get('length', [15])[0])
     start = int(kwargs.get('start', [0])[0])
@@ -155,6 +159,13 @@ def query_posts_by_args(**kwargs):
 
     queryset = Post.objects.all()
     total = queryset.count()
+
+    # get user Info
+    # user should be the
+    # return items which
+    userProfile = UserProfile.objects.get(user=user)
+    if userProfile.user_type != "Manager":
+        queryset = queryset.filter(models.Q(projectpermission__user=userProfile)).distinct()
 
     # filter and orderby
     if search_value:
