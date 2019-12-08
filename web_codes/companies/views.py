@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+# -*- coding: utf-8 -*- from __future__ import unicode_literals
 
 from django.shortcuts import render
 from django.views import generic
@@ -16,6 +15,11 @@ from .serializers import CompanySerializer, DepartmentSerializer, PostSerializer
 from ordov.choices import (DEGREE_CHOICES, DEGREE_CHOICES_MAP)
 
 from django.http import HttpResponse, HttpResponseRedirect
+
+from rest_framework import permissions
+from accounts.models import UserProfile
+from django.contrib.auth.models import User
+from permissions.models import ProjectPermission
 
 class CompanyView(APIView):
     def get(self, request):
@@ -71,9 +75,37 @@ class PostView(APIView):
             {"success": "Post '{}' created successfully".format(post_saved.name)}
         )
 
+class IsCreationOrIsAuthenticated(permissions.BasePermission):
+    def has_permission(self, request, view):
+        print("User:", request.user.username, request.user.password)
+        if request.user.is_authenticated is not True:
+            print("user.is_authenticated", request.user.is_authenticated)
+            return False
+        userProfile = UserProfile.objects.get(user=request.user)
+        if userProfile.user_type == "Manager":
+            return True;
+        elif userProfile.user_type == "Recruiter" or userProfile.user_type == "Candidate" or userProfile.user_type == "Employer":
+            post_id = int(request.query_params.get('post_id', -999))
+            if post_id == -999:
+                return False
+            status_id = int(request.query_params.get('status_id', -999))
+            if status_id == -999:
+                return False
+            try:
+                permission = ProjectPermission.objects.get(post=post_id, stage=status_id, user=userProfile)
+                print("Found Permission", permission.id)
+                return True
+            except:
+                return False
+        else:
+            print("Fail")
+            return False
+        return False
+
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by('id')
     serializer_class = PostSerializer
+    permission_classes = (IsCreationOrIsAuthenticated, )
 
     def list(self, request, **kwargs):
 
