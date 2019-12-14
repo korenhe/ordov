@@ -26,7 +26,10 @@
        <a href="{% url 'app_manager:t_index' %}" class="btn btn-default">管理员首页</a>
        <a href={% url 'app_manager:t_multi' %} class="btn btn-default">项目管理</a>
        <span class="btn btn-default" id="projSelectorBtn">选择项目</span>
+       {% if UserType == "Manager" %}
        <span class="btn btn-default" id="projPermissionBtn">项目权限管理</span>
+       {% endif %}
+
      </div>
      </div>
      </div>

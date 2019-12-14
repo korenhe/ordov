@@ -143,7 +143,9 @@ class MultiTable(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(MultiTable, self).get_context_data(**kwargs)
         context['template_table_name'] = 'Resume'
-
+        userProfile = UserProfile.objects.get(user=self.request.user)
+        if (userProfile.user_type == "Manager"):
+            context['UserType'] = 'Manager'
         return context
 
 
