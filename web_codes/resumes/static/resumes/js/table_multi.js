@@ -27,6 +27,8 @@ $(document).ready(function() {
   var filter_status_value = 0;
   var enable_multi = false;
 
+  var toCollapsed = true;
+
   function empty_multi_selection() {
     //empty resumes
     resumes_selected = [];
@@ -1300,6 +1302,15 @@ $(document).ready(function() {
 
   $(function() {
     $('#projPermissionBtn').click(function(e) {
+		if (toCollapsed) {
+			toCollapsed = false;
+            $(".sidebar2.right").trigger("sidebar:open");
+        } else {
+            toCollapsed = true;
+            $(".sidebar2.right").trigger("sidebar:close");
+        }
+
+      return
       e.preventDefault();
       // step0: Get the all recruiter
       // step1: First should update the header
