@@ -7,7 +7,7 @@ $(document).ready(function() {
     // TODO: not so strong here
     var component=(window.location.href.split("/"))
     resume_id = component[5]
-    console.log("id", resume_id)
+    //console.log("id", resume_id)
     get_resume_certification()
     show_one_certification(-1)
 });
@@ -76,7 +76,7 @@ function get_resume_certification_one(cert_id) {
         type: 'GET',
         data: null,
         success: function(response) {
-            console.log("get certification successfully ", response)
+            //console.log("get certification successfully ", response)
             // Should update the certification item here
             $('div[class="resume_certification_item"][id=' + cert_id + ']' + ' .cert_name').text(response.name)
             $('div[class="resume_certification_item"][id=' + cert_id + ']' + ' .cert_institution').text(response.institution)
@@ -89,19 +89,19 @@ function get_resume_certification_one(cert_id) {
 }
 
 function get_resume_certification() {
-    console.log('/api/certifications/?resume_id=' + resume_id)
+    //console.log('/api/certifications/?resume_id=' + resume_id)
     $.ajax({
         // Keep the standard restful API here
         url: '/api/certifications/?resume_id=' + resume_id,
         type: 'GET',
         data: null,
         success: function(response) {
-            console.log("certification: ", response)
+            //console.log("certification: ", response)
             $.each(response.results, function(index, ele) {
-                console.log("exp.end:", ele.end, " cert_name:", ele.name, " institution:", ele.institution)
+                //console.log("exp.end:", ele.end, " cert_name:", ele.name, " institution:", ele.institution)
                 // check if the item has been added
                 if (cert_map[ele.id]) {
-                    console.log(ele.id, " item has beed added, skip it")
+                    //console.log(ele.id, " item has beed added, skip it")
                     return
                 }
                 $('#resume_certification_show').append(
@@ -165,7 +165,7 @@ $(document).on('click', '#resume_basic_edit_button_up', function() {
 
 $(document).on('click', '.resume_certification_edit_button', function() {
    var id = Number(this.id)
-   console.log('[class="resume_certification_item_edit"][id=' + id + ']')
+   //console.log('[class="resume_certification_item_edit"][id=' + id + ']')
    // get the specified resume_id/certification_id info
    // Attention: the and logic for jquery
    show_one_certification(id)
@@ -174,22 +174,24 @@ $(document).on('click', '.resume_certification_edit_button', function() {
 
 $(document).on('click', '.resume_certification_item_edit .certification_save', function() {
     var id = Number(this.id)
-    console.log("logged to id:", id)
+    //console.log("logged to id:", id)
     // update the resume info
-    console.log("serialize: ", $('form[class="resume_certification_item_edit"][id=' + id + ']').serialize())
+    //console.log("serialize: ", $('form[class="resume_certification_item_edit"][id=' + id + ']').serialize())
     if (id > 0) {
-        console.log("update to id:", id)
+        //console.log("update to id:", id)
         $.ajax({
             url: '/api/certifications/' + id + '/',
             async: false,
             type: 'PUT',
             data: $('form[class="resume_certification_item_edit"][id=' + id + ']').serialize(),
             success: function(data, textStatus, jqXHR) {
+            /*
                 console.log("success ", data)
                 console.log("success ", jqXHR.responseText)
                 console.log("success ", jqXHR.status)
                 console.log("success ", jqXHR.readState)
                 console.log("success ", jqXHR.statusText)
+                */
             },
             error: function(jqXHR, textStatus, errorThrown) {
 				console.log(jqXHR.responseText);
@@ -203,7 +205,7 @@ $(document).on('click', '.resume_certification_item_edit .certification_save', f
     } else if (id < 0) {
         // the a new item for resume
         var fields = $('form[class="resume_certification_item_edit"][id=' + id + ']').serialize() + "&resume=" + resume_id
-        console.log("add new items:", fields)
+        //console.log("add new items:", fields)
         $.ajax({
             url: '/api/certifications/',
             async: false,

@@ -8,7 +8,7 @@ $(document).ready(function() {
     // TODO: not so strong here
     var component=(window.location.href.split("/"))
     resume_id = component[5]
-    console.log("id", resume_id)
+    //console.log("id", resume_id)
     get_resume_basic()
     get_resume_experience()
     show_one_experience(-1)
@@ -39,8 +39,8 @@ function get_resume_basic() {
         type: 'GET',
         data: null,
         success: function(response) {
-            console.log(response)
-            console.log(response.email)
+            //console.log(response)
+            //console.log(response.email)
            gender = '男'
            if (response.gender == 'f') {
                gender = '女'
@@ -143,7 +143,7 @@ function get_resume_experience_one(exp_id) {
         type: 'GET',
         data: null,
         success: function(response) {
-            console.log("get experience successfully ", response)
+            //console.log("get experience successfully ", response)
             // Should update the experience item here
             $('div[class="resume_experience_item"][id=' + exp_id + ']' + ' .interval').text(response.start + ' -- ' + response.end)
             $('div[class="resume_experience_item"][id=' + exp_id + ']' + ' .company_name').text(response.company_name)
@@ -156,19 +156,19 @@ function get_resume_experience_one(exp_id) {
 }
 
 function get_resume_experience() {
-    console.log('/api/experiences/?resume_id=' + resume_id)
+    //console.log('/api/experiences/?resume_id=' + resume_id)
     $.ajax({
         // Keep the standard restful API here
         url: '/api/experiences/?resume_id=' + resume_id,
         type: 'GET',
         data: null,
         success: function(response) {
-            console.log(response)
+            //console.log(response)
             $.each(response.results, function(index, ele) {
-                console.log("exp.end:", ele.end, " company:", ele.company_name, " ele.id:", ele.id)
+                //console.log("exp.end:", ele.end, " company:", ele.company_name, " ele.id:", ele.id)
                 // check if the item has been added
                 if (exp_map[ele.id]) {
-                    console.log(ele.id, " item has beed added, skip it")
+                    //console.log(ele.id, " item has beed added, skip it")
                     return
                 }
                 $('#resume_experience_show').append(

@@ -127,19 +127,19 @@ function get_resume_education_one(edu_id) {
 }
 
 function get_resume_education() {
-    console.log('/api/educations/?resume_id=' + resume_id)
+    //console.log('/api/educations/?resume_id=' + resume_id)
     $.ajax({
         // Keep the standard restful API here
         url: '/api/educations/?resume_id=' + resume_id,
         type: 'GET',
         data: null,
         success: function(response) {
-            console.log("education: ", response)
+            //console.log("education: ", response)
             $.each(response.results, function(index, ele) {
-                console.log("exp.end:", ele.end, " school:", ele.school, " ele.id:", ele.id)
+                //console.log("exp.end:", ele.end, " school:", ele.school, " ele.id:", ele.id)
                 // check if the item has been added
                 if (edu_map[ele.id]) {
-                    console.log(ele.id, " item has beed added, skip it")
+                    //console.log(ele.id, " item has beed added, skip it")
                     return
                 }
                 $('#resume_education_show').append(
@@ -209,7 +209,7 @@ $(document).on('click', '#resume_basic_edit_button_up', function() {
 
 $(document).on('click', '.resume_education_edit_button', function() {
    var id = Number(this.id)
-   console.log('[class="resume_education_item_edit"][id=' + id + ']')
+   //console.log('[class="resume_education_item_edit"][id=' + id + ']')
    // get the specified resume_id/education_id info
    // Attention: the and logic for jquery
    show_one_education(id)
@@ -218,22 +218,24 @@ $(document).on('click', '.resume_education_edit_button', function() {
 
 $(document).on('click', '.resume_education_item_edit .education_save', function() {
     var id = Number(this.id)
-    console.log("logged to id:", id)
+    //console.log("logged to id:", id)
     // update the resume info
-    console.log("serialize: ", $('form[class="resume_education_item_edit"][id=' + id + ']').serialize())
+    //console.log("serialize: ", $('form[class="resume_education_item_edit"][id=' + id + ']').serialize())
     if (id > 0) {
-        console.log("update to id:", id)
+        //console.log("update to id:", id)
         $.ajax({
             url: '/api/educations/' + id + '/',
             async: false,
             type: 'PUT',
             data: $('form[class="resume_education_item_edit"][id=' + id + ']').serialize(),
             success: function(data, textStatus, jqXHR) {
+            /*
                 console.log("success ", data)
                 console.log("success ", jqXHR.responseText)
                 console.log("success ", jqXHR.status)
                 console.log("success ", jqXHR.readState)
                 console.log("success ", jqXHR.statusText)
+                */
             },
             error: function(jqXHR, textStatus, errorThrown) {
 				console.log(jqXHR.responseText);

@@ -78,7 +78,7 @@ function get_resume_language_one(lang_id) {
         type: 'GET',
         data: null,
         success: function(response) {
-            console.log("get language successfully ", response)
+            //console.log("get language successfully ", response)
             // Should update the language item here
             $('div[class="resume_language_item"][id=' + lang_id + ']' + ' .lang_name').text(response.name)
             $('div[class="resume_language_item"][id=' + lang_id + ']' + ' .lang_cert').text(response.cert)
@@ -97,9 +97,9 @@ function get_resume_language() {
         type: 'GET',
         data: null,
         success: function(response) {
-            console.log("language: ", response)
+            //console.log("language: ", response)
             $.each(response.results, function(index, ele) {
-                console.log("exp.end:", ele.end, " lang_name:", ele.name, " role:", ele.role)
+                //console.log("exp.end:", ele.end, " lang_name:", ele.name, " role:", ele.role)
                 // check if the item has been added
                 if (lang_map[ele.id]) {
                     console.log(ele.id, " item has beed added, skip it")
@@ -161,7 +161,7 @@ $(document).on('click', '#resume_basic_edit_button_up', function() {
 
 $(document).on('click', '.resume_language_edit_button', function() {
    var id = Number(this.id)
-   console.log('[class="resume_language_item_edit"][id=' + id + ']')
+   //console.log('[class="resume_language_item_edit"][id=' + id + ']')
    // get the specified resume_id/language_id info
    // Attention: the and logic for jquery
    show_one_language(id)
@@ -170,22 +170,24 @@ $(document).on('click', '.resume_language_edit_button', function() {
 
 $(document).on('click', '.resume_language_item_edit .language_save', function() {
     var id = Number(this.id)
-    console.log("logged to id:", id)
+    //console.log("logged to id:", id)
     // update the resume info
-    console.log("serialize: ", $('form[class="resume_language_item_edit"][id=' + id + ']').serialize())
+    //console.log("serialize: ", $('form[class="resume_language_item_edit"][id=' + id + ']').serialize())
     if (id > 0) {
-        console.log("update to id:", id)
+        //console.log("update to id:", id)
         $.ajax({
             url: '/api/languages/' + id + '/',
             async: false,
             type: 'PUT',
             data: $('form[class="resume_language_item_edit"][id=' + id + ']').serialize(),
             success: function(data, textStatus, jqXHR) {
+            /*
                 console.log("success ", data)
                 console.log("success ", jqXHR.responseText)
                 console.log("success ", jqXHR.status)
                 console.log("success ", jqXHR.readState)
                 console.log("success ", jqXHR.statusText)
+                */
             },
             error: function(jqXHR, textStatus, errorThrown) {
 				console.log(jqXHR.responseText);
@@ -199,7 +201,7 @@ $(document).on('click', '.resume_language_item_edit .language_save', function() 
     } else if (id < 0) {
         // the a new item for resume
         var fields = $('form[class="resume_language_item_edit"][id=' + id + ']').serialize() + "&resume=" + resume_id
-        console.log("add new items:", fields)
+        //console.log("add new items:", fields)
         $.ajax({
             url: '/api/languages/',
             type: 'POST',

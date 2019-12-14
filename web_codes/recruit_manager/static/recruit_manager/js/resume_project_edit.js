@@ -105,7 +105,7 @@ function get_resume_project_one(proj_id) {
         type: 'GET',
         data: null,
         success: function(response) {
-            console.log("get project successfully ", response)
+            //console.log("get project successfully ", response)
             // Should update the project item here
             $('div[class="resume_project_item"][id=' + proj_id + ']' + ' .interval').text(response.start + ' -- ' + response.end)
             $('div[class="resume_project_item"][id=' + proj_id + ']' + ' .proj_name').text(response.name)
@@ -118,19 +118,19 @@ function get_resume_project_one(proj_id) {
 }
 
 function get_resume_project() {
-    console.log('/api/projects?resume_id=' + resume_id)
+    //console.log('/api/projects?resume_id=' + resume_id)
     $.ajax({
         // Keep the standard restful API here
         url: '/api/projects?resume_id=' + resume_id,
         type: 'GET',
         data: null,
         success: function(response) {
-            console.log("project: ", response)
+            //console.log("project: ", response)
             $.each(response.results, function(index, ele) {
-                console.log("exp.end:", ele.end, " proj_name:", ele.name, " role:", ele.role)
+                //console.log("exp.end:", ele.end, " proj_name:", ele.name, " role:", ele.role)
                 // check if the item has been added
                 if (edu_map[ele.id]) {
-                    console.log(ele.id, " item has beed added, skip it")
+                    //console.log(ele.id, " item has beed added, skip it")
                     return
                 }
                 $('#resume_project_show').append(
@@ -200,7 +200,7 @@ $(document).on('click', '#resume_basic_edit_button_up', function() {
 
 $(document).on('click', '.resume_project_edit_button', function() {
    var id = Number(this.id)
-   console.log('[class="resume_project_item_edit"][id=' + id + ']')
+   //console.log('[class="resume_project_item_edit"][id=' + id + ']')
    // get the specified resume_id/project_id info
    // Attention: the and logic for jquery
    show_one_project(id)
@@ -209,9 +209,9 @@ $(document).on('click', '.resume_project_edit_button', function() {
 
 $(document).on('click', '.resume_project_item_edit .project_save', function() {
     var id = Number(this.id)
-    console.log("logged to id:", id)
+    //console.log("logged to id:", id)
     // update the resume info
-    console.log("serialize: ", $('form[class="resume_project_item_edit"][id=' + id + ']').serialize())
+    //console.log("serialize: ", $('form[class="resume_project_item_edit"][id=' + id + ']').serialize())
     if (id > 0) {
         console.log("update to id:", id)
         $.ajax({
@@ -220,11 +220,13 @@ $(document).on('click', '.resume_project_item_edit .project_save', function() {
             type: 'PUT',
             data: $('form[class="resume_project_item_edit"][id=' + id + ']').serialize(),
             success: function(data, textStatus, jqXHR) {
+            /*
                 console.log("success ", data)
                 console.log("success ", jqXHR.responseText)
                 console.log("success ", jqXHR.status)
                 console.log("success ", jqXHR.readState)
                 console.log("success ", jqXHR.statusText)
+                */
             },
             error: function(jqXHR, textStatus, errorThrown) {
 				console.log(jqXHR.responseText);
@@ -238,7 +240,7 @@ $(document).on('click', '.resume_project_item_edit .project_save', function() {
     } else if (id < 0) {
         // the a new item for resume
         var fields = $('form[class="resume_project_item_edit"][id=' + id + ']').serialize() + "&resume=" + resume_id
-        console.log("add new items:", fields)
+        //console.log("add new items:", fields)
         $.ajax({
             url: '/api/projects/',
             type: 'POST',
