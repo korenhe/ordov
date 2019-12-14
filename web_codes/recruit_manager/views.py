@@ -17,6 +17,9 @@ from interviews.models import Interview
 from resumes.models import Resume
 from .load_excel import load_excel
 
+from accounts.models import UserProfile
+from permissions.models import ProjectPermission
+
 # Create your views here.
 @login_required
 def index(request):
@@ -145,16 +148,37 @@ def resume_statistic(request, post_id):
         if post_resume_latest_modified is not None:
             queryset_waitting = queryset_waitting.filter(models.Q(last_modified__gte=post_resume_latest_modified))
 
-
+    userProfile = UserProfile.objects.get(user=request.user)
     resumes_waitting = queryset_waitting.count()
+
+    if userProfile.user_type != "Manager":
+        permission = ProjectPermission.objects.filter(user=userProfile, post=post_request, stage=0)
+        if permission:
+            pass
+        else:
+            resumes_waitting = 0
+
     # resumes_waitting should exclude the post filter ones
 
     interviews_status_filters = []
 
-    for i in range(1, 9):
-        interviews_status_filters.append(Resume.objects.filter(interview__status=i, interview__post__id=post_id, interview__is_active=True).count())
-
-    interviews_status_filters.append(Resume.objects.filter(interview__post__id=post_id, interview__is_active=False).count())
+    if userProfile.user_type == "Manager":
+        for i in range(1, 9):
+            interviews_status_filters.append(Resume.objects.filter(interview__status=i, interview__post__id=post_id, interview__is_active=True).count())
+        interviews_status_filters.append(Resume.objects.filter(interview__post__id=post_id, interview__is_active=False).count())
+    else:
+        for i in range(1, 9):
+            try:
+                permission = ProjectPermission.objects.filter(user=userProfile, post=post_request, stage=i)
+                if permission:
+                    print(i, Resume.objects.filter(interview__status=i, interview__post__id=post_id, interview__is_active=True).count())
+                    interviews_status_filters.append(Resume.objects.filter(interview__status=i, interview__post__id=post_id, interview__is_active=True).count())
+                    continue
+            except:
+                pass
+            print(i, 0)
+            interviews_status_filters.append(0)
+        interviews_status_filters.append(0)
 
     data = {
         "resumes_total": resumes_total,
