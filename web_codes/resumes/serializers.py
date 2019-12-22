@@ -51,10 +51,17 @@ class ResumeSerializer(serializers.ModelSerializer):
         return (str(resume.last_modified.strftime("%Y/%m/%d %H:%M"))) 
     def get_expected(self, resume):
         #TODO: expected city and more
+        expect = ""
+        if resume.expected_province is not None:
+            expect = expect + resume.expected_province
         if resume.expected_city is not None:
-            return resume.expected_city
-        else:
-            return "--"
+            expect = expect + resume.expected_city
+        if resume.expected_district is not None:
+            expect = expect + resume.expected_district
+        if resume.expected_street is not None:
+            expect = expect + resume.expected_street
+        return expect 
+
     def get_birthorigin(self, resume):
         birth =""
         hasBirthInfo = False
