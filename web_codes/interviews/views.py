@@ -307,11 +307,13 @@ def getAIInfo(request):
             except:
                 return HttpResponse("fail")
             instanceId = interviewInfo.callInstanceId
-        phoneLogs, duration = get_instance_info(instanceId)
+        phoneLogs, duration, jobname, tags = get_instance_info(instanceId)
         print("result: ", phoneLogs)
         iMap = {
           "phoneLogs": phoneLogs,
-          "phoneDuration": duration
+          "phoneDuration": duration,
+          "phoneJobName": jobname,
+          "phoneTags": tags,
         }
         return JsonResponse(iMap)
 

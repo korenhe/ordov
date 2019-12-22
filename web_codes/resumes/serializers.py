@@ -5,6 +5,7 @@ from .models import Resume, Education
 from interviews.models import Interview, STATUS_CHOICES
 
 from ordov.choices import (DEGREE_CHOICES, DEGREE_CHOICES_MAP)
+from third_party.views import getBaiyingTaskList, importTaskCustomer, get_num_of_instances, get_job_instances2, get_instance_info
 
 class ResumeSerializer(serializers.ModelSerializer):
     candidate = CandidateSerializer(required=False)
@@ -151,7 +152,40 @@ class ResumeSerializer(serializers.ModelSerializer):
                 return objs[0].sub_status
         else:
             # default 0
-            return "--"
+            # which means there are no items yet, show the ai
+            resumeObjs = Resume.objects.filter(pk=resume.id)
+            interviewObjs = Interview.objects.filter(resume__pk=resume.id)
+            if resumeObjs and interviewObjs and len(resumeObjs)==1: # a valid resume
+                if resumeObjs[0].callInstanceId is not None:
+                    duration = resumeObjs[0].callPhoneDuration
+                    jobname = resumeObjs[0].callJobname
+                    tags = resumeObjs[0].callTags
+                    #return jobname + "/" + duration + "/" + tags + "\n\r"
+                    if jobname is None:
+                        jobname = "unknownJob"
+                    if tags is None:
+                        tags = "notags"
+                    if duration is None:
+                        duration = "-1s"
+                    return "AI历史: " + jobname + "/" + duration + "/" + tags + "\n\r"
+                    # No instance Info in resume info
+                for interview in interviewObjs:
+                    if interview.callInstanceId is not None:
+                        print("Found a valid instance info")
+                        phoneLog, duration, jobname, tags = get_instance_info(interview.callInstanceId)
+                        # save the info to resume info
+                        resumeObjs[0].callInstanceId = interview.callInstanceId
+                        resumeObjs[0].callPhoneDuration = duration
+                        resumeObjs[0].callTags = tags
+                        resumeObjs[0].callJobname = jobname
+
+                        resumeObjs[0].save()
+                        return "AI历史: " + jobname + "/" + duration + "/" + tags + "\n\r"
+                        #return "AI项目名(" + jobname + ")\n\r" + "时长(" + duration + ")\n\r" + "标签(" + tags + ")\n\r"
+                        # No interview info
+                return "Never call AI before"
+
+            return "Never call AI before B"
 
     class Meta:
         model = Resume

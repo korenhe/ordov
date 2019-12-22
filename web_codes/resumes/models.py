@@ -78,6 +78,12 @@ class Resume(models.Model):
     # status
     hunting_status = models.IntegerField(blank=True, null=True, choices=HUNTING_STATUS_CHOICES)
 
+    # ai info
+    callInstanceId = models.CharField(max_length=50, blank=True, null=True)
+    callPhoneDuration = models.CharField(max_length=100, blank=True, null=True)
+    callTags = models.CharField(max_length=100, blank=True, null=True)
+    callJobname = models.CharField(max_length=100, blank=True, null=True)
+
     # table related info
     last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
