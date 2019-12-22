@@ -337,6 +337,18 @@ def aiTest(request):
         candidate_phone = sceneInfo.get('customerTelephone')
         status = sceneInfo.get('status')
         finishstatus = sceneInfo.get('finishStatus')
+        jobName = sceneInfo.get('jobName', "unknown")
+        duration = sceneInfo.get('duration', -1)
+        tags = ""
+        taskResultInfo = returnData.get('data').get('data').get('taskResult')
+        if taskResultInfo is not None:
+            for result in taskResultInfo:
+                resultName = result.get('resultName')
+                if resultName.find('客户标签') >= 0:
+                    labelList = result.get("resultLabels")
+                    for label in labelList:
+                        tags = tags + label.get("value") + ";"
+        print("Found valid tags", tags)
 
         postInfo = None
         resumeInfo = None
@@ -360,6 +372,13 @@ def aiTest(request):
 
         print("companyId:", companyId, " callJobId:", callJobId, " candiate: ", candidate, "phone: ", candidate_phone, "callInsence", callInstanceId)
         interviewInfo.callInstanceId = callInstanceId
+
+        resumeInfo.callInstanceId =  callInstanceId
+        resumeInfo.callPhoneDuration = str(duration) + "s"
+        resumeInfo.callTags = tags
+        resumeInfo.callJobName = jobName
+        resumeInfo.save()
+
         if status == 2 and finishstatus == 2:
             #未接通case
             interviewInfo.sub_status = '未接通AI'

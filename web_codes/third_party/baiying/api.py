@@ -246,20 +246,23 @@ def get_instance_info(callInstanceId):
         if info != "":
             pJson = json.loads(info)
             phoneLog = ""
-            logList = pJson["data"]["phoneLogs"]
-            for item in logList:
-                phoneLog = phoneLog +  item.get("speaker", "NONE") + ":" + item.get("content", "") + "\n"
-            pInstance = pJson["data"]["callInstance"]
-            taskResult = pJson["data"]["taskResult"]
-            tags = ""
-            for it in taskResult:
-                tempTags = it.get("resultLabels")
-                for it2 in tempTags:
-                    tags = tags + it2.get("value") + ";"
-                    #tags = tags + '''str(it2.get("key", -1)) + ":" + '''it2.get("value") + ";"
-            print("tags", tags)
-            return phoneLog, str(pInstance.get("duration", -1)) + "s", pInstance.get("jobName", "UnKnown"), tags 
-    return "", "", ""
+            try:
+                logList = pJson["data"]["phoneLogs"]
+                for item in logList:
+                    phoneLog = phoneLog +  item.get("speaker", "NONE") + ":" + item.get("content", "") + "\n"
+                pInstance = pJson["data"]["callInstance"]
+                taskResult = pJson["data"]["taskResult"]
+                tags = ""
+                for it in taskResult:
+                    tempTags = it.get("resultLabels")
+                    for it2 in tempTags:
+                        tags = tags + it2.get("value") + ";"
+                        #tags = tags + '''str(it2.get("key", -1)) + ":" + '''it2.get("value") + ";"
+                print("tags", tags)
+                return phoneLog, str(pInstance.get("duration", -1)) + "s", pInstance.get("jobName", "UnKnown"), tags
+            except:
+                return "", "", "", ""
+    return "", "", "", ""
 
 def get_ai_info(callJobId, phone_number):
     instanceId = get_instanceId(callJobId, phone_number)
