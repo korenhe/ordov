@@ -95,7 +95,7 @@ $(document).ready(function() {
             console.log(jqXHR.statusText);
             console.log(textStatus);
             console.log(errorThrown);
-            //$('#dataTable_resume tbody').remove()
+            //$('#dataTable_resume tbody').clear()
         }
 
     },

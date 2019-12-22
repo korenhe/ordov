@@ -34,7 +34,6 @@ class IsCreationOrIsAuthenticated(permissions.BasePermission):
     def has_permission(self, request, view):
         print("User:", request.user.username, request.user.password)
         if request.user.is_authenticated is not True:
-            print("user.is_authenticated", request.user.is_authenticated)
             return False
         userProfile = UserProfile.objects.get(user=request.user)
         if userProfile.user_type == "Manager":
@@ -60,7 +59,6 @@ class IsCreationOrIsAuthenticated(permissions.BasePermission):
             permission = ProjectPermission.objects.filter(user=userProfile, post=post, stage=status_id)
             print("permission", permission, userProfile, post, status_id)
             if permission:
-                print("-------------------> success")
                 return True
             else:
                 return False

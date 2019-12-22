@@ -176,7 +176,6 @@ def resume_statistic(request, post_id):
                     continue
             except:
                 pass
-            print(i, 0)
             interviews_status_filters.append(0)
         interviews_status_filters.append(0)
 
