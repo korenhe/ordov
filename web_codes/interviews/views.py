@@ -50,7 +50,9 @@ from permissions.models import ProjectPermission
 
 class IsCreationOrIsAuthenticated(permissions.BasePermission):
     def has_permission(self, request, view):
-        print("User:", request.user.username, request.user.password)
+        print("interview ---------------> User:", request.user.username, request.user.password)
+        print("data", request.data)
+        print("query_params", request.query_params)
         if request.user.is_authenticated is not True:
             print("user.is_authenticated", request.user.is_authenticated)
             return False
@@ -58,10 +60,10 @@ class IsCreationOrIsAuthenticated(permissions.BasePermission):
         if userProfile.user_type == "Manager":
             return True;
         elif userProfile.user_type == "Recruiter" or userProfile.user_type == "Candidate" or userProfile.user_type == "Employer":
-            post_id = int(request.query_params.get('post_id', -999))
+            post_id = int(request.data.get('post', -999))
             if post_id == -999:
                 return False
-            status_id = int(request.query_params.get('status_id', -999))
+            status_id = int(request.data.get('status', -999))
             if status_id == -999:
                 return False
             try:

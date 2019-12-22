@@ -33,7 +33,6 @@ class ResumeSerializer(serializers.ModelSerializer):
     def get_ageg(self, resume):
         return "年龄:" + str(resume.age)+" " "毕业: "+str(resume.graduate_time)
     def get_majorfull(self, resume):
-        print("----------------> resume.degree: ", resume.degree)
         degree_str = ""
         if type(resume.degree) == type(1):
             degree_str = DEGREE_CHOICES[resume.degree][1]

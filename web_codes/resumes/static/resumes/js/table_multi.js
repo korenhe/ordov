@@ -604,6 +604,8 @@ $(document).ready(function() {
 		  console.log(xhr.responseText)
 		  console.log(xhr.status)
 		  console.log(xhr.statusText)
+          console.log(url)
+          console.log(data)
           alert("Something error happend\n");
         }
       }
@@ -627,6 +629,7 @@ $(document).ready(function() {
   function submit_interview_by_id(interview_id, url, status_value, sub_status) {
     data = {"is_active":true,
             "status": status_value,
+            "post": post_selected_value,
             "result":"Pending",
             "sub_status":sub_status,
            };

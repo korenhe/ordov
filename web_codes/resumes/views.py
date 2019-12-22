@@ -33,6 +33,9 @@ import re
 class IsCreationOrIsAuthenticated(permissions.BasePermission):
     def has_permission(self, request, view):
         print("User:", request.user.username, request.user.password)
+        print("query_params:", request.query_params)
+        print("data:", request.data)
+        print("request.method:", request.method)
         if request.user.is_authenticated is not True:
             return False
         userProfile = UserProfile.objects.get(user=request.user)
@@ -59,6 +62,7 @@ class IsCreationOrIsAuthenticated(permissions.BasePermission):
             permission = ProjectPermission.objects.filter(user=userProfile, post=post, stage=status_id)
             print("permission", permission, userProfile, post, status_id)
             if permission:
+                print("has permission------------>")
                 return True
             else:
                 return False
@@ -94,7 +98,6 @@ class ResumeViewSet(viewsets.ModelViewSet):
 
         resume = query_resumes_by_args(request.user, **request.query_params)
 
-        print("-------------------------------> add new", request.user)
         post_id = int(request.query_params.get('post_id', 0))
 
         serializer = ResumeSerializer(
