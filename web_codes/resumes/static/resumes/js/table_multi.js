@@ -752,6 +752,8 @@ $(document).ready(function() {
         console.log(response.phoneLogs)
         $('#ai_result_panel').val(response.phoneLogs)
         $('#ai_result_duration').text(response.phoneDuration)
+        $('#ai_result_projname').text(response.phoneJobName)
+        $('#ai_result_tag').text(response.phoneTags)
         $('#aiResult').modal('toggle')
       },
 	  error: function(jqXHR, textStatus, errorThrown) {
