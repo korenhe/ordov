@@ -595,7 +595,7 @@ $(document).ready(function() {
     };
 
     xhr.onreadystatechange=function() {
-      if (xhr.readyState === 4){   //if complete
+      if (xhr.readyState === 4){ //if complete
         // 2xx is ok, ref: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
         if(xhr.status >= 200 && xhr.status < 300) {
           //success
@@ -613,6 +613,11 @@ $(document).ready(function() {
     xhr.send(JSON.stringify(data));
   }
 
+  /* There should be all request or all data, should be be composed with query and data */
+  /* should these params be in data here?*/
+  /* /api/interviews/ */
+  /* The Put Mothod is designed to */
+  /* resume and post info is only support when create a new interview */
   function submit_interview_by_compound(resume_id, post_id, url, status_value, sub_status, is_active=true) {
     data = {"resume": resume_id,
             "post": post_id,
@@ -1116,27 +1121,6 @@ $(document).ready(function() {
       document.getElementById("text_company_name").innerHTML = tr.innerText;
       document.getElementById("projectName").innerHTML = tr.innerText;
     }
-  });
-
-  $(function(){
-    $('#inviteFormSubmit').click(function(e){
-      e.preventDefault();
-      var resume_id = resume_selected_value;
-      var post_id = post_selected_value;
-      var status = 1;
-
-      alert("Resume:" + resume_id + " :Post:" + post_id);
-      $('#inviteModal').modal('hide');
-      //$('#formResults').text($('#myForm').serialize());
-      submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, 'AI面试');
-      /*
-        $.post('http://path/to/post',
-        $('#myForm').serialize(),
-        function(data, status, xhr){
-        // do something here with response;
-        });
-      */
-    });
   });
 
   function do_dial_submit(resume_id) {
