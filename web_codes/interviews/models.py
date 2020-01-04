@@ -225,7 +225,9 @@ class InterviewSub_Probation(models.Model):
     result_type = models.IntegerField(null=True)
 
 class InterviewSub_Probation_Fail(models.Model):
-    probation_sub = models.ForeignKey(InterviewSub_Probation, on_delete=models.CASCADE, default=0)
+    #probation_sub = models.ForeignKey(InterviewSub_Probation, on_delete=models.CASCADE, default=0)
+    interview = models.ForeignKey(Interview, on_delete=models.CASCADE, default=0)
+    result_type = models.IntegerField(null=True)
 
     reason = models.CharField(max_length=50, blank=True, null=True)
     comments = models.CharField(max_length=50, blank=True, null=True)

@@ -655,6 +655,19 @@ $(document).ready(function() {
     xhr_common_send("POST", url, data);
   }
 
+  function stop_interview(interview_id, resume_id, post_id, url, status_value, sub_status, is_active=false) {
+    data = {"resume": resume_id,
+            "post": post_id,
+            "is_active": is_active,
+            "status": status_value,
+            "sub_status": sub_status,
+            "result": is_active ? "Pending" : "Stopped",
+           };
+
+    /* POST: create the new item */
+    xhr_common_send("PATCH", url + interview_id + '/', data);
+  }
+
   // short-cut for xx-by_compound
   function submit_interview_by_id(interview_id, url, status_value, sub_status) {
     data = {"is_active":true,
@@ -668,12 +681,12 @@ $(document).ready(function() {
   }
 
   /* Save Interview Sub Table */
-  function submit_interviewsub_by_id(url, table, data) {
+  function create_interviewsub_info(url, table, data) {
     xhr_common_send("POST", url, data);
   }
 
   /* Save Interview Sub Table */
-  function submit_interviewsub_by_id_test(url, table, data) {
+  function create_interviewsub_info_test(url, table, data) {
     xhr_common_send("GET", url, data);
   }
 
@@ -1486,7 +1499,7 @@ $(document).ready(function() {
       "expected_insurance_schedule": helper_get_selectbox_text("text_terminate_expected_insurance_schedule")
     };
 
-    submit_interviewsub_by_id("/interviews/api/terminate_sub/", table, data);
+    create_interviewsub_info("/interviews/api/terminate_sub/", table, data);
   }
 
   function do_update_resume(resume_id) {
@@ -1527,7 +1540,7 @@ $(document).ready(function() {
     };
 
     // step1: update the interview result
-    submit_interviewsub_by_id("/interviews/api/interview_sub/", table, data);
+    create_interviewsub_info("/interviews/api/interview_sub/", table, data);
     // step2: the interview stage to next
     submit_interview_by_id(interview_id, "/api/interviews/", 4, 'OFFER')
   }
@@ -1557,7 +1570,7 @@ $(document).ready(function() {
     };
 
     // step1:
-    submit_interviewsub_by_id("/interviews/api/offer_sub/", table, data);
+    create_interviewsub_info("/interviews/api/offer_sub/", table, data);
     // step2:
     submit_interview_by_id(interview_id, "/api/interviews/", 5, '入职')
   }
@@ -1577,7 +1590,7 @@ $(document).ready(function() {
       "notes": helper_get_textbox_text("text_update_offerinfo_notes")
 
     };
-    submit_interviewsub_by_id("/interviews/api/offer_sub/", table, data);
+    create_interviewsub_info("/interviews/api/offer_sub/", table, data);
   }
 
   $(function(){
@@ -1623,7 +1636,7 @@ $(document).ready(function() {
 
     };
 
-    submit_interviewsub_by_id("/interviews/api/offer_sub/", table, data);
+    create_interviewsub_info("/interviews/api/offer_sub/", table, data);
   }
 
   $(function(){
@@ -1648,18 +1661,18 @@ $(document).ready(function() {
 
   function do_probationFail_submit(interview_id) {
     $('#probationFailModal').modal('hide');
-    // active = false
     data = {
-      "probation_sub": {
-        "interview": interview_id,
-        "result_type": 3
-      },
+      "interview": interview_id,
+      "result_type": 3,
       "reason": helper_get_textbox_text("text_probation_reason"),
       "comments": helper_get_textbox_text("text_probation_comments")
     };
 
     /* This is different with other terminate modal, because it contains the probation fail reason */
-    submit_interviewsub_by_id("/interviews/api/probation_sub_fail/", table, data);
+    // step1:
+    create_interviewsub_info("/interviews/api/probation_sub_fail/", table, data);
+    // step2:
+    stop_interview(interview_id, resume_id, post_selected_value, "/api/interviews/", 6, '考察期-终止');
   }
 
   $(function(){
@@ -1706,7 +1719,7 @@ $(document).ready(function() {
       "notes": helper_get_textbox_text("text_pbfinish_notes")
     };
 
-    submit_interviewsub_by_id("/interviews/api/payback_sub_finish/", table, data);
+    create_interviewsub_info("/interviews/api/payback_sub_finish/", table, data);
   }
 
   $(function(){
@@ -1746,7 +1759,7 @@ $(document).ready(function() {
     };
 
     /* step1: update the appointment info*/
-    submit_interviewsub_by_id("/interviews/api/appointment_sub/", table, data);
+    create_interviewsub_info("/interviews/api/appointment_sub/", table, data);
     /* step2: update the interview status to next stage*/
     submit_interview_by_id(interview_id, "/api/interviews/", 3, '面试')
   }
