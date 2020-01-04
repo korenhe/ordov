@@ -32,7 +32,7 @@ import re
 
 class IsCreationOrIsAuthenticated(permissions.BasePermission):
     def has_permission(self, request, view):
-        print("User:", request.user.username, request.user.password)
+        print("User:", request.user.username, request.user.password, view.action)
         print("query_params:", request.query_params)
         print("data:", request.data)
         print("request.method:", request.method)
