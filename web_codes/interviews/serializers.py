@@ -6,7 +6,7 @@ from resumes.models import Resume
 
 from .models import InterviewSub_Appointment, InterviewSub_Appointment_Agree
 from .models import InterviewSub_Interview, InterviewSub_Interview_Pass
-from .models import InterviewSub_Offer, InterviewSub_Offer_Agree
+from .models import InterviewSub_Offer
 from .models import InterviewSub_Probation, InterviewSub_Probation_Fail
 from .models import InterviewSub_Payback, InterviewSub_Payback_Finish
 from .models import InterviewSub_Terminate
@@ -82,14 +82,6 @@ class InterviewSub_OfferSerializer(serializers.ModelSerializer):
         fields = (
             'interview',
             'result_type',
-        )
-
-class InterviewSub_Offer_AgreeSerializer(serializers.ModelSerializer):
-    offer_sub = InterviewSub_OfferSerializer(required=True)
-    class Meta:
-        model = InterviewSub_Offer_Agree
-        fields = (
-            'offer_sub',
             'date',
             'contact',
             'contact_phone',
@@ -99,38 +91,6 @@ class InterviewSub_Offer_AgreeSerializer(serializers.ModelSerializer):
             'salary',
             'notes',
         )
-
-    def create(self, validated_data):
-        offer_sub_data = validated_data.pop('offer_sub')
-
-        # Attention: The Interview - Offer - Offer_Agree is one-one-one relationship
-        offer_sub_ = InterviewSub_Offer.objects.all().filter(interview_id=offer_sub_data.get('interview'))
-        if offer_sub_ is None or len(offer_sub_) is 0:
-            offer_sub_ = InterviewSub_OfferSerializer.create(InterviewSub_OfferSerializer(), validated_data=offer_sub_data)
-        else:
-            offer_sub_ = offer_sub_[0]
-
-        offer_sub_agree = None
-        try:
-            offer_sub_agree, created = InterviewSub_Offer_Agree.objects.update_or_create(
-                offer_sub_id=offer_sub_.id, defaults=validated_data)
-        except (MultipleObjectsReturned):
-            # To walkaround the perious bug
-            # Attention! The Interview - Offer - Offer_Agree is one-one-one relationship
-            offer_agree_subs = InterviewSub_Offer_Agree.objects.all().filter(offer_sub_id=offer_sub_.id)
-            """
-            FixUp all the offer_subs
-            """
-            offerAgreeSeri = InterviewSub_Offer_AgreeSerializer()
-            for oas in offer_agree_subs:
-                item = offerAgreeSeri.update(
-                        instance=oas,
-                        validated_data=validated_data
-                )
-                item.save()
-                offer_sub_agree = item
-
-        return offer_sub_agree
 
 # Interview Probation SubModal
 

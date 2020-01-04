@@ -1541,14 +1541,9 @@ $(document).ready(function() {
 
   function do_offerInfo_submit(interview_id) {
     $('#offerModal').modal('hide');
-    //var status = 5;
-
     data = {
-      "offer_sub": {
-        "interview": interview_id,
-        "result_type": 3
-      },
-      "op": "UpdatePass",
+      "interview": interview_id,
+      "result_type": 3,
       "date": helper_get_textbox_text("text_offerinfo_date"),
       "contact": helper_get_textbox_text("text_offerinfo_contact"),
       "contact_phone": helper_get_textbox_text("text_offerinfo_contact_phone"),
@@ -1561,17 +1556,17 @@ $(document).ready(function() {
 
     };
 
-    submit_interviewsub_by_id("/interviews/api/offer_sub_agree/", table, data);
+    // step1:
+    submit_interviewsub_by_id("/interviews/api/offer_sub/", table, data);
+    // step2:
+    submit_interview_by_id(interview_id, "/api/interviews/", 5, '入职')
   }
 
   function do_offerInfoUpdate_submit(interview_id) {
     $('#offerUpdateModal').modal('hide');
     data = {
-      "offer_sub": {
-        "interview": interview_id,
-        "result_type": 3
-      },
-      "op": "Update",
+      "interview": interview_id,
+      "result_type": 3,
       "date": helper_get_textbox_text("text_update_offerinfo_date"),
       "contact": helper_get_textbox_text("text_update_offerinfo_contact"),
       "contact_phone": helper_get_textbox_text("text_update_offerinfo_contact_phone"),
@@ -1582,7 +1577,7 @@ $(document).ready(function() {
       "notes": helper_get_textbox_text("text_update_offerinfo_notes")
 
     };
-    submit_interviewsub_by_id("/interviews/api/offer_sub_agree/", table, data);
+    submit_interviewsub_by_id("/interviews/api/offer_sub/", table, data);
   }
 
   $(function(){
@@ -1615,11 +1610,8 @@ $(document).ready(function() {
     //var status = 5;
 
     data = {
-      "offer_sub": {
-        "interview": interview_id,
-        "result_type": 4
-      },
-      "op":"Update",
+      "interview": interview_id,
+      "result_type": 4,
       "date": helper_get_textbox_text("text_entryupdate_date"),
       "contact": helper_get_textbox_text("text_entryupdate_contact"),
       "contact_phone": helper_get_textbox_text("text_entryupdate_contact_phone"),
@@ -1631,7 +1623,7 @@ $(document).ready(function() {
 
     };
 
-    submit_interviewsub_by_id("/interviews/api/offer_sub_agree/", table, data);
+    submit_interviewsub_by_id("/interviews/api/offer_sub/", table, data);
   }
 
   $(function(){

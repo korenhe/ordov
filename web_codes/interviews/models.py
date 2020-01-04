@@ -185,6 +185,19 @@ class InterviewSub_Offer(models.Model):
     interview = models.ForeignKey(Interview, on_delete=models.CASCADE, default=0)
     result_type = models.IntegerField(null=True)
 
+    date = models.DateTimeField(blank=True, null=True)
+
+    contact = models.CharField(max_length=50, blank=True, null=True)
+    contact_phone = models.CharField(max_length=15, null=True, blank=True)
+
+    address = models.CharField(max_length=50, null=True, blank=True)
+    postname = models.CharField(max_length=50, null=True, blank=True)
+
+    certification = models.CharField(max_length=50, null=True, blank=True)
+    salary = models.CharField(max_length=50, null=True, blank=True)
+
+    notes = models.TextField(max_length=500, blank=True, null=True)
+
 class InterviewSub_Offer_Agree(models.Model):
     offer_sub = models.ForeignKey(InterviewSub_Offer, on_delete=models.CASCADE, default=0)
 

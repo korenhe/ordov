@@ -22,7 +22,7 @@ from .models import InterviewSub_Interview
 from .serializers import InterviewSub_InterviewSerializer
 
 from .models import InterviewSub_Offer, InterviewSub_Offer_Agree
-from .serializers import InterviewSub_OfferSerializer, InterviewSub_Offer_AgreeSerializer
+from .serializers import InterviewSub_OfferSerializer
 
 from .models import InterviewSub_Probation, InterviewSub_Probation_Fail
 from .serializers import InterviewSub_ProbationSerializer, InterviewSub_Probation_FailSerializer
@@ -202,41 +202,6 @@ class InterviewSub_OfferViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Offer.objects.all()
     serializer_class = InterviewSub_OfferSerializer
     permission_classes = (IsCreationOrIsAuthenticated, )
-
-class InterviewSub_Offer_AgreeViewSet(viewsets.ModelViewSet):
-    queryset = InterviewSub_Offer_Agree.objects.all()
-    serializer_class = InterviewSub_Offer_AgreeSerializer
-    permission_classes = (IsCreationOrIsAuthenticated, )
-
-    def create(self, request):
-        params = request.data
-        op = params.pop('op', None)
-        print("params", params)
-        if op == 'Update':
-            serializer = InterviewSub_Offer_AgreeSerializer(data=params)
-            if serializer.is_valid(raise_exception=True):
-                serializer.save()
-            else:
-                print("Fail to Serialize the Offer_Agree")
-            return HttpResponse("success")
-        elif op == 'UpdatePass':
-            serializer = InterviewSub_Offer_AgreeSerializer(data=params)
-            if serializer.is_valid(raise_exception=True):
-                serializer.save()
-            else:
-                print("Fail to Serialize the Offer_Agree")
-
-            interviewId = int(params.get('offer_sub').get('interview', -1))
-            interview = Interview.objects.get(id=interviewId)
-            interview.status = 5
-            interview.sub_status = '入职'
-            interview.save()
-            return HttpResponse("success")
-
-        else:
-            print("Bad Info")
-            return HttpResponse("Fail")
-
 
 # Interview Probation SubModal
 # ---------------------------------------- Pretty Split Line ----------------------------------------
