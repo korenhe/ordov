@@ -307,9 +307,9 @@ $(document).ready(function() {
 
   $(function(){
     /* flush table every 100s */
-    setInterval(flush,100000);
+    setInterval(flush,1000);
     function flush(){
-        if (post_selected_value > 0) {
+        if (post_selected_value > 0 && interview_selected_value == 1) {
             page_refresh(table, true);
         }
     }
