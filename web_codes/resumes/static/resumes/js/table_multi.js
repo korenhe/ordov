@@ -622,6 +622,7 @@ $(document).ready(function() {
             "result": is_active ? "Pending" : "Stopped",
            };
 
+    /* POST: create the new item */
     xhr_common_send("POST", url, data);
   }
 
@@ -1635,14 +1636,10 @@ $(document).ready(function() {
 
   function do_appointment_submit(interview_id) {
     $('#appointmentModal').modal('hide');
-    //var status = 3 // interview
 
     data = {
-      "appointment_sub": {
-        "interview": interview_id,
-        "result_type": 3
-      },
-      //"date": "2018-05-23 09:00",
+      "interview": interview_id,
+      "result_type": 3,
       "date": helper_get_textbox_text("text_appointment_date"),
       "contact": helper_get_textbox_text("text_appointment_contact"),
       "address": helper_get_textbox_text("text_appointment_address"),
@@ -1653,7 +1650,10 @@ $(document).ready(function() {
       "notes": helper_get_textbox_text("text_appointment_notes"),
     };
 
-    submit_interviewsub_by_id("/interviews/api/appointment_sub_agree/", table, data);
+    /* step1: update the appointment info*/
+    submit_interviewsub_by_id("/interviews/api/appointment_sub/", table, data);
+    /* step2: update the interview status to next stage*/
+    submit_interview_by_id(interview_id, "/api/interviews/", 3, '面试')
   }
   $(function() {
     $('#appointmentSubmit').click(function(e){

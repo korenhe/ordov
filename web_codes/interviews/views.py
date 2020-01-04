@@ -16,7 +16,7 @@ from .models import Interview, query_interviews_by_args, STATUS_CHOICES
 from .serializers import InterviewSerializer
 
 from .models import InterviewSub_Appointment, InterviewSub_Appointment_Agree
-from .serializers import InterviewSub_AppointmentSerializer, InterviewSub_Appointment_AgreeSerializer
+from .serializers import InterviewSub_AppointmentSerializer
 
 from .models import InterviewSub_Interview, InterviewSub_Interview_Pass
 from .serializers import InterviewSub_InterviewSerializer, InterviewSub_Interview_PassSerializer
@@ -197,25 +197,60 @@ def Task(request):
 
 # Interview Appointment SubModal
 # ---------------------------------------- Pretty Split Line ----------------------------------------
+class IsSubInterviewAuthenticated(permissions.BasePermission):
+    def has_permission(self, request, view):
+        print("interview ---------------> User:", request.user.username, request.user.password)
+        print("view.action----->", view.action, " request.action", request.method)
+        print("data", request.data)
+        print("query_params", request.query_params)
+        if request.user.is_authenticated is not True:
+            print("user.is_authenticated", request.user.is_authenticated)
+            return False
+        userProfile = UserProfile.objects.get(user=request.user)
+        if userProfile.user_type == "Manager":
+            return True;
+        elif userProfile.user_type != "Recruiter" and userProfile.user_type != "Candidate" and userProfile.user_type != "Employer":
+            print("User Type NOT Recruiter Or Candidate Or Employer")
+            return False;
+
+        # Recruiter/Candidate/Employer Scenario
+        interviewId = int(request.data.get('interview', -999))
+        if interviewId < 0:
+            return False;
+
+        qSet = Interview.objects.filter(pk=interviewId)
+        if len(qSet) < 1:
+            return False;
+
+        post_id = qSet[0].post_id
+        status_id = qSet[0].status
+        # To Check If has Permission For this User and Status
+
+        try:
+            permission = ProjectPermission.objects.get(post=post_id, stage=status_id, user=userProfile)
+            print("Found Permission", permission.id)
+            return True
+        except:
+            return False
+        return False
+
+
 class InterviewSub_AppointmentViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Appointment.objects.all()
     serializer_class = InterviewSub_AppointmentSerializer
-
-class InterviewSub_Appointment_AgreeViewSet(viewsets.ModelViewSet):
-    queryset = InterviewSub_Appointment_Agree.objects.all()
-    serializer_class = InterviewSub_Appointment_AgreeSerializer
+    permission_classes = (IsSubInterviewAuthenticated, )
 
 # Interview Result SubModal
 # ---------------------------------------- Pretty Split Line ----------------------------------------
 class InterviewSub_InterviewViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Interview.objects.all()
     serializer_class = InterviewSub_InterviewSerializer
-    permission_classes = (IsCreationOrIsAuthenticated, )
+    permission_classes = (IsSubInterviewAuthenticated, )
 
 class InterviewSub_Interview_PassViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Interview_Pass.objects.all()
     serializer_class = InterviewSub_Interview_PassSerializer
-    permission_classes = (IsCreationOrIsAuthenticated, )
+    permission_classes = (IsSubInterviewAuthenticated, )
 
 
 # Interview Offer SubModal
@@ -223,12 +258,12 @@ class InterviewSub_Interview_PassViewSet(viewsets.ModelViewSet):
 class InterviewSub_OfferViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Offer.objects.all()
     serializer_class = InterviewSub_OfferSerializer
-    permission_classes = (IsCreationOrIsAuthenticated, )
+    permission_classes = (IsSubInterviewAuthenticated, )
 
 class InterviewSub_Offer_AgreeViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Offer_Agree.objects.all()
     serializer_class = InterviewSub_Offer_AgreeSerializer
-    permission_classes = (IsCreationOrIsAuthenticated, )
+    permission_classes = (IsSubInterviewAuthenticated, )
 
     def create(self, request):
         params = request.data
@@ -265,31 +300,31 @@ class InterviewSub_Offer_AgreeViewSet(viewsets.ModelViewSet):
 class InterviewSub_ProbationViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Probation.objects.all()
     serializer_class = InterviewSub_ProbationSerializer
-    permission_classes = (IsCreationOrIsAuthenticated, )
+    permission_classes = (IsSubInterviewAuthenticated, )
 
 class InterviewSub_Probation_FailViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Probation_Fail.objects.all()
     serializer_class = InterviewSub_Probation_FailSerializer
-    permission_classes = (IsCreationOrIsAuthenticated, )
+    permission_classes = (IsSubInterviewAuthenticated, )
 
 # Interview Payback SubModal
 # ---------------------------------------- Pretty Split Line ----------------------------------------
 class InterviewSub_PaybackViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Payback.objects.all()
     serializer_class = InterviewSub_PaybackSerializer
-    permission_classes = (IsCreationOrIsAuthenticated, )
+    permission_classes = (IsSubInterviewAuthenticated, )
 
 class InterviewSub_Payback_FinishViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Payback_Finish.objects.all()
     serializer_class = InterviewSub_Payback_FinishSerializer
-    permission_classes = (IsCreationOrIsAuthenticated, )
+    permission_classes = (IsSubInterviewAuthenticated, )
 
 # Interview Terminate SubModal
 # ---------------------------------------- Pretty Split Line ----------------------------------------
 class InterviewSub_TerminateViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Terminate.objects.all()
     serializer_class = InterviewSub_TerminateSerializer
-    permission_classes = (IsCreationOrIsAuthenticated, )
+    permission_classes = (IsSubInterviewAuthenticated, )
 
 def interviewsub_get_offer_detail(request, interview_id):
     interview_obj = Interview.objects.get(pk=interview_id)

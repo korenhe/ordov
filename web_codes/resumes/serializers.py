@@ -119,18 +119,24 @@ class ResumeSerializer(serializers.ModelSerializer):
             statusId = int(objsStatusId[0].status)
 
         objs = Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)
+        print("|resume",resume.id,"post",post_id, "|")
         if (objs):
             assert len(objs) == 1
             # check the status
             if statusId == 3:
                 appointmentObjs = objs[0].interviewsub_appointment_set.all()
-                assert len(appointmentObjs) == 1
-                agreeObjs = appointmentObjs[0].interviewsub_appointment_agree_set.all()
-                assert len(agreeObjs) == 1
-                if agreeObjs[0].date is None:
-                    return "无该同学面试时间信息"
+                #assert len(appointmentObjs) == 1
+                if len(appointmentObjs) < 1:
+                    return "--"
+                #assert len(agreeObjs) == 1
+                if appointmentObjs[0].date is not None:
+                    return "约定面试: "+appointmentObjs[0].date.strftime("%Y/%m/%d %H:%M:%S")
                 else:
-                    return "约定面试: "+agreeObjs[0].date.strftime("%Y/%m/%d %H:%M:%S")
+                    agreeObjs = appointmentObjs[0].interviewsub_appointment_agree_set.all()
+                    if len(agreeObjs) > 0:
+                        return "约定面试: "+agreeObjs[0].date.strftime("%Y/%m/%d %H:%M:%S")
+                    else:
+                        return "无该同学面试时间信息"
                 # the interview status, we should show the interview time
             elif statusId == 4:
                 offerObjs = objs[0].interviewsub_offer_set.all()

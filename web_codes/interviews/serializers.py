@@ -49,14 +49,6 @@ class InterviewSub_AppointmentSerializer(serializers.ModelSerializer):
         fields = (
             'interview',
             'result_type',
-        )
-
-class InterviewSub_Appointment_AgreeSerializer(serializers.ModelSerializer):
-    appointment_sub = InterviewSub_AppointmentSerializer(required=True)
-    class Meta:
-        model = InterviewSub_Appointment_Agree
-        fields = (
-            'appointment_sub',
             'date',
             'contact',
             'address',
@@ -66,23 +58,6 @@ class InterviewSub_Appointment_AgreeSerializer(serializers.ModelSerializer):
             'first_impression',
             'notes',
         )
-
-    def create(self, validated_data):
-        appointment_sub_data = validated_data.pop('appointment_sub')
-
-        appointment_sub_ = InterviewSub_AppointmentSerializer.create(InterviewSub_AppointmentSerializer(),
-                                                                     validated_data=appointment_sub_data)
-        appointment_sub_agree, created = InterviewSub_Appointment_Agree.objects.update_or_create(
-            appointment_sub=appointment_sub_,
-            **validated_data)
-        # update interview table
-
-        interview = Interview.objects.get(pk=appointment_sub_.interview.id)
-        interview.status = 3
-        interview.sub_status = '面试'
-        interview.save()
-
-        return appointment_sub_agree
 
 # Interview Result SubModal
 # ---------------------------------------- Pretty Split Line ----------------------------------------

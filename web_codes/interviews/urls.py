@@ -1,7 +1,7 @@
 from django.urls import include, path
 
 from rest_framework import routers
-from .views import InterviewSub_AppointmentViewSet, InterviewSub_Appointment_AgreeViewSet
+from .views import InterviewSub_AppointmentViewSet
 from .views import InterviewSub_InterviewViewSet, InterviewSub_Interview_PassViewSet
 from .views import InterviewSub_OfferViewSet, InterviewSub_Offer_AgreeViewSet
 from .views import InterviewSub_ProbationViewSet, InterviewSub_Probation_FailViewSet
@@ -12,7 +12,6 @@ from interviews import views
 router = routers.DefaultRouter()
 
 router.register(r'appointment_sub', InterviewSub_AppointmentViewSet)
-router.register(r'appointment_sub_agree', InterviewSub_Appointment_AgreeViewSet)
 
 router.register(r'interview_sub', InterviewSub_InterviewViewSet)
 router.register(r'interview_sub_pass', InterviewSub_Interview_PassViewSet)

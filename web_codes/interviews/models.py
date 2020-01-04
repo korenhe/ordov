@@ -139,6 +139,19 @@ class InterviewSub_Appointment(models.Model):
     interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
     result_type = models.IntegerField(null=True)
 
+    date = models.DateTimeField(blank=True, null=True)
+    contact = models.CharField(max_length=50, blank=True, null=True)
+
+    address = models.CharField(max_length=50, null=True, blank=True)
+    postname = models.CharField(max_length=50, null=True, blank=True)
+
+    certification = models.CharField(max_length=50, null=True, blank=True)
+    attention = models.CharField(max_length=50, null=True, blank=True)
+    first_impression = models.CharField(max_length=50, null=True, blank=True)
+
+    notes = models.TextField(max_length=500, blank=True, null=True)
+
+# There is no need For Appointment_Agree class
 class InterviewSub_Appointment_Agree(models.Model):
     appointment_sub = models.ForeignKey(InterviewSub_Appointment, on_delete=models.CASCADE)
 
