@@ -49,12 +49,12 @@ class ProjectPermissionViewSet(viewsets.ModelViewSet):
         # Refer to: https://www.django-rest-framework.org/api-guide/filtering/#filtering-against-the-url
         qset = ProjectPermission.objects.all()
         post_id = self.request.query_params.get('post_id', None)
-        print("get permission(", post_id, ")")
+        #print("get permission(", post_id, ")")
         if post_id is None or not post_id.isdigit():
             return qset
         qset = qset.filter(post_id=post_id)
         stage_id = self.request.query_params.get('stage', None)
-        print("get permission(", post_id, ") stage(", stage_id, ")")
+        #print("get permission(", post_id, ") stage(", stage_id, ")")
         if stage_id is not None and stage_id.isdigit():
             qset = qset.filter(stage=stage_id)
         elif stage_id is not None and isinstance(stage_id, list):
@@ -65,12 +65,12 @@ class ProjectPermissionViewSet(viewsets.ModelViewSet):
 
         return qset
     def create(self, request):
-        print("come here", request.data)
+        #print("come here", request.data)
         stageList = request.data.get('stage', None)
         postId = request.data.get('post', None)
         userId = request.data.get('user', None)
         if stageList == None or postId == None or userId == None:
-            print("None", stageList, postId, userId)
+            #print("None", stageList, postId, userId)
             return HttpResponse("Fail")
         # stage is a array, list it
         for stage in stageList:

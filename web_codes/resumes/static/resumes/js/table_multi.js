@@ -73,6 +73,12 @@ $(document).ready(function() {
     "ajax": {
       "url": "/api/resumes/",
       "type": "GET",
+      "beforeSend": function(request) {
+        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
+        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
+        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
+        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
+      },
       "data": function (d) {
         d.degree_id_min = $('#degree_id_min').val();
         d.degree_id_max = $('#degree_id_max').val();
@@ -278,6 +284,12 @@ $(document).ready(function() {
     "ajax": {
       "url": "/api/posts/",
       "type": "GET",
+      "beforeSend": function(request) {
+        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
+        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
+        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
+        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
+      },
 	  "error": function(jqXHR, textStatus, errorThrown) {
             console.log(jqXHR.responseText);
             console.log(jqXHR.status);
@@ -485,6 +497,12 @@ $(document).ready(function() {
 	return $.ajax({
 	  url: '/api/resumes/' + resume_id + '/',
 	  type: 'GET',
+      "beforeSend": function(request) {
+        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
+        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
+        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
+        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
+      },
 	  data: null,
 	  async: false
 	}).responseText;
@@ -554,6 +572,12 @@ $(document).ready(function() {
     $.ajax({
       url: "/manager/resumes/statistic/" + post_selected_value + "/",
       type: 'GET',
+      "beforeSend": function(request) {
+        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
+        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
+        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
+        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
+      },
       data: null,
       success: function(response) {
         document.getElementById("badge_statistic_stage_0").innerHTML = response.resumes_waitting;
@@ -585,9 +609,14 @@ $(document).ready(function() {
     xhr.open(method, url);
 
     xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    xhr.setRequestHeader('ORDOV-INTERVIEW-ID', interview_selected_value);
+    xhr.setRequestHeader('ORDOV-POST-ID', post_selected_value);
+    xhr.setRequestHeader('ORDOV-RESUME-ID', resume_selected_value);
+    xhr.setRequestHeader('ORDOV-STATUS-ID', filter_status_value);
     var csrftoken = getCookie('csrftoken');
 
     xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    console.log("------------------------------------>")
 
     xhr.onloadend = function() {
       //done
@@ -689,6 +718,12 @@ $(document).ready(function() {
     $.ajax({
       url:'/api/posts/' + post_selected_value + '/',
       type: 'GET',
+      "beforeSend": function(request) {
+        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
+        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
+        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
+        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
+      },
       data: null,
       success: function(response) {
         document.getElementById("config_ai_task_name").value = response.baiying_task_name;
@@ -700,6 +735,12 @@ $(document).ready(function() {
     $.ajax({
       url:'/api/resumes/' + resume_id + '/',
       type: 'GET',
+      "beforeSend": function(request) {
+        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
+        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
+        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
+        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
+      },
       data: null,
       success: function(response) {
 
@@ -718,6 +759,12 @@ $(document).ready(function() {
     $.ajax({
       url:'/api/resumes/' + resume_id + '/',
       type: 'GET',
+      "beforeSend": function(request) {
+        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
+        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
+        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
+        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
+      },
       data: null,
       success: function(response) {
 
@@ -747,6 +794,12 @@ $(document).ready(function() {
     $.ajax({
       url: urlPath,
       type: 'GET',
+      "beforeSend": function(request) {
+        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
+        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
+        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
+        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
+      },
       data: null,
       success: function(response) {
 		console.log("success: ", response)
@@ -772,6 +825,12 @@ $(document).ready(function() {
     $.ajax({
       url:'/api/resumes/' + resume_id + '/',
       type: 'GET',
+      "beforeSend": function(request) {
+        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
+        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
+        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
+        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
+      },
       data: null,
       success: function(response) {
         document.getElementById("text_terminate_expected_province").value = response.expected_province;
@@ -789,6 +848,12 @@ $(document).ready(function() {
     $.ajax({
       url:'/interviews/sub/offer/' + interview_id + '/',
       type: 'GET',
+      "beforeSend": function(request) {
+        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
+        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
+        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
+        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
+      },
       data: null,
       success: function(response) {
 
@@ -928,6 +993,12 @@ $(document).ready(function() {
 	  $.ajax({
         url:'/api/resumes/' + resume_id + '/',
         type: 'GET',
+      "beforeSend": function(request) {
+        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
+        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
+        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
+        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
+      },
 		data: null,
 		success: function(response) {
 		  document.getElementById("text_interview_resumeinfo_username").value = response.username;
@@ -953,6 +1024,12 @@ $(document).ready(function() {
 	$.ajax({
 	  url:'/api/resumes/' + resume_id + '/',
 	  type: 'GET',
+      "beforeSend": function(request) {
+        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
+        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
+        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
+        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
+      },
 	  data: null,
       success: function(response) {
 	    document.getElementById("text_update_offer_resumeinfo_username").value = response.username;
@@ -971,6 +1048,12 @@ $(document).ready(function() {
 	$.ajax({
 	  url:'/api/resumes/' + resume_id + '/',
 	  type: 'GET',
+      "beforeSend": function(request) {
+        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
+        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
+        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
+        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
+      },
 	  data: null,
 	  success: function(response) {
 		document.getElementById("text_offer_resumeinfo_username").value = response.username;
@@ -996,6 +1079,12 @@ $(document).ready(function() {
 	$.ajax({
 	  url:'/api/resumes/' + resume_id + '/',
 	  type: 'GET',
+      "beforeSend": function(request) {
+        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
+        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
+        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
+        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
+      },
 	  data: null,
 	  success: function(response) {
 		document.getElementById("text_entry_update_resumeinfo_username").value = response.username;
@@ -1016,6 +1105,12 @@ $(document).ready(function() {
 	$.ajax({
 	  url:'/api/resumes/' + resume_id + '/',
 	  type: 'GET',
+      "beforeSend": function(request) {
+        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
+        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
+        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
+        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
+      },
 	  data: null,
 	  success: function(response) {
 		document.getElementById("text_entry_resumeinfo_username").value = response.username;
@@ -1049,6 +1144,12 @@ $(document).ready(function() {
 	$.ajax({
 	  url:'/api/resumes/' + resume_id + '/',
 	  type: 'GET',
+      "beforeSend": function(request) {
+        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
+        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
+        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
+        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
+      },
 	  data: null,
 	  success: function(response) {
 		document.getElementById("text_probation_resumeinfo_username").value = response.username;
@@ -1156,6 +1257,12 @@ $(document).ready(function() {
       $.ajax({
         url:'/api/permissions/?post_id=' + post_id,
         type: 'GET',
+      "beforeSend": function(request) {
+        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
+        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
+        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
+        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
+      },
         data: null,
         async: false,
         success: function(response) {
@@ -1210,6 +1317,12 @@ $(document).ready(function() {
         $.ajax({
             url:'/api/permissions/?post=' + post_selected_value + '&user=' + who + '&stage=' + stage,
             type: 'GET',
+      "beforeSend": function(request) {
+        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
+        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
+        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
+        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
+      },
             data: null,
             success: function(response) {
                 console.log('/api/permissions/?post_id=' + post_selected_value + '&user=' + who + '&stage=' + stage)
@@ -1270,6 +1383,12 @@ $(document).ready(function() {
       $.ajax({
         url:'/api/accounts/?user_type=Recruiter',
         type: 'GET',
+      "beforeSend": function(request) {
+        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
+        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
+        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
+        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
+      },
         async: false,
         data: null,
         success: function(response) {
@@ -1303,6 +1422,12 @@ $(document).ready(function() {
       $.ajax({
         url:'/api/posts/' + post_selected_value + '/',
         type: 'GET',
+      "beforeSend": function(request) {
+        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
+        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
+        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
+        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
+      },
         data: null,
         success: function(response) {
             // get the project info successfully
@@ -1381,29 +1506,7 @@ $(document).ready(function() {
       "expected_insurance": helper_get_selectbox_text("text_terminate_expected_insurance"),
       "expected_insurance_schedule": helper_get_selectbox_text("text_terminate_expected_insurance_schedule")
      }
-    console.log("data: ", JSON.stringify(data))
-    console.log('/api/resumes/' + resume_id + '/')
     xhr_common_send('PUT', '/api/resumes/' + resume_id + '/', data)
-        /*
-	$.ajax({
-		url: '/api/resumes/' + resume_id + '/',
-        type: 'POST',
-        data: JSON.stringify(data),
-        success: function(response) {
-            console.log(response)
-        },
-		error: function(jqXHR, textStatus, errorThrown) {
-            console.log("Fail to post resume info of ", resume_id)
-            console.log(jqXHR.responseText);
-            console.log(jqXHR.status);
-            console.log(jqXHR.readyState);
-            console.log(jqXHR.statusText);
-            console.log(textStatus);
-            console.log(errorThrown);
-		}
-    })
-    */
-
   }
 
   $(function() {

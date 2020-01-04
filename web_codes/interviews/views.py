@@ -50,10 +50,13 @@ from permissions.models import ProjectPermission
 
 class IsCreationOrIsAuthenticated(permissions.BasePermission):
     def has_permission(self, request, view):
-        print("interview ---------------> User:", request.user.username, request.user.password)
-        print("view.action----->", view.action, " request.action", request.method)
-        print("data", request.data)
-        print("query_params", request.query_params)
+
+        resumeId = request.META.get('HTTP_ORDOV_RESUME_ID', -1)
+        postId = request.META.get('HTTP_ORDOV_POST_ID', -1)
+        interviewId = request.META.get('HTTP_ORDOV_INTERVIEW_ID', -1)
+        statusId = request.META.get('HTTP_ORDOV_STATUS_ID', -1)
+        print("Interview: resumeId", resumeId, "postId", postId, "interviewId", interviewId, "statusId", statusId)
+
         if request.user.is_authenticated is not True:
             print("user.is_authenticated", request.user.is_authenticated)
             return False
@@ -64,35 +67,19 @@ class IsCreationOrIsAuthenticated(permissions.BasePermission):
             print("User Type NOT Recruiter Or Candidate Or Employer")
             return False;
 
-        # Recruiter/Candidate/Employer Scenario
-        post_id = -1
-        status_id = -1
-        if view.action == 'partial_update':
-            # How to Parse 224 from /api/interviews/224/ :: views.kwargs.get('pk')
-            interviewId = view.kwargs.get('pk', -1)
-            if interviewId == -1:
-                return False
-            qSet = Interview.objects.filter(pk=interviewId)
-            post_id = qSet[0].post_id
-            status_id = qSet[0].status
-            print("Update --------------->", post_id)
-        elif view.action == 'create':
-            print("Create --------------->")
-
-            # post and status Info are only exit in request.data field
-            # the POST frame including [resume, post, is_active, sub_status, result]
-
-            post_id = int(request.data.get('post', -999))
-            if post_id == -999:
-                return False
-            status_id = -1
+        post = None
         try:
-            #permission = ProjectPermission.objects.get(post=post_id, stage=status_id, user=userProfile)
-            permission = ProjectPermission.objects.get(post=post_id, stage=status_id, user=userProfile)
-            print("Found Permission", permission.id)
-            return True
+            post = Post.objects.get(id=postId)
         except:
+            print("Could Not Found The post_id:", postId)
             return False
+
+        # Recruiter/Candidate/Employer Scenario
+        print("Pre Interview: resumeId", resumeId, "postId", postId, "interviewId", interviewId, "statusId", statusId)
+        permission = ProjectPermission.objects.filter(post=post, stage=statusId, user=userProfile)
+        if permission:
+            print("Found Permission-------->")
+            return True
         return False
 
 # Create your views here.
@@ -197,60 +184,22 @@ def Task(request):
 
 # Interview Appointment SubModal
 # ---------------------------------------- Pretty Split Line ----------------------------------------
-class IsSubInterviewAuthenticated(permissions.BasePermission):
-    def has_permission(self, request, view):
-        print("interview ---------------> User:", request.user.username, request.user.password)
-        print("view.action----->", view.action, " request.action", request.method)
-        print("data", request.data)
-        print("query_params", request.query_params)
-        if request.user.is_authenticated is not True:
-            print("user.is_authenticated", request.user.is_authenticated)
-            return False
-        userProfile = UserProfile.objects.get(user=request.user)
-        if userProfile.user_type == "Manager":
-            return True;
-        elif userProfile.user_type != "Recruiter" and userProfile.user_type != "Candidate" and userProfile.user_type != "Employer":
-            print("User Type NOT Recruiter Or Candidate Or Employer")
-            return False;
-
-        # Recruiter/Candidate/Employer Scenario
-        interviewId = int(request.data.get('interview', -999))
-        if interviewId < 0:
-            return False;
-
-        qSet = Interview.objects.filter(pk=interviewId)
-        if len(qSet) < 1:
-            return False;
-
-        post_id = qSet[0].post_id
-        status_id = qSet[0].status
-        # To Check If has Permission For this User and Status
-
-        try:
-            permission = ProjectPermission.objects.get(post=post_id, stage=status_id, user=userProfile)
-            print("Found Permission", permission.id)
-            return True
-        except:
-            return False
-        return False
-
-
 class InterviewSub_AppointmentViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Appointment.objects.all()
     serializer_class = InterviewSub_AppointmentSerializer
-    permission_classes = (IsSubInterviewAuthenticated, )
+    permission_classes = (IsCreationOrIsAuthenticated, )
 
 # Interview Result SubModal
 # ---------------------------------------- Pretty Split Line ----------------------------------------
 class InterviewSub_InterviewViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Interview.objects.all()
     serializer_class = InterviewSub_InterviewSerializer
-    permission_classes = (IsSubInterviewAuthenticated, )
+    permission_classes = (IsCreationOrIsAuthenticated, )
 
 class InterviewSub_Interview_PassViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Interview_Pass.objects.all()
     serializer_class = InterviewSub_Interview_PassSerializer
-    permission_classes = (IsSubInterviewAuthenticated, )
+    permission_classes = (IsCreationOrIsAuthenticated, )
 
 
 # Interview Offer SubModal
@@ -258,12 +207,12 @@ class InterviewSub_Interview_PassViewSet(viewsets.ModelViewSet):
 class InterviewSub_OfferViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Offer.objects.all()
     serializer_class = InterviewSub_OfferSerializer
-    permission_classes = (IsSubInterviewAuthenticated, )
+    permission_classes = (IsCreationOrIsAuthenticated, )
 
 class InterviewSub_Offer_AgreeViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Offer_Agree.objects.all()
     serializer_class = InterviewSub_Offer_AgreeSerializer
-    permission_classes = (IsSubInterviewAuthenticated, )
+    permission_classes = (IsCreationOrIsAuthenticated, )
 
     def create(self, request):
         params = request.data
@@ -300,31 +249,31 @@ class InterviewSub_Offer_AgreeViewSet(viewsets.ModelViewSet):
 class InterviewSub_ProbationViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Probation.objects.all()
     serializer_class = InterviewSub_ProbationSerializer
-    permission_classes = (IsSubInterviewAuthenticated, )
+    permission_classes = (IsCreationOrIsAuthenticated, )
 
 class InterviewSub_Probation_FailViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Probation_Fail.objects.all()
     serializer_class = InterviewSub_Probation_FailSerializer
-    permission_classes = (IsSubInterviewAuthenticated, )
+    permission_classes = (IsCreationOrIsAuthenticated, )
 
 # Interview Payback SubModal
 # ---------------------------------------- Pretty Split Line ----------------------------------------
 class InterviewSub_PaybackViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Payback.objects.all()
     serializer_class = InterviewSub_PaybackSerializer
-    permission_classes = (IsSubInterviewAuthenticated, )
+    permission_classes = (IsCreationOrIsAuthenticated, )
 
 class InterviewSub_Payback_FinishViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Payback_Finish.objects.all()
     serializer_class = InterviewSub_Payback_FinishSerializer
-    permission_classes = (IsSubInterviewAuthenticated, )
+    permission_classes = (IsCreationOrIsAuthenticated, )
 
 # Interview Terminate SubModal
 # ---------------------------------------- Pretty Split Line ----------------------------------------
 class InterviewSub_TerminateViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Terminate.objects.all()
     serializer_class = InterviewSub_TerminateSerializer
-    permission_classes = (IsSubInterviewAuthenticated, )
+    permission_classes = (IsCreationOrIsAuthenticated, )
 
 def interviewsub_get_offer_detail(request, interview_id):
     interview_obj = Interview.objects.get(pk=interview_id)

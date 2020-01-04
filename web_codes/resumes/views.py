@@ -32,42 +32,40 @@ import re
 
 class IsCreationOrIsAuthenticated(permissions.BasePermission):
     def has_permission(self, request, view):
-        print("User:", request.user.username, request.user.password, view.action)
-        print("query_params:", request.query_params)
-        print("data:", request.data)
-        print("request.method:", request.method)
         if request.user.is_authenticated is not True:
             return False
         userProfile = UserProfile.objects.get(user=request.user)
         if userProfile.user_type == "Manager":
             return True;
-        elif userProfile.user_type == "Recruiter" or userProfile.user_type == "Candidate" or userProfile.user_type == "Employer":
-            # To get the resumes
-            # To Watching the resumes, For a Recruiter, you have limited permissions only by
-            # the <post_id, stage info>
-            # For Recruiter, There should never get the
-            post_id = int(request.query_params.get('post_id', -999))
-            if post_id == -999:
-                return False
-            post = None
-            try:
-                post = Post.objects.get(id=post_id)
-            except:
-                print("Could Not Found The post_id:", post_id)
-                return False
+        if userProfile.user_type != "Recruiter" and userProfile.user_type != "Employer":
+            return False;
 
-            status_id = int(request.query_params.get('status_id', -999))
-            if status_id == -999:
-                return False
-            permission = ProjectPermission.objects.filter(user=userProfile, post=post, stage=status_id)
-            print("permission", permission, userProfile, post, status_id)
-            if permission:
-                print("has permission------------>")
-                return True
-            else:
-                return False
-        else:
+        # Recruiter and Employer Scenario
+
+        # To get the resumes
+        # To Watching the resumes, For a Recruiter, you have limited permissions only by
+        # For Recruiter, There should never get the
+        # When Updating, you should add the interview
+        # How to deliver the priviledge info for one http request
+        # How about Put the stage info in http header?
+        post = None
+
+        resumeId = request.META.get('HTTP_ORDOV_RESUME_ID', -1)
+        postId = request.META.get('HTTP_ORDOV_POST_ID', -1)
+        interviewId = request.META.get('HTTP_ORDOV_INTERVIEW_ID', -1)
+        statusId = request.META.get('HTTP_ORDOV_STATUS_ID', -1)
+        print("resumeId", resumeId, "postId", postId, "interviewId", interviewId)
+
+        try:
+            post = Post.objects.get(id=postId)
+        except:
+            print("Could Not Found The post_id:", postId)
             return False
+
+        permission = ProjectPermission.objects.filter(user=userProfile, post=post, stage=statusId)
+        if permission:
+            print("has permission------------>")
+            return True
         return False
 
 class ResumeView(APIView):
