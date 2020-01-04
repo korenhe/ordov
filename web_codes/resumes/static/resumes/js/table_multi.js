@@ -613,12 +613,7 @@ $(document).ready(function() {
     xhr.send(JSON.stringify(data));
   }
 
-  /* There should be all request or all data, should be be composed with query and data */
-  /* should these params be in data here?*/
-  /* /api/interviews/ */
-  /* The Put Mothod is designed to */
-  /* resume and post info is only support when create a new interview */
-  function submit_interview_by_compound(resume_id, post_id, url, status_value, sub_status, is_active=true) {
+  function create_interview(resume_id, post_id, url, status_value, sub_status, is_active=true) {
     data = {"resume": resume_id,
             "post": post_id,
             "is_active": is_active,
@@ -865,7 +860,7 @@ $(document).ready(function() {
     If the element is for SUBMIT, then use the multisel* wrapper.
    */
   function do_stage_zero_pass(resume_id) {
-    submit_interview_by_compound(resume_id, post_selected_value, "/api/interviews/", 2, '邀约');
+    create_interview(resume_id, post_selected_value, "/api/interviews/", 2, '邀约');
   }
 
   $(document).on('click', '.stage_zero_pass', function() {
@@ -875,7 +870,7 @@ $(document).ready(function() {
 
   function do_stage_zero_fail(resume_id) {
 	resume_selected_value = Number(this.id)
-    submit_interview_by_compound(resume_id, post_selected_value, "/api/interviews/", 0, "初选-终止", false);
+    create_interview(resume_id, post_selected_value, "/api/interviews/", 0, "初选-终止", false);
   }
 
   $(document).on('click', '.stage_zero_fail', function() {
@@ -1135,7 +1130,7 @@ $(document).ready(function() {
 
     $('#dialModal').modal('hide');
 
-    submit_interview_by_compound(resume_id, post_id, "/api/interviews/", status, 'AI面试');
+    create_interview(resume_id, post_id, "/api/interviews/", status, 'AI面试');
   }
 
   $(function(){
