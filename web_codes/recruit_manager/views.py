@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.core.files.storage import FileSystemStorage
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 from django.contrib.auth.decorators import login_required
 
@@ -179,9 +180,11 @@ def resume_statistic(request, post_id):
             interviews_status_filters.append(0)
         interviews_status_filters.append(0)
 
+    print("----------------------------->")
     data = {
         "resumes_total": resumes_total,
         "resumes_waitting": resumes_waitting,
         "interviews_status_filters": interviews_status_filters,
     }
+    #return Response(data, status=rest_status.HTTP_200_OK, template_name=None, content_type=None)
     return JsonResponse(data)

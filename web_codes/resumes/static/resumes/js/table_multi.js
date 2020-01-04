@@ -566,8 +566,13 @@ $(document).ready(function() {
   });
 
   function page_refresh(table, reset_flag = false) {
-    // update statistic info
-    //var xx = t_resume_statistic_url;
+    /*
+        Shoud Never call xhr_common_send in xhr_common_send
+     */
+    console.log("page_refresh------------>")
+    if (post_selected_value < 0) {
+        return
+    }
 
     $.ajax({
       url: "/manager/resumes/statistic/" + post_selected_value + "/",
@@ -581,14 +586,11 @@ $(document).ready(function() {
       data: null,
       success: function(response) {
         document.getElementById("badge_statistic_stage_0").innerHTML = response.resumes_waitting;
-        for (var i = 1; i < 10; i++) {
+        for (var i = 1; i < response.interviews_status_filters.length; i++) {
           document.getElementById("badge_statistic_stage_" + i).innerHTML = response.interviews_status_filters[i-1];
         }
-      },
-      error: function() {
-        console.log("get statistic info failed");
-      },
-    });
+      }
+	});
 
     empty_multi_selection();
     enable_multi = false;
@@ -604,15 +606,17 @@ $(document).ready(function() {
     }
   }
 
-  function xhr_common_send(method, url, data) {
+  function xhr_common_send(method, url, data, succCallback=null, needRefresh=true) {
     var xhr = new XMLHttpRequest();
     xhr.open(method, url);
 
     xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+
     xhr.setRequestHeader('ORDOV-INTERVIEW-ID', interview_selected_value);
     xhr.setRequestHeader('ORDOV-POST-ID', post_selected_value);
     xhr.setRequestHeader('ORDOV-RESUME-ID', resume_selected_value);
     xhr.setRequestHeader('ORDOV-STATUS-ID', filter_status_value);
+
     var csrftoken = getCookie('csrftoken');
 
     xhr.setRequestHeader("X-CSRFToken", csrftoken);
@@ -620,14 +624,18 @@ $(document).ready(function() {
 
     xhr.onloadend = function() {
       //done
-      page_refresh(table);
+      if (needRefresh) {
+        page_refresh(table);
+      }
     };
 
     xhr.onreadystatechange=function() {
       if (xhr.readyState === 4){ //if complete
         // 2xx is ok, ref: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
         if(xhr.status >= 200 && xhr.status < 300) {
-          //success
+            if (succCallback) {
+                succCallback(xhr.response)
+            }
         } else {
           console.log("csrftoken: ", csrftoken)
 		  console.log(xhr.responseText)
@@ -704,12 +712,7 @@ $(document).ready(function() {
   }
 
   function show_post_modal(post_id, callback) {
-    $.ajax({
-      url:'/api/posts/' + post_id + '/',
-      type: 'GET',
-      data: null,
-      success: function(response) {
-
+    xhr_common_send('GET', '/api/posts/' + post_id + '/', null, function(response){
         /* here the abbreviation is not work, don't know why. Since the getElementbyid method is the most effience one, use it. */
         //$('#text_postinfo_company').value = response.department.company.name;
         //document.querySelector('#text_postinfo_company').value = response.department.company.name;
@@ -717,82 +720,27 @@ $(document).ready(function() {
         document.getElementById("text_postinfo_department").value = response.department.name;
         document.getElementById("text_postinfo_post").value = response.name;
         document.getElementById("text_postinfo_description").value = response.description;
-
-        if (callback)
-          $('#postModal').modal('toggle');
-      },
-      error: function() {
-        console.log("get post info failed");
-      },
-    });
+    })
   }
 
   function show_ai_config_modal(resume_id) {
-    $.ajax({
-      url:'/api/posts/' + post_selected_value + '/',
-      type: 'GET',
-      "beforeSend": function(request) {
-        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
-        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
-        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
-        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
-      },
-      data: null,
-      success: function(response) {
+    xhr_common_send('GET', '/api/posts/' + post_selected_value + '/', null, function(response){
         document.getElementById("config_ai_task_name").value = response.baiying_task_name;
-      },
-      error: function() {
-        console.log("get resume info failed");
-      },
-    });
-    $.ajax({
-      url:'/api/resumes/' + resume_id + '/',
-      type: 'GET',
-      "beforeSend": function(request) {
-        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
-        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
-        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
-        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
-      },
-      data: null,
-      success: function(response) {
-
+    })
+    xhr_common_send('GET', '/api/resumes/' + resume_id + '/', null, function(response){
         document.getElementById("text_name").value = response.username;
         document.getElementById("text_phone_number").value = response.phone_number;
-
         $('#dialModal').modal('toggle');
-      },
-      error: function() {
-        console.log("get resume info failed");
-      },
-    });
+    })
   }
 
   function show_resume_modal(resume_id, callback) {
-    $.ajax({
-      url:'/api/resumes/' + resume_id + '/',
-      type: 'GET',
-      "beforeSend": function(request) {
-        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
-        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
-        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
-        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
-      },
-      data: null,
-      success: function(response) {
-
+    xhr_common_send('GET', '/api/resumes/' + resume_id + '/', null, function(response){
         document.getElementById("candidate_text_resumeinfo_username").value = response.username;
         document.getElementById("candidate_text_resumeinfo_degree").value = response.degree;
         document.getElementById("candidate_text_resumeinfo_school").value = response.school;
         document.getElementById("candidate_text_resumeinfo_phone_number").value = response.phone_number;
-
-        if (callback)
-          $('#resumeModal').modal('toggle');
-      },
-      error: function() {
-        console.log("get resume info failed");
-      },
-    });
+    })
   }
 
   function show_callCandidate_modal(post_id, resume_id) {
@@ -803,18 +751,8 @@ $(document).ready(function() {
   }
 
   function show_ai_info(resume_id, post_id) {
-    urlPath="/interview/ai/info?resume_id=" + resume_id + "&post_id=" + post_id
-    $.ajax({
-      url: urlPath,
-      type: 'GET',
-      "beforeSend": function(request) {
-        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
-        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
-        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
-        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
-      },
-      data: null,
-      success: function(response) {
+
+    xhr_common_send('GET', "/interview/ai/info?resume_id=" + resume_id + "&post_id=" + post_id, null, function(response){
 		console.log("success: ", response)
         console.log(response.phoneLogs)
         $('#ai_result_panel').val(response.phoneLogs)
@@ -822,54 +760,20 @@ $(document).ready(function() {
         $('#ai_result_projname').text(response.phoneJobName)
         $('#ai_result_tag').text(response.phoneTags)
         $('#aiResult').modal('toggle')
-      },
-	  error: function(jqXHR, textStatus, errorThrown) {
-		console.log(jqXHR.responseText);
-		console.log(jqXHR.status);
-		console.log(jqXHR.readyState);
-		console.log(jqXHR.statusText);
-		console.log(textStatus);
-		console.log(errorThrown);
-      }
-    });
+    })
   }
 
   function show_stop_modal(interview_id, resume_id) {
-    $.ajax({
-      url:'/api/resumes/' + resume_id + '/',
-      type: 'GET',
-      "beforeSend": function(request) {
-        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
-        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
-        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
-        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
-      },
-      data: null,
-      success: function(response) {
+    xhr_common_send('GET', '/api/resumes/' + resume_id + '/', null, function(response){
         document.getElementById("text_terminate_expected_province").value = response.expected_province;
         document.getElementById("text_terminate_expected_city").value = response.expected_city;
         document.getElementById("text_terminate_expected_district").value = response.expected_district;
-      },
-      error: function() {
-        console.log("get resume info failed");
-      },
-    });
+    })
     $('#stopModal').modal('toggle')
   }
 
   function show_entry_update_modal(interview_id) {
-    $.ajax({
-      url:'/interviews/sub/offer/' + interview_id + '/',
-      type: 'GET',
-      "beforeSend": function(request) {
-        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
-        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
-        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
-        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
-      },
-      data: null,
-      success: function(response) {
-
+    xhr_common_send('GET', '/interviews/sub/offer/' + interview_id + '/', null, function(response){
         document.getElementById("text_entryupdate_date").value = response.date;
         document.getElementById("text_entryupdate_contact").value = response.contact;
         document.getElementById("text_entryupdate_contact_phone").value = response.contact_phone;
@@ -878,13 +782,8 @@ $(document).ready(function() {
         document.getElementById("text_entryupdate_certification").value = response.certification;
         document.getElementById("text_entryupdate_salary").value = response.salary;
         document.getElementById("text_entryupdate_notes").value = response.notes;
-
         $('#entryUpdateModal').modal('toggle');
-      },
-      error: function() {
-        console.log("get sub offer info failed");
-      },
-    });
+    })
   }
 
   // ================================= CLICKS ===============================================
@@ -1003,24 +902,11 @@ $(document).ready(function() {
     interview_selected_value = Number(this.id);
 	resume_selected_value = Number(this.dataset.resume_id)
 	resume_id = this.dataset.resume_id;
-	  $.ajax({
-        url:'/api/resumes/' + resume_id + '/',
-        type: 'GET',
-        beforeSend: function(request) {
-            request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
-            request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
-            request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
-            request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
-        },
-		data: null,
-		success: function(response) {
-		  document.getElementById("text_interview_resumeinfo_username").value = response.username;
-		  document.getElementById("text_interview_resumeinfo_phone_number").value = response.phone_number;
-        },
-		error: function() {
-		  console.log("get resume info failed");
-		},
-	  });
+
+    xhr_common_send('GET', '/api/resumes/' + resume_id + '/', null, function(response) {
+        document.getElementById("text_interview_resumeinfo_username").value = response.username;
+        document.getElementById("text_interview_resumeinfo_phone_number").value = response.phone_number;
+    })
 	$('#interviewResultModal').modal('toggle')
   });
   $(document).on('click', '.stage_three_fail', function() {
@@ -1034,48 +920,23 @@ $(document).ready(function() {
     interview_selected_value = Number(this.id);
 	resume_selected_value = Number(this.dataset.resume_id)
 	resume_id = this.dataset.resume_id;
-	$.ajax({
-	  url:'/api/resumes/' + resume_id + '/',
-	  type: 'GET',
-      "beforeSend": function(request) {
-        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
-        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
-        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
-        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
-      },
-	  data: null,
-      success: function(response) {
+
+    xhr_common_send('GET', '/api/resumes/' + resume_id + '/', null, function(response){
 	    document.getElementById("text_update_offer_resumeinfo_username").value = response.username;
 		document.getElementById("text_update_offer_resumeinfo_phone_number").value = response.phone_number;
-      },
-	  error: function() {
-		console.log("get resume info failed");
-	  },
-	});
+    })
     $('#offerUpdateModal').modal('toggle')
   });
   $(document).on('click', '.stage_four_pass', function() {
     interview_selected_value = Number(this.id);
 	resume_selected_value = Number(this.dataset.resume_id)
 	resume_id = this.dataset.resume_id;
-	$.ajax({
-	  url:'/api/resumes/' + resume_id + '/',
-	  type: 'GET',
-      "beforeSend": function(request) {
-        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
-        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
-        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
-        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
-      },
-	  data: null,
-	  success: function(response) {
+
+    xhr_common_send('GET', '/api/resumes/' + resume_id + '/', null, function(response){
 		document.getElementById("text_offer_resumeinfo_username").value = response.username;
 		document.getElementById("text_offer_resumeinfo_phone_number").value = response.phone_number;
-	  },
-	  error: function() {
-		console.log("get resume info failed");
-	  },
-	});
+    })
+
     $('#offerModal').modal('toggle')
   });
   $(document).on('click', '.stage_four_fail', function() {
@@ -1089,24 +950,10 @@ $(document).ready(function() {
     interview_selected_value = Number(this.id);
 	resume_selected_value = Number(this.dataset.resume_id)
 	resume_id = this.dataset.resume_id;
-	$.ajax({
-	  url:'/api/resumes/' + resume_id + '/',
-	  type: 'GET',
-      "beforeSend": function(request) {
-        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
-        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
-        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
-        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
-      },
-	  data: null,
-	  success: function(response) {
+    xhr_common_send('GET', '/api/resumes/' + resume_id + '/', null, function(response){
 		document.getElementById("text_entry_update_resumeinfo_username").value = response.username;
 		document.getElementById("text_entry_update_resumeinfo_phone_number").value = response.phone_number;
-	  },
-	  error: function() {
-		console.log("get resume info failed");
-	  },
-	});
+    })
     // This is a popup
     show_entry_update_modal(interview_selected_value);
   });
@@ -1115,24 +962,12 @@ $(document).ready(function() {
     interview_selected_value = Number(this.id);
 	resume_selected_value = Number(this.dataset.resume_id)
 	resume_id = this.dataset.resume_id;
-	$.ajax({
-	  url:'/api/resumes/' + resume_id + '/',
-	  type: 'GET',
-      "beforeSend": function(request) {
-        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
-        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
-        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
-        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
-      },
-	  data: null,
-	  success: function(response) {
+
+    xhr_common_send('GET', '/api/resumes/' + resume_id + '/', null, function(response){
 		document.getElementById("text_entry_resumeinfo_username").value = response.username;
 		document.getElementById("text_entry_resumeinfo_phone_number").value = response.phone_number;
-	  },
-	  error: function() {
-		console.log("get resume info failed");
-	  },
-	});
+    })
+
     $('#entryedModal').modal('toggle')
   });
 
@@ -1154,24 +989,12 @@ $(document).ready(function() {
     interview_selected_value = Number(this.id);
 	resume_selected_value = Number(this.dataset.resume_id)
 	resume_id = this.dataset.resume_id;
-	$.ajax({
-	  url:'/api/resumes/' + resume_id + '/',
-	  type: 'GET',
-      "beforeSend": function(request) {
-        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
-        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
-        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
-        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
-      },
-	  data: null,
-	  success: function(response) {
+
+    xhr_common_send('GET', '/api/resumes/' + resume_id + '/', null, function(response){
 		document.getElementById("text_probation_resumeinfo_username").value = response.username;
 		document.getElementById("text_probation_resumeinfo_phone_number").value = response.phone_number;
-	  },
-	  error: function() {
-		console.log("get resume info failed");
-	  },
-	});
+    })
+
     $('#probationSuccModal').modal('toggle')
   });
 
@@ -1267,18 +1090,7 @@ $(document).ready(function() {
       //$('#projPermInfo').append("<span>"+"当前的权限分配信息如下:"+"</span>")
       console.log("Enter getCurPermSync---->", post_id)
 
-      $.ajax({
-        url:'/api/permissions/?post_id=' + post_id,
-        type: 'GET',
-      "beforeSend": function(request) {
-        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
-        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
-        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
-        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
-      },
-        data: null,
-        async: false,
-        success: function(response) {
+      xhr_common_send('GET', '/api/permissions/?post_id=' + post_id, null, function(response){
             console.log("response ", response)
             result=""
             $.each(response.results, function(index, ele) {
@@ -1287,14 +1099,9 @@ $(document).ready(function() {
             console.log(result)
             //$('#projPermInfo').append('<span style="display:inline">'+ele.stage_name + ':' + ele.user_name + '</span>')
             $('#projPermInfo').val(result)
-        },
-        error: function() {
-            console.log("get resume info failed");
-            alert('Sth Wrong')
-        },
-      });
+      })
   }
-    getRecruiterSync()
+  getRecruiterSync()
 /*
   $('#cRecruiter').click(function(e) {
     console.log("click the cRecruiter selector")
@@ -1327,44 +1134,25 @@ $(document).ready(function() {
            console.log("Fail", post_selected_value, who, stage)
            return
         }
-        $.ajax({
-            url:'/api/permissions/?post=' + post_selected_value + '&user=' + who + '&stage=' + stage,
-            type: 'GET',
-      "beforeSend": function(request) {
-        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
-        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
-        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
-        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
-      },
-            data: null,
-            success: function(response) {
-                console.log('/api/permissions/?post_id=' + post_selected_value + '&user=' + who + '&stage=' + stage)
-                $.each(response.results, function(index, ele) {
-                    console.log(ele)
-                    console.log(stage.includes(ele.stage_id))
-                    if (stage.includes(ele.stage_id.toString(10)) &&
-                           (post_selected_value == ele.post_id) &&
-                           (who == ele.user_id)) {
-                        console.log("to delete index: ", index, " ", ele.id)
-                        xhr_common_send('DELETE', '/api/permissions/'+ele.id+'/', null)
-                    } else {
-                        console.log("No need to delete", ele.user_name)
-                    }
-                    setTimeout(getCurPermSync, 1000, post_selected_value)
-                    setTimeout(getCurPermSync, 2000, post_selected_value)
-                });
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log('api/permissions/?post=' + post_selected_value + '&user=' + who + '&stage=' + stage)
-				console.log(jqXHR.responseText);
-                console.log(jqXHR.status);
-				console.log(jqXHR.readyState);
-                console.log(jqXHR.statusText);
-                console.log(textStatus);
-                console.log(errorThrown);
-                alert('Sth Wrong')
-            },
-        });
+
+        xhr_common_send('GET', '/api/permissions/?post=' + post_selected_value + '&user=' + who + '&stage=' + stage, null, function(response){
+            console.log('/api/permissions/?post_id=' + post_selected_value + '&user=' + who + '&stage=' + stage)
+            $.each(response.results, function(index, ele) {
+                console.log(ele)
+                console.log(stage.includes(ele.stage_id))
+                if (stage.includes(ele.stage_id.toString(10)) &&
+                    (post_selected_value == ele.post_id) &&
+                    (who == ele.user_id)) {
+                    console.log("to delete index: ", index, " ", ele.id)
+                    xhr_common_send('DELETE', '/api/permissions/'+ele.id+'/', null)
+                } else {
+                    console.log("No need to delete", ele.user_name)
+                }
+                setTimeout(getCurPermSync, 1000, post_selected_value)
+                setTimeout(getCurPermSync, 2000, post_selected_value)
+            });
+        })
+
       }
       getCurPermSync(post_selected_value)
 		/*
@@ -1393,28 +1181,11 @@ $(document).ready(function() {
       $('#cRecruiter').html("")
       $('#cRecruiter').prepend('<option value=""></option>')
       console.log("Enter getRecruiterSync ---->")
-      $.ajax({
-        url:'/api/accounts/?user_type=Recruiter',
-        type: 'GET',
-      "beforeSend": function(request) {
-        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
-        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
-        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
-        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
-      },
-        async: false,
-        data: null,
-        success: function(response) {
-            console.log("get response success", response)
+        xhr_common_send('GET', '/api/accounts/?user_type=Recruiter', null, function(response){
           $.each(response.results, function(index, ele){
               $('#cRecruiter').append('<option value=' + ele.id + '>' + ele.username + '</option>')
           })
-        },
-        error: function(response) {
-            console.log("get resume info failed");
-            alert('Sth Wrong')
-        },
-      });
+        })
   }
 
   $(function() {
@@ -1432,19 +1203,8 @@ $(document).ready(function() {
       // step0: Get the all recruiter
       // step1: First should update the header
       console.log("post_seelcted_value", post_selected_value)
-      $.ajax({
-        url:'/api/posts/' + post_selected_value + '/',
-        type: 'GET',
-      "beforeSend": function(request) {
-        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
-        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
-        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
-        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
-      },
-        data: null,
-        success: function(response) {
-            // get the project info successfully
-            // then to get the project info
+
+        xhr_common_send('GET', '/api/posts/' + post_selected_value + '/', null, function(response){
             $('#projPermName').text(response.name)
             $('#permOp').val("")
             $('#interview_stage_id').val("")
@@ -1456,12 +1216,8 @@ $(document).ready(function() {
             console.log("~~~~~~");
             $('#projPermission').modal('show')
             console.log("show le ne");
-        },
-        error: function() {
-            console.log("get resume info failed");
-            alert('Sth Wrong')
-        },
-      });
+        })
+
       // step2: Then the all recruiter
 
     });
@@ -1814,20 +1570,14 @@ $(document).ready(function() {
 
   // ================================ CLICKS END ================================================
   //-------- select
-  $.ajax({
-    type: "GET",
-    url:'/interview/ai/task',
-    async:false,
-    dataType: "json",
-    success: function(data){
+    xhr_common_send('GET', '/interview/ai/task', null, function(response){
       $('#ai_task_id').html("")
       $('#ai_task_id').prepend('<option value="">请选择任务</option>');
-      if (data !='') {
-        $.each(data.ai_taskId,function(index, ele) {
+      if (response !='') {
+        $.each(response.ai_taskId,function(index, ele) {
           $('#ai_task_id').append('<option value="ai_task_id' + index + '">' + ele + '</option>');
         });
       }
-    }
-  });
+    })
   //-----------
 });
