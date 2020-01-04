@@ -18,8 +18,8 @@ from .serializers import InterviewSerializer
 from .models import InterviewSub_Appointment, InterviewSub_Appointment_Agree
 from .serializers import InterviewSub_AppointmentSerializer
 
-from .models import InterviewSub_Interview, InterviewSub_Interview_Pass
-from .serializers import InterviewSub_InterviewSerializer, InterviewSub_Interview_PassSerializer
+from .models import InterviewSub_Interview
+from .serializers import InterviewSub_InterviewSerializer
 
 from .models import InterviewSub_Offer, InterviewSub_Offer_Agree
 from .serializers import InterviewSub_OfferSerializer, InterviewSub_Offer_AgreeSerializer
@@ -195,12 +195,6 @@ class InterviewSub_InterviewViewSet(viewsets.ModelViewSet):
     queryset = InterviewSub_Interview.objects.all()
     serializer_class = InterviewSub_InterviewSerializer
     permission_classes = (IsCreationOrIsAuthenticated, )
-
-class InterviewSub_Interview_PassViewSet(viewsets.ModelViewSet):
-    queryset = InterviewSub_Interview_Pass.objects.all()
-    serializer_class = InterviewSub_Interview_PassSerializer
-    permission_classes = (IsCreationOrIsAuthenticated, )
-
 
 # Interview Offer SubModal
 # ---------------------------------------- Pretty Split Line ----------------------------------------

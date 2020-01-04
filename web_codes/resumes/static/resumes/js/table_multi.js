@@ -993,12 +993,12 @@ $(document).ready(function() {
 	  $.ajax({
         url:'/api/resumes/' + resume_id + '/',
         type: 'GET',
-      "beforeSend": function(request) {
-        request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
-        request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
-        request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
-        request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
-      },
+        beforeSend: function(request) {
+            request.setRequestHeader("ORDOV-INTERVIEW-ID", interview_selected_value);
+            request.setRequestHeader("ORDOV-POST-ID", post_selected_value);
+            request.setRequestHeader("ORDOV-RESUME-ID", resume_selected_value);
+            request.setRequestHeader("ORDOV-STATUS-ID", filter_status_value);
+        },
 		data: null,
 		success: function(response) {
 		  document.getElementById("text_interview_resumeinfo_username").value = response.username;
@@ -1520,16 +1520,16 @@ $(document).ready(function() {
 
   function do_interviewResult_submit(interview_id) {
     $('#interviewResultModal').modal('hide');
-    //var status = 4;
     data = {
-      "interview_sub": {
-        "interview": interview_id,
-        "result_type": 3
-      },
+      "interview": interview_id,
+      "result_type": 3,
       "comments": helper_get_textbox_text("text_interviewresult_comments"),
     };
 
-    submit_interviewsub_by_id("/interviews/api/interview_sub_pass/", table, data);
+    // step1: update the interview result
+    submit_interviewsub_by_id("/interviews/api/interview_sub/", table, data);
+    // step2: the interview stage to next
+    submit_interview_by_id(interview_id, "/api/interviews/", 4, 'OFFER')
   }
 
   $(function() {

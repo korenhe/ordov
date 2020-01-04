@@ -172,6 +172,7 @@ class InterviewSub_Appointment_Agree(models.Model):
 class InterviewSub_Interview(models.Model):
     interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
     result_type = models.IntegerField(null=True)
+    comments = models.CharField(max_length=50, blank=True, null=True)
 
 class InterviewSub_Interview_Pass(models.Model):
     interview_sub = models.ForeignKey(InterviewSub_Interview, on_delete=models.CASCADE)

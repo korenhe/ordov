@@ -69,33 +69,8 @@ class InterviewSub_InterviewSerializer(serializers.ModelSerializer):
         fields = (
             'interview',
             'result_type',
-        )
-
-class InterviewSub_Interview_PassSerializer(serializers.ModelSerializer):
-    interview_sub = InterviewSub_InterviewSerializer(required=True)
-    class Meta:
-        model = InterviewSub_Interview_Pass
-        fields = (
-            'interview_sub',
             'comments',
         )
-
-    def create(self, validated_data):
-        interview_sub_data = validated_data.pop('interview_sub')
-        interview_sub_ = InterviewSub_InterviewSerializer.create(InterviewSub_InterviewSerializer(),
-                                                                validated_data=interview_sub_data)
-
-        interview_sub_pass, created = InterviewSub_Interview_Pass.objects.update_or_create(
-            interview_sub=interview_sub_,
-            **validated_data)
-
-        # update interview table
-        interview = Interview.objects.get(pk=interview_sub_.interview.id)
-        interview.status = 4
-        interview.sub_status = 'OFFER'
-        interview.save()
-
-        return interview_sub_pass
 
 # Interview Offer SubModal
 # ---------------------------------------- Pretty Split Line ----------------------------------------
