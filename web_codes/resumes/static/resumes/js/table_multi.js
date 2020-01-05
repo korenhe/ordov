@@ -873,15 +873,20 @@ $(document).ready(function() {
     show_stop_modal(interview_selected_value, resume_id)
   });
 
+
+
   $(document).on('click', '.stage_two_dail', function() {
     interview_selected_value = Number(this.id);
     resume_id = this.dataset.resume_id;
+	resume_selected_value = Number(this.dataset.resume_id)
     // This is a popup
     show_callCandidate_modal(post_selected_value, resume_id);
   });
 
   $(document).on('click', '.stage_two_pass', function() {
     interview_selected_value = Number(this.id);
+	resume_selected_value = Number(this.dataset.resume_id)
+    // This is a popup
     $('#appointmentModal').modal('toggle')
   });
   $(document).on('click', '.stage_two_fail', function() {
@@ -1517,11 +1522,13 @@ $(document).ready(function() {
     submit_interview_by_id(interview_id, "/api/interviews/", status, '深度沟通');
   }
 
-  $(function() {
-    $('#dail_deeper_communicate').click(function(e){
-      e.preventDefault();
-      multisel_submit_wrapper(do_dial_deeper_submit);
-    });
+  $('#dail_deeper_communicate').click(function(e){
+    e.preventDefault();
+    multisel_submit_wrapper(do_dial_deeper_submit);
+  });
+
+  $('#close_dail_content').click(function(e){
+    $('#dailToCandidateModal').modal('hide')
   });
 
   function do_dial_not_linked_submit(interview_id) {
@@ -1537,8 +1544,7 @@ $(document).ready(function() {
 
   $('#giveup_interview').click(function(e){
     $('#dailToCandidateModal').modal('hide');
-    resume_id = this.dataset.resume_id;
-    show_stop_modal(interview_selected_value, resume_id)
+    show_stop_modal(interview_selected_value, resume_selected_value)
   });
 
   // ================================ CLICKS END ================================================
