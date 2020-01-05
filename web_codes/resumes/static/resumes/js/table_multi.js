@@ -633,7 +633,7 @@ $(document).ready(function() {
         // 2xx is ok, ref: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
         if(xhr.status >= 200 && xhr.status < 300) {
             if (succCallback) {
-                succCallback(xhr.response)
+                succCallback(JSON.parse(xhr.response))
             }
         } else {
           console.log("csrftoken: ", csrftoken)
@@ -1228,11 +1228,9 @@ $(document).ready(function() {
     submit_interview_by_id(interview_id, "/api/interviews/", status, '邀约');
   }
 
-  $(function() {
-    $('#nextSubmit').click(function(e){
-      e.preventDefault();
-      multisel_submit_wrapper(do_next_submit);
-    });
+  $('#nextSubmit').click(function(e){
+    e.preventDefault();
+    multisel_submit_wrapper(do_next_submit);
   });
 
   function do_stop_submit(interview_id) {
@@ -1277,13 +1275,11 @@ $(document).ready(function() {
     xhr_common_send('PUT', '/api/resumes/' + resume_id + '/', data)
   }
 
-  $(function() {
-    $('#stopFormSubmit').click(function(e){
-      e.preventDefault();
-	  do_update_resume(resume_selected_value);
-      do_stop_submit(interview_selected_value);
-      //multisel_submit_wrapper(do_stop_submit);
-    });
+  $('#stopFormSubmit').click(function(e){
+    e.preventDefault();
+    do_update_resume(resume_selected_value);
+    do_stop_submit(interview_selected_value);
+    //multisel_submit_wrapper(do_stop_submit);
   });
 
   function do_interviewResult_submit(interview_id) {
@@ -1300,11 +1296,9 @@ $(document).ready(function() {
     submit_interview_by_id(interview_id, "/api/interviews/", 4, 'OFFER')
   }
 
-  $(function() {
-    $('#interviewResultFormSubmit').click(function(e){
-      e.preventDefault();
-      multisel_submit_wrapper(do_interviewResult_submit);
-    });
+  $('#interviewResultFormSubmit').click(function(e){
+    e.preventDefault();
+    multisel_submit_wrapper(do_interviewResult_submit);
   });
 
   function do_offerInfo_submit(interview_id) {
@@ -1348,29 +1342,23 @@ $(document).ready(function() {
     create_interviewsub_info("/interviews/api/offer_sub/", table, data);
   }
 
-  $(function(){
-    $('#offerSubmit').click(function(e){
-      e.preventDefault();
-      multisel_submit_wrapper(do_offerInfo_submit);
-    });
+  $('#offerSubmit').click(function(e){
+    e.preventDefault();
+    multisel_submit_wrapper(do_offerInfo_submit);
   });
 
-  $(function() {
-    $('#offerUpdateSubmit').click(function(e) {
-      e.preventDefault();
-      multisel_submit_wrapper(do_offerInfoUpdate_submit);
-    });
+  $('#offerUpdateSubmit').click(function(e) {
+    e.preventDefault();
+    multisel_submit_wrapper(do_offerInfoUpdate_submit);
   });
 
   function do_entryed_submit(interview_id) {
     do_common_plain_submit(interview_id, '#entryedModal', 6, '考察');
   }
 
-  $(function(){
-    $('#entryedSubmit').click(function(e){
-      e.preventDefault();
-      multisel_submit_wrapper(do_entryed_submit);
-    });
+  $('#entryedSubmit').click(function(e){
+    e.preventDefault();
+    multisel_submit_wrapper(do_entryed_submit);
   });
 
   function do_entryUpdate_submit(interview_id) {
@@ -1394,24 +1382,19 @@ $(document).ready(function() {
     create_interviewsub_info("/interviews/api/offer_sub/", table, data);
   }
 
-  $(function(){
-    // only update the entry info
-    $('#entryUpdateSubmit').click(function(e){
-      e.preventDefault();
-      multisel_submit_wrapper(do_entryUpdate_submit);
-    });
+  $('#entryUpdateSubmit').click(function(e){
+    e.preventDefault();
+    multisel_submit_wrapper(do_entryUpdate_submit);
   });
 
   function do_probationSucc_submit(interview_id) {
     do_common_plain_submit(interview_id, '#probationSuccModal', 7, '回款');
   }
 
-  $(function(){
     // only update the entry info
-    $('#probationSuccSubmit').click(function(e){
-      e.preventDefault();
-      multisel_submit_wrapper(do_probationSucc_submit);
-    });
+  $('#probationSuccSubmit').click(function(e){
+    e.preventDefault();
+    multisel_submit_wrapper(do_probationSucc_submit);
   });
 
   function do_probationFail_submit(interview_id) {
@@ -1430,41 +1413,34 @@ $(document).ready(function() {
     stop_interview(interview_id, resume_id, post_selected_value, "/api/interviews/", 6, '考察期-终止');
   }
 
-  $(function(){
     // only update the entry info
-    $('#probationFailSubmit').click(function(e){
-      e.preventDefault();
-      multisel_submit_wrapper(do_probationFail_submit);
-    });
+  $('#probationFailSubmit').click(function(e){
+    e.preventDefault();
+    multisel_submit_wrapper(do_probationFail_submit);
   });
 
   function do_pbInvoice_submit(interview_id) {
     do_common_plain_submit(interview_id, '#pbInvoiceModal', 7, '回款');
   }
 
-  $(function(){
     // only update the entry info
-    $('#pbInvoiceSubmit').click(function(e){
-      e.preventDefault();
-      multisel_submit_wrapper(do_pbInvoice_submit);
-    });
+  $('#pbInvoiceSubmit').click(function(e){
+    e.preventDefault();
+    multisel_submit_wrapper(do_pbInvoice_submit);
   });
 
   function do_pbBaddebt_submit(interview_id) {
     do_common_plain_submit(interview_id, '#pbBaddebtModal', 7, '坏账');
   }
 
-  $(function(){
-    // only update the entry info
-    $('#pbBaddebtSubmit').click(function(e){
-      e.preventDefault();
-      multisel_submit_wrapper(do_pbBaddebt_submit);
-    });
+ // only update the entry info
+  $('#pbBaddebtSubmit').click(function(e){
+    e.preventDefault();
+    multisel_submit_wrapper(do_pbBaddebt_submit);
   });
 
   function do_pbFinish_submit(interview_id) {
     $('#pbFinishModal').modal('hide');
-
     // status = 8
     data = {
       "payback_sub": {
@@ -1477,12 +1453,10 @@ $(document).ready(function() {
     create_interviewsub_info("/interviews/api/payback_sub_finish/", table, data);
   }
 
-  $(function(){
-    // only update the entry info
-    $('#pbFinishSubmit').click(function(e){
-      e.preventDefault();
-      multisel_submit_wrapper(do_pbFinish_submit);
-    });
+  // only update the entry info
+  $('#pbFinishSubmit').click(function(e){
+    e.preventDefault();
+    multisel_submit_wrapper(do_pbFinish_submit);
   });
 
   function do_pbRegister_submit(interview_id) {
@@ -1518,19 +1492,23 @@ $(document).ready(function() {
     /* step2: update the interview status to next stage*/
     submit_interview_by_id(interview_id, "/api/interviews/", 3, '面试')
   }
-  $(function() {
-    $('#appointmentSubmit').click(function(e){
-      e.preventDefault();
-      multisel_submit_wrapper(do_appointment_submit);
-    });
+
+  $('#appointmentSubmit').click(function(e){
+    e.preventDefault();
+    multisel_submit_wrapper(do_appointment_submit);
   });
 
-  // ================================================================================
-  $(function() {
-    $('#agree_interview').click(function(e){
-      $('#dailToCandidateModal').modal('hide');
-      $('#appointmentModal').modal('show');
-    });
+  $('#agree_interview').click(function(e){
+    $('#dailToCandidateModal').modal('hide');
+    $('#appointmentModal').modal('show');
+  });
+
+  function do_save_dail_content(interview_id) {
+  }
+
+  $('#save_dail_content').click(function(e) {
+    e.preventDefault()
+    do_save_dail_content(interview_selected_value)
   });
 
   function do_dial_deeper_submit(interview_id) {
@@ -1552,19 +1530,15 @@ $(document).ready(function() {
     submit_interview_by_id(interview_id, "/api/interviews/", status, '未接通');
   }
 
-  $(function() {
-    $('#dail_not_linked').click(function(e){
-      e.preventDefault();
-      multisel_submit_wrapper(do_dial_not_linked_submit);
-    });
+  $('#dail_not_linked').click(function(e){
+    e.preventDefault();
+    multisel_submit_wrapper(do_dial_not_linked_submit);
   });
 
-  $(function() {
-    $('#giveup_interview').click(function(e){
-      $('#dailToCandidateModal').modal('hide');
-      resume_id = this.dataset.resume_id;
-      show_stop_modal(interview_selected_value, resume_id)
-    });
+  $('#giveup_interview').click(function(e){
+    $('#dailToCandidateModal').modal('hide');
+    resume_id = this.dataset.resume_id;
+    show_stop_modal(interview_selected_value, resume_id)
   });
 
   // ================================ CLICKS END ================================================
