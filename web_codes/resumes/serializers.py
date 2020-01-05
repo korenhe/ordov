@@ -249,6 +249,7 @@ class ResumeSerializer(serializers.ModelSerializer):
             'expected_province',
             'expected_city',
             'expected_district',
+            'expected_street',
 
             'expected_industry',
             'expected_salary',

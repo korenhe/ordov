@@ -699,6 +699,7 @@ $(document).ready(function() {
 
 
   function helper_get_selectbox_text(select_id) {
+    console.log("id: ", select_id)
     select_box = document.getElementById(select_id);
     text_box = select_box.options[select_box.selectedIndex].innerHTML;
 
@@ -707,7 +708,10 @@ $(document).ready(function() {
 
   function helper_get_textbox_text(text_id) {
     text_box = document.getElementById(text_id);
-    return text_box.value;
+    if (text_box != null) {
+        return text_box.value;
+    }
+    return ""
   }
 
   function show_post_modal(post_id, callback) {
@@ -746,6 +750,18 @@ $(document).ready(function() {
     show_post_modal(post_id, false);
     show_resume_modal(resume_id, false);
     // TBD: no error handler
+    xhr_common_send('GET', '/api/resumes/' + resume_id + '/', null, function(response){
+        console.log("response", response)
+        document.getElementById("dail_text_cur_hunting_status").value = response.hunting_status;
+        document.getElementById("dail_text_expected_industry").value = response.expected_industry;
+        document.getElementById("dail_text_expected_post").value = response.expected_post;
+        document.getElementById("dail_text_expected_salary").value = response.expected_salary;
+        document.getElementById("dail_text_expected_place_province").value = response.expected_province;
+        document.getElementById("dail_text_expected_place_city").value = response.expected_city;
+        document.getElementById("dail_text_expected_place_district").value = response.expected_district;
+        document.getElementById("dail_text_expected_place_street").value = response.expected_street;
+        //document.getElementById("").value = response.phone_number;
+    })
     $('#dailToCandidateModal').modal('toggle');
   }
 
@@ -1508,12 +1524,31 @@ $(document).ready(function() {
     $('#appointmentModal').modal('show');
   });
 
-  function do_save_dail_content(interview_id) {
+  function do_save_dail_content(interview_id, resume_id) {
+     data = {
+      "id": resume_id,
+      "school":  helper_get_textbox_text("candidate_text_resumeinfo_school"),
+      "hunting_status": $('#dail_text_cur_hunting_status').val(),
+      "expected_industry": helper_get_selectbox_text("dail_text_expected_industry"),
+      "expected_post": helper_get_selectbox_text("dail_text_expected_post"),
+      "expected_shift": helper_get_selectbox_text("dail_text_expected_shift"),
+
+      "expected_salary": helper_get_textbox_text("dail_text_expected_salary"),
+      "expected_notes": helper_get_textbox_text("dail_text_expected_notes"),
+      "expected_province": helper_get_textbox_text("dail_text_expected_place_province"),
+      "expected_city": helper_get_textbox_text("dail_text_expected_place_city"),
+      "expected_district": helper_get_textbox_text("dail_text_expected_place_district"),
+
+      "expected_insurance": helper_get_selectbox_text("dail_text_expected_insurance"),
+      "expected_insurance_schedule": helper_get_selectbox_text("dail_text_expected_insurance_schedule")
+     }
+     console.log("data", data)
+    xhr_common_send('PUT', '/api/resumes/' + resume_id + '/', data)
   }
 
   $('#save_dail_content').click(function(e) {
     e.preventDefault()
-    do_save_dail_content(interview_selected_value)
+    do_save_dail_content(interview_selected_value, resume_selected_value)
   });
 
   function do_dial_deeper_submit(interview_id) {

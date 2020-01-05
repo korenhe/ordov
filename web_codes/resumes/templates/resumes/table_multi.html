@@ -539,15 +539,15 @@
             </div> <?--- the left part-->
             <div class="col-4">
               <h6 style="color:#5323e1;">沟通思路</h6> 
-                  <textarea class="form-control" id="text_terminate_expected_notes" style="height:400px;"></textarea>
+                  <textarea class="form-control" id="dail_text_terminate_expected_notes" style="height:400px;"></textarea>
             </div>
             <div class="col-4">
 
               <form>
                 <?----item1--->
                 <div>
-                <label for="text_expected_industry">当前找工作状态</label>
-                <select id="text_terminate_hunting_status">
+                <label for="dail_text_cur_hunting_status">当前找工作状态</label>
+                <select id="dail_text_cur_hunting_status">
                     <option value=-1></option><option value=0>在职,不找工作</option>
                     <option value=1>在职,考虑新机会</option><option value=2>离职,正在找工作</option>
                 </select>
@@ -555,8 +555,8 @@
 
                 <?-----item2---->
                 <div>
-                  <label for="text_expected_industry">选择期望行业</label>
-                  <select id="text_terminate_expected_industry">
+                  <label for="dail_text_expected_industry">选择期望行业</label>
+                  <select id="dail_text_expected_industry">
                     <option></option><option>计算机软件</option><option>通信</option>
                     <option>建筑</option><option>房地产</option><option>家居装修</option>
                   </select>
@@ -564,51 +564,55 @@
 
                 <?-----item3---->
                 <div>
-                  <label for="text_expected_post">选择期望岗位</label>
-                  <select id="text_terminate_expected_post">
+                  <label for="dail_text_expected_post">选择期望岗位</label>
+                  <select id="dail_text_expected_post">
                     <option></option><option>普通员工</option><option>项目经理</option><option>总监</option>
                   </select>
                 </div>
 
                 <?------item4------>
                 <div>
-                  <label for="text_expected_shift" >期望作息时间</label>
-                  <select id="text_terminate_expected_shift">
+                  <label for="dail_text_expected_shift" >期望作息时间</label>
+                  <select id="dail_text_expected_shift">
                     <option></option><option>做五休二</option><option>单双休</option><option>单休</option><option>无休</option>
                   </select>
                 </div>
 
                 <?-------item5----->
                 <div> 
-                  <label for="text_expected_salary" class="col-form-label">期望薪水(元/月)</label>
-                  <textarea class="form-control" id="text_terminate_expected_salary"></textarea>
+                  <label for="dail_text_expected_salary" class="col-form-label">期望薪水(元/月)</label>
+                  <textarea class="form-control" id="dail_text_expected_salary"></textarea>
                 </div>
                 <div>
-                  <label for="text_expected_other" class="col-form-label">其他说明</label>
-                  <textarea class="form-control" id="text_terminate_expected_notes"></textarea>
+                  <label for="dail_text_expected_other" class="col-form-label">其他说明</label>
+                  <textarea class="form-control" id="dail_text_terminate_expected_notes"></textarea>
                 </div>
                 <div>
-                  <label for="text_expected_place_province">期望工作地.省</label>
-                  <input type="text" name="text_expected_place_province" id="text_terminate_expected_province" value="">
+                  <label for="dail_text_expected_place_province">期望工作地.省</label>
+                  <input type="text" name="text_expected_place_province" id="dail_text_expected_place_province" value="">
                 </div>
                 <div>
-                  <label for="text_expected_place_city" >期望工作地.市</label>
-                  <input type="text" name="text_expected_place_city" id="text_terminate_expected_city" value="">
+                  <label for="dail_text_expected_place_city" >期望工作地.市</label>
+                  <input type="text" name="text_expected_place_city" id="dail_text_expected_place_city" value="">
                 </div>
                 <div>
-                  <label for="text_expected_place_district">期望工作地.区/县</label>
-                  <input type="text" name="text_expected_place_district" id="text_terminate_expected_district" value="">
+                  <label for="dail_text_expected_place_district">期望工作地.区/县</label>
+                  <input type="text" name="text_expected_place_district" id="dail_text_expected_place_district" value="">
                 </div>
                 <div>
-                  <label for="text_expected_insurance">期望社保购买地</label>
-                  <select id="text_terminate_expected_insurance">
+                  <label for="dail_text_expected_place_street">期望工作地.街道</label>
+                  <input type="text" name="text_expected_place_street" id="dail_text_expected_place_street" value="">
+                </div>
+                <div>
+                  <label for="dail_text_expected_insurance">期望社保购买地</label>
+                  <select id="dail_text_expected_insurance">
                     <option></option><option>本地最低</option><option>本地实缴</option><option>外地最低</option>
                     <option>外地实缴</option><option>不购买</option>
                   </select>
                 </div>
                 <div>
-                  <label for="text_expected_insurance">期望社保购买时间</label>
-                  <select id="text_terminate_expected_insurance_schedule">
+                  <label for="dail_text_expected_insurance_schedule">期望社保购买时间</label>
+                  <select id="dail_text_expected_insurance_schedule">
                     <option></option><option>转正购买</option><option>入职购买</option><option>不购买</option>
                   </select>
                 </div>
