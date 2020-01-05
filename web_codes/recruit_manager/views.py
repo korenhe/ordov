@@ -153,7 +153,7 @@ def resume_statistic(request, post_id):
             except:
                 pass
             interviews_status_filters.append(0)
-        interviews_status_filters.append(0)
+        interviews_status_filters.append(Resume.objects.filter(interview__post__id=post_id, interview__is_active=False).count())
 
     data = {
         "resumes_total": resumes_total,
