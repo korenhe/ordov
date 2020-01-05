@@ -569,7 +569,6 @@ $(document).ready(function() {
     /*
         Shoud Never call xhr_common_send in xhr_common_send
      */
-    console.log("page_refresh------------>")
     if (post_selected_value < 0) {
         return
     }
@@ -586,7 +585,7 @@ $(document).ready(function() {
       data: null,
       success: function(response) {
         document.getElementById("badge_statistic_stage_0").innerHTML = response.resumes_waitting;
-        for (var i = 1; i < response.interviews_status_filters.length; i++) {
+        for (var i = 1; i <= response.interviews_status_filters.length; i++) {
           document.getElementById("badge_statistic_stage_" + i).innerHTML = response.interviews_status_filters[i-1];
         }
       }
@@ -1091,7 +1090,7 @@ $(document).ready(function() {
       console.log("Enter getCurPermSync---->", post_id)
 
       xhr_common_send('GET', '/api/permissions/?post_id=' + post_id, null, function(response){
-            console.log("response ", response)
+            //console.log("response ", response)
             result=""
             $.each(response.results, function(index, ele) {
                 result += ele.stage_name+":"+ele.user_name+"\n";

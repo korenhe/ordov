@@ -9,7 +9,8 @@ from rest_framework.views import APIView
 from rest_framework import viewsets, status
 
 # Create your views here.
-from .models import Resume, query_resumes_by_args
+from .models import Resume
+from .filter import query_resumes_by_args
 from companies.models import Post
 from .models import Education
 from experiences.models import Experience, Project, Language, Certification
