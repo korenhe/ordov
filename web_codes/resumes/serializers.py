@@ -119,7 +119,6 @@ class ResumeSerializer(serializers.ModelSerializer):
             statusId = int(objsStatusId[0].status)
 
         objs = Interview.objects.filter(post__pk=post_id, resume__pk=resume.id)
-        print("|resume",resume.id,"post",post_id, "|")
         if (objs):
             assert len(objs) == 1
             # check the status

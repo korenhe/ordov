@@ -170,10 +170,6 @@ def FilterResumeByCustomizedRequest(queryset, **kwargs):
 
     return queryset
 
-def GetResumeFilteredByPost(post_id):
-	querySet = Resume.objects.all()
-	return FilterResumeByPostRequest(querySet, post_id)
-
 #query_resume_by_args is call By the user-defined filter Info
 def query_resumes_by_args(user, **kwargs):
     draw = int(kwargs.get('draw', [0])[0])
@@ -200,6 +196,7 @@ def query_resumes_by_args(user, **kwargs):
         queryset = Resume.objects.all()
 
     # step1: Filter from post request
+    print("status_id", status_id)
     queryset = FilterResumeByPostRequest(queryset, post_id)
 
     # step1.1: Skip ones who would not find a job

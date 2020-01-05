@@ -32,7 +32,6 @@ class ExperienceView(APIView):
 class IsCreationOrIsAuthenticated(permissions.BasePermission):
 
     def has_permission(self, request, view):
-        print("-------------------------------------------->", request.user, view.action, request.user.is_authenticated)
         print("view: ", view.get_permissions())
         if not request.user.is_authenticated:
             if view.action == 'list':

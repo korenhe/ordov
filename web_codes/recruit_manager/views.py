@@ -16,6 +16,7 @@ from candidates.models import Candidate
 from companies.models import Company, Post
 from interviews.models import Interview
 from resumes.models import Resume
+from resumes.filter import FilterResumeByPostRequest
 from .load_excel import load_excel
 
 from accounts.models import UserProfile
@@ -113,41 +114,15 @@ def resume_statistic(request, post_id):
     resumes_total = Resume.objects.exclude(interview__status=0, interview__post__id=post_id).count()
 
     queryset_waitting = Resume.objects.exclude(interview__post__id=post_id)
+
+    # filter resumes by post_id
     post_request = None
     try:
         post_request = Post.objects.get(id=post_id)
     except (ObjectDoesNotExist, MultipleObjectsReturned):
-        pass
+        print("EXCEPT: ObjectDoesNotExist, MultipleObjectsReturned")
 
-    if post_request:
-        post_age_min = post_request.age_min or 0
-        post_age_max = post_request.age_max or 100
-        post_degree_min = post_request.degree_min or 0
-        post_degree_max = post_request.degree_max or 100
-        post_gender = post_request.gender or ""
-        post_province = post_request.address_province
-        post_city = post_request.address_city
-        post_district = post_request.address_district
-        post_resume_latest_modified = post_request.resume_latest_modified
-
-        queryset_waitting = queryset_waitting.filter(models.Q(degree__gte=post_degree_min) &
-                                   models.Q(degree__lte=post_degree_max) &
-                                   models.Q(age__gte=post_age_min) &
-                                   models.Q(age__lte=post_age_max))
-        if post_gender.find(u'男') >= 0:
-            queryset_waitting = queryset_waitting.filter(models.Q(gender__contains='m'))
-        elif post_gender.find(u'女') >= 0:
-            queryset_waitting = queryset_waitting.filter(models.Q(gender__contains='f'))
-
-        # post_province/city/district filter
-        if post_province and post_province != "":
-            queryset_waitting = queryset_waitting.filter(models.Q(expected_province__icontains=post_province))
-        if post_city and post_city != "":
-            queryset_waitting = queryset_waitting.filter(models.Q(expected_city__icontains=post_city))
-        if post_district and post_district != "":
-            queryset_waitting = queryset_waitting.filter(models.Q(expected_district__icontains=post_district))
-        if post_resume_latest_modified is not None:
-            queryset_waitting = queryset_waitting.filter(models.Q(last_modified__gte=post_resume_latest_modified))
+    queryset_waitting = FilterResumeByPostRequest(queryset_waitting, post_id)
 
     userProfile = UserProfile.objects.get(user=request.user)
     resumes_waitting = queryset_waitting.count()
@@ -180,7 +155,6 @@ def resume_statistic(request, post_id):
             interviews_status_filters.append(0)
         interviews_status_filters.append(0)
 
-    print("----------------------------->")
     data = {
         "resumes_total": resumes_total,
         "resumes_waitting": resumes_waitting,
