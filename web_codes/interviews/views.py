@@ -341,6 +341,7 @@ def aiTest(request):
         print("companyId:", companyId, " callJobId:", callJobId, " candiate: ", candidate, "phone: ", candidate_phone, "callInsence", callInstanceId)
         interviewInfo.callInstanceId = callInstanceId
 
+        print("Update the callInstanceInfo:", callInstanceId, duration, tags, jobName)
         resumeInfo.callInstanceId =  callInstanceId
         resumeInfo.callPhoneDuration = str(duration) + "s"
         resumeInfo.callTags = tags

@@ -752,9 +752,6 @@ $(document).ready(function() {
     // TBD: no error handler
     xhr_common_send('GET', '/api/resumes/' + resume_id + '/', null, function(response){
         console.log("response", response)
-        document.getElementById("dail_text_cur_hunting_status").value = response.hunting_status;
-        document.getElementById("dail_text_expected_industry").value = response.expected_industry;
-        document.getElementById("dail_text_expected_post").value = response.expected_post;
         document.getElementById("dail_text_expected_salary").value = response.expected_salary;
         document.getElementById("dail_text_expected_place_province").value = response.expected_province;
         document.getElementById("dail_text_expected_place_city").value = response.expected_city;
@@ -886,7 +883,8 @@ $(document).ready(function() {
     interview_selected_value = Number(this.id);
     resume_id = this.dataset.resume_id;
 	resume_selected_value = Number(this.dataset.resume_id)
-    show_stop_modal(interview_selected_value, resume_id)
+    //show_stop_modal(interview_selected_value, resume_id)
+    show_callCandidate_modal(post_selected_value, resume_id);
   });
 
 
@@ -909,7 +907,8 @@ $(document).ready(function() {
     interview_selected_value = Number(this.id);
 	resume_selected_value = Number(this.dataset.resume_id)
     resume_id = this.dataset.resume_id;
-    show_stop_modal(interview_selected_value, resume_id)
+    //show_stop_modal(interview_selected_value, resume_id)
+    show_callCandidate_modal(post_selected_value, resume_id);
   });
 
   $(document).on('click', '.stage_three_miss', function() {
@@ -933,7 +932,8 @@ $(document).ready(function() {
     interview_selected_value = Number(this.id);
 	resume_selected_value = this.dataset.resume_id
     resume_id = this.dataset.resume_id;
-    show_stop_modal(interview_selected_value, resume_id)
+    //show_stop_modal(interview_selected_value, resume_id)
+    show_callCandidate_modal(post_selected_value, resume_id);
   });
 
   $(document).on('click', '.stage_four_update', function() {
@@ -963,7 +963,8 @@ $(document).ready(function() {
     interview_selected_value = Number(this.id);
     resume_id = this.dataset.resume_id;
 	resume_selected_value = this.dataset.resume_id;
-    show_stop_modal(interview_selected_value, resume_id)
+    //show_stop_modal(interview_selected_value, resume_id)
+    show_callCandidate_modal(post_selected_value, resume_id);
   });
 
   $(document).on('click', '.stage_five_update', function() {
@@ -995,14 +996,16 @@ $(document).ready(function() {
     interview_selected_value = Number(this.id);
     resume_id = this.dataset.resume_id;
 	resume_selected_value = this.dataset.resume_id;
-    show_stop_modal(interview_selected_value, resume_id)
+    //show_stop_modal(interview_selected_value, resume_id)
+    show_callCandidate_modal(post_selected_value, resume_id);
   });
 
   $(document).on('click', '.stage_six_giveup', function() {
     interview_selected_value = Number(this.id);
 	resume_selected_value = Number(this.dataset.resume_id)
     resume_id = this.dataset.resume_id;
-    show_stop_modal(interview_selected_value, resume_id)
+    //show_stop_modal(interview_selected_value, resume_id)
+    show_callCandidate_modal(post_selected_value, resume_id);
   });
 
   $(document).on('click', '.stage_six_pass', function() {
@@ -1538,6 +1541,7 @@ $(document).ready(function() {
       "expected_province": helper_get_textbox_text("dail_text_expected_place_province"),
       "expected_city": helper_get_textbox_text("dail_text_expected_place_city"),
       "expected_district": helper_get_textbox_text("dail_text_expected_place_district"),
+      "expected_street": helper_get_textbox_text("dail_text_expected_place_district"),
 
       "expected_insurance": helper_get_selectbox_text("dail_text_expected_insurance"),
       "expected_insurance_schedule": helper_get_selectbox_text("dail_text_expected_insurance_schedule")
@@ -1579,7 +1583,9 @@ $(document).ready(function() {
 
   $('#giveup_interview').click(function(e){
     $('#dailToCandidateModal').modal('hide');
-    show_stop_modal(interview_selected_value, resume_selected_value)
+    do_save_dail_content(interview_selected_value, resume_selected_value)
+    do_stop_submit(interview_selected_value);
+    //show_stop_modal(interview_selected_value, resume_selected_value)
   });
 
   // ================================ CLICKS END ================================================
