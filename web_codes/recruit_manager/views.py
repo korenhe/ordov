@@ -114,6 +114,7 @@ def resume_statistic(request, post_id):
     resumes_total = Resume.objects.exclude(interview__status=0, interview__post__id=post_id).count()
 
     queryset_waitting = Resume.objects.exclude(interview__post__id=post_id)
+    queryset_interview = Resume.objects.filter(interview__post__id=post_id)
 
     # filter resumes by post_id
     post_request = None
@@ -123,6 +124,8 @@ def resume_statistic(request, post_id):
         print("EXCEPT: ObjectDoesNotExist, MultipleObjectsReturned")
 
     queryset_waitting = FilterResumeByPostRequest(queryset_waitting, post_id)
+    queryset_waitting = queryset_waitting.filter(~models.Q(hunting_status=0))
+    queryset_interview = queryset_interview.filter(~models.Q(hunting_status=0))
 
     userProfile = UserProfile.objects.get(user=request.user)
     resumes_waitting = queryset_waitting.count()
@@ -147,10 +150,11 @@ def resume_statistic(request, post_id):
             try:
                 permission = ProjectPermission.objects.filter(user=userProfile, post=post_request, stage=i)
                 if permission:
-                    print(i, Resume.objects.filter(interview__status=i, interview__post__id=post_id, interview__is_active=True).count())
-                    interviews_status_filters.append(Resume.objects.filter(interview__status=i, interview__post__id=post_id, interview__is_active=True).count())
+                    resume_count = queryset_interview.filter(interview__status=i, interview__post__id=post_id, interview__is_active=True).count()
+                    interviews_status_filters.append(resume_count)
                     continue
-            except:
+            except Exception as e:
+                print("Fucking error ------>", str(e))
                 pass
             interviews_status_filters.append(0)
         interviews_status_filters.append(Resume.objects.filter(interview__post__id=post_id, interview__is_active=False).count())
