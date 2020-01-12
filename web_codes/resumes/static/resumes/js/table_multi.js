@@ -915,6 +915,7 @@ $(document).ready(function() {
     interview_selected_value = Number(this.id);
     resume_id = this.dataset.resume_id;
 	resume_selected_value = Number(this.dataset.resume_id)
+    //show_callCandidate_modal(post_selected_value, resume_id);
     show_stop_modal(interview_selected_value, resume_id)
   });
   $(document).on('click', '.stage_three_pass', function() {
