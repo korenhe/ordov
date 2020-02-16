@@ -32,6 +32,7 @@ class ResumeSerializer(serializers.ModelSerializer):
 
     def get_ageg(self, resume):
         return "年龄:" + str(resume.age)+" " "毕业: "+str(resume.graduate_time)
+
     def get_majorfull(self, resume):
         degree_str = ""
         if type(resume.degree) == type(1):
@@ -40,6 +41,7 @@ class ResumeSerializer(serializers.ModelSerializer):
             degree_str = resume.degree
         major_str = resume.major
         return resume.school + ">" + degree_str + ">" + major_str
+
     def get_newname(self, resume):
         if resume.gender == "Male":
             return resume.username
@@ -47,8 +49,10 @@ class ResumeSerializer(serializers.ModelSerializer):
             return resume.username+"(女)"
         else:
             return resume.username
+
     def get_lastmod(self, resume):
         return (str(resume.last_modified.strftime("%Y/%m/%d %H:%M"))) 
+
     def get_expected(self, resume):
         #TODO: expected city and more
         expect = ""

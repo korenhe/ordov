@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% load static %}
+<html class="x-admin-sm">
+<head>
+  {% include 'recruit_manager/userInfoHeader.html' %}
+</head>
+<body>
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15" id=resumeInfo resumeId={{resumeId}}>
+      <div class="layui-col-md4">
+        {% include 'recruit_manager/userInfoBasic.html' %}
+        {% include 'recruit_manager/userInfoEdu.html' %}
+        {% include 'recruit_manager/userInfoExp.html' %}
+      </div>
+      {% include 'recruit_manager/userInfoOther.html' %}
+  </div>
+  <div class="layui-col-md4">
+    {% include 'recruit_manager/userInfoInterview.html' %}
+  </div>
+  <div class="layui-col-md4">
+    {% include 'recruit_manager/userInfoHistory.html' %}
+  </div>
+  <div class="layui-col-md12">
+    <div class="layui-card">
+      <div class="layui-card-body" >
+        <div style="text-align: center;">
+          <button class="layui-btn" onclick="xadmin.open('添加用户','./member-add.html',600,400)"><i class="layui-icon"></i>新增</button>
+          <button class="layui-btn layui-btn layui-btn-xs"  onclick="xadmin.open('编辑','admin-edit.html')" ><i class="layui-icon">&#xe642;</i>编辑</button>
+          <button class="layui-btn" onclick="xadmin.open('添加用户','./member-add.html',600,400)"><i class="layui-icon"></i>新增</button>
+          <button class="layui-btn layui-btn layui-btn-xs"  onclick="xadmin.open('编辑','admin-edit.html')" ><i class="layui-icon">&#xe642;</i>编辑</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
+<script type="text/javascript">
+</script>
+</body>
+</html>

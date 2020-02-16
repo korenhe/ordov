@@ -76,6 +76,25 @@ class CandidateTable(generic.ListView):
         context['template_table_name'] = 'Candidate'
         return context
 
+def callInterview(request):
+    print("callInterview.data",
+            type(int(request.GET.get('resume_id'))),
+            request.GET.get('resume_id'),
+            request.GET.get('project_id'),
+            request.GET.get('interview_id'),
+            request.GET.get('stage_id'))
+
+    resumeId = request.GET.get('resume_id', None)
+    print("----------------", resumeId)
+    projectId = request.GET.get('project_id')
+    interviewId = request.GET.get('interview_id')
+    stageId = request.GET.get('stage_id')
+
+    resume = Resume.objects.get(pk=resumeId)
+
+    return render(request, 'recruit_manager/userInfo.html', locals())
+
+
 def interview_api(request, resume_id, interview_id):
     resume = get_object_or_404(Resume, pk=resume_id)
     interview = get_object_or_404(Interview, pk=interview_id)
