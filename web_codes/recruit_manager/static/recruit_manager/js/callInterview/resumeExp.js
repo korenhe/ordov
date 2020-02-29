@@ -4,12 +4,9 @@ var on_project_add = false
 var edu_map = {}
 $(document).ready(function() {
     // get the resume id from the original url
-    // TODO: not so strong here
-    var component=(window.location.href.split("/"))
     resumeId = $('#resumeInfo').attr('resumeId')
     console.log("resumeExp, resumeId(", resumeId, ")")
     getResumeExperience()
-    //show_one_project(-1)
 });
 
 function show_one_project(proj_id) {
@@ -20,8 +17,58 @@ function show_one_project(proj_id) {
           $(value).css('display', 'none')
         }
     })
-
 }
+
+$(document).on('click', '#userExpEditButton', function() {
+
+    $('#userExpHeader').css('background-color', '#66FFFF')
+
+    $('#userExpAddButton').css('display', 'none')
+    $('#userExpEditButton').css('display', 'none')
+    $('#userExpSaveButton').css('display', 'inline')
+});
+
+$(document).on('click', '#userExpSaveButton', function() {
+
+    $('#userExpHeader').css('background-color', '#FFFFFF')
+
+    $('#userExpAddButton').css('display', 'inline')
+    $('#userExpEditButton').css('display', 'inline')
+    $('#userExpSaveButton').css('display', 'none')
+
+    $('#userExpAddPanel').remove()
+});
+
+$(document).on('click', '#userExpAddButton', function() {
+
+    $('#userExpHeader').css('background-color', '#66FFFF')
+
+    $('#userExpAddButton').css('display', 'none')
+    $('#userExpEditButton').css('display', 'none')
+    $('#userExpSaveButton').css('display', 'inline')
+
+	var userExpAddPanel = '<div class="layui-form-item" id="userExpAddPanel">'+
+	'<span class="layui-col-sm12">'+
+	'       开始时间：<input class="layui-input"  autocomplete="off" placeholder="2012"  name="workStrDate" id="workStrDate">'+
+	'       </span>'+
+	'       <span class="layui-col-sm12">'+
+	'       结束时间：<input class="layui-input"  autocomplete="off" placeholder="2012" placeholder="2012" name="workEndDate" id="workEndDate">'+
+	'       </span>'+
+	'       <span class="layui-col-sm12">'+
+	'       公司：<input type="text" id="" placeholder="请输入公司名称" name="" autocomplete="off" class="layui-input">'+
+	'       </span>'+
+	'       <span class="layui-col-sm12">'+
+	'       职位：<input type="text" id="" placeholder="请输入职位" name="" autocomplete="off" class="layui-input">'+
+	'       </span>'+
+	'       <span class="layui-col-sm12">'+
+	'       时间：<input type="text" id="" placeholder="请输入工作时间" name="" autocomplete="off" class="layui-input">'+
+	'       </span>'+
+	'       <span class="layui-col-sm12">'+
+	'       离职原因：<input type="text" id="" placeholder="请输入离职原因" name="" autocomplete="off" class="layui-input">'+
+	'       </span>'+
+	'   </div>';
+	$("#resumeExpPanel").append(userExpAddPanel);
+});
 
 function clean_resume_project_edit(proj_id) {
     $('form[class="resume_project_item_edit"][id=' + proj_id + '] #project_start' + proj_id).val("")
@@ -30,73 +77,6 @@ function clean_resume_project_edit(proj_id) {
     $('form[class="resume_project_item_edit"][id=' + proj_id + '] #project_role' + proj_id).val("")
     $('form[class="resume_project_item_edit"][id=' + proj_id + '] #project_duty' + proj_id).val("")
     $('form[class="resume_project_item_edit"][id=' + proj_id + '] #project_company_name' + proj_id).val("")
-}
-
-function gen_resume_project_edit(proj_id) {
-    return '<form class="resume_project_item_edit" id=' + proj_id + '>' +
-        '<div class="row">' +
-          '<div class="col-md-6 input-group">' +
-            '<div class="input-group-prepend resume_basic_addon">' +
-              '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">开始时间</span>' +
-            '</div>' +
-            '<input type="text" class="form-control" name="start" id=project_start' + proj_id + ' value="">' +
-          '</div>' +
-          '<div class="col-md-6 input-group">' +
-            '<div class="input-group-prepend resume_basic_addon">' +
-              '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">结束时间</span>' +
-            '</div>' +
-            '<input type="text" class="form-control" name="end" id=project_end' + proj_id + ' value="">' +
-          '</div>' +
-        '</div>' +
-        '<div class="row">' +
-          '<div class="col-md-6 input-group">' +
-            '<div class="input-group-prepend resume_basic_addon">' +
-              '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">项目名</span>' +
-            '</div>' +
-            '<input type="text" class="form-control" name="name" id=project_name' + proj_id + ' value="">' +
-          '</div>' +
-          '<div class="col-md-6 input-group">' +
-            '<div class="input-group-prepend resume_basic_addon">' +
-              '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">角色</span> ' +
-            '</div>' +
-            '<input type="text" class="form-control" name="role" id=project_role' + proj_id + ' value="">' +
-          '</div>' +
-        '</div>' +
-        '<div class="row">' +
-          '<div class="col-md-6 input-group">' +
-            '<div class="input-group-prepend resume_basic_addon">' +
-              '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">公司名</span>' +
-            '</div>' +
-            '<input type="text" class="form-control" name="company_name" id=project_company_name' + proj_id + ' value="">' +
-          '</div>' +
-          '<div class="col-md-6 input-group">' +
-            '<div class="input-group-prepend resume_basic_addon">' +
-              '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">职责</span>' +
-            '</div>' +
-            '<input type="text" class="form-control" name="duty" id=project_duty' + proj_id + ' value="">' +
-          '</div>' +
-        '</div>' +
-        '<div class="row">' +
-          '<div class="col-md-12 input-group">' +
-            '<div class="input-group-prepend resume_basic_addon">' +
-              '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">描述</span>' +
-            '</div>' +
-            '<input type="text" class="form-control" name="description" id=project_description' + proj_id + ' value="">' +
-          '</div>' +
-        '</div>' +
-        '<div class="row">' +
-          '<div class="col-md-6">' +
-            '<button type="button" class="project_save" id=' + proj_id + '>' +
-              '确定' +
-            '</button>' +
-          '</div>' +
-          '<div class="col-md-6">' +
-            '<button type="button" class="project_cancel" id=' + proj_id + '>' +
-              '取消' +
-            '</button>' +
-          '</div>' +
-        '</div>' +
-        '</form>'
 }
 
 function getResumeExperience_one(proj_id) {
@@ -141,52 +121,18 @@ function showResumeExperience(ele) {
 
 function getResumeExperience() {
     console.log('/api/experiences?resume_id=' + resumeId)
-    $.ajax({
-        // Keep the standard restful API here
-        url: '/api/experiences?resume_id=' + resumeId,
-        type: 'GET',
-        data: null,
-        success: function(response) {
-            console.log("project: ", response)
-            $.each(response.results, function(index, ele) {
-                //console.log("exp.end:", ele.end, " proj_name:", ele.name, " role:", ele.role)
-                // check if the item has been added
-                if (edu_map[ele.id]) {
-                    //console.log(ele.id, " item has beed added, skip it")
-                    return
-                }
-
-                showResumeExperience(ele)
-
-                $('#resume_project_show').append(
-                    gen_resume_project_edit(ele.id)
-                )
-                clean_resume_project_edit(ele.id)
-                // step1: set the basic value
-                $('form[class="resume_project_item_edit"][id=' + ele.id + '] #project_start' + ele.id).val(ele.start)
-                $('form[class="resume_project_item_edit"][id=' + ele.id + '] #project_end' + ele.id).val(ele.end)
-                $('form[class="resume_project_item_edit"][id=' + ele.id + '] #project_name' + ele.id).val(ele.name)
-                $('form[class="resume_project_item_edit"][id=' + ele.id + '] #project_role' + ele.id).val(ele.role)
-                $('form[class="resume_project_item_edit"][id=' + ele.id + '] #project_company_name' + ele.id).val(ele.company_name)
-                $('form[class="resume_project_item_edit"][id=' + ele.id + '] #project_duty' + ele.id).val(ele.duty)
-                //$('form[class="resume_project_item_edit"][id=' + ele.id + ']').css('display', 'none')
-
-                edu_map[ele.id]='form[class="resume_project_item_edit"][id=' + ele.id + ']'
-                $(edu_map[ele.id]).css('display', 'none')
-
-                // step2: set the timepicker
-                $('form[class="resume_project_item_edit"][id=' + ele.id + '] #project_start' + ele.id).datepicker({
-                    dateFormat: 'yy-mm-dd',
-                })
-                $('form[class="resume_project_item_edit"][id=' + ele.id + '] #project_end' + ele.id).datepicker({
-                    dateFormat: 'yy-mm-dd',
-                })
-            })
-        },
-        error: function() {
-           console.log("Fail to get the project of ", resume_id)
-        }
-    })
+	xhr_common_send('GET', '/api/experiences?resume_id=' + resumeId, null, function(response) {
+		console.log("project: ", response)
+		$.each(response.results, function(index, ele) {
+			//console.log("exp.end:", ele.end, " proj_name:", ele.name, " role:", ele.role)
+			// check if the item has been added
+			if (edu_map[ele.id]) {
+				//console.log(ele.id, " item has beed added, skip it")
+				return
+			}
+			showResumeExperience(ele)
+		})
+	})
 }
 
 $(document).on('click', '#resume_basic_edit_confirm', function() {
@@ -293,3 +239,53 @@ $(document).on('click', 'form[class="resume_project_item_edit"][id=-1]', functio
     on_project_add = false
 });
 
+// ====================================================
+// Meta Function
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+function xhr_common_send(method, url, data, succCallback=null) {
+  var xhr = new XMLHttpRequest();
+  xhr.open(method, url);
+
+  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+
+  var csrftoken = getCookie('csrftoken');
+
+  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+  console.log("------------------------------------>")
+
+  xhr.onreadystatechange=function() {
+    if (xhr.readyState === 4){ //if complete
+      // 2xx is ok, ref: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+      if(xhr.status >= 200 && xhr.status < 300) {
+        if (succCallback) {
+          succCallback(JSON.parse(xhr.response))
+        }
+		console.log("success")
+      } else {
+        console.log("csrftoken: ", csrftoken)
+        console.log(xhr.responseText)
+        console.log(xhr.status)
+        console.log(xhr.statusText)
+        console.log(url)
+        console.log(data)
+        alert("Something error happend\n");
+      }
+    }
+  }
+  xhr.send(JSON.stringify(data));
+}
