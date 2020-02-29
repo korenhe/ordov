@@ -1,17 +1,21 @@
 <div class="layui-card">
-  <div class="layui-card-header">
+  <div class="layui-card-header" id="userBasicHeader">
     <div class="layui-col-sm10">基本信息</div>
     <div class="layui-col-sm2">
-      <button class="layui-btn layui-btn layui-btn-xs"  onclick="xadmin.open('编辑','admin-edit.html')" ><i class="layui-icon">&#xe642;</i>编辑</button>
+      <button class="layui-btn layui-btn-xs" id="userBasicEditButton">编辑</button>
+    </div>
+    <div class="layui-col-sm2">
+      <button class="layui-btn layui-btn-xs" id="userBasicSaveButton" hidden>保存</button>
     </div>
   </div>
-  <div class="layui-card-body layui-row layui-col-space10">
-    <div id="main1" class="layui-col-sm9">
-      <div class="layui-form-item" data-resumeId=>
-          <h4> {{ resume.username }} </h4>
+
+  <div class="layui-card-body layui-row layui-col-space10" id="userBasicShowPanel">
+    <div class="layui-col-sm9">
+      <div class="layui-form-item" id="userBasicShowName">
+        <h4> {{ resume.username }} </h4>
       </div>
       <div class="layui-form-item">
-          <h5 class="layui-col-sm2">
+          <h5 class="layui-col-sm2" id="userBasicShowGendor">
             {% if resume.gendor == 'm' %}
               男
             {% elif resume.gendor == 'f' %}
@@ -20,17 +24,41 @@
               未知
             {% endif %}
           </h5>
-        <h5 class="layui-col-sm3">{{resume.age}}</h5>
-        <h5 class="layui-col-sm3">{{resume.degree}}</h5>
-        <h5 class="layui-col-sm4">{{resume.graduate}}</h5>
+        <h5 class="layui-col-sm3" id="userBasicShowAge">{{resume.age}}</h5>
+        <h5 class="layui-col-sm3" id="userBasicShowDegree">{{resume.degree}}</h5>
+        <h5 class="layui-col-sm4" id="userBasicShowGraduate">{{resume.graduate}}</h5>
       </div>
       <div class="layui-form-item">
-        <h6 class="layui-col-sm6">现居住地：{{ resume.username }}</h6>
-        <h6 class="layui-col-sm6">籍贯：{{ resume.birth_province }}</h6>
+        <h6 class="layui-col-sm6" id="userBasicShowCurResidence">现居住地：{{ resume.username }}</h6>
+        <h6 class="layui-col-sm6" id="userBasicShowBirthPlace">籍贯：{{ resume.birth_province }}</h6>
       </div>
     </div>
-    <div id="main1" class="layui-col-sm3">
-      <img style="max-height: 200px;max-width: 80px;" src="./images/bgs.png">
+  </div>
+
+  <div class="layui-card-body layui-row layui-col-space10" id="userBasicEditPanel" hidden>
+    <div class="layui-col-sm9">
+      <div class="layui-form-item">
+        <input type="text" id="userBasicEditName" name="username" placeholder="姓名" autocomplete="off" class="layui-input">
+        <h5 class="layui-col-sm2">
+          <input type="text" id="userBasicEditGendor" name="gender" placeholder="性别" autocomplete="off" class="layui-input layui-from-checked">
+        </h5>
+        <h5 class="layui-col-sm3">
+          <input type="text" id="userBasicEditAge" name="age" placeholder="年龄" autocomplete="off" class="layui-input">
+        </h5>
+        <h5 class="layui-col-sm3">
+          <input type="text" id="userBasicEditDegree" name="degree" placeholder="学历" autocomplete="off" class="layui-input">
+        </h5>
+        <h5 class="layui-col-sm4">
+          <input class="layui-input" autocomplete="off" placeholder="毕业时间" id="userBasicEditGraduate">
+        </h5>
+        <h6 class="layui-col-sm12">籍贯：
+            <input type="text" id="userBasicEditBirthPlace" class="layui-input" name="birth_place">
+        </h6>
+        <h6 class="layui-col-sm12">现居住地：
+            <input type="text" id="userBasicEditCurPlace" class="layui-input" placeholder="现居住地">
+        </h6>
+      </div>
     </div>
   </div>
+
 </div>
