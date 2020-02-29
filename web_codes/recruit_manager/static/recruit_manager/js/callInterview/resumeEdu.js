@@ -8,7 +8,62 @@ $(document).ready(function() {
     resumeId = $('#resumeInfo').attr('resumeId')
     console.log("resumeEdu, resumeId(", resumeId, ")")
     getResumeEducation()
-    //show_one_education(-1)
+});
+
+$(document).on('click', '#userEduEditButton', function() {
+
+	$('#userEduHeader').css('background-color', '#66FFFF')
+
+	$('#userEduAddButton').css('display', 'none')
+	$('#userEduEditButton').css('display', 'none')
+	$('#userEduSaveButton').css('display', 'inline')
+});
+
+$(document).on('click', '#userEduSaveButton', function() {
+
+	$('#userEduHeader').css('background-color', '#FFFFFF')
+
+	$('#userEduAddButton').css('display', 'inline')
+	$('#userEduEditButton').css('display', 'inline')
+	$('#userEduSaveButton').css('display', 'none')
+
+	$('#userEduAddPanel').remove()
+});
+
+$(document).on('click', '#userEduAddButton', function() {
+
+	$('#userEduHeader').css('background-color', '#66FFFF')
+
+	$('#userEduAddButton').css('display', 'none')
+	$('#userEduEditButton').css('display', 'none')
+	$('#userEduSaveButton').css('display', 'inline')
+
+	var editpanel = '<div class="layui-form-item" id="userEduAddPanel">'+
+	 '<span class="layui-col-sm12">'+
+	 '   开始时间：<input class="layui-input"  autocomplete="off" placeholder="2012" name="educStrDate" id="educStrDate">'+
+	 '   </span>'+
+	 '   <span class="layui-col-sm12">'+
+	 '   结束时间：<input class="layui-input"  autocomplete="off" placeholder="2012" name="educEndDate" id="educEndDate">'+
+	 '   </span>'+
+	 '   <span class="layui-col-sm12">学校：<input type="text" id="" placeholder="请输入学校名称" name="email" autocomplete="off" class="layui-input"></span>'+
+	 '   <span class="layui-col-sm12">专业：<input type="text" id="" placeholder="请输入专业名称" name="email" autocomplete="off" class="layui-input"></span>'+
+	 '   <span class="layui-col-sm12">类别：<input type="text" id="" placeholder="本科" name="email" autocomplete="off" class="layui-input"></span>'+
+	 '   <span class="layui-col-sm12">类别：<input type="text" id="" placeholder="统招" name="email" autocomplete="off" class="layui-input"></span>'+
+	 '   <span class="layui-col-sm12">'+
+	 '    <div class="layui-col-sm12">标签：</div>'+
+	 '<div class="layui-col-sm12"><button class="layui-btn" onclick="addEducLabel(this)">添加标签</button></div>'+
+	 '</span>'+
+	 '<span class="layui-col-sm12">'+
+	 '   公司简介：<input type="text" id="" placeholder="山东师范大学" name="email" autocomplete="off" class="layui-input">'+
+	 '   </span>'+
+	 '   <span class="layui-col-sm12">'+
+	 '   职位描述及业绩：<input type="text" id="" placeholder="山东师范大学" name="email" autocomplete="off" class="layui-input">'+
+	 '   </span>'+
+	 '   </div>';
+	$('#resumeEduPanel').append(editpanel)
+});
+
+$(document).on('click', '#userEduAddButton', function() {
 });
 
 function show_one_education(edu_id) {
@@ -22,7 +77,6 @@ function show_one_education(edu_id) {
     if (edu_id != -1) {
         on_education_add = false
     }
-
 }
 
 function clean_resume_education_edit(edu_id) {
@@ -148,52 +202,18 @@ function showResumeEducation(ele) {
 }
 
 function getResumeEducation() {
-    console.log('GETGET: /api/educations/?resume_id=' + resumeId)
-    $.ajax({
-        // Keep the standard restful API here
-        url: '/api/educations/?resume_id=' + resumeId,
-        type: 'GET',
-        data: null,
-        success: function(response) {
-            console.log("education: ", response)
-            $.each(response.results, function(index, ele) {
-                // check if the item has been added
-                if (edu_map[ele.id]) {
-                    //console.log(ele.id, " item has beed added, skip it")
-                    return
-                }
-
-				showResumeEducation(ele)
-
-                $('#resume_education_show').append(
-                    gen_resume_education_edit(ele.id)
-                )
-                clean_resume_education_edit(ele.id)
-                // step1: set the basic value
-                $('form[class="resume_education_item_edit"][id=' + ele.id + '] #education_start' + ele.id).val(ele.start)
-                $('form[class="resume_education_item_edit"][id=' + ele.id + '] #education_end' + ele.id).val(ele.end)
-                $('form[class="resume_education_item_edit"][id=' + ele.id + '] #education_school' + ele.id).val(ele.school)
-                $('form[class="resume_education_item_edit"][id=' + ele.id + '] #education_college' + ele.id).val(ele.college)
-                $('form[class="resume_education_item_edit"][id=' + ele.id + '] #education_major' + ele.id).val(ele.major)
-                $('form[class="resume_education_item_edit"][id=' + ele.id + '] #education_degree' + ele.id).val(ele.degree)
-                //$('form[class="resume_education_item_edit"][id=' + ele.id + ']').css('display', 'none')
-
-                edu_map[ele.id]='form[class="resume_education_item_edit"][id=' + ele.id + ']'
-                $(edu_map[ele.id]).css('display', 'none')
-
-                // step2: set the timepicker
-                $('form[class="resume_education_item_edit"][id=' + ele.id + '] #education_start' + ele.id).datepicker({
-                    dateFormat: 'yy-mm-dd',
-                })
-                $('form[class="resume_education_item_edit"][id=' + ele.id + '] #education_end' + ele.id).datepicker({
-                    dateFormat: 'yy-mm-dd',
-                })
-            })
-        },
-        error: function() {
-           console.log("Fail to get the education of ", resumeId)
-        }
-    })
+  console.log('/api/educations/?resume_id=' + resumeId)
+  xhr_common_send('GET', '/api/educations/?resume_id=' + resumeId, null, function(response) {
+    console.log("education: ", response)
+	$.each(response.results, function(index, ele) {
+	  // check if the item has been added
+	  if (edu_map[ele.id]) {
+		//console.log(ele.id, " item has beed added, skip it")
+		return
+	  }
+	  showResumeEducation(ele)
+	})
+  })
 }
 
 $(document).on('click', '#resume_basic_edit_confirm', function() {
@@ -293,4 +313,57 @@ $(document).on('click', '#resume_education_add_button', function() {
 $(document).on('click', 'form[class="resume_education_item_edit"][id=-1]', function() {
     on_education_add = false
 });
+
+// ====================================================
+// Meta Function
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+function xhr_common_send(method, url, data, succCallback=null) {
+  var xhr = new XMLHttpRequest();
+  xhr.open(method, url);
+
+  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+
+  var csrftoken = getCookie('csrftoken');
+
+  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+  console.log("------------------------------------>")
+
+  xhr.onreadystatechange=function() {
+    if (xhr.readyState === 4){ //if complete
+      // 2xx is ok, ref: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+      if(xhr.status >= 200 && xhr.status < 300) {
+        if (succCallback) {
+          succCallback(JSON.parse(xhr.response))
+        }
+		console.log("success")
+      } else {
+        console.log("csrftoken: ", csrftoken)
+        console.log(xhr.responseText)
+        console.log(xhr.status)
+        console.log(xhr.statusText)
+        console.log(url)
+        console.log(data)
+        alert("Something error happend\n");
+      }
+    }
+  }
+  xhr.send(JSON.stringify(data));
+}
+
+
 

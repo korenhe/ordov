@@ -76,22 +76,6 @@ function UpdateBasicInfo() {
 	})
 }
 
-function show_one_experience(exp_id) {
-}
-
-
-function clean_resume_experience_edit(exp_id) {
-}
-
-$(document).on('click', '.resume_experience_edit_button', function() {
-});
-$(document).on('click', '.resume_experience_item_edit .experience_save', function() {
-});
-$(document).on('click', '.resume_experience_item_edit .experience_cancel', function() {
-});
-$(document).on('click', '#resume_experience_add_button', function() {
-});
-
 // Meta Function
 function getCookie(name) {
   var cookieValue = null;

@@ -1,9 +1,10 @@
 <div class="layui-card">
-  <div class="layui-card-header">
+  <div class="layui-card-header" id="userEduHeader">
     <div class="layui-col-sm7">教育经历</div>
     <div class="layui-col-sm5">
-      <button class="layui-btn" onclick="xadmin.open('添加用户','./member-add.html',600,400)"></i>新增</button>
-      <button class="layui-btn layui-btn layui-btn-xs"  onclick="xadmin.open('编辑','admin-edit.html')">编辑</button>
+      <button class="layui-btn layui-btn layui-btn-xs" id="userEduAddButton">新增</button>
+      <button class="layui-btn layui-btn layui-btn-xs" id="userEduEditButton">编辑</button>
+      <button class="layui-btn layui-btn layui-btn-xs" id="userEduSaveButton" style="display:none">保存</button>
     </div>
   </div>
   <div class="layui-card-body layui-row layui-col-space10">
@@ -16,6 +17,8 @@
         <span class="layui-col-sm1">本科</span>
         <span class="layui-col-sm1">统招</span>
       </div>
+
+
     </div>
   </div>
 </div>
