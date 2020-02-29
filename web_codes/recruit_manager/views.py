@@ -86,8 +86,10 @@ def callInterview(request):
 
     resumeId = request.GET.get('resume_id', None)
     print("----------------", resumeId)
-    projectId = request.GET.get('project_id')
-    interviewId = request.GET.get('interview_id')
+    projectId = request.GET.get('project_id', None)
+    print("projectId", projectId)
+    interviewId = request.GET.get('interview_id', None)
+    print("interviewId", interviewId)
     stageId = request.GET.get('stage_id')
 
     resume = Resume.objects.get(pk=resumeId)

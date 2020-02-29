@@ -113,6 +113,9 @@ class Post(models.Model):
     linkman = models.CharField(max_length=10, blank=True, null=True)
     linkman_phone = models.CharField(max_length=15, null=True, blank=True)
 
+    # talk hint
+    talk_hint = models.CharField(max_length=1000, null=True, blank=True)
+
     # reserved
     reserved1 = models.CharField(max_length=50, blank=True, null=True, default='')
     reserved2 = models.CharField(max_length=50, blank=True, null=True, default='')

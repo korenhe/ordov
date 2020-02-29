@@ -86,6 +86,7 @@ class PostSerializer(serializers.ModelSerializer):
             'place',
             'link',
             'request',
+            'talk_hint',
         )
 
     def create(self, validated_data):

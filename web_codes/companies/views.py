@@ -155,6 +155,7 @@ def UpdatePost(request):
         post_name = request.POST['post_name']
         baiying_task = request.POST['baiying_task_id']
         p_type = request.POST['post_type']
+        talk_hint = request.POST['talk_hint']
 
         province = request.POST['working_place_province']
         city = request.POST['working_place_city']
@@ -268,6 +269,7 @@ def UpdatePost(request):
             "baiying_task_name": baiying_task_name,
             "baiying_task_id": int(baiying_task_id),
             "resume_latest_modified": resume_latest_modified,
+            "talk_hint": talk_hint,
             "level": ""
         }
 
