@@ -14,6 +14,7 @@ $(document).ready(function() {
             projectId, ") interviewId(",
             interviewId, ")")
     GetResumeTag()
+    GetExpectedInfo()
 });
 
 function InsertTag(ele) {
@@ -41,26 +42,151 @@ function GetResumeTag() {
 	xhr_common_send('GET', '/api/tags/?resume_id=' + resumeId , null, function(response) {
         console.log("-------------", response)
         $.each(response.results, function(index, ele) {
-            console.log("insert ", ele.id, " ", ele.tagname, "")
+            //console.log("insert ", ele.id, " ", ele.tagname, "")
             InsertTag(ele)
         });
 	});
 }
 
-function UpdateBasicInfo() {
-    // Parsing the basic info and update
-    var data = {
-      "username": $('#userBasicEditName').val(),
-      "gender": 'f',
-      "age": 34,
-      "degree": 3,
-      "graduate": $('#userBasicEditGraduate').val(),
-      "brith_place": $('#userBasicEditBirthPlace').val(),
-    }
-    console.log("data:", data)
-	xhr_common_send('PUT', '/api/resumes/' + resumeId + '/', data, function(response){
-		console.log("success")
-	})
+$(document).on('change', '#userCurJobState', function() {
+    var val = $('#userCurJobState').val()
+	var data = {
+		"hunting_status": val,
+	}
+    console.log("Prepare to update the resume Info data:", data)
+    xhr_common_send('PUT', '/api/resumes/' + resumeId + '/', data, function(response){
+        console.log("success update resume Info")
+    })
+});
+
+$(document).on('change', '#userExpectArea', function() {
+    var val = $('#userExpectArea').val()
+	var data = {
+		"expected_industry": val,
+	}
+    console.log("Prepare to update the resume Info data:", data)
+    xhr_common_send('PUT', '/api/resumes/' + resumeId + '/', data, function(response){
+        console.log("success update resume Info")
+    })
+});
+
+
+$(document).on('change', '#userExpectPost', function() {
+    var val = $('#userExpectPost').val()
+	var data = {
+		"expected_post": val,
+	}
+    console.log("Prepare to update the resume Info data:", data)
+    xhr_common_send('PUT', '/api/resumes/' + resumeId + '/', data, function(response){
+        console.log("success update resume Info")
+    })
+});
+
+$(document).on('change', '#userExpectRestModel', function() {
+    var val = $('#userExpectRestModel').val()
+	var data = {
+		"expected_restmodel": val,
+	}
+    console.log("Prepare to update the resume Info data:", data)
+    xhr_common_send('PUT', '/api/resumes/' + resumeId + '/', data, function(response){
+        console.log("success update resume Info")
+    })
+});
+
+
+$(document).on('change', '#userExpectInsurancePlace', function() {
+    var val = $('#userExpectInsurancePlace').val()
+	var data = {
+		"expected_insurance_place_type": val,
+	}
+    console.log("Prepare to update the resume Info data:", data)
+    xhr_common_send('PUT', '/api/resumes/' + resumeId + '/', data, function(response){
+        console.log("success update resume Info")
+    })
+});
+
+$(document).on('change', '#userExpectInsuranceTime', function() {
+    var val = $('#userExpectInsuranceTime').val()
+	var data = {
+		"expected_insurance_time_type": val,
+	}
+    console.log("Prepare to update the resume Info data:", data)
+    xhr_common_send('PUT', '/api/resumes/' + resumeId + '/', data, function(response){
+        console.log("success update resume Info")
+    })
+});
+
+$(document).on('change', '#userExpectSalary', function() {
+    var val = $('#userExpectSalary').val()
+	var data = {
+		"expected_salary": val,
+	}
+    console.log("Prepare to update the resume Info data:", data)
+    xhr_common_send('PUT', '/api/resumes/' + resumeId + '/', data, function(response){
+        console.log("success update resume Info")
+    })
+});
+
+function GetExpectedInfo() {
+    var jobStateSeletor = document.getElementById("userCurJobState")
+    var areaSelector = document.getElementById("userExpectArea")
+    var postSelector = document.getElementById("userExpectPost")
+    var insurancePlaceSelector = document.getElementById("userExpectInsurancePlace")
+    var insuranceTimeSelector = document.getElementById("userExpectInsuranceTime")
+    var restModelSelector = document.getElementById("userExpectRestModel")
+
+	xhr_common_send('GET', '/api/resumes/' + resumeId + '/', null, function(response) {
+		console.log(response)
+        console.log('hunting_status', response.hunting_status)
+
+        // job status
+        if (response.hunting_status == -1) {
+            console.log('hunting_status inner', response.hunting_status)
+            jobStateSeletor.options[0].selected = true
+        } else if (response.hunting_status > 0) {
+            jobStateSeletor.options[response.hunting_status].selected = true
+        }
+
+        // restmodel
+        var restModelId = parseInt(response.expected_restmodel);
+        if (isNaN(restModelId)) {
+            restModelId = 0
+        }
+        restModelSelector.options[restModelId].selected = true
+
+        // areaSelector
+        var areaId = parseInt(response.expected_industry);
+        if (isNaN(areaId)) {
+            areaId = 0
+        }
+        areaSelector.options[areaId].selected = true
+
+        // postSelector
+        var postId = parseInt(response.expected_post);
+        if (isNaN(postId)) {
+            postId = 0
+        }
+        postSelector.options[postId].selected = true
+
+        // insurance_place Selector
+        var insurancePlaceId = parseInt(response.expected_insurance_place_type);
+        if (isNaN(insurancePlaceId)) {
+            insurancePlaceId = 0
+        }
+        insurancePlaceSelector.options[insurancePlaceId].selected = true
+
+        // insurance_time Selector
+        var insuranceTimeId = parseInt(response.expected_insurance_time_type);
+        if (isNaN(insuranceTimeId)) {
+            insuranceTimeId = 0
+        }
+        insuranceTimeSelector.options[insuranceTimeId].selected = true
+
+        $('#userExpectSalary').val(response.expected_salary)
+
+    });
+
+
 }
 
 // Meta Function

@@ -19,22 +19,6 @@ function GetProjectInfo() {
 	})
 }
 
-function UpdateBasicInfo() {
-    // Parsing the basic info and update
-    var data = {
-      "username": $('#userBasicEditName').val(),
-      "gender": 'f',
-      "age": 34,
-      "degree": 3,
-      "graduate": $('#userBasicEditGraduate').val(),
-      "brith_place": $('#userBasicEditBirthPlace').val(),
-    }
-    console.log("data:", data)
-	xhr_common_send('PUT', '/api/projects/' + projectId+ '/', data, function(response){
-		console.log("success")
-	})
-}
-
 // Meta Function
 function getCookie(name) {
   var cookieValue = null;

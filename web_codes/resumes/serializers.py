@@ -19,7 +19,9 @@ class ResumeSerializer(serializers.ModelSerializer):
     newname = serializers.SerializerMethodField()
     birthorigin = serializers.SerializerMethodField()
     expected = serializers.SerializerMethodField()
+    cursettle = serializers.SerializerMethodField()
     lastmod = serializers.SerializerMethodField()
+
 
     def get_candidate_id(self, resume):
         if resume.candidate:
@@ -78,9 +80,24 @@ class ResumeSerializer(serializers.ModelSerializer):
         if resume.birth_district is not None:
             birth = birth + "." + resume.birth_district
             hasBirthInfo = True
+        if resume.birth_street is not None:
+            birth = birth + "." + resume.birth_street
+            hasBirthInfo = True
         if hasBirthInfo is False:
             return "无籍贯信息"
         return birth
+
+    def get_cursettle(self, resume):
+        current_settle = ""
+        if resume.current_settle_province is not None:
+            current_settle = current_settle + resume.current_settle_province
+        if resume.current_settle_city is not None:
+            current_settle = current_settle + resume.current_settle_city
+        if resume.current_settle_district is not None:
+            current_settle = current_settle + resume.current_settle_district
+        if resume.current_settle_street is not None:
+            current_settle = current_settle + resume.current_settle_street
+        return current_settle 
 
     # by post id, can be is_in_interview for post1 but not for post2
     def get_workexp(self, resume):
@@ -217,6 +234,7 @@ class ResumeSerializer(serializers.ModelSerializer):
             'newname',
             'birthorigin',
             'expected',
+            'cursettle',
             'majorfull',
             'lastmod',
 
@@ -249,15 +267,24 @@ class ResumeSerializer(serializers.ModelSerializer):
             'birth_province',
             'birth_city',
             'birth_district',
+            'birth_street',
 
             'expected_province',
             'expected_city',
             'expected_district',
             'expected_street',
 
+            'current_settle_province',
+            'current_settle_city',
+            'current_settle_district',
+            'current_settle_street',
+
             'expected_industry',
             'expected_salary',
             'expected_post',
+            'expected_restmodel',
+            'expected_insurance_place_type',
+            'expected_insurance_time_type',
 
             'graduate_time',
             'graduate_year',

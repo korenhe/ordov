@@ -15,7 +15,7 @@
         <h4> {{ resume.username }} </h4>
       </div>
       <div class="layui-form-item">
-          <h5 class="layui-col-sm2" id="userBasicShowGendor">
+          <h5 class="layui-col-sm1" id="userBasicShowGendor">
             {% if resume.gendor == 'm' %}
               男
             {% elif resume.gendor == 'f' %}
@@ -24,13 +24,15 @@
               未知
             {% endif %}
           </h5>
-        <h5 class="layui-col-sm3" id="userBasicShowAge">{{resume.age}}</h5>
-        <h5 class="layui-col-sm3" id="userBasicShowDegree">{{resume.degree}}</h5>
-        <h5 class="layui-col-sm4" id="userBasicShowGraduate">{{resume.graduate}}</h5>
+        <h5 class="layui-col-sm1" id="userBasicShowAge">{{resume.age}}</h5>
+        <h5 class="layui-col-sm2" id="userBasicShowDegree"></h5>
+        <h5 class="layui-col-sm3" id="userBasicShowGraduate">{{resume.graduate}}</h5>
+        <h6 class="layui-col-sm4" id="userBasicShowPhone">电话:</h6>
       </div>
       <div class="layui-form-item">
-        <h6 class="layui-col-sm6" id="userBasicShowCurResidence">现居住地：{{ resume.username }}</h6>
-        <h6 class="layui-col-sm6" id="userBasicShowBirthPlace">籍贯：{{ resume.birth_province }}</h6>
+        <h6 class="layui-col-sm12" id="userBasicShowCurResidence">现居住地：</h6>
+        <h6 class="layui-col-sm12" id="userBasicShowBirthPlace">籍贯:</h6>
+        <h6 class="layui-col-sm12" id="userBasicShowExpectPlace">期望工作地:</h6>
       </div>
     </div>
   </div>
@@ -51,12 +53,56 @@
         <h5 class="layui-col-sm4">
           <input class="layui-input" autocomplete="off" placeholder="毕业时间" id="userBasicEditGraduate">
         </h5>
-        <h6 class="layui-col-sm12">籍贯：
-            <input type="text" id="userBasicEditBirthPlace" class="layui-input" name="birth_place">
+
+        <h6 class="layui-col-sm12">电话号码：
+            <input type="text" id="userBasicEditPhone" class="layui-input" name="phone_number">
         </h6>
+        <h6 class="layui-col-sm12">籍贯:
+        </h6>
+        <h5 class="layui-col-sm3">
+          <input type="text" id="userBasicEditBirthProvince" name="birth_province" placeholder="省" autocomplete="off" class="layui-input layui-from-checked">
+        </h5>
+        <h5 class="layui-col-sm3">
+          <input type="text" id="userBasicEditBirthCity" name="birth_city" placeholder="市" autocomplete="off" class="layui-input layui-from-checked">
+        </h5>
+        <h5 class="layui-col-sm3">
+          <input type="text" id="userBasicEditBirthDistrict" name="birth_district" placeholder="区" autocomplete="off" class="layui-input layui-from-checked">
+        </h5>
+        <h5 class="layui-col-sm3">
+          <input type="text" id="userBasicEditBirthStreet" name="birth_street" placeholder="街道" autocomplete="off" class="layui-input layui-from-checked">
+        </h5>
+
         <h6 class="layui-col-sm12">现居住地：
-            <input type="text" id="userBasicEditCurPlace" class="layui-input" placeholder="现居住地">
         </h6>
+        <h5 class="layui-col-sm3">
+          <input type="text" id="userBasicEditCurSettleProvince" name="current_settle_province" placeholder="省" autocomplete="off" class="layui-input layui-from-checked">
+        </h5>
+        <h5 class="layui-col-sm3">
+          <input type="text" id="userBasicEditCurSettleCity" name="current_settle_city" placeholder="市" autocomplete="off" class="layui-input layui-from-checked">
+        </h5>
+        <h5 class="layui-col-sm3">
+          <input type="text" id="userBasicEditCurSettleDistrict" name="current_settle_district" placeholder="区" autocomplete="off" class="layui-input layui-from-checked">
+        </h5>
+        <h5 class="layui-col-sm3">
+          <input type="text" id="userBasicEditCurSettleStreet" name="current_settle_street" placeholder="街道" autocomplete="off" class="layui-input layui-from-checked">
+        </h5>
+
+
+        <h6 class="layui-col-sm12">期望工作地：
+        </h6>
+        <h5 class="layui-col-sm3">
+          <input type="text" id="userBasicEditExpectProvince" name="expected_province" placeholder="省" autocomplete="off" class="layui-input layui-from-checked">
+        </h5>
+        <h5 class="layui-col-sm3">
+          <input type="text" id="userBasicEditExpectCity" name="expected_city" placeholder="市" autocomplete="off" class="layui-input layui-from-checked">
+        </h5>
+        <h5 class="layui-col-sm3">
+          <input type="text" id="userBasicEditExpectDistrict" name="expected_district" placeholder="区" autocomplete="off" class="layui-input layui-from-checked">
+        </h5>
+        <h5 class="layui-col-sm3">
+          <input type="text" id="userBasicEditExpectStreet" name="expected_place" placeholder="街道" autocomplete="off" class="layui-input layui-from-checked">
+        </h5>
+
       </div>
     </div>
   </div>
