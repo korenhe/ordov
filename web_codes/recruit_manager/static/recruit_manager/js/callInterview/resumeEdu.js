@@ -122,6 +122,8 @@ function showResumeEducation(ele) {
 
 function getResumeEducation() {
   console.log('/api/educations/?resume_id=' + resumeId)
+  document.getElementById('resumeEduPanel').innerHTML = ""
+
   xhr_common_send('GET', '/api/educations/?resume_id=' + resumeId, null, function(response) {
     console.log("education: ", response)
 	$.each(response.results, function(index, ele) {

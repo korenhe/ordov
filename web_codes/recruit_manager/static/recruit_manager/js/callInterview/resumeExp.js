@@ -30,10 +30,11 @@ $(document).on('click', '#userExpEditButton', function() {
 
 $(document).on('click', '#userExpSaveButton', function() {
 
+	SaveExpInfo()
     $('#userExpHeader').css('background-color', '#FFFFFF')
 
     $('#userExpAddButton').css('display', 'inline')
-    $('#userExpEditButton').css('display', 'inline')
+    $('#userExpEditButton').css('display', 'none')
     $('#userExpSaveButton').css('display', 'none')
 
     $('#userExpAddPanel').remove()
@@ -49,22 +50,19 @@ $(document).on('click', '#userExpAddButton', function() {
 
 	var userExpAddPanel = '<div class="layui-form-item" id="userExpAddPanel">'+
 	'<span class="layui-col-sm12">'+
-	'       开始时间：<input class="layui-input"  autocomplete="off" placeholder="2012"  name="workStrDate" id="workStrDate">'+
+	'       开始时间：<input class="layui-input"  autocomplete="off" placeholder="2020-01-01"  name="workStrDate" id="userExpEditStart">'+
 	'       </span>'+
 	'       <span class="layui-col-sm12">'+
-	'       结束时间：<input class="layui-input"  autocomplete="off" placeholder="2012" placeholder="2012" name="workEndDate" id="workEndDate">'+
+	'       结束时间：<input class="layui-input"  autocomplete="off" placeholder="2020-01-01" placeholder="2012" name="workEndDate" id="userExpEditEnd">'+
 	'       </span>'+
 	'       <span class="layui-col-sm12">'+
-	'       公司：<input type="text" id="" placeholder="请输入公司名称" name="" autocomplete="off" class="layui-input">'+
+	'       公司：<input type="text" id="userExpEditCompanyName" placeholder="请输入公司名称" name="" autocomplete="off" class="layui-input">'+
 	'       </span>'+
 	'       <span class="layui-col-sm12">'+
-	'       职位：<input type="text" id="" placeholder="请输入职位" name="" autocomplete="off" class="layui-input">'+
+	'       职位：<input type="text" id="userExpEditPostName" placeholder="请输入职位" name="" autocomplete="off" class="layui-input">'+
 	'       </span>'+
 	'       <span class="layui-col-sm12">'+
-	'       时间：<input type="text" id="" placeholder="请输入工作时间" name="" autocomplete="off" class="layui-input">'+
-	'       </span>'+
-	'       <span class="layui-col-sm12">'+
-	'       离职原因：<input type="text" id="" placeholder="请输入离职原因" name="" autocomplete="off" class="layui-input">'+
+	'       离职原因：<input type="text" id="userExpEditLeaveReason" placeholder="请输入离职原因" name="" autocomplete="off" class="layui-input">'+
 	'       </span>'+
 	'   </div>';
 	$("#resumeExpPanel").append(userExpAddPanel);
@@ -77,6 +75,30 @@ function clean_resume_project_edit(proj_id) {
     $('form[class="resume_project_item_edit"][id=' + proj_id + '] #project_role' + proj_id).val("")
     $('form[class="resume_project_item_edit"][id=' + proj_id + '] #project_duty' + proj_id).val("")
     $('form[class="resume_project_item_edit"][id=' + proj_id + '] #project_company_name' + proj_id).val("")
+}
+
+function SaveExpInfo() {
+	data = {}
+	data["resume"] = resumeId
+	if ($('#userExpEditStart').val().length == 0) {
+		data["start"] = "1970-01-01"
+	} else {
+		data["start"] = $('#userExpEditStart').val()
+	}
+
+	if ($('#userExpEditEnd').val().length == 0) {
+		data["end"] = "1970-01-01"
+	} else {
+		data["end"] = $('#userExpEditEnd').val()
+	}
+	data['company_name'] = $('#userExpEditCompanyName').val()
+	data['post_name'] = $('#userExpEditPostName').val()
+	data['leave_reason'] = $('#userExpEditLeaveReason').val()
+
+	xhr_common_send('POST', '/api/experiences/', data, function(response){
+        getResumeExperience()
+		console.log("-------------------success")
+	})
 }
 
 function getResumeExperience_one(proj_id) {
@@ -121,6 +143,7 @@ function showResumeExperience(ele) {
 
 function getResumeExperience() {
     console.log('/api/experiences?resume_id=' + resumeId)
+    document.getElementById('resumeExpPanel').innerHTML = ""
 	xhr_common_send('GET', '/api/experiences?resume_id=' + resumeId, null, function(response) {
 		console.log("project: ", response)
 		$.each(response.results, function(index, ele) {
