@@ -37,6 +37,7 @@ router.register(r'languages', experiencesViews.LanguageViewSet)
 router.register(r'certifications', experiencesViews.CertificationViewSet)
 router.register(r'permissions', permissionsViews.ProjectPermissionViewSet)
 router.register(r'accounts', accountsViews.UserProfileViewSet)
+router.register(r'tags', resumesViews.TagViewSet)
 
 # Look at here: all path pattern should be ENDUP with '/'
 urlpatterns = [

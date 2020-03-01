@@ -12,9 +12,9 @@ from rest_framework import viewsets, status
 from .models import Resume
 from .filter import query_resumes_by_args
 from companies.models import Post
-from .models import Education
+from .models import Education, Tag
 from experiences.models import Experience, Project, Language, Certification
-from .serializers import ResumeSerializer, EducationSerializer
+from .serializers import ResumeSerializer, EducationSerializer, TagSerializer
 from datatableview.views import DatatableView
 from datatableview.utils import *
 from django.http import JsonResponse, HttpResponse
@@ -293,6 +293,17 @@ class EducationViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         qset = Education.objects.all()
+        resume_id = self.request.query_params.get('resume_id', None)
+        if resume_id is not None and resume_id.isdigit():
+            qset = qset.filter(resume_id=resume_id)
+        return qset
+
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+
+    def get_queryset(self):
+        qset = Tag.objects.all()
         resume_id = self.request.query_params.get('resume_id', None)
         if resume_id is not None and resume_id.isdigit():
             qset = qset.filter(resume_id=resume_id)

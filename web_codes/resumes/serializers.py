@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from candidates.serializers import CandidateSerializer
-from .models import Resume, Education
+from .models import Resume, Education, Tag
 from interviews.models import Interview, STATUS_CHOICES
 
 from ordov.choices import (DEGREE_CHOICES, DEGREE_CHOICES_MAP)
@@ -318,4 +318,18 @@ class EducationSerializer(serializers.ModelSerializer):
             'place',
             'instructor',
             'instructor_phone',
+        )
+
+class TagSerializer(serializers.ModelSerializer):
+
+    # DO NOT WRAP EMBEDDED FOREIGN KEY OBJECT HERE
+    # REFER TO: EducationSerializer
+    class Meta:
+        model = Tag
+        fields = (
+            'id',
+            'resume', # foreginkey
+            'tag',
+            'last_modified',
+            'created',
         )

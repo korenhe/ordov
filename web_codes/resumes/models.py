@@ -119,3 +119,12 @@ class Education(models.Model):
 
     def __str__(self):
         return self.degree
+
+class Tag(models.Model):
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, default='')
+    recuriter = models.CharField(max_length=50, blank=True, null=True)
+    tag = models.CharField(max_length=50, blank=True, null=True)
+
+    # table related info
+    last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
