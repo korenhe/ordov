@@ -21,13 +21,16 @@ $(document).on('click', '#userEduEditButton', function() {
 
 $(document).on('click', '#userEduSaveButton', function() {
 
+    // Save
+    SaveEducationInfo()
 	$('#userEduHeader').css('background-color', '#FFFFFF')
 
 	$('#userEduAddButton').css('display', 'inline')
-	$('#userEduEditButton').css('display', 'inline')
+	$('#userEduEditButton').css('display', 'none')
 	$('#userEduSaveButton').css('display', 'none')
 
 	$('#userEduAddPanel').remove()
+
 });
 
 $(document).on('click', '#userEduAddButton', function() {
@@ -40,31 +43,23 @@ $(document).on('click', '#userEduAddButton', function() {
 
 	var editpanel = '<div class="layui-form-item" id="userEduAddPanel">'+
 	 '<span class="layui-col-sm12">'+
-	 '   开始时间：<input class="layui-input"  autocomplete="off" placeholder="2012" name="educStrDate" id="educStrDate">'+
+	 '   开始时间：<input class="layui-input"  autocomplete="off" placeholder="2020-01-01" name="educStrDate" id="userEduEditStart">'+
 	 '   </span>'+
 	 '   <span class="layui-col-sm12">'+
-	 '   结束时间：<input class="layui-input"  autocomplete="off" placeholder="2012" name="educEndDate" id="educEndDate">'+
+	 '   结束时间：<input class="layui-input"  autocomplete="off" placeholder="2020-01-01" name="educEndDate" id="userEduEditEnd">'+
 	 '   </span>'+
-	 '   <span class="layui-col-sm12">学校：<input type="text" id="" placeholder="请输入学校名称" name="email" autocomplete="off" class="layui-input"></span>'+
-	 '   <span class="layui-col-sm12">专业：<input type="text" id="" placeholder="请输入专业名称" name="email" autocomplete="off" class="layui-input"></span>'+
-	 '   <span class="layui-col-sm12">类别：<input type="text" id="" placeholder="本科" name="email" autocomplete="off" class="layui-input"></span>'+
-	 '   <span class="layui-col-sm12">类别：<input type="text" id="" placeholder="统招" name="email" autocomplete="off" class="layui-input"></span>'+
+	 '   <span class="layui-col-sm12">学校：<input type="text" id="userEduEditSchool" name="email" autocomplete="off" class="layui-input"></span>'+
+	 '   <span class="layui-col-sm12">专业：<input type="text" id="userEduEditMajor" name="email" autocomplete="off" class="layui-input"></span>'+
+	 '   <span class="layui-col-sm12">学位：<input type="text" id="userEduEditDegree" placeholder="本科" name="email" autocomplete="off" class="layui-input"></span>'+
+	 '   <span class="layui-col-sm12">类别：<input type="text" id="userEduEditType" placeholder="统招/成人大学" name="email" autocomplete="off" class="layui-input"></span>'+
 	 '   <span class="layui-col-sm12">'+
 	 '    <div class="layui-col-sm12">标签：</div>'+
 	 '<div class="layui-col-sm12"><button class="layui-btn" onclick="addEducLabel(this)">添加标签</button></div>'+
 	 '</span>'+
-	 '<span class="layui-col-sm12">'+
-	 '   公司简介：<input type="text" id="" placeholder="山东师范大学" name="email" autocomplete="off" class="layui-input">'+
-	 '   </span>'+
-	 '   <span class="layui-col-sm12">'+
-	 '   职位描述及业绩：<input type="text" id="" placeholder="山东师范大学" name="email" autocomplete="off" class="layui-input">'+
-	 '   </span>'+
 	 '   </div>';
 	$('#resumeEduPanel').append(editpanel)
 });
 
-$(document).on('click', '#userEduAddButton', function() {
-});
 
 function show_one_education(edu_id) {
     $.each(edu_map, function(key, value){
@@ -77,82 +72,6 @@ function show_one_education(edu_id) {
     if (edu_id != -1) {
         on_education_add = false
     }
-}
-
-function clean_resume_education_edit(edu_id) {
-    $('form[class="resume_education_item_edit"][id=' + edu_id + '] #education_start' + edu_id).val("")
-    $('form[class="resume_education_item_edit"][id=' + edu_id + '] #education_end' + edu_id).val("")
-    $('form[class="resume_education_item_edit"][id=' + edu_id + '] #education_school' + edu_id).val("")
-    $('form[class="resume_education_item_edit"][id=' + edu_id + '] #education_college' + edu_id).val("")
-    $('form[class="resume_education_item_edit"][id=' + edu_id + '] #education_degree' + edu_id).val("")
-    $('form[class="resume_education_item_edit"][id=' + edu_id + '] #education_major' + edu_id).val("")
-}
-
-function gen_resume_education_edit(edu_id) {
-    return '<form class="resume_education_item_edit" id=' + edu_id + '>' +
-        '<div class="row">' +
-          '<div class="col-md-6 input-group">' +
-            '<div class="input-group-prepend resume_basic_addon">' +
-              '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">开始时间</span>' +
-            '</div>' +
-            '<input type="text" class="form-control" name="start" id=education_start' + edu_id + ' value="">' +
-          '</div>' +
-          '<div class="col-md-6 input-group">' +
-            '<div class="input-group-prepend resume_basic_addon">' +
-              '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">结束时间</span>' +
-            '</div>' +
-            '<input type="text" class="form-control" name="end" id=education_end' + edu_id + ' value="">' +
-          '</div>' +
-        '</div>' +
-        '<div class="row">' +
-          '<div class="col-md-6 input-group">' +
-            '<div class="input-group-prepend resume_basic_addon">' +
-              '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">学校</span>' +
-            '</div>' +
-            '<input type="text" class="form-control" name="school" id=education_school' + edu_id + ' value="">' +
-          '</div>' +
-          '<div class="col-md-6 input-group">' +
-            '<div class="input-group-prepend resume_basic_addon">' +
-              '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">学院</span> ' +
-            '</div>' +
-            '<input type="text" class="form-control" name="college" id=education_college' + edu_id + ' value="">' +
-          '</div>' +
-        '</div>' +
-        '<div class="row">' +
-          '<div class="col-md-6 input-group">' +
-            '<div class="input-group-prepend resume_basic_addon">' +
-              '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">专业</span>' +
-            '</div>' +
-            '<input type="text" class="form-control" name="major" id=education_major' + edu_id + ' value="">' +
-          '</div>' +
-          '<div class="col-md-6 input-group">' +
-            '<div class="input-group-prepend resume_basic_addon">' +
-              '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">学位</span>' +
-            '</div>' +
-            '<input type="text" class="form-control" name="degree" id=education_degree' + edu_id + ' value="">' +
-          '</div>' +
-        '</div>' +
-        '<div class="row">' +
-          '<div class="col-md-12 input-group">' +
-            '<div class="input-group-prepend resume_basic_addon">' +
-              '<span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">描述</span>' +
-            '</div>' +
-            '<input type="text" class="form-control" name="description" id=education_description' + edu_id + ' value="">' +
-          '</div>' +
-        '</div>' +
-        '<div class="row">' +
-          '<div class="col-md-6">' +
-            '<button type="button" class="education_save" id=' + edu_id + '>' +
-              '确定' +
-            '</button>' +
-          '</div>' +
-          '<div class="col-md-6">' +
-            '<button type="button" class="education_cancel" id=' + edu_id + '>' +
-              '取消' +
-            '</button>' +
-          '</div>' +
-        '</div>' +
-        '</form>'
 }
 
 function getResumeEducation_one(edu_id) {
@@ -239,6 +158,53 @@ $(document).on('click', '.resume_education_edit_button', function() {
    show_one_education(id)
    $('form[class="resume_education_item_edit"][id=' + id + ']').show()
 });
+
+function SaveEducationInfo() {
+
+	var data = {}
+	console.log("degree ", $('#userEduEditDegree').html())
+    if ($('#userEduEditDegree').val() == '小学') {
+        data['degree'] = 1
+    } else if ($('#userEduEditDegree').val() == '初中') {
+        data['degree'] = 2
+    } else if ($('#userEduEditDegree').val() == '高中') {
+        data['degree'] = 3
+    } else if ($('#userEduEditDegree').val() == '中专') {
+        data['degree'] = 4
+    } else if ($('#userEduEditDegree').val() == '大专') {
+        data['degree'] = 5
+    } else if ($('#userEduEditDegree').val() == '本科') {
+        data['degree'] = 6
+    } else if ($('#userEduEditDegree').val() == '硕士') {
+        data['degree'] = 7
+    } else if ($('#userEduEditDegree').val() == '博士') {
+        data['degree'] = 8
+    } else if ($('#userEduEditDegree').val() == '博士后') {
+        data['degree'] = 9
+    }
+
+	data["resume"] = resumeId
+
+	if ($('#userEduEditStart').val().length == 0) {
+        data["start"] = "1970-01-01"
+	} else {
+        data["start"] = $('#userEduEditStart').val()
+	}
+
+	if ($('#userEduEditEnd').val().length == 0) {
+        data["end"] = "1970-01-01"
+	} else {
+        data["end"] = $('#userEduEditEnd').val()
+	}
+    data["school"] = $('#userEduEditSchool').val()
+    data["major"] = $('#userEduEditMajor').val()
+    data["edu_type"] = $('#userEduEditType').val()
+
+    console.log("---------> fields: ", data)
+    xhr_common_send('POST', '/api/educations/', data, function(response) {
+        console.log("--------------Add ")
+    });
+}
 
 $(document).on('click', '.resume_education_item_edit .education_save', function() {
     var id = Number(this.id)
