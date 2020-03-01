@@ -200,7 +200,7 @@ def query_resumes_by_args(user, **kwargs):
     queryset = FilterResumeByPostRequest(queryset, post_id)
 
     # step1.1: Skip ones who would not find a job
-    queryset = queryset.filter(~models.Q(hunting_status=0))
+    queryset = queryset.filter(~models.Q(hunting_status=1))
 
     total = queryset.count()
 
