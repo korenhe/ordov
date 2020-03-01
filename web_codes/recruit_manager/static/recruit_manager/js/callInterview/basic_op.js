@@ -1,3 +1,46 @@
+var resumeId = -1
+var projectId = -1
+var interviewId = -1
+
+$(document).ready(function() {
+    resumeId = $('#resumeInfo').attr('resumeId')
+    projectId = $('#resumeInfo').attr('projectId')
+    interviewId = $('#resumeInfo').attr('interviewId')
+    console.log("basicInfo resumeId(",
+            resumeId, ") projectId(",
+            projectId, ") interviewId(",
+            interviewId, ")")
+});
+
+$(document).on('click', '#deepContactButton', function() {
+    var status = 2; 
+    //submitInterviewById(interviewId, "/api/interviews/", status, '深度沟通');
+});
+
+$(document).on('click', '#unlinkButton', function() {
+	var status = 2;
+	//submitInterviewById(interviewId, "/api/interviews/", status, '未接通');
+});
+
+$(document).on('click', '#agreeInterviewButton', function() {
+});
+
+$(document).on('click', '#giveupInterviewButton', function() {
+});
+
+
+function submitInterviewById(interviewId, url, status_value, sub_status) {
+  data = {"is_active":true,
+          "status": status_value,
+          "post": post_selected_value,
+          "result":"Pending",
+          "sub_status":sub_status,
+         };
+
+  xhr_common_send("PATCH", url + interview_id + '/', data);
+}
+
+//====================================
 function getCookie(name) {
   var cookieValue = null;
   if (document.cookie && document.cookie !== '') {
