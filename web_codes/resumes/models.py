@@ -33,6 +33,7 @@ class Resume(models.Model):
     birth_province = models.CharField(max_length=10, blank=True, null=True)
     birth_city = models.CharField(max_length=10, blank=True, null=True)
     birth_district = models.CharField(max_length=10, blank=True, null=True)
+    birth_street = models.CharField(max_length=10, blank=True, null=True)
     birth_place = models.CharField(max_length=50, blank=True, null=True)
 
     # social info
@@ -55,6 +56,9 @@ class Resume(models.Model):
     expected_salary = models.CharField(max_length=50, null=True, blank=True)
     expected_post = models.CharField(max_length=50, null=True, blank=True)
     expected_positon = models.CharField(max_length=50, null=True, blank=True)
+    expected_restmodel = models.CharField(max_length=50, null=True, blank=True)
+    expected_insurance_place_type = models.CharField(max_length=50, null=True, blank=True)
+    expected_insurance_time_type = models.CharField(max_length=50, null=True, blank=True)
 
     expected_province = models.CharField(max_length=50, null=True, blank=True)
     expected_city = models.CharField(max_length=50, null=True, blank=True)
@@ -119,3 +123,12 @@ class Education(models.Model):
 
     def __str__(self):
         return self.degree
+
+class Tag(models.Model):
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, default='')
+    recuriter = models.CharField(max_length=50, blank=True, null=True)
+    tag = models.CharField(max_length=50, blank=True, null=True)
+
+    # table related info
+    last_modified = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)

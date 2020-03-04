@@ -203,6 +203,7 @@ $(document).ready(function() {
                 <button type="button" class="stage_two_dail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">拨号面试</button>
                 <button type="button" class="stage_two_pass btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">通过</button>
                 <button type="button" class="stage_two_fail btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">结束</button>
+                <button type="button" class="stage_two_test btn btn-sm " id="` + row.interview_id + `" data-resume_id="` + row.id + `">Test</button>
                 </div>
 
 `;
@@ -739,10 +740,12 @@ $(document).ready(function() {
 
   function show_resume_modal(resume_id, callback) {
     xhr_common_send('GET', '/api/resumes/' + resume_id + '/', null, function(response){
+        /*
         document.getElementById("candidate_text_resumeinfo_username").value = response.username;
         document.getElementById("candidate_text_resumeinfo_degree").value = response.degree;
         document.getElementById("candidate_text_resumeinfo_school").value = response.school;
         document.getElementById("candidate_text_resumeinfo_phone_number").value = response.phone_number;
+        */
     })
   }
 
@@ -752,14 +755,17 @@ $(document).ready(function() {
     // TBD: no error handler
     xhr_common_send('GET', '/api/resumes/' + resume_id + '/', null, function(response){
         console.log("response", response)
+            /*
         document.getElementById("dail_text_expected_salary").value = response.expected_salary;
         document.getElementById("dail_text_expected_place_province").value = response.expected_province;
         document.getElementById("dail_text_expected_place_city").value = response.expected_city;
         document.getElementById("dail_text_expected_place_district").value = response.expected_district;
         document.getElementById("dail_text_expected_place_street").value = response.expected_street;
+        */
         //document.getElementById("").value = response.phone_number;
     })
     $('#dailToCandidateModal').modal('toggle');
+    //$('#myModal').modal('toggle');
   }
 
   function show_ai_info(resume_id, post_id) {
@@ -887,13 +893,22 @@ $(document).ready(function() {
     show_callCandidate_modal(post_selected_value, resume_id);
   });
 
-
+  $(document).on('click', '.stage_two_test', function() {
+	interview_selected_value = Number(this.id);
+	resume_id = this.dataset.resume_id;
+	resume_selected_value = Number(this.dataset.resume_id)
+	// construct the url
+	url="callInterview?resume_id="+resume_id+
+        "&project_id="+post_selected_value+
+        "&interview_id="+interview_selected_value+
+        "&stage_id=2";
+	xadmin.open('标题', url)
+  });
 
   $(document).on('click', '.stage_two_dail', function() {
-    interview_selected_value = Number(this.id);
-    resume_id = this.dataset.resume_id;
+	interview_selected_value = Number(this.id);
+	resume_id = this.dataset.resume_id;
 	resume_selected_value = Number(this.dataset.resume_id)
-    // This is a popup
     show_callCandidate_modal(post_selected_value, resume_id);
   });
 
@@ -915,8 +930,7 @@ $(document).ready(function() {
     interview_selected_value = Number(this.id);
     resume_id = this.dataset.resume_id;
 	resume_selected_value = Number(this.dataset.resume_id)
-    //show_callCandidate_modal(post_selected_value, resume_id);
-    show_stop_modal(interview_selected_value, resume_id)
+    show_callCandidate_modal(post_selected_value, resume_id);
   });
   $(document).on('click', '.stage_three_pass', function() {
     interview_selected_value = Number(this.id);

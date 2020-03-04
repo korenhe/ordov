@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from candidates.serializers import CandidateSerializer
-from .models import Resume, Education
+from .models import Resume, Education, Tag
 from interviews.models import Interview, STATUS_CHOICES
 
 from ordov.choices import (DEGREE_CHOICES, DEGREE_CHOICES_MAP)
@@ -19,7 +19,9 @@ class ResumeSerializer(serializers.ModelSerializer):
     newname = serializers.SerializerMethodField()
     birthorigin = serializers.SerializerMethodField()
     expected = serializers.SerializerMethodField()
+    cursettle = serializers.SerializerMethodField()
     lastmod = serializers.SerializerMethodField()
+
 
     def get_candidate_id(self, resume):
         if resume.candidate:
@@ -32,6 +34,7 @@ class ResumeSerializer(serializers.ModelSerializer):
 
     def get_ageg(self, resume):
         return "年龄:" + str(resume.age)+" " "毕业: "+str(resume.graduate_time)
+
     def get_majorfull(self, resume):
         degree_str = ""
         if type(resume.degree) == type(1):
@@ -40,6 +43,7 @@ class ResumeSerializer(serializers.ModelSerializer):
             degree_str = resume.degree
         major_str = resume.major
         return resume.school + ">" + degree_str + ">" + major_str
+
     def get_newname(self, resume):
         if resume.gender == "Male":
             return resume.username
@@ -47,8 +51,10 @@ class ResumeSerializer(serializers.ModelSerializer):
             return resume.username+"(女)"
         else:
             return resume.username
+
     def get_lastmod(self, resume):
         return (str(resume.last_modified.strftime("%Y/%m/%d %H:%M"))) 
+
     def get_expected(self, resume):
         #TODO: expected city and more
         expect = ""
@@ -74,9 +80,24 @@ class ResumeSerializer(serializers.ModelSerializer):
         if resume.birth_district is not None:
             birth = birth + "." + resume.birth_district
             hasBirthInfo = True
+        if resume.birth_street is not None:
+            birth = birth + "." + resume.birth_street
+            hasBirthInfo = True
         if hasBirthInfo is False:
             return "无籍贯信息"
         return birth
+
+    def get_cursettle(self, resume):
+        current_settle = ""
+        if resume.current_settle_province is not None:
+            current_settle = current_settle + resume.current_settle_province
+        if resume.current_settle_city is not None:
+            current_settle = current_settle + resume.current_settle_city
+        if resume.current_settle_district is not None:
+            current_settle = current_settle + resume.current_settle_district
+        if resume.current_settle_street is not None:
+            current_settle = current_settle + resume.current_settle_street
+        return current_settle 
 
     # by post id, can be is_in_interview for post1 but not for post2
     def get_workexp(self, resume):
@@ -213,6 +234,7 @@ class ResumeSerializer(serializers.ModelSerializer):
             'newname',
             'birthorigin',
             'expected',
+            'cursettle',
             'majorfull',
             'lastmod',
 
@@ -245,15 +267,24 @@ class ResumeSerializer(serializers.ModelSerializer):
             'birth_province',
             'birth_city',
             'birth_district',
+            'birth_street',
 
             'expected_province',
             'expected_city',
             'expected_district',
             'expected_street',
 
+            'current_settle_province',
+            'current_settle_city',
+            'current_settle_district',
+            'current_settle_street',
+
             'expected_industry',
             'expected_salary',
             'expected_post',
+            'expected_restmodel',
+            'expected_insurance_place_type',
+            'expected_insurance_time_type',
 
             'graduate_time',
             'graduate_year',
@@ -314,4 +345,18 @@ class EducationSerializer(serializers.ModelSerializer):
             'place',
             'instructor',
             'instructor_phone',
+        )
+
+class TagSerializer(serializers.ModelSerializer):
+
+    # DO NOT WRAP EMBEDDED FOREIGN KEY OBJECT HERE
+    # REFER TO: EducationSerializer
+    class Meta:
+        model = Tag
+        fields = (
+            'id',
+            'resume', # foreginkey
+            'tag',
+            'last_modified',
+            'created',
         )
