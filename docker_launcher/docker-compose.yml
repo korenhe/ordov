@@ -5,6 +5,8 @@ services:
     image: postgres:12
     volumes:
       - ../pg-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
   web:
     tty: yes
     build: .
