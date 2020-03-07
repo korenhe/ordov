@@ -56,14 +56,24 @@ class PostSerializer(serializers.ModelSerializer):
     def get_id(self, post):
         return post.id
     def get_place(self, post):
-        return post.address_province + post.address_city + post.address_district
-    def get_link(self, post):
-        if post.linkman == "" and post.linkman_phone == "":
+        try:
+            return post.address_province + post.address_city + post.address_district
+        except TypeError:
             return "未填写"
-        return post.linkman + "(" + post.linkman_phone + ")"
+
+    def get_link(self, post):
+        try:
+            if post.linkman == "" and post.linkman_phone == "":
+                return "未填写"
+            return post.linkman + "(" + post.linkman_phone + ")"
+        except TypeError:
+            return "未填写"
+
     def get_request(self, post):
         degree_min = 0
         degree_max = post.degree_max
+        if not degree_max:
+            degree_max = 0
         if degree_max > 9:
             degree_max = 9
         if degree_min < 1:
@@ -86,7 +96,14 @@ class PostSerializer(serializers.ModelSerializer):
             'place',
             'link',
             'request',
+
             'talk_hint',
+
+            'address_province',
+            'address_city',
+            'address_district',
+            'address_street',
+            'address_suite',
         )
 
     def create(self, validated_data):

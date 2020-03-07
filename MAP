@@ -1,0 +1,19 @@
+the map navigation is
+
+From:
+
+Post <web_codes/companies/models.py>
+
+address_province
+address_city
+address_district
+<NEW ADDED> address_street
+
+To:
+
+Resume <web_codes/resumes/models.py>
+
+current_settle_province
+current_settle_city
+current_settle_district
+current_settle_street

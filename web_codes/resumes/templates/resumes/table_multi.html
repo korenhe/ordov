@@ -156,7 +156,7 @@
         <div class="card-body" style="padding: 0.5rem;">
           <div class="row">
 
-		   <div class="col-md-3 input-group">
+            <div class="col-md-3 input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1" style="width:70px">最低学历</span>
               </div>
@@ -171,7 +171,7 @@
               </select>
             </div>
 
-			<div class="col-md-3 input-group">
+            <div class="col-md-3 input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon2">最小年龄</span>
               </div>
@@ -266,6 +266,8 @@
                 <option>2017</option>
                 <option>2018</option>
                 <option>2019</option>
+                <option>2020</option>
+                <!-- TODO: dynamic get this so we won't change here year by year -->
               </select>
             </div>
 
@@ -306,11 +308,42 @@
       </div>
       <?-- Filter -->
 
+      <?-- Candidates Other Info -->
+      <div class="card">
+        <div class="card-header" id="headingThree">
+          岗位其他信息
+        </div>
+
+        <div class="card-body" style="padding: 0.5rem;">
+          <div class="row">
+			<div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">公司.街道</span>
+              </div>
+              <input type="text" class="form-control" name="working_place_street" id="working_place_street" placeholder="位置" value=""></input>
+            </div>
+
+			<div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">公司.详细地址</span>
+              </div>
+              <input type="text" class="form-control" name="working_place_suite" id="working_place_suite" placeholder="室" value=""></input>
+            </div>
+          </div>
+        </div>
+      </div>
+      <?-- Candidates Other Info -->
+
       <?-- Candidates -->
       <div class="card">
         <div class="card-header" id="headingThree">
           符合条件的候选人
         </div>
+        <!--<button type="button" style="width: 160px;height: 60px;background-color: red">生成地图公交路线</button>-->
+        <button onclick="copyText()" style="width: 160px;height: 60px;">生成多个导航</button>
+        <div id="littleshowid" style="background-color: white">0</div>
+        <div id="l-map" style="display: none"></div>
+        <div id="r-result" style="background-color: yellowgreen;display: none">1111111111</div>
 
         <div class="card-body">
           <?-- canidates table-->
@@ -324,6 +357,7 @@
                   <th>ID</th>
                   <th>*Name</th>
                   <th>Expect</th>
+                  <th>Location</th>
                   <th>Age+G</th>
                   <th>*Phone</th>
                   <th>*Email</th>
@@ -1317,12 +1351,148 @@
     });
 </script>
 <script type="text/javascript">
-    $(function () {
-        $('select[multiple].active').multiselect();
+ $(function () {
+   $('select[multiple].active').multiselect();
 
-    });
+ });
+ var G_gsopend = {lng:0,lat:0};
+ var G_perple = [];
+ var G_numi = 1;
+
+
+ var map = new BMap.Map("l-map");
+ map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
+ map.enableScrollWheelZoom();
+ var p1 = new BMap.Point(116.301934, 39.977552);
+ var p2 = new BMap.Point(116.508328, 39.919141);
+ var transit = new BMap.TransitRoute(map, {
+   renderOptions: {map: map, panel: "r-result"}
+ });
+ transit.search(p1, p2);
+
+ function wordgjTwice(sendbbbName,outi){
+
+   var map = new BMap.Map("l-map");
+   map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
+   map.enableScrollWheelZoom();
+
+   map.clearOverlays();
+
+   function myFun(){
+     var poi = local.getResults().getPoi(0);
+     if(typeof poi == "undefined" || poi == null || poi == ""){
+       alert("行ID为--"+outi+"--地址为["+sendbbbName+"]:简历的地址百度未检索到,此行不生成导航!(poi)");
+       return;
+     }
+     var pp = local.getResults().getPoi(0).point;
+     if(typeof pp == "undefined" || pp == null || pp == ""){
+       alert("行ID为--"+outi+"--地址为["+sendbbbName+"]:简历的地址百度未检索到,此行不生成导航!(pp)");
+       return;
+     }
+     map.centerAndZoom(pp, 18);
+     map.addOverlay(new BMap.Marker(pp));
+     var cIdName = "aaadiv" + outi;
+     var transit = new BMap.TransitRoute(map, {
+       renderOptions: {map: map, panel: cIdName},
+       pageCapacity:1
+     });
+
+     var slng = G_gsopend.lng;
+     var slat = G_gsopend.lat;
+     var gspoint=new BMap.Point(slng, slat);
+     var elng = pp.lng;
+     var elat = pp.lat;
+     var gspointend=new BMap.Point(elng, elat);
+     G_numi++;
+     transit.search(gspoint, gspointend);
+   }
+   var local = new BMap.LocalSearch(map, {
+     onSearchComplete: myFun
+   });
+   local.search(sendbbbName);
+ };
+ function wordgjFirst(sendaaaName,fbbbName,outi){
+   var map = new BMap.Map("l-map");
+   map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
+   map.enableScrollWheelZoom();
+
+   map.clearOverlays();
+
+   function myFun(){
+     var poi = local.getResults().getPoi(0);
+     if(typeof poi == "undefined" || poi == null || poi == ""){
+       alert("百度未检索到起点(poi):请输入规范的--公司.街道与公司.详细地址!");
+       return;
+     }
+     var pp = local.getResults().getPoi(0).point;
+     if(typeof pp == "undefined" || pp == null || pp == ""){
+       alert("百度未检索到起点(pp):请输入规范的--公司.街道与公司.详细地址!");
+       return;
+     }
+     console.log(poi);
+     console.log(pp);
+     G_gsopend.lng=pp.lng;
+     G_gsopend.lat=pp.lat;
+     map.centerAndZoom(pp, 18);
+     map.addOverlay(new BMap.Marker(pp));
+     console.log(outi);
+     wordgjTwice(fbbbName,outi);
+   }
+   var local = new BMap.LocalSearch(map, {
+     onSearchComplete: myFun
+   });
+   local.search(sendaaaName);
+ };
+
+ function copyText() {
+   G_numi=1;
+   var justtable = $('#dataTable_resume');
+   var tab = document.getElementById("dataTable_resume");
+   var trnum = tab.rows.length;
+   var geName = document.getElementById("dataTable_resume").rows[1].cells[2].innerHTML;
+   var startCity = document.getElementById('working_place_city').value
+   if(typeof startCity == "undefined" || startCity == null || startCity == ""){
+     alert("请输入筛选的--城市!");
+     return;
+   }
+   var startStreet = document.getElementById('working_place_street').value
+   if(typeof startStreet == "undefined" || startStreet == null || startStreet == ""){
+     alert("请输入--公司.街道!");
+     return;
+   }
+   var start_suite = document.getElementById('working_place_suite').value
+   if(typeof start_suite == "undefined" || start_suite == null || start_suite == ""){
+     start_suite=" ";
+   }
+   var topsoucity = startCity+startStreet+start_suite;
+
+   for (i = 1; i < trnum;i++) {
+
+     var partgeName = document.getElementById("dataTable_resume").rows[i].cells[2].innerHTML;
+     var geLocation = document.getElementById("dataTable_resume").rows[i].cells[3].innerHTML;
+
+     var geID = document.getElementById("dataTable_resume").rows[i].cells[0].innerHTML;
+     //线上
+     geName = partgeName + geLocation;
+     wordgjFirst(topsoucity,geName,geID);
+     if(i==trnum-1){
+       var msg = i+"行,数据已处理,起点为["+topsoucity+"]";
+       document.getElementById("littleshowid").innerHTML = msg;
+     }
+   }
+ }
 </script>
 
+<style>
+  .trans-plan-content{
+    background-color: red !important;
+    display: none !important;
+  }
+    .trans_plan_desc{
+        background-color: red !important;
+        display: none !important;
+    }
+</style>
 
 
 {% endblock%}

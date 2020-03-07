@@ -19,7 +19,7 @@ class ResumeSerializer(serializers.ModelSerializer):
     newname = serializers.SerializerMethodField()
     birthorigin = serializers.SerializerMethodField()
     expected = serializers.SerializerMethodField()
-    cursettle = serializers.SerializerMethodField()
+    current_settle = serializers.SerializerMethodField()
     lastmod = serializers.SerializerMethodField()
 
 
@@ -66,7 +66,20 @@ class ResumeSerializer(serializers.ModelSerializer):
             expect = expect + resume.expected_district
         if resume.expected_street is not None:
             expect = expect + resume.expected_street
-        return expect 
+        return expect
+
+    def get_current_settle(self, resume):
+        current_settle = ""
+        if resume.current_settle_province is not None:
+            current_settle += resume.current_settle_province
+        if resume.current_settle_city is not None:
+            current_settle += resume.current_settle_city
+        if resume.current_settle_district is not None:
+            current_settle += resume.current_settle_district
+        if resume.current_settle_street is not None:
+            current_settle += resume.current_settle_street
+
+        return current_settle
 
     def get_birthorigin(self, resume):
         birth =""
@@ -86,18 +99,6 @@ class ResumeSerializer(serializers.ModelSerializer):
         if hasBirthInfo is False:
             return "无籍贯信息"
         return birth
-
-    def get_cursettle(self, resume):
-        current_settle = ""
-        if resume.current_settle_province is not None:
-            current_settle = current_settle + resume.current_settle_province
-        if resume.current_settle_city is not None:
-            current_settle = current_settle + resume.current_settle_city
-        if resume.current_settle_district is not None:
-            current_settle = current_settle + resume.current_settle_district
-        if resume.current_settle_street is not None:
-            current_settle = current_settle + resume.current_settle_street
-        return current_settle 
 
     # by post id, can be is_in_interview for post1 but not for post2
     def get_workexp(self, resume):
@@ -234,7 +235,7 @@ class ResumeSerializer(serializers.ModelSerializer):
             'newname',
             'birthorigin',
             'expected',
-            'cursettle',
+            'current_settle',
             'majorfull',
             'lastmod',
 
@@ -268,6 +269,11 @@ class ResumeSerializer(serializers.ModelSerializer):
             'birth_city',
             'birth_district',
             'birth_street',
+
+            'current_settle_province',
+            'current_settle_city',
+            'current_settle_district',
+            'current_settle_street',
 
             'expected_province',
             'expected_city',

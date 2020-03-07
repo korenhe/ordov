@@ -33,6 +33,11 @@ def generate(i):
         payload['email'] = fake1.free_email()
         payload['marriage'] = marriage_choices[random.randint(0, len(marriage_choices)-1)]
 
+        payload['marriage'] = marriage_choices[random.randint(0, len(marriage_choices)-1)]
+        payload['current_settle_province'] = fake1.province()
+        payload['current_settle_city'] = fake1.city()
+        payload['current_settle_district'] = fake1.district()
+        payload['current_settle_street'] = fake1.street_address()
         try:
             os.stat("pesudo_resume")
         except:
@@ -50,6 +55,7 @@ if __name__ == '__main__':
     i = 0
 
     while (i < NUM):
+#        cmd = "curl -X POST -u hekuang:Huawei123 -H 'Content-type:application/json' 127.0.0.1:8000/api/resumes/ -d@pesudo_resume/resume.target.{}".format(i)
         cmd = "curl -X POST -H 'Content-type:application/json' 127.0.0.1:8000/api/resumes/ -d@pesudo_resume/resume.target.{}".format(i)
         print(cmd)
         os.system(cmd)

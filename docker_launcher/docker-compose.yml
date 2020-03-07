@@ -2,7 +2,7 @@ version: '3'
 
 services:
   db:
-    image: postgres
+    image: postgres:12
     volumes:
       - ../pg-data:/var/lib/postgresql/data
   web:
@@ -10,7 +10,7 @@ services:
     build: .
     volumes:
       - ../web_codes:/code
-      - /etc/localtime:/etc/localtime
+
     ports:
       - "8000:8000"
     depends_on:

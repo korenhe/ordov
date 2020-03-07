@@ -32,10 +32,14 @@ class Company(models.Model):
     # unified social credit code
     uscc = models.CharField(max_length=50, blank=True, null=True)
 
+    # TODO: Here's a replicated fields to Post's fields, will be removed
+    # Otherwise, we should make this more smart, company will gether the Post's address info if empty
+    # And Post can inherent Company's address by default, so let's just make it the same as Post's for the first step
     address_province = models.CharField(max_length=10, blank=True, null=True)
     address_city = models.CharField(max_length=10, blank=True, null=True)
     address_district = models.CharField(max_length=10, blank=True, null=True)
     address_street = models.CharField(max_length=20, blank=True, null=True)
+    address_suite = models.CharField(max_length=20, blank=True, null=True)
 
     phone_number = models.CharField(max_length=15, null=True, blank=True)
     email = models.CharField(max_length=50, blank=True, null=True)
@@ -92,10 +96,13 @@ class Post(models.Model):
     social_security = models.CharField(max_length=20, blank=True, null=True, default='')
     other_benefit = models.CharField(max_length=20, blank=True, null=True, default='')
 
-    address_province = models.CharField(max_length=10, blank=True, null=True)
-    address_city = models.CharField(max_length=10, blank=True, null=True)
-    address_district = models.CharField(max_length=10, blank=True, null=True)
-    address_street = models.CharField(max_length=20, blank=True, null=True)
+    address_province = models.CharField(max_length=10, blank=True, null=True, default='')
+    address_city = models.CharField(max_length=10, blank=True, null=True, default='')
+    address_district = models.CharField(max_length=10, blank=True, null=True, default='')
+    address_street = models.CharField(max_length=20, blank=True, null=True, default='')
+    # company address can have this 'Suite' address, this is distinguished from candidates' address
+    # Like 'Building 2A Suite 402'
+    address_suite = models.CharField(max_length=20, blank=True, null=True, default='')
 
     # Requirement for the post
     degree = models.IntegerField(blank=True, null=True, choices=DEGREE_CHOICES)
@@ -110,8 +117,8 @@ class Post(models.Model):
     salary_offer = models.CharField(max_length=20, blank=True, null=True, default='')
     observe_time = models.IntegerField(blank=True, null=True)
     interview_location = models.CharField(max_length=30, blank=True, null=True)
-    linkman = models.CharField(max_length=10, blank=True, null=True)
-    linkman_phone = models.CharField(max_length=15, null=True, blank=True)
+    linkman = models.CharField(max_length=10, blank=True, null=True, default='')
+    linkman_phone = models.CharField(max_length=15, null=True, blank=True, default='')
 
     # talk hint
     talk_hint = models.CharField(max_length=1000, null=True, blank=True)

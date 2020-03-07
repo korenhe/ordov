@@ -18,6 +18,12 @@ def generate(i):
         payload['department']['company']['short_name'] = fake1.company_prefix()
         payload['department']['company']['scale'] = random.randint(100, 100000)
 
+        payload['address_province'] = fake1.province()
+        payload['address_city'] = fake1.city()
+        payload['address_district'] = fake1.district()
+        payload['address_street'] = fake1.street_name()
+        payload['address_suite'] = fake1.street_address()
+
         try:
             os.stat("pesudo_post")
         except:

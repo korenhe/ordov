@@ -142,6 +142,9 @@ $(document).ready(function() {
       {"data": "expected",
        "width": "5%"
       },
+      {"data": "current_settle",
+       "width": "5%"
+      },
       {"data": "ageg",
        "width": "5%"
       },
@@ -181,6 +184,8 @@ $(document).ready(function() {
                 <button type="button" class="stage_zero_sms btn btn-sm " id="` + row.id + `">短信</button>
                 <button type="button" class="stage_zero_pass btn btn-sm " id="` + row.id + `">通过</button>
                 <button type="button" class="stage_zero_fail btn btn-sm " id="` + row.id + `">结束</button>
+                <div style="width: 200px;height: auto;background-color: white" id="` +'aaadiv'+ row.id + `">地图初始值11:13</div>
+                <div style="width: 200px;height: auto;background-color: white" id="` +'bbbdiv'+ row.id + `"></div>
                 </div>
           `;
          }
@@ -1087,6 +1092,25 @@ $(document).ready(function() {
       getCurPermSync(id);
 
       var tr = document.getElementById(id);
+
+      $.ajax({
+        url:'/api/posts/' + post_selected_value + '/',
+        type: 'GET',
+        data: null,
+        success: function(response) {
+          // update filter also, so the filter strategy is changed that:
+          // the widget will display the post's address value, then the actual filter will only refer to the widget value but not the post value
+          document.getElementById("working_place_province").value = response.address_province;
+          document.getElementById("working_place_city").value = response.address_city;
+          document.getElementById("working_place_district").value = response.address_district;
+          document.getElementById("working_place_street").value = response.address_street;
+          document.getElementById("working_place_suite").value = response.address_suite;
+        },
+        error: function() {
+          console.log("get resume info failed");
+        },
+      });
+
       page_refresh(table);
 
       document.getElementById("text_company_name").innerHTML = tr.innerText;

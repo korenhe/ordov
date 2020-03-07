@@ -49,7 +49,6 @@ class Resume(models.Model):
     current_settle_city = models.CharField(max_length=10, blank=True, null=True)
     current_settle_district = models.CharField(max_length=10, blank=True, null=True)
     current_settle_street = models.CharField(max_length=20, blank=True, null=True)
-    birth_place = models.CharField(max_length=50, blank=True, null=True)
 
     # Expection info
     expected_industry = models.CharField(max_length=50, null=True, blank=True)

@@ -78,12 +78,20 @@ def FilterResumeByPostRequest(queryset, post_id):
             queryset = queryset.filter(models.Q(gender__contains='f'))
 
         # post_province/city/district filter
+        # post_province/city/district filter
         if post_province and post_province != "":
-            queryset = queryset.filter(models.Q(expected_province__icontains=post_province))
+            queryset = queryset.filter(models.Q(expected_province__exact='') |
+                                       models.Q(expected_province__isnull=True) |
+                                       models.Q(expected_province__icontains=post_province))
         if post_city and post_city != "":
-            queryset = queryset.filter(models.Q(expected_city__icontains=post_city))
+            queryset = queryset.filter(models.Q(expected_city__exact='') |
+                                       models.Q(expected_city__isnull=True) |
+                                       models.Q(expected_city__icontains=post_city))
         if post_district and post_district != "":
-            queryset = queryset.filter(models.Q(expected_district__icontains=post_district))
+            queryset = queryset.filter(models.Q(expected_district__exact='') |
+                                       models.Q(expected_district__isnull=True) |
+                                       models.Q(expected_district__icontains=post_district))
+
         if post_resume_latest_modified is not None:
             queryset = queryset.filter(models.Q(last_modified__gte=post_resume_latest_modified))
 
@@ -146,11 +154,17 @@ def FilterResumeByCustomizedRequest(queryset, **kwargs):
 
     # expected_province/city/district filter
     if not expected_province == "":
-        queryset = queryset.filter(models.Q(expected_province__icontains=expected_province))
+        queryset = queryset.filter(models.Q(expected_province__exact='') |
+                                   models.Q(expected_province__isnull=True) |
+                                   models.Q(expected_province__icontains=expected_province))
     if not expected_city == "":
-        queryset = queryset.filter(models.Q(expected_city__icontains=expected_city))
+        queryset = queryset.filter(models.Q(expected_city__exact='') |
+                                   models.Q(expected_city__isnull=True) |
+                                   models.Q(expected_city__icontains=expected_city))
     if not expected_district == "":
-        queryset = queryset.filter(models.Q(expected_district__icontains=expected_district))
+        queryset = queryset.filter(models.Q(expected_district__exact='') |
+                                   models.Q(expected_district__isnull=True) |
+                                   models.Q(expected_district__icontains=expected_district))
 
     # search_value box
     if search_value:
