@@ -41,6 +41,6 @@ if __name__ == '__main__':
     i = 0
 
     while (i < NUM):
-        cmd = "curl -X POST -H 'Content-type:application/json' 127.0.0.1:8000/api/posts/ -d@pesudo_post/post.target.{}".format(i)
+        cmd = "curl -X POST -u hekuang:Huawei123 -H 'Content-type:application/json' 127.0.0.1:8000/api/posts/ -d@pesudo_post/post.target.{}".format(i)
         os.system(cmd)
         i = i+1
