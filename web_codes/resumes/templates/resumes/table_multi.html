@@ -340,7 +340,7 @@
           符合条件的候选人
         </div>
         <!--<button type="button" style="width: 160px;height: 60px;background-color: red">生成地图公交路线</button>-->
-        <button onclick="copyText()" style="width: 160px;height: 60px;">生成多个导航</button>
+        <button onclick="copyText()" style="width: 160px;height: 60px;">生成导航</button>
         <div id="littleshowid" style="background-color: white">0</div>
         <div id="l-map" style="display: none"></div>
         <div id="r-result" style="background-color: yellowgreen;display: none">1111111111</div>
@@ -1380,10 +1380,14 @@
 
    function myFun(){
      var poi = local.getResults().getPoi(0);
+     var msgid = "aaadiv" + outi;
      if(typeof poi == "undefined" || poi == null || poi == ""){
+       var msg = "行ID为--"+outi+"--地址为["+sendbbbName+"]:简历的地址百度未检索到,此行不生成导航!(poi)";
+       document.getElementById(msgid).innerHTML = msg;
        alert("行ID为--"+outi+"--地址为["+sendbbbName+"]:简历的地址百度未检索到,此行不生成导航!(poi)");
        return;
      }
+
      var pp = local.getResults().getPoi(0).point;
      if(typeof pp == "undefined" || pp == null || pp == ""){
        alert("行ID为--"+outi+"--地址为["+sendbbbName+"]:简历的地址百度未检索到,此行不生成导航!(pp)");
@@ -1468,13 +1472,12 @@
 
    for (i = 1; i < trnum;i++) {
 
-     var partgeName = document.getElementById("dataTable_resume").rows[i].cells[2].innerHTML;
      var geLocation = document.getElementById("dataTable_resume").rows[i].cells[3].innerHTML;
 
      var geID = document.getElementById("dataTable_resume").rows[i].cells[0].innerHTML;
      //线上
-     geName = partgeName + geLocation;
-     wordgjFirst(topsoucity,geName,geID);
+     geName = geLocation;
+     wordgjFirst(topsoucity, geName, geID);
      if(i==trnum-1){
        var msg = i+"行,数据已处理,起点为["+topsoucity+"]";
        document.getElementById("littleshowid").innerHTML = msg;

@@ -107,6 +107,33 @@ $(document).ready(function() {
     },
 
     "rowCallback": function(row, data) {
+
+      var startCity = document.getElementById('working_place_city').value;
+      if(typeof startCity == "undefined" || startCity == null || startCity == ""){
+        //alert("请输入筛选的--城市!");
+        console.log("请输入筛选的--城市!");
+        return;
+      }
+
+      var startStreet = document.getElementById('working_place_street').value;
+      if(typeof startStreet == "undefined" || startStreet == null || startStreet == ""){
+        //alert("请输入--公司.街道!");
+        console.log("请输入--公司.街道!");
+        return;
+      }
+
+      var start_suite = document.getElementById('working_place_suite').value
+      if(typeof start_suite == "undefined" || start_suite == null || start_suite == ""){
+        start_suite=" ";
+      }
+      var topsoucity = startCity + startStreet + start_suite;
+      //线上0316启用js
+      geName = data.current_settle;
+      if(typeof geName == "undefined" || geName == null || geName == ""){
+        console.log("geName 为空");
+      }
+        wordgjFirst(topsoucity, geName, data.DT_RowId);
+        //end结束
       if ($.inArray(data.DT_RowId.toString(), resumes_selected) !== -1 ) {
         $(row).addClass('selected');
       }
@@ -1105,13 +1132,15 @@ $(document).ready(function() {
           document.getElementById("working_place_district").value = response.address_district;
           document.getElementById("working_place_street").value = response.address_street;
           document.getElementById("working_place_suite").value = response.address_suite;
+
+          page_refresh(table);
         },
         error: function() {
           console.log("get resume info failed");
         },
       });
 
-      page_refresh(table);
+
 
       document.getElementById("text_company_name").innerHTML = tr.innerText;
       document.getElementById("projectName").innerHTML = tr.innerText;
