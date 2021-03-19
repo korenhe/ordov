@@ -1,7 +1,7 @@
 Django==2.2
 Babel==2.6.0
 
-djangorestframework==3.9.2
+djangorestframework==3.11.2
 djangorestframework-datatables
 django-datatable-view-compat
 
