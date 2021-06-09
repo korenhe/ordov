@@ -13,7 +13,7 @@ phonenumberslite==8.10.10
 xlrd
 xlwt
 
-pip==19.1
+pip==19.2
 setuptools==41.0.1
 wheel==0.33.1
 
