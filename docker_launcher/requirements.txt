@@ -1,5 +1,5 @@
 Django==2.2
-Babel==2.6.0
+Babel==2.9.1
 
 djangorestframework==3.9.2
 djangorestframework-datatables
